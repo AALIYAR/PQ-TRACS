@@ -1,0 +1,689 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="LCSTopLc"
+                             partialTriggers=" LCSfbb LCSNewButton LCSSaveButton0 LCSCancelButton0"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateLookUpCodeSets ? nls['INSERT_TITLE_LOOKUPCODESETS'] :  (jhsUserRoles['LookUpCodeSets.update'] ? nls['EDIT_TITLE_LOOKUPCODESET: #{bindings.LCSCodeSet.inputValue}'] : nls['VIEW_TITLE_LOOKUPCODESET: #{bindings.LCSCodeSet.inputValue}'])  }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="LCSfbb" layout="horizontal"
+                                       rendered="#{ bindings.LookUpCodeSetsIterator.currentRow!=null  and bindings.LookUpCodeSetsIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateLookUpCodeSets and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="LCSFirst LCSPrevious LCSNext LCSLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstLookUpCodeSets.execute}"
+                                             id="LCSFirst" partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.LookUpCodeSetsIterator.rangeStart+bindings.LookUpCodeSetsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.LookUpCodeSetsIterator.rangeStart+bindings.LookUpCodeSetsIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousLookUpCodeSets.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="LCSPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.LookUpCodeSetsIterator.rangeStart+bindings.LookUpCodeSetsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.LookUpCodeSetsIterator.rangeStart+bindings.LookUpCodeSetsIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.LookUpCodeSetsIterator.rangeStart+bindings.LookUpCodeSetsIterator.currentRowIndexInRange+1} / #{bindings.LookUpCodeSetsIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextLookUpCodeSets.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="LCSNext" partialSubmit="true"
+                                             rendered="#{bindings.LookUpCodeSetsIterator.rangeStart+bindings.LookUpCodeSetsIterator.currentRowIndexInRange+1 lt bindings.LookUpCodeSetsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.LookUpCodeSetsIterator.rangeStart+bindings.LookUpCodeSetsIterator.currentRowIndexInRange+1 lt bindings.LookUpCodeSetsIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastLookUpCodeSets.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="LCSLast" partialSubmit="true"
+                                             rendered="#{bindings.LookUpCodeSetsIterator.rangeStart+bindings.LookUpCodeSetsIterator.currentRowIndexInRange+1 lt bindings.LookUpCodeSetsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.LookUpCodeSetsIterator.rangeStart+bindings.LookUpCodeSetsIterator.currentRowIndexInRange+1 lt bindings.LookUpCodeSetsIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateLookUpCodeSets.execute}"
+                                             action="CreateLCS"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_LOOKUPCODESETS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateLookUpCodeSets and (true) and (jhsUserRoles['LookUpCodeSets.create'])}"
+                                             id="LCSNewButton"></af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="LCSPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveLookUpCodeSets.execute}"
+                                      rendered="#{(((((jhsUserRoles['LookUpCodeSets.create']) or (jhsUserRoles['LookUpCodeSets.update'])) or (jhsUserRoles['LookUpCodeValues.create'])) or (jhsUserRoles['LookUpCodeValues.update'])) or (jhsUserRoles['LookUpCodeValues.delete'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="LCSSaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="LCSCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.LookUpCodeSetsIterator.findMode!='true'}"
+                       id="LCSSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.LookUpCodeSetsIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="LCSNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="LCSFC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="2"
+                                    id="LCSFI">
+                  <af:inputText id="LCSCodeSet"
+                                value="#{bindings.LCSCodeSet.inputValue}"
+                                label="#{bindings.LCSCodeSet.hints.label}"
+                                required="true"
+                                rows="#{bindings.LCSCodeSet.hints.displayHeight}"
+                                columns="#{bindings.LCSCodeSet.hints.displayWidth}"
+                                maximumLength="40"
+                                readOnly="#{((pageFlowScope.createModes.CreateLookUpCodeSets) and (!(jhsUserRoles['LookUpCodeSets.create']))) or ((!pageFlowScope.createModes.CreateLookUpCodeSets) and (!(jhsUserRoles['LookUpCodeSets.update'])))}">
+                    <f:validator binding="#{bindings.LCSCodeSet.validator}"/>
+                  </af:inputText>
+                  <af:selectBooleanCheckbox id="LCSActiveFlag"
+                                            value="#{bindings.LCSActiveFlag.inputValue}"
+                                            label="#{bindings.LCSActiveFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateLookUpCodeSets) and (!(jhsUserRoles['LookUpCodeSets.create']))) or ((!pageFlowScope.createModes.CreateLookUpCodeSets) and (!(jhsUserRoles['LookUpCodeSets.update'])))}"></af:selectBooleanCheckbox>
+                  <af:selectOneChoice id="LCSParentCodeSetId"
+                                      value="#{bindings.LCSParentCodeSetId.inputValue}"
+                                      label="#{bindings.LCSParentCodeSetId.hints.label}"
+                                      required="#{bindings.LCSParentCodeSetId.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateLookUpCodeSets) and (!(jhsUserRoles['LookUpCodeSets.create']))) or ((!pageFlowScope.createModes.CreateLookUpCodeSets) and (!(jhsUserRoles['LookUpCodeSets.update'])))}"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{LCSParentCodeSetIdDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{bindings.LCSParentCodeSetId.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="LCSParentLookupCodeId"
+                                      value="#{bindings.LCSParentLookupCodeId.inputValue}"
+                                      label="#{bindings.LCSParentLookupCodeId.hints.label}"
+                                      required="#{bindings.LCSParentLookupCodeId.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateLookUpCodeSets) and (!(jhsUserRoles['LookUpCodeSets.create']))) or ((!pageFlowScope.createModes.CreateLookUpCodeSets) and (!(jhsUserRoles['LookUpCodeSets.update'])))}">
+                    <f:selectItems value="#{bindings.LCSParentLookupCodeId.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="LCSCreatedBy"
+                                value="#{bindings.LCSCreatedBy.inputValue}"
+                                label="#{bindings.LCSCreatedBy.hints.label}"
+                                required="#{bindings.LCSCreatedBy.hints.mandatory}"
+                                rows="#{bindings.LCSCreatedBy.hints.displayHeight}"
+                                columns="#{bindings.LCSCreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.LCSCreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="LCSCreatedDate"
+                                value="#{bindings.LCSCreatedDate.inputValue}"
+                                label="#{bindings.LCSCreatedDate.hints.label}"
+                                required="#{bindings.LCSCreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="LCSLastUpdatedBy"
+                                value="#{bindings.LCSLastUpdatedBy.inputValue}"
+                                label="#{bindings.LCSLastUpdatedBy.hints.label}"
+                                required="#{bindings.LCSLastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.LCSLastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.LCSLastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.LCSLastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="LCSLastUpdatedDate"
+                                value="#{bindings.LCSLastUpdatedDate.inputValue}"
+                                label="#{bindings.LCSLastUpdatedDate.hints.label}"
+                                required="#{bindings.LCSLastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_LOOKUPCODEVALUES']}"
+                               partialTriggers=" LCSTopLc LookUpCodeValuesDeleteDialog qsAreaLookUpCodeValuesSearchOptions LookUpCodeValuesPC:LookUpCodeValuesArm LookUpCodeValuesPC:LookUpCodeValuesdelrmTM LookUpCodeValuesPC:LookUpCodeValuesArl LookUpCodeValuesPC:LookUpCodeValuesTab:LookUpCodeValuesdelrm LookUpCodeValuesPC:LookUpCodeValuesTab:LookUpCodeValuesdelrl"
+                               id="LookUpCodeValuesTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN']}"
+                               disabled="#{!jhsUserRoles['ADMIN']}">
+              <af:panelGroupLayout layout="vertical" id="LookUpCodeValuesTopLc"
+                                   partialTriggers=" LCSTopLc LookUpCodeValuesDeleteDialog qsAreaLookUpCodeValuesSearchOptions LookUpCodeValuesPC:LookUpCodeValuesArm LookUpCodeValuesPC:LookUpCodeValuesdelrmTM LookUpCodeValuesPC:LookUpCodeValuesArl LookUpCodeValuesPC:LookUpCodeValuesTab:LookUpCodeValuesdelrm LookUpCodeValuesPC:LookUpCodeValuesTab:LookUpCodeValuesdelrl"
+                                   rendered="#{jhsUserRoles['ADMIN']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0">
+                  <af:panelGroupLayout id="modelSearchAreaLookUpCodeValues"
+                                       rendered="#{!pageFlowScope.createModes.CreateLookUpCodeValues and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreaLookUpCodeValuesSearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.LookUpCodeValuesIteratorLookupCodeViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.LookUpCodeValuesIteratorLookupCodeViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.LookUpCodeValuesIteratorLookupCodeViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl0">
+                  <af:panelCollection id="LookUpCodeValuesPC" featuresOff=" "
+                                      inlineStyle=" width:748px; ">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="LookUpCodeValuestbb"
+                                    rendered="#{ bindings.LookUpCodeValuesIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstLookUpCodeValues.execute}"
+                                                id="LookUpCodeValuesFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousLookUpCodeValues.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="LookUpCodeValuesPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextLookUpCodeValues.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="LookUpCodeValuesNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastLookUpCodeValues.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="LookUpCodeValuesLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="LookUpCodeValuesArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.LookUpCodeValuesTable.addRow}"
+                                            rendered="#{ bindings.LookUpCodeSetsIterator.currentRow!=null  and (jhsUserRoles['LookUpCodeValues.create'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="LookUpCodeValuesdelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['LookUpCodeValues.delete']}">
+                          <af:showPopupBehavior popupId="::LookUpCodeValuesDeletePopup"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <!-- Also create CreateLookUpCodeValues bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="LookUpCodeValuesArl"
+                                             immediate="false"
+                                             rendered="#{ bindings.LookUpCodeSetsIterator.currentRow!=null  and (jhsUserRoles['LookUpCodeValues.create'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.LookUpCodeValuesTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandToolbarButton text="Print"
+                                                 id="LookUpCodeValuesPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.LookUpCodeValuesIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="LookUpCodeValuesTab"
+                              contentDelivery="immediate"
+                              value="#{bindings.LookUpCodeValuesTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.LookUpCodeValuesTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.LookUpCodeValuesTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.LookUpCodeValuesTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.LookUpCodeValuesTable.rangeSize}"
+                              autoHeightRows="#{bindings.LookUpCodeValuesTable.estimatedRowCount lt 5 ? 5 : bindings.LookUpCodeValuesTable.estimatedRowCount lt bindings.LookUpCodeValuesTable.rangeSize ? bindings.LookUpCodeValuesTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.LookUpCodeValuesTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.LookUpCodeValuesIteratorLookupCodeViewCriteriaQuery.processQuery}"
+                              binding="#{pageFlowScope.LookUpCodeValuesTable.table}"
+                              partialTriggers=":::qsAreaLookUpCodeValuesSearchOptions :::LookUpCodeValuesPC ::LookUpCodeValuesFirst ::LookUpCodeValuesPrevious ::LookUpCodeValuesNext ::LookUpCodeValuesLast"
+                              width="748px"
+                              summary="#{nls['TABLE_TITLE_LOOKUPCODEVALUES']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="LookUpCodeValuesTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="LookUpCodeValuesdelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['LookUpCodeValues.delete']}">
+                              <af:showPopupBehavior popupId=":::LookUpCodeValuesDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="LookUpCodeValuesActionColumn" width="20"
+                                 align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl1">
+                          <af:commandImageLink id="LookUpCodeValuesdelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['LookUpCodeValues.delete']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::LookUpCodeValuesDeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="LookUpCodeValuesDisplayValueCol"
+                                 sortable="true" noWrap="true" width="240"
+                                 sortProperty="DisplayValue" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.LookUpCodeValuesTable.hints.DisplayValue.label}"
+                                          showRequired="true" id="ol0"/>
+                        </f:facet>
+                        <af:inputText id="LookUpCodeValuesDisplayValue"
+                                      value="#{row.bindings.DisplayValue.inputValue}"
+                                      label="#{bindings.LookUpCodeValuesTable.hints.DisplayValue.label}"
+                                      required="true"
+                                      rows="#{bindings.LookUpCodeValuesTable.hints.DisplayValue.displayHeight}"
+                                      columns="#{bindings.LookUpCodeValuesTable.hints.DisplayValue.displayWidth}"
+                                      maximumLength="40"
+                                      readOnly="#{((pageFlowScope.LookUpCodeValuesTable.newRow) and (!(jhsUserRoles['LookUpCodeValues.create']))) or ((!pageFlowScope.LookUpCodeValuesTable.newRow) and (!(jhsUserRoles['LookUpCodeValues.update'])))}">
+                          <f:validator binding="#{row.bindings.DisplayValue.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="LookUpCodeValuesInternalValueCol"
+                                 sortable="true" noWrap="true" width="240"
+                                 sortProperty="InternalValue" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.LookUpCodeValuesTable.hints.InternalValue.label}"
+                                          showRequired="true" id="ol1"/>
+                        </f:facet>
+                        <af:inputText id="LookUpCodeValuesInternalValue"
+                                      value="#{row.bindings.InternalValue.inputValue}"
+                                      label="#{bindings.LookUpCodeValuesTable.hints.InternalValue.label}"
+                                      required="true"
+                                      rows="#{bindings.LookUpCodeValuesTable.hints.InternalValue.displayHeight}"
+                                      columns="#{bindings.LookUpCodeValuesTable.hints.InternalValue.displayWidth}"
+                                      maximumLength="40"
+                                      readOnly="#{(((pageFlowScope.LookUpCodeValuesTable.newRow) and (!(jhsUserRoles['LookUpCodeValues.create']))) or ((!pageFlowScope.LookUpCodeValuesTable.newRow) and (!(jhsUserRoles['LookUpCodeValues.update'])))) or (!(pageFlowScope.LookUpCodeValuesTable.newRow))}">
+                          <f:validator binding="#{row.bindings.InternalValue.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="LookUpCodeValuesOrderBy1Col"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="OrderBy1" align="right"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.LookUpCodeValuesTable.hints.OrderBy1.label}"
+                                          showRequired="#{bindings.LookUpCodeValuesTable.hints.OrderBy1.mandatory}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:inputText id="LookUpCodeValuesOrderBy1"
+                                      value="#{row.bindings.OrderBy1.inputValue}"
+                                      label="#{bindings.LookUpCodeValuesTable.hints.OrderBy1.label}"
+                                      required="#{bindings.LookUpCodeValuesTable.hints.OrderBy1.mandatory}"
+                                      rows="#{bindings.LookUpCodeValuesTable.hints.OrderBy1.displayHeight}"
+                                      columns="#{bindings.LookUpCodeValuesTable.hints.OrderBy1.displayWidth}"
+                                      maximumLength="5"
+                                      readOnly="#{((pageFlowScope.LookUpCodeValuesTable.newRow) and (!(jhsUserRoles['LookUpCodeValues.create']))) or ((!pageFlowScope.LookUpCodeValuesTable.newRow) and (!(jhsUserRoles['LookUpCodeValues.update'])))}">
+                          <f:validator binding="#{row.bindings.OrderBy1.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.LookUpCodeValuesTable.hints.OrderBy1.format}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="LookUpCodeValuesActiveFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="ActiveFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.LookUpCodeValuesTable.hints.ActiveFlag.label}"
+                                          showRequired="#{bindings.LookUpCodeValuesTable.hints.ActiveFlag.mandatory}"
+                                          id="ol3"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="LookUpCodeValuesActiveFlag"
+                                                  label="#{bindings.LookUpCodeValuesTable.hints.ActiveFlag.label}"
+                                                  value="#{LookUpCodeValuesActiveFlagcheckboxInTable.value}"
+                                                  readOnly="#{((pageFlowScope.LookUpCodeValuesTable.newRow) and (!(jhsUserRoles['LookUpCodeValues.create']))) or ((!pageFlowScope.LookUpCodeValuesTable.newRow) and (!(jhsUserRoles['LookUpCodeValues.update'])))}"></af:selectBooleanCheckbox>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_CHILDCODEVALUES']}"
+                               partialTriggers=" LCSTopLc qsAreaChildCodeValuesSearchOptions"
+                               id="ChildCodeValuesTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN']}"
+                               disabled="#{!jhsUserRoles['ADMIN']}">
+              <af:panelGroupLayout layout="vertical" id="ChildCodeValuesTopLc"
+                                   partialTriggers=" LCSTopLc qsAreaChildCodeValuesSearchOptions"
+                                   rendered="#{jhsUserRoles['ADMIN']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp4"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g1">
+                  <af:panelGroupLayout id="modelSearchAreaChildCodeValues"
+                                       rendered="#{!pageFlowScope.createModes.CreateChildCodeValues and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreaChildCodeValuesSearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.ChildCodeValuesIteratorLookupCodeSetViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.ChildCodeValuesIteratorLookupCodeSetViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.ChildCodeValuesIteratorLookupCodeSetViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl2">
+                  <af:panelCollection id="ChildCodeValuesPC" featuresOff=" "
+                                      inlineStyle=" width:956px; ">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu4">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu5">
+                          <af:group id="ChildCodeValuestbb"
+                                    rendered="#{ bindings.ChildCodeValuesIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstChildCodeValues.execute}"
+                                                id="ChildCodeValuesFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousChildCodeValues.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="ChildCodeValuesPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextChildCodeValues.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="ChildCodeValuesNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastChildCodeValues.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="ChildCodeValuesLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar2">
+                        <af:commandToolbarButton text="Print"
+                                                 id="ChildCodeValuesPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.ChildCodeValuesIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="ChildCodeValuesTab"
+                              contentDelivery="immediate"
+                              value="#{bindings.ChildCodeValuesTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.ChildCodeValuesTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.ChildCodeValuesTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.ChildCodeValuesTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.ChildCodeValuesTable.rangeSize}"
+                              autoHeightRows="#{bindings.ChildCodeValuesTable.estimatedRowCount lt 5 ? 5 : bindings.ChildCodeValuesTable.estimatedRowCount lt bindings.ChildCodeValuesTable.rangeSize ? bindings.ChildCodeValuesTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.ChildCodeValuesTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.ChildCodeValuesIteratorLookupCodeSetViewCriteriaQuery.processQuery}"
+                              binding="#{pageFlowScope.ChildCodeValuesTable.table}"
+                              partialTriggers=":::qsAreaChildCodeValuesSearchOptions :::ChildCodeValuesPC ::ChildCodeValuesFirst ::ChildCodeValuesPrevious ::ChildCodeValuesNext ::ChildCodeValuesLast"
+                              width="956px"
+                              summary="#{nls['TABLE_TITLE_CHILDCODEVALUES']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="ChildCodeValuesTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu6">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu7"></af:menu>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="ChildCodeValuesCodeSetCol" sortable="true"
+                                 noWrap="true" width="120"
+                                 sortProperty="CodeSet" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ChildCodeValuesTable.hints.CodeSet.label}"
+                                          id="ol4"/>
+                        </f:facet>
+                        <af:inputText id="ChildCodeValuesCodeSet"
+                                      value="#{row.bindings.CodeSet.inputValue}"
+                                      label="#{bindings.ChildCodeValuesTable.hints.CodeSet.label}"
+                                      required="#{bindings.ChildCodeValuesTable.hints.CodeSet.mandatory}"
+                                      rows="#{bindings.ChildCodeValuesTable.hints.CodeSet.displayHeight}"
+                                      columns="#{bindings.ChildCodeValuesTable.hints.CodeSet.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.ChildCodeValuesTable.hints.CodeSet.tooltip}">
+                          <f:validator binding="#{row.bindings.CodeSet.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ChildCodeValuesActiveFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="ActiveFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ChildCodeValuesTable.hints.ActiveFlag.label}"
+                                          id="ol5"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="ChildCodeValuesActiveFlag"
+                                                  label="#{bindings.ChildCodeValuesTable.hints.ActiveFlag.label}"
+                                                  value="#{ChildCodeValuesActiveFlagcheckboxInTable.value}"
+                                                  readOnly="true"
+                                                  shortDesc="#{bindings.ChildCodeValuesTable.hints.ActiveFlag.tooltip}"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="ChildCodeValuesParentCodeSetCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="ParentCodeSet" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ChildCodeValuesTable.hints.ParentCodeSet.label}"
+                                          id="ol6"/>
+                        </f:facet>
+                        <af:inputText id="ChildCodeValuesParentCodeSet"
+                                      value="#{row.bindings.ParentCodeSet.inputValue}"
+                                      label="#{bindings.ChildCodeValuesTable.hints.ParentCodeSet.label}"
+                                      required="#{bindings.ChildCodeValuesTable.hints.ParentCodeSet.mandatory}"
+                                      rows="#{bindings.ChildCodeValuesTable.hints.ParentCodeSet.displayHeight}"
+                                      columns="#{bindings.ChildCodeValuesTable.hints.ParentCodeSet.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.ChildCodeValuesTable.hints.ParentCodeSet.tooltip}">
+                          <f:validator binding="#{row.bindings.ParentCodeSet.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ChildCodeValuesParentCodeCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="ParentCode" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ChildCodeValuesTable.hints.ParentCode.label}"
+                                          id="ol7"/>
+                        </f:facet>
+                        <af:inputText id="ChildCodeValuesParentCode"
+                                      value="#{row.bindings.ParentCode.inputValue}"
+                                      label="#{bindings.ChildCodeValuesTable.hints.ParentCode.label}"
+                                      required="#{bindings.ChildCodeValuesTable.hints.ParentCode.mandatory}"
+                                      rows="#{bindings.ChildCodeValuesTable.hints.ParentCode.displayHeight}"
+                                      columns="#{bindings.ChildCodeValuesTable.hints.ParentCode.displayWidth}"
+                                      maximumLength="100" readOnly="true"
+                                      shortDesc="#{bindings.ChildCodeValuesTable.hints.ParentCode.tooltip}">
+                          <f:validator binding="#{row.bindings.ParentCode.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ChildCodeValuesCreatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ChildCodeValuesTable.hints.CreatedBy.label}"
+                                          id="ol8"/>
+                        </f:facet>
+                        <af:inputText id="ChildCodeValuesCreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.ChildCodeValuesTable.hints.CreatedBy.label}"
+                                      required="#{bindings.ChildCodeValuesTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.ChildCodeValuesTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.ChildCodeValuesTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.ChildCodeValuesTable.hints.CreatedBy.tooltip}">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ChildCodeValuesCreatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ChildCodeValuesTable.hints.CreatedDate.label}"
+                                          id="ol9"/>
+                        </f:facet>
+                        <af:inputDate id="ChildCodeValuesCreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.ChildCodeValuesTable.hints.CreatedDate.label}"
+                                      required="#{bindings.ChildCodeValuesTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ChildCodeValuesTable.hints.CreatedDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="ChildCodeValuesLastUpdatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ChildCodeValuesTable.hints.LastUpdatedBy.label}"
+                                          id="ol10"/>
+                        </f:facet>
+                        <af:inputText id="ChildCodeValuesLastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.ChildCodeValuesTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.ChildCodeValuesTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.ChildCodeValuesTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.ChildCodeValuesTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.ChildCodeValuesTable.hints.LastUpdatedBy.tooltip}">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ChildCodeValuesLastUpdatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ChildCodeValuesTable.hints.LastUpdatedDate.label}"
+                                          id="ol11"/>
+                        </f:facet>
+                        <af:inputDate id="ChildCodeValuesLastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.ChildCodeValuesTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.ChildCodeValuesTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ChildCodeValuesTable.hints.LastUpdatedDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="LookUpCodeValuesDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="LookUpCodeValuesDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_LOOKUPCODEVALUE:#{pageFlowScope.LookUpCodeValuesTable.currentRowAttributeValues.DisplayValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteLookUpCodeValues.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

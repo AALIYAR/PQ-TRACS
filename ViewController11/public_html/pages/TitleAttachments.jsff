@@ -1,0 +1,293 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="s2dTopLc"
+                             partialTriggers=" s2dDeleteDialog s2dfbb s2dNewButton s2dDelB s2dSaveButton0 s2dCancelButton0 s2dSaveButton1 s2dCancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateTitleAttachments ? nls['INSERT_TITLE_TITLEATTACHMENTS'] :  (jhsUserRoles['RM, ADMIN, AllButAdmn'] ? nls['EDIT_TITLE_TITLEATTACHMENT: #{bindings.s2dName.inputValue}'] : nls['VIEW_TITLE_TITLEATTACHMENT: #{bindings.s2dName.inputValue}'])  }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="s2dfbb" layout="horizontal"
+                                       rendered="#{ bindings.TitleAttachmentsIterator.currentRow!=null  and bindings.TitleAttachmentsIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateTitleAttachments and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="s2dFirst s2dPrevious s2dNext s2dLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstTitleAttachments.execute}"
+                                             id="s2dFirst" partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.TitleAttachmentsIterator.rangeStart+bindings.TitleAttachmentsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.TitleAttachmentsIterator.rangeStart+bindings.TitleAttachmentsIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousTitleAttachments.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="s2dPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.TitleAttachmentsIterator.rangeStart+bindings.TitleAttachmentsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.TitleAttachmentsIterator.rangeStart+bindings.TitleAttachmentsIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.TitleAttachmentsIterator.rangeStart+bindings.TitleAttachmentsIterator.currentRowIndexInRange+1} / #{bindings.TitleAttachmentsIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextTitleAttachments.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="s2dNext" partialSubmit="true"
+                                             rendered="#{bindings.TitleAttachmentsIterator.rangeStart+bindings.TitleAttachmentsIterator.currentRowIndexInRange+1 lt bindings.TitleAttachmentsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.TitleAttachmentsIterator.rangeStart+bindings.TitleAttachmentsIterator.currentRowIndexInRange+1 lt bindings.TitleAttachmentsIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastTitleAttachments.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="s2dLast" partialSubmit="true"
+                                             rendered="#{bindings.TitleAttachmentsIterator.rangeStart+bindings.TitleAttachmentsIterator.currentRowIndexInRange+1 lt bindings.TitleAttachmentsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.TitleAttachmentsIterator.rangeStart+bindings.TitleAttachmentsIterator.currentRowIndexInRange+1 lt bindings.TitleAttachmentsIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateTitleAttachments.execute}"
+                                             action="Creates2d"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_TITLEATTACHMENTS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateTitleAttachments and (true) and (jhsUserRoles['RM, ADMIN, AllButAdmn'])}"
+                                             id="s2dNewButton"></af:commandToolbarButton>
+                    <af:commandToolbarButton action="DeleteTitleAttachments"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_TITLEATTACHMENTS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateTitleAttachments and  bindings.TitleAttachmentsIterator.currentRow!=null   and (jhsUserRoles['RM, ADMIN, AllButAdmn'])}"
+                                             immediate="true" id="s2dDelB">
+                      <af:showPopupBehavior popupId="s2dDeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="s2dPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveTitleAttachments.execute}"
+                                      rendered="#{((jhsUserRoles['RM, ADMIN, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="s2dSaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="s2dCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.TitleAttachmentsIterator.findMode!='true'}"
+                       id="s2dSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.TitleAttachmentsIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="s2dNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="s2dFC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="2"
+                                    id="s2dFI">
+                  <af:inputText id="s2dAttachmentType"
+                                value="#{bindings.s2dAttachmentType.inputValue}"
+                                label="#{bindings.s2dAttachmentType.hints.label}"
+                                required="#{bindings.s2dAttachmentType.hints.mandatory}"
+                                rows="#{bindings.s2dAttachmentType.hints.displayHeight}"
+                                columns="#{bindings.s2dAttachmentType.hints.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{((pageFlowScope.createModes.CreateTitleAttachments) and (!(jhsUserRoles['RM, ADMIN, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateTitleAttachments) and (!(jhsUserRoles['RM, ADMIN, AllButAdmn'])))}"
+                                shortDesc="#{bindings.s2dAttachmentType.hints.tooltip}">
+                    <f:validator binding="#{bindings.s2dAttachmentType.validator}"/>
+                  </af:inputText>
+                  <af:inputFile id="s2dAttachment"
+                                label="#{bindings.s2dAttachment.hints.label}"
+                                columns="#{bindings.s2dAttachment.hints.displayWidth}"
+                                binding="#{s2dAttachmentFileHandlerBean.usesUploadIndicator}"
+                                rendered="#{(!(((pageFlowScope.createModes.CreateTitleAttachments) and (!(jhsUserRoles['RM, ADMIN, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateTitleAttachments) and (!(jhsUserRoles['RM, ADMIN, AllButAdmn']))))) and (true)}"
+                                shortDesc="#{bindings.s2dAttachment.hints.tooltip}"
+                                valueChangeListener="#{s2dAttachmentFileHandlerBean.uploadFile}"/>
+                  <af:panelLabelAndMessage label="#{bindings.s2dAttachmentDL.hints.label}"
+                                           id="s2dAttachmentDLLabel"
+                                           shortDesc="#{bindings.s2dAttachmentDL.hints.tooltip}">
+                    <af:commandLink id="s2dAttachmentDL"
+                                    rendered="#{s2dAttachmentDLFileHandlerBean.fileExist}">
+                      <af:outputText id="ot1"
+                                     value="#{s2dAttachmentDLFileHandlerBean.fileName}"/>
+                      <af:fileDownloadActionListener contentType="#{s2dAttachmentDLFileHandlerBean.contentType}"
+                                                     filename="#{s2dAttachmentDLFileHandlerBean.fileName}"
+                                                     method="#{s2dAttachmentDLFileHandlerBean.downloadFile}"/>
+                    </af:commandLink>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl0" valign="top"
+                                           layout="horizontal"></af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="#{bindings.s2dDescription.hints.label}"
+                                           shortDesc="#{bindings.s2dDescription.hints.tooltip}"
+                                           showRequired="#{bindings.s2dDescription.hints.mandatory}"
+                                           id="s2dDescriptionLabel">
+                    <af:inputText id="s2dDescription"
+                                  value="#{bindings.s2dDescription.inputValue}"
+                                  required="#{bindings.s2dDescription.hints.mandatory}"
+                                  rows="#{bindings.s2dDescription.hints.displayHeight}"
+                                  columns="#{bindings.s2dDescription.hints.displayWidth}"
+                                  maximumLength="4000"
+                                  readOnly="#{((pageFlowScope.createModes.CreateTitleAttachments) and (!(jhsUserRoles['RM, ADMIN, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateTitleAttachments) and (!(jhsUserRoles['RM, ADMIN, AllButAdmn'])))}"
+                                  autoSubmit="true" simple="true"
+                                  partialTriggers="s2dDescriptionEditorLink s2dDescriptionEditorText">
+                      <f:validator binding="#{bindings.s2dDescription.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl1" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink id="s2dDescriptionEditorLink"
+                                        rendered="#{!(((pageFlowScope.createModes.CreateTitleAttachments) and (!(jhsUserRoles['RM, ADMIN, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateTitleAttachments) and (!(jhsUserRoles['RM, ADMIN, AllButAdmn']))))}"
+                                        immediate="true" partialSubmit="true">
+                          <af:showPopupBehavior popupId="s2dDescriptionPopup"/>
+                          <af:image source="/jheadstart/images/editor.gif"
+                                    id="s2dDescriptionIcon"
+                                    clientComponent="true"/>
+                        </af:commandLink>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:inputText id="s2dFileSize"
+                                value="#{bindings.s2dFileSize.inputValue}"
+                                label="#{bindings.s2dFileSize.hints.label}"
+                                required="#{bindings.s2dFileSize.hints.mandatory}"
+                                rows="#{bindings.s2dFileSize.hints.displayHeight}"
+                                columns="#{bindings.s2dFileSize.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.s2dFileSize.hints.tooltip}">
+                    <f:validator binding="#{bindings.s2dFileSize.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s2dFileSize.format}"/>
+                  </af:inputText>
+                  <af:inputText id="s2dCreatedBy"
+                                value="#{bindings.s2dCreatedBy.inputValue}"
+                                label="#{bindings.s2dCreatedBy.hints.label}"
+                                required="#{bindings.s2dCreatedBy.hints.mandatory}"
+                                rows="#{bindings.s2dCreatedBy.hints.displayHeight}"
+                                columns="#{bindings.s2dCreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                shortDesc="#{bindings.s2dCreatedBy.hints.tooltip}">
+                    <f:validator binding="#{bindings.s2dCreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s2dCreatedDate"
+                                value="#{bindings.s2dCreatedDate.inputValue}"
+                                label="#{bindings.s2dCreatedDate.hints.label}"
+                                required="#{bindings.s2dCreatedDate.hints.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.s2dCreatedDate.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="s2dLastUpdatedBy"
+                                value="#{bindings.s2dLastUpdatedBy.inputValue}"
+                                label="#{bindings.s2dLastUpdatedBy.hints.label}"
+                                required="#{bindings.s2dLastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.s2dLastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.s2dLastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                shortDesc="#{bindings.s2dLastUpdatedBy.hints.tooltip}">
+                    <f:validator binding="#{bindings.s2dLastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s2dLastUpdatedDate"
+                                value="#{bindings.s2dLastUpdatedDate.inputValue}"
+                                label="#{bindings.s2dLastUpdatedDate.hints.label}"
+                                required="#{bindings.s2dLastUpdatedDate.hints.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.s2dLastUpdatedDate.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveTitleAttachments.execute}"
+                                            rendered="#{((jhsUserRoles['RM, ADMIN, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="s2dSaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="s2dCancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="s2dDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s2dDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_TITLEATTACHMENT: #{bindings.s2dName.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteTitleAttachments.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s2dDescriptionPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher" childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog0">
+            <af:inputText rows="10" columns="100"
+                          value="#{bindings.s2dDescription.inputValue}"
+                          simple="true" maximumLength="4000"
+                          id="s2dDescriptionEditorText"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

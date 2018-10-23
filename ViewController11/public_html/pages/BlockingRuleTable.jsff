@@ -1,0 +1,2065 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="BlockingRuleTopLc"
+                             partialTriggers=" BlockingRuleSaveButton0 BlockingRuleCancelButton0 qsAreaBlockingRuleSearchOptions BlockingRulePC:BlockingRuleArm BlockingRulePC:BlockingRuleArl"
+                             rendered="#{jhsUserRoles['ADMIN, BR, BRUSER']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_BLOCKINGRULE']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0"></af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton action="#{SaveBlockingRule.execute}"
+                                      rendered="#{(((((((((((((((((jhsUserRoles['ADMIN, BR']) or (jhsUserRoles['ADMIN, BR'])) or (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')) or (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')) or (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')) or (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process' &amp;&amp; bindings.BlockingRuleMarketBlockedFlag.inputValue != 'N')) or (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')) or (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')) or (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')) or (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')) or (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')) or (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')) or (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')) or (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')) or (jhsUserRoles['ADMIN, BR, BRUSER'])) or (jhsUserRoles['ADMIN, BR, BRUSER'])) or (false)) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="BlockingRuleSaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel"
+                                      id="BlockingRuleCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaBlockingRule"
+                                 rendered="#{!pageFlowScope.createModes.CreateBlockingRule and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers="">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:quickQuery id="qsAreaBlockingRuleSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.BlockingRuleIteratorTraxBlockingRuleHdrViewCriteriaQuery.queryDescriptor}"
+                             model="#{bindings.BlockingRuleIteratorTraxBlockingRuleHdrViewCriteriaQuery.queryModel}"
+                             queryListener="#{bindings.BlockingRuleIteratorTraxBlockingRuleHdrViewCriteriaQuery.processQuery}"></af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="BlockingRulePC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:group id="BlockingRuletbb"
+                              rendered="#{ (bindings.BlockingRuleIterator.viewObject!=null and bindings.BlockingRuleIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstBlockingRule.execute}"
+                                          id="BlockingRuleFirst"
+                                          partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousBlockingRule.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="BlockingRulePrevious"
+                                          partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextBlockingRule.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="BlockingRuleNext"
+                                          partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastBlockingRule.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="BlockingRuleLast"
+                                          partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem id="BlockingRuleArm"
+                                      textAndAccessKey="#{nls['ADD_ROW']}"
+                                      immediate="false"
+                                      icon="/jheadstart/images/addRow.png"
+                                      partialSubmit="true"
+                                      actionListener="#{pageFlowScope.BlockingRuleTable.addRow}"
+                                      rendered="#{(true) and (jhsUserRoles['ADMIN, BR'])}"></af:commandMenuItem>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="BlockingRuleTab"
+                                                       type="excelHTML"
+                                                       filename="BlockingRule.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <!-- Also create CreateBlockingRule bean so we can start table group in create mode as well -->
+                  <af:commandImageLink id="BlockingRuleArl" immediate="false"
+                                       rendered="#{(true) and (jhsUserRoles['ADMIN, BR'])}"
+                                       partialSubmit="true"
+                                       actionListener="#{pageFlowScope.BlockingRuleTable.addRow}"
+                                       shortDesc="#{nls['ADD_ROW']}"
+                                       icon="/jheadstart/images/addRow.png"/>
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="BlockingRuleTab"
+                                                       type="excelHTML"
+                                                       filename="BlockingRule.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="BlockingRulePrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.BlockingRuleIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="BlockingRuleTab" contentDelivery="immediate"
+                        value="#{bindings.BlockingRuleTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.BlockingRuleTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.BlockingRuleTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.BlockingRuleTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.BlockingRuleTable.rangeSize}"
+                        autoHeightRows="#{bindings.BlockingRuleTable.estimatedRowCount lt 5 ? 5 : bindings.BlockingRuleTable.estimatedRowCount lt bindings.BlockingRuleTable.rangeSize ? bindings.BlockingRuleTable.estimatedRowCount : 0 }"
+                        fetchSize="#{bindings.BlockingRuleTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.BlockingRuleIteratorTraxBlockingRuleHdrViewCriteriaQuery.processQuery}"
+                        filterModel="#{bindings.BlockingRuleIteratorTraxBlockingRuleHdrViewCriteriaQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.BlockingRuleTable.table}"
+                        partialTriggers=":::qsAreaBlockingRuleSearchOptions :::BlockingRulePC ::BlockingRuleFirst ::BlockingRulePrevious ::BlockingRuleNext ::BlockingRuleLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_BLOCKINGRULE']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="BlockingRuleTablePopup"
+                            childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3"></af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="BlockingRuleBlockingRuleNameCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="BlockingRuleName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.BlockingRuleTable.hints.BlockingRuleName.label}"
+                                    showRequired="#{bindings.BlockingRuleTable.hints.BlockingRuleName.mandatory}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="BlockingRuleBlockingRuleName"
+                                value="#{row.bindings.BlockingRuleName.inputValue}"
+                                label="#{bindings.BlockingRuleTable.hints.BlockingRuleName.label}"
+                                required="#{bindings.BlockingRuleTable.hints.BlockingRuleName.mandatory}"
+                                rows="#{bindings.BlockingRuleTable.hints.BlockingRuleName.displayHeight}"
+                                columns="#{bindings.BlockingRuleTable.hints.BlockingRuleName.displayWidth}"
+                                maximumLength="40"
+                                readOnly="#{((pageFlowScope.BlockingRuleTable.newRow) and (!(jhsUserRoles['ADMIN, BR']))) or ((!pageFlowScope.BlockingRuleTable.newRow) and (!(jhsUserRoles['ADMIN, BR'])))}"
+                                shortDesc="#{bindings.BlockingRuleTable.hints.BlockingRuleName.tooltip}">
+                    <f:validator binding="#{row.bindings.BlockingRuleName.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="BlockingRuleBlockingRuleNumCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="BlockingRuleNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.BlockingRuleTable.hints.BlockingRuleNumber.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="BlockingRuleBlockingRuleNum"
+                                value="#{row.bindings.BlockingRuleNumber.inputValue}"
+                                label="#{bindings.BlockingRuleTable.hints.BlockingRuleNumber.label}"
+                                required="#{bindings.BlockingRuleTable.hints.BlockingRuleNumber.mandatory}"
+                                rows="#{bindings.BlockingRuleTable.hints.BlockingRuleNumber.displayHeight}"
+                                columns="#{bindings.BlockingRuleTable.hints.BlockingRuleNumber.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.BlockingRuleTable.hints.BlockingRuleNumber.tooltip}">
+                    <f:validator binding="#{row.bindings.BlockingRuleNumber.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.BlockingRuleTable.hints.BlockingRuleNumber.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="BlockingRuleBlockingRuleDescriptionCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="240" sortProperty="BlockingRuleDescription"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.BlockingRuleTable.hints.BlockingRuleDescription.label}"
+                                    showRequired="#{bindings.BlockingRuleTable.hints.BlockingRuleDescription.mandatory}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="BlockingRuleBlockingRuleDescription"
+                                value="#{row.bindings.BlockingRuleDescription.inputValue}"
+                                label="#{bindings.BlockingRuleTable.hints.BlockingRuleDescription.label}"
+                                required="#{bindings.BlockingRuleTable.hints.BlockingRuleDescription.mandatory}"
+                                rows="#{bindings.BlockingRuleTable.hints.BlockingRuleDescription.displayHeight}"
+                                columns="#{bindings.BlockingRuleTable.hints.BlockingRuleDescription.displayWidth}"
+                                maximumLength="250"
+                                readOnly="#{((pageFlowScope.BlockingRuleTable.newRow) and (!(jhsUserRoles['ADMIN, BR']))) or ((!pageFlowScope.BlockingRuleTable.newRow) and (!(jhsUserRoles['ADMIN, BR'])))}"
+                                shortDesc="#{bindings.BlockingRuleTable.hints.BlockingRuleDescription.tooltip}">
+                    <f:validator binding="#{row.bindings.BlockingRuleDescription.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="BlockingRuleBlockingRuleStatusCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="240" sortProperty="BlockingRuleStatus"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.BlockingRuleTable.hints.BlockingRuleStatus.label}"
+                                    showRequired="#{bindings.BlockingRuleTable.hints.BlockingRuleStatus.mandatory}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:selectOneChoice id="BlockingRuleBlockingRuleStatus"
+                                      value="#{row.bindings.BlockingRuleStatus.inputValue}"
+                                      label="#{bindings.BlockingRuleTable.hints.BlockingRuleStatus.label}"
+                                      required="#{bindings.BlockingRuleTable.hints.BlockingRuleStatus.mandatory}"
+                                      readOnly="#{((pageFlowScope.BlockingRuleTable.newRow) and (!(jhsUserRoles['ADMIN, BR']))) or ((!pageFlowScope.BlockingRuleTable.newRow) and (!(jhsUserRoles['ADMIN, BR'])))}"
+                                      shortDesc="#{bindings.BlockingRuleTable.hints.BlockingRuleStatus.tooltip}"
+                                      unselectedLabel="">
+                    <af:selectItem id="si0" value="Active" label="Active"/>
+                    <af:selectItem id="si1" value="In Process"
+                                   label="In Process"/>
+                    <af:selectItem id="si2" value="Inactive" label="Inactive"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="BlockingRuleCreatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CreatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.BlockingRuleTable.hints.CreatedBy.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:inputText id="BlockingRuleCreatedBy"
+                                value="#{row.bindings.CreatedBy.inputValue}"
+                                label="#{bindings.BlockingRuleTable.hints.CreatedBy.label}"
+                                required="#{bindings.BlockingRuleTable.hints.CreatedBy.mandatory}"
+                                rows="#{bindings.BlockingRuleTable.hints.CreatedBy.displayHeight}"
+                                columns="#{bindings.BlockingRuleTable.hints.CreatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.BlockingRuleTable.hints.CreatedBy.tooltip}">
+                    <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="BlockingRuleCreatedbySearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedbySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.BlockingRuleTable.hints.CreatedbySearch.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedbySearch}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="BlockingRuleCreatedbySearch"
+                                value="#{row.bindings.CreatedbySearch.inputValue}"
+                                label="#{bindings.BlockingRuleTable.hints.CreatedbySearch.label}"
+                                required="#{bindings.BlockingRuleTable.hints.CreatedbySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.BlockingRuleTable.hints.CreatedbySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="BlockingRuleLastUpdatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="LastUpdatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.BlockingRuleTable.hints.LastUpdatedBy.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:inputText id="BlockingRuleLastUpdatedBy"
+                                value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                label="#{bindings.BlockingRuleTable.hints.LastUpdatedBy.label}"
+                                required="#{bindings.BlockingRuleTable.hints.LastUpdatedBy.mandatory}"
+                                rows="#{bindings.BlockingRuleTable.hints.LastUpdatedBy.displayHeight}"
+                                columns="#{bindings.BlockingRuleTable.hints.LastUpdatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.BlockingRuleTable.hints.LastUpdatedBy.tooltip}">
+                    <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="BlockingRuleLastUpdatedbySearchCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="100" sortProperty="LastUpdatedbySearch"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.BlockingRuleTable.hints.LastUpdatedbySearch.label}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdatedbySearch}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="BlockingRuleLastUpdatedbySearch"
+                                value="#{row.bindings.LastUpdatedbySearch.inputValue}"
+                                label="#{bindings.BlockingRuleTable.hints.LastUpdatedbySearch.label}"
+                                required="#{bindings.BlockingRuleTable.hints.LastUpdatedbySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.BlockingRuleTable.hints.LastUpdatedbySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_BLOCKINGRULEMARKET']}"
+                               partialTriggers=" BlockingRulePC:BlockingRuleTab BlockingRuleTopLc BlockingRuleMarketDeleteDialog BlockingRuleMarketPC:BlockingRuleMarketArm BlockingRuleMarketPC:BlockingRuleMarketdelrmTM BlockingRuleMarketPC:BlockingRuleMarketArl BlockingRuleMarketPC:BlockingRuleMarketTab:BlockingRuleMarketdelrm BlockingRuleMarketPC:BlockingRuleMarketTab:BlockingRuleMarketdelrl"
+                               id="BlockingRuleMarketTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN, BR, BRUSER']}"
+                               disabled="#{!jhsUserRoles['ADMIN, BR, BRUSER']}">
+              <af:panelGroupLayout layout="vertical"
+                                   id="BlockingRuleMarketTopLc"
+                                   partialTriggers=" BlockingRulePC:BlockingRuleTab BlockingRuleTopLc BlockingRuleMarketDeleteDialog BlockingRuleMarketPC:BlockingRuleMarketArm BlockingRuleMarketPC:BlockingRuleMarketdelrmTM BlockingRuleMarketPC:BlockingRuleMarketArl BlockingRuleMarketPC:BlockingRuleMarketTab:BlockingRuleMarketdelrm BlockingRuleMarketPC:BlockingRuleMarketTab:BlockingRuleMarketdelrl"
+                                   rendered="#{jhsUserRoles['ADMIN, BR, BRUSER']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp1"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0"></af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl1">
+                  <af:panelCollection id="BlockingRuleMarketPC" featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu4">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu5">
+                          <af:group id="BlockingRuleMarkettbb"
+                                    rendered="#{ bindings.BlockingRuleMarketIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstBlockingRuleMarket.execute}"
+                                                id="BlockingRuleMarketFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousBlockingRuleMarket.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="BlockingRuleMarketPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextBlockingRuleMarket.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="BlockingRuleMarketNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastBlockingRuleMarket.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="BlockingRuleMarketLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="BlockingRuleMarketArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.BlockingRuleMarketTable.addRow}"
+                                            rendered="#{ (bindings.BlockingRuleIterator.viewObject!=null and bindings.BlockingRuleIterator.viewObject.currentRow!=null) and (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')}"></af:commandMenuItem>
+                        <af:commandMenuItem id="BlockingRuleMarketdelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}">
+                          <af:showPopupBehavior popupId="::BlockingRuleMarketDeletePopup"/>
+                        </af:commandMenuItem>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi1">
+                          <af:exportCollectionActionListener exportedId="BlockingRuleMarketTab"
+                                                             type="excelHTML"
+                                                             filename="BlockingRuleMarket.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar2">
+                        <!-- Also create CreateBlockingRuleMarket bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="BlockingRuleMarketArl"
+                                             immediate="false"
+                                             rendered="#{ (bindings.BlockingRuleIterator.viewObject!=null and bindings.BlockingRuleIterator.viewObject.currentRow!=null) and (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.BlockingRuleMarketTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl1"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="BlockingRuleMarketTab"
+                                                             type="excelHTML"
+                                                             filename="BlockingRuleMarket.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print"
+                                                 id="BlockingRuleMarketPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.BlockingRuleMarketIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="BlockingRuleMarketTab"
+                              contentDelivery="immediate"
+                              value="#{bindings.BlockingRuleMarketTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.BlockingRuleMarketTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.BlockingRuleMarketTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.BlockingRuleMarketTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.BlockingRuleMarketTable.rangeSize}"
+                              autoHeightRows="#{bindings.BlockingRuleMarketTable.estimatedRowCount lt 5 ? 5 : bindings.BlockingRuleMarketTable.estimatedRowCount lt bindings.BlockingRuleMarketTable.rangeSize ? bindings.BlockingRuleMarketTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.BlockingRuleMarketTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              binding="#{pageFlowScope.BlockingRuleMarketTable.table}"
+                              partialTriggers=" :::BlockingRuleMarketPC ::BlockingRuleMarketFirst ::BlockingRuleMarketPrevious ::BlockingRuleMarketNext ::BlockingRuleMarketLast"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_BLOCKINGRULEMARKET']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="BlockingRuleMarketTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu6">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu7"></af:menu>
+                            <af:commandMenuItem id="BlockingRuleMarketdelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}">
+                              <af:showPopupBehavior popupId=":::BlockingRuleMarketDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="BlockingRuleMarketActionColumn" width="20"
+                                 align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl2">
+                          <af:commandImageLink id="BlockingRuleMarketdelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::BlockingRuleMarketDeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="BlockingRuleMarketMarketIdCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="LovId" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="Market Id"
+                                          showRequired="#{bindings.BlockingRuleMarketTable.hints.LovId.mandatory}"
+                                          id="ol8"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleMarketMarketId"
+                                      value="#{row.bindings.LovId.inputValue}"
+                                      label="Market Id"
+                                      required="#{bindings.BlockingRuleMarketTable.hints.LovId.mandatory}"
+                                      rows="#{bindings.BlockingRuleMarketTable.hints.LovId.displayHeight}"
+                                      columns="#{bindings.BlockingRuleMarketTable.hints.LovId.displayWidth}"
+                                      maximumLength="20"
+                                      readOnly="#{((pageFlowScope.BlockingRuleMarketTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'))) or ((!pageFlowScope.BlockingRuleMarketTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')))}"
+                                      shortDesc="#{bindings.BlockingRuleMarketTable.hints.LovId.tooltip}"
+                                      autoSubmit="true">
+                          <f:validator binding="#{row.bindings.LovId.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.BlockingRuleMarketTable.hints.LovId.format}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleMarketBlockingRuleValueCol"
+                                 sortable="true" noWrap="true" width="240"
+                                 sortProperty="BlockingRuleValue"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="Market"
+                                          showRequired="#{bindings.BlockingRuleMarketTable.hints.BlockingRuleValue.mandatory}"
+                                          id="ol9"/>
+                        </f:facet>
+                        <af:selectOneChoice id="BlockingRuleMarketBlockingRuleValue"
+                                            value="#{row.bindings.BlockingRuleValue.inputValue}"
+                                            label="Market"
+                                            required="#{bindings.BlockingRuleMarketTable.hints.BlockingRuleValue.mandatory}"
+                                            readOnly="#{((pageFlowScope.BlockingRuleMarketTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'))) or ((!pageFlowScope.BlockingRuleMarketTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')))}"
+                                            shortDesc="#{bindings.BlockingRuleMarketTable.hints.BlockingRuleValue.tooltip}"
+                                            autoSubmit="true"
+                                            unselectedLabel="">
+                          <af:forEach var="row2"
+                                      items="#{bindings.CategoryValueLookup.rangeSet}">
+                            <af:selectItem id="si3" label="#{row2.DisplayValue}"
+                                           value="#{row2.InternalValue}"/>
+                          </af:forEach>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="BlockingRuleMarketBlockedFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="BlockedFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleMarketTable.hints.BlockedFlag.label}"
+                                          showRequired="false" id="ol10"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="BlockingRuleMarketBlockedFlag"
+                                                  label="#{bindings.BlockingRuleMarketTable.hints.BlockedFlag.label}"
+                                                  value="#{BlockingRuleMarketBlockedFlagcheckboxInTable.value}"
+                                                  readOnly="#{(((pageFlowScope.BlockingRuleMarketTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'))) or ((!pageFlowScope.BlockingRuleMarketTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')))) or (!(row.ContainChilds=='N'))}"
+                                                  shortDesc="#{bindings.BlockingRuleMarketTable.hints.BlockedFlag.tooltip}"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="BlockingRuleMarketContainChildsCol"
+                                 noWrap="true" width="100" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleMarketTable.hints.ContainChilds.label}"
+                                          id="ol11"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="BlockingRuleMarketContainChilds"
+                                                  label="#{bindings.BlockingRuleMarketTable.hints.ContainChilds.label}"
+                                                  value="#{BlockingRuleMarketContainChildscheckboxInTable.value}"
+                                                  readOnly="true"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="BlockingRuleMarketCreatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleMarketTable.hints.CreatedBy.label}"
+                                          id="ol12"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleMarketCreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.BlockingRuleMarketTable.hints.CreatedBy.label}"
+                                      required="#{bindings.BlockingRuleMarketTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.BlockingRuleMarketTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.BlockingRuleMarketTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleMarketTable.hints.CreatedBy.tooltip}">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleMarketCreatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleMarketTable.hints.CreatedDate.label}"
+                                          id="ol13"/>
+                        </f:facet>
+                        <af:inputDate id="BlockingRuleMarketCreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.BlockingRuleMarketTable.hints.CreatedDate.label}"
+                                      required="#{bindings.BlockingRuleMarketTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleMarketTable.hints.CreatedDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="BlockingRuleMarketLastUpdatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleMarketTable.hints.LastUpdatedBy.label}"
+                                          id="ol14"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleMarketLastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.BlockingRuleMarketTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.BlockingRuleMarketTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.BlockingRuleMarketTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.BlockingRuleMarketTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleMarketTable.hints.LastUpdatedBy.tooltip}">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleMarketLastUpdatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleMarketTable.hints.LastUpdatedDate.label}"
+                                          id="ol15"/>
+                        </f:facet>
+                        <af:inputDate id="BlockingRuleMarketLastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.BlockingRuleMarketTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.BlockingRuleMarketTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleMarketTable.hints.LastUpdatedDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                <af:panelAccordion discloseMany="true" id="pst1"
+                                   dimensionsFrom="auto"
+                                   styleClass="AFStretchWidth">
+                  <af:showDetailItem stretchChildren="first"
+                                     text="#{nls['TABLE_TITLE_SUBMARKET']}"
+                                     partialTriggers=" BlockingRuleMarketPC:BlockingRuleMarketTab BlockingRuleMarketTopLc SubMarketDeleteDialog SubMarketPC:SubMarketArm SubMarketPC:SubMarketdelrmTM SubMarketPC:SubMarketArl SubMarketPC:SubMarketTab:SubMarketdelrm SubMarketPC:SubMarketTab:SubMarketdelrl"
+                                     id="SubMarketTopLcSdi"
+                                     rendered="#{jhsUserRoles['RA, ADMIN, BR']}"
+                                     disabled="#{!jhsUserRoles['RA, ADMIN, BR']}">
+                    <f:facet name="toolbar">
+                      <af:toolbox id="tbox1">
+                        <af:toolbar id="tbar3">
+                          <af:group id="gr3"></af:group>
+                          <af:group id="gr4"></af:group>
+                        </af:toolbar>
+                      </af:toolbox>
+                    </f:facet>
+                    <af:panelGroupLayout layout="vertical" id="SubMarketTopLc"
+                                         partialTriggers=" BlockingRuleMarketPC:BlockingRuleMarketTab BlockingRuleMarketTopLc SubMarketDeleteDialog SubMarketPC:SubMarketArm SubMarketPC:SubMarketdelrmTM SubMarketPC:SubMarketArl SubMarketPC:SubMarketTab:SubMarketdelrm SubMarketPC:SubMarketTab:SubMarketdelrl"
+                                         rendered="#{jhsUserRoles['RA, ADMIN, BR']}">
+                      <f:facet name="separator">
+                        <af:spacer width="10" height="10" id="sp2"/>
+                      </f:facet>
+                      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                      <af:group id="g1"></af:group>
+                      <af:panelGroupLayout layout="vertical" id="pgl3">
+                        <af:panelCollection id="SubMarketPC" featuresOff=" "
+                                            styleClass="AFStretchWidth">
+                          <f:facet name="menus">
+                            <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                                     id="menu8">
+                              <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                       id="menu9">
+                                <af:group id="SubMarkettbb"
+                                          rendered="#{ bindings.SubMarketIterator.currentRow!=null }">
+                                  <af:commandMenuItem actionListener="#{bindings.FirstSubMarket.execute}"
+                                                      id="SubMarketFirst"
+                                                      partialSubmit="true"
+                                                      icon="/afr/shuttleleftall_ena.png"
+                                                      textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                                  <af:commandMenuItem actionListener="#{bindings.PreviousSubMarket.execute}"
+                                                      icon="/afr/shuttleleft_ena.png"
+                                                      textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                      id="SubMarketPrevious"
+                                                      partialSubmit="true"></af:commandMenuItem>
+                                  <af:commandMenuItem actionListener="#{bindings.NextSubMarket.execute}"
+                                                      icon="/afr/shuttleright_ena.png"
+                                                      textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                      id="SubMarketNext"
+                                                      partialSubmit="true"></af:commandMenuItem>
+                                  <af:commandMenuItem actionListener="#{bindings.LastSubMarket.execute}"
+                                                      icon="/afr/shuttlerightall_ena.png"
+                                                      textAndAccessKey="#{nls['LAST_ROW']}"
+                                                      id="SubMarketLast"
+                                                      partialSubmit="true"></af:commandMenuItem>
+                                </af:group>
+                              </af:menu>
+                              <af:commandMenuItem id="SubMarketArm"
+                                                  textAndAccessKey="#{nls['ADD_ROW']}"
+                                                  immediate="false"
+                                                  icon="/jheadstart/images/addRow.png"
+                                                  partialSubmit="true"
+                                                  actionListener="#{pageFlowScope.SubMarketTable.addRow}"
+                                                  rendered="#{ bindings.BlockingRuleMarketIterator.currentRow!=null  and (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process' &amp;&amp; bindings.BlockingRuleMarketBlockedFlag.inputValue != 'N')}"></af:commandMenuItem>
+                              <af:commandMenuItem id="SubMarketdelrmTM"
+                                                  textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                  icon="/jheadstart/images/deleteRow.png"
+                                                  partialSubmit="true"
+                                                  immediate="true"
+                                                  rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}">
+                                <af:showPopupBehavior popupId="::SubMarketDeletePopup"/>
+                              </af:commandMenuItem>
+                              <af:commandMenuItem partialSubmit="true"
+                                                  textAndAccessKey="#{nls['EXPORT']}"
+                                                  icon="/jheadstart/images/excel.png"
+                                                  immediate="true" id="cmi2">
+                                <af:exportCollectionActionListener exportedId="SubMarketTab"
+                                                                   type="excelHTML"
+                                                                   filename="SubMarket.xls"/>
+                              </af:commandMenuItem>
+                            </af:menu>
+                          </f:facet>
+                          <f:facet name="toolbar">
+                            <af:toolbar id="tbar4">
+                              <!-- Also create CreateSubMarket bean so we can start table group in create mode as well -->
+                              <af:commandImageLink id="SubMarketArl"
+                                                   immediate="false"
+                                                   rendered="#{ bindings.BlockingRuleMarketIterator.currentRow!=null  and (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process' &amp;&amp; bindings.BlockingRuleMarketBlockedFlag.inputValue != 'N')}"
+                                                   partialSubmit="true"
+                                                   actionListener="#{pageFlowScope.SubMarketTable.addRow}"
+                                                   shortDesc="#{nls['ADD_ROW']}"
+                                                   icon="/jheadstart/images/addRow.png"/>
+                              <af:commandImageLink immediate="true"
+                                                   partialSubmit="true" id="cl2"
+                                                   shortDesc="#{nls['EXPORT']}"
+                                                   icon="/jheadstart/images/excel.png">
+                                <af:exportCollectionActionListener exportedId="SubMarketTab"
+                                                                   type="excelHTML"
+                                                                   filename="SubMarket.xls"/>
+                              </af:commandImageLink>
+                              <af:commandToolbarButton text="Print"
+                                                       id="SubMarketPrint"
+                                                       shortDesc="Opens a new tab with printer friendly format.">
+                                <af:showPrintablePageBehavior/>
+                              </af:commandToolbarButton>
+                              <af:commandButton id="SubMarketExcludeInclude"
+                                                textAndAccessKey="Exclude/Include"
+                                                actionListener="#{bindings.SubMarketExcludeInclude.execute}"
+                                                visible="false"></af:commandButton>
+                            </af:toolbar>
+                          </f:facet>
+                          <f:facet name="statusbar">
+                            <af:toolbar>
+                              <af:outputText value="#{bindings.SubMarketIterator.estimatedRowCount} rows found"/>
+                            </af:toolbar>
+                          </f:facet>
+                          <af:table id="SubMarketTab"
+                                    contentDelivery="immediate"
+                                    value="#{bindings.SubMarketTable.collectionModel}"
+                                    columnStretching="blank"
+                                    rowBandingInterval="0" editingMode="editAll"
+                                    columnSelection="multiple"
+                                    contextMenuSelect="true"
+                                    rowSelection="single"
+                                    selectionListener="#{pageFlowScope.SubMarketTable.makeCurrent}"
+                                    selectedRowKeys="#{pageFlowScope.SubMarketTable.selectedRow}"
+                                    rowDisclosureListener="#{pageFlowScope.SubMarketTable.discloseRow}"
+                                    var="row" varStatus="status"
+                                    rows="#{bindings.SubMarketTable.rangeSize}"
+                                    autoHeightRows="#{bindings.SubMarketTable.estimatedRowCount lt 5 ? 5 : bindings.SubMarketTable.estimatedRowCount lt bindings.SubMarketTable.rangeSize ? bindings.SubMarketTable.estimatedRowCount : 0 }"
+                                    fetchSize="#{bindings.SubMarketTable.rangeSize}"
+                                    emptyText="#{nls['NO_ROWS_FOUND']}"
+                                    binding="#{pageFlowScope.SubMarketTable.table}"
+                                    partialTriggers=" :::SubMarketPC ::SubMarketFirst ::SubMarketPrevious ::SubMarketNext ::SubMarketLast"
+                                    styleClass="AFStretchWidth"
+                                    summary="#{nls['TABLE_TITLE_SUBMARKET']}">
+                            <f:facet name="contextMenu">
+                              <af:popup id="SubMarketTablePopup"
+                                        childCreation="deferred">
+                                <af:menu id="menu10">
+                                  <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                           id="menu11"></af:menu>
+                                  <af:commandMenuItem id="SubMarketdelrm"
+                                                      textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                      icon="/jheadstart/images/deleteRow.png"
+                                                      partialSubmit="true"
+                                                      immediate="true"
+                                                      rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}">
+                                    <af:showPopupBehavior popupId=":::SubMarketDeletePopup"/>
+                                  </af:commandMenuItem>
+                                </af:menu>
+                              </af:popup>
+                            </f:facet>
+                            <af:column id="SubMarketActionColumn" width="20"
+                                       align="center" headerText=" ">
+                              <af:panelGroupLayout layout="horizontal"
+                                                   id="pgl4">
+                                <af:commandImageLink id="SubMarketdelrl"
+                                                     partialSubmit="true"
+                                                     immediate="true"
+                                                     rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}"
+                                                     shortDesc="#{nls['DELETE_ROW']}"
+                                                     icon="/jheadstart/images/deleteRow.png">
+                                  <af:showPopupBehavior popupId=":::SubMarketDeletePopup"/>
+                                </af:commandImageLink>
+                              </af:panelGroupLayout>
+                            </af:column>
+                            <af:column id="SubMarketSubMarketIdCol"
+                                       sortable="true" noWrap="true" width="120"
+                                       sortProperty="LovId" rowHeader="false"
+                                       filterFeatures="caseInsensitive">
+                              <f:facet name="header">
+                                <af:outputLabel value="#{bindings.SubMarketTable.hints.LovId.label}"
+                                                showRequired="#{bindings.SubMarketTable.hints.LovId.mandatory}"
+                                                id="ol16"/>
+                              </f:facet>
+                              <af:inputText id="SubMarketSubMarketId"
+                                            value="#{row.bindings.LovId.inputValue}"
+                                            label="#{bindings.SubMarketTable.hints.LovId.label}"
+                                            required="#{bindings.SubMarketTable.hints.LovId.mandatory}"
+                                            rows="#{bindings.SubMarketTable.hints.LovId.displayHeight}"
+                                            columns="#{bindings.SubMarketTable.hints.LovId.displayWidth}"
+                                            maximumLength="20"
+                                            readOnly="#{((pageFlowScope.SubMarketTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process' &amp;&amp; bindings.BlockingRuleMarketBlockedFlag.inputValue != 'N'))) or ((!pageFlowScope.SubMarketTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')))}"
+                                            shortDesc="#{bindings.SubMarketTable.hints.LovId.tooltip}"
+                                            autoSubmit="true">
+                                <f:validator binding="#{row.bindings.LovId.validator}"/>
+                                <af:convertNumber groupingUsed="false"
+                                                  pattern="#{bindings.SubMarketTable.hints.LovId.format}"/>
+                              </af:inputText>
+                            </af:column>
+                            <af:column id="SubMarketBlockingRuleValueCol"
+                                       sortable="true" noWrap="true" width="240"
+                                       sortProperty="BlockingRuleValue"
+                                       rowHeader="false"
+                                       filterFeatures="caseInsensitive">
+                              <f:facet name="header">
+                                <af:outputLabel value="Sub Market"
+                                                showRequired="#{bindings.SubMarketTable.hints.BlockingRuleValue.mandatory}"
+                                                id="ol17"/>
+                              </f:facet>
+                              <af:selectOneChoice id="SubMarketBlockingRuleValue"
+                                                  value="#{row.bindings.BlockingRuleValue.inputValue}"
+                                                  label="Sub Market"
+                                                  required="#{bindings.SubMarketTable.hints.BlockingRuleValue.mandatory}"
+                                                  readOnly="#{((pageFlowScope.SubMarketTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process' &amp;&amp; bindings.BlockingRuleMarketBlockedFlag.inputValue != 'N'))) or ((!pageFlowScope.SubMarketTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')))}"
+                                                  shortDesc="#{bindings.SubMarketTable.hints.BlockingRuleValue.tooltip}"
+                                                  autoSubmit="true"
+                                                  unselectedLabel="">
+                                <f:selectItems value="#{SubCategoryValueLookupQueryBindParamsRowSpecific.selectItems}"/>
+                              </af:selectOneChoice>
+                            </af:column>
+                            <af:column id="SubMarketBlockedFlagCol"
+                                       sortable="true" noWrap="true" width="100"
+                                       sortProperty="BlockedFlag" align="center"
+                                       rowHeader="false"
+                                       filterFeatures="caseInsensitive">
+                              <f:facet name="header">
+                                <af:outputLabel value="#{bindings.SubMarketTable.hints.BlockedFlag.label}"
+                                                showRequired="false" id="ol18"/>
+                              </f:facet>
+                              <af:selectBooleanCheckbox id="SubMarketBlockedFlag"
+                                                        label="#{bindings.SubMarketTable.hints.BlockedFlag.label}"
+                                                        value="#{SubMarketBlockedFlagcheckboxInTable.value}"
+                                                        readOnly="#{((pageFlowScope.SubMarketTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process' &amp;&amp; bindings.BlockingRuleMarketBlockedFlag.inputValue != 'N'))) or ((!pageFlowScope.SubMarketTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')))}"
+                                                        shortDesc="#{bindings.SubMarketTable.hints.BlockedFlag.tooltip}"></af:selectBooleanCheckbox>
+                            </af:column>
+                            <af:column id="SubMarketCreatedByCol"
+                                       sortable="true" noWrap="true" width="120"
+                                       sortProperty="CreatedBy"
+                                       rowHeader="false"
+                                       filterFeatures="caseInsensitive">
+                              <f:facet name="header">
+                                <af:outputLabel value="#{bindings.SubMarketTable.hints.CreatedBy.label}"
+                                                id="ol19"/>
+                              </f:facet>
+                              <af:inputText id="SubMarketCreatedBy"
+                                            value="#{row.bindings.CreatedBy.inputValue}"
+                                            label="#{bindings.SubMarketTable.hints.CreatedBy.label}"
+                                            required="#{bindings.SubMarketTable.hints.CreatedBy.mandatory}"
+                                            rows="#{bindings.SubMarketTable.hints.CreatedBy.displayHeight}"
+                                            columns="#{bindings.SubMarketTable.hints.CreatedBy.displayWidth}"
+                                            maximumLength="20" readOnly="true"
+                                            shortDesc="#{bindings.SubMarketTable.hints.CreatedBy.tooltip}">
+                                <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                              </af:inputText>
+                            </af:column>
+                            <af:column id="SubMarketCreatedDateCol"
+                                       sortable="true" noWrap="true" width="100"
+                                       sortProperty="CreatedDate"
+                                       rowHeader="false"
+                                       filterFeatures="caseInsensitive">
+                              <f:facet name="header">
+                                <af:outputLabel value="#{bindings.SubMarketTable.hints.CreatedDate.label}"
+                                                id="ol20"/>
+                              </f:facet>
+                              <af:inputDate id="SubMarketCreatedDate"
+                                            value="#{row.bindings.CreatedDate.inputValue}"
+                                            label="#{bindings.SubMarketTable.hints.CreatedDate.label}"
+                                            required="#{bindings.SubMarketTable.hints.CreatedDate.mandatory}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.SubMarketTable.hints.CreatedDate.tooltip}">
+                                <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                              </af:inputDate>
+                            </af:column>
+                            <af:column id="SubMarketLastUpdatedByCol"
+                                       sortable="true" noWrap="true" width="120"
+                                       sortProperty="LastUpdatedBy"
+                                       rowHeader="false"
+                                       filterFeatures="caseInsensitive">
+                              <f:facet name="header">
+                                <af:outputLabel value="#{bindings.SubMarketTable.hints.LastUpdatedBy.label}"
+                                                id="ol21"/>
+                              </f:facet>
+                              <af:inputText id="SubMarketLastUpdatedBy"
+                                            value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                            label="#{bindings.SubMarketTable.hints.LastUpdatedBy.label}"
+                                            required="#{bindings.SubMarketTable.hints.LastUpdatedBy.mandatory}"
+                                            rows="#{bindings.SubMarketTable.hints.LastUpdatedBy.displayHeight}"
+                                            columns="#{bindings.SubMarketTable.hints.LastUpdatedBy.displayWidth}"
+                                            maximumLength="20" readOnly="true"
+                                            shortDesc="#{bindings.SubMarketTable.hints.LastUpdatedBy.tooltip}">
+                                <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                              </af:inputText>
+                            </af:column>
+                            <af:column id="SubMarketLastUpdatedDateCol"
+                                       sortable="true" noWrap="true" width="100"
+                                       sortProperty="LastUpdatedDate"
+                                       rowHeader="false"
+                                       filterFeatures="caseInsensitive">
+                              <f:facet name="header">
+                                <af:outputLabel value="#{bindings.SubMarketTable.hints.LastUpdatedDate.label}"
+                                                id="ol22"/>
+                              </f:facet>
+                              <af:inputDate id="SubMarketLastUpdatedDate"
+                                            value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                            label="#{bindings.SubMarketTable.hints.LastUpdatedDate.label}"
+                                            required="#{bindings.SubMarketTable.hints.LastUpdatedDate.mandatory}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.SubMarketTable.hints.LastUpdatedDate.tooltip}">
+                                <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                              </af:inputDate>
+                            </af:column>
+                          </af:table>
+                        </af:panelCollection>
+                      </af:panelGroupLayout>
+                      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                    </af:panelGroupLayout>
+                  </af:showDetailItem>
+                </af:panelAccordion>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_BLOCKINGRULECOUNTRY']}"
+                               partialTriggers=" BlockingRulePC:BlockingRuleTab BlockingRuleTopLc BlockingRuleCountryDeleteDialog BlockingRuleCountryPC:BlockingRuleCountryArm BlockingRuleCountryPC:BlockingRuleCountryduprmTM BlockingRuleCountryPC:BlockingRuleCountrydelrmTM BlockingRuleCountryPC:BlockingRuleCountryArl BlockingRuleCountryPC:BlockingRuleCountryTab:BlockingRuleCountryduprm BlockingRuleCountryPC:BlockingRuleCountryTab:BlockingRuleCountrydelrm BlockingRuleCountryPC:BlockingRuleCountryTab:BlockingRuleCountrydelrl BlockingRuleCountryPC:BlockingRuleCountryTab:BlockingRuleCountryduprl"
+                               id="BlockingRuleCountryTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN, BR, BRUSER']}"
+                               disabled="#{!jhsUserRoles['ADMIN, BR, BRUSER']}">
+              <af:panelGroupLayout layout="vertical"
+                                   id="BlockingRuleCountryTopLc"
+                                   partialTriggers=" BlockingRulePC:BlockingRuleTab BlockingRuleTopLc BlockingRuleCountryDeleteDialog BlockingRuleCountryPC:BlockingRuleCountryArm BlockingRuleCountryPC:BlockingRuleCountryduprmTM BlockingRuleCountryPC:BlockingRuleCountrydelrmTM BlockingRuleCountryPC:BlockingRuleCountryArl BlockingRuleCountryPC:BlockingRuleCountryTab:BlockingRuleCountryduprm BlockingRuleCountryPC:BlockingRuleCountryTab:BlockingRuleCountrydelrm BlockingRuleCountryPC:BlockingRuleCountryTab:BlockingRuleCountrydelrl BlockingRuleCountryPC:BlockingRuleCountryTab:BlockingRuleCountryduprl"
+                                   rendered="#{jhsUserRoles['ADMIN, BR, BRUSER']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g2"></af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl5">
+                  <af:panelCollection id="BlockingRuleCountryPC" featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu12">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu13">
+                          <af:group id="BlockingRuleCountrytbb"
+                                    rendered="#{ bindings.BlockingRuleCountryIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstBlockingRuleCountry.execute}"
+                                                id="BlockingRuleCountryFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousBlockingRuleCountry.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="BlockingRuleCountryPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextBlockingRuleCountry.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="BlockingRuleCountryNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastBlockingRuleCountry.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="BlockingRuleCountryLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="BlockingRuleCountryArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.BlockingRuleCountryTable.addRow}"
+                                            rendered="#{ (bindings.BlockingRuleIterator.viewObject!=null and bindings.BlockingRuleIterator.viewObject.currentRow!=null) and (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')}"></af:commandMenuItem>
+                        <af:commandMenuItem id="BlockingRuleCountryduprmTM"
+                                            textAndAccessKey="#{nls['DUPLICATE_ROW']}"
+                                            immediate="true"
+                                            icon="/jheadstart/images/duplicateRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.BlockingRuleCountryTable.duplicateRow}"
+                                            rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}"></af:commandMenuItem>
+                        <af:commandMenuItem id="BlockingRuleCountrydelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}">
+                          <af:showPopupBehavior popupId="::BlockingRuleCountryDeletePopup"/>
+                        </af:commandMenuItem>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi3">
+                          <af:exportCollectionActionListener exportedId="BlockingRuleCountryTab"
+                                                             type="excelHTML"
+                                                             filename="BlockingRuleCountry.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar5">
+                        <!-- Also create CreateBlockingRuleCountry bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="BlockingRuleCountryArl"
+                                             immediate="false"
+                                             rendered="#{ (bindings.BlockingRuleIterator.viewObject!=null and bindings.BlockingRuleIterator.viewObject.currentRow!=null) and (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.BlockingRuleCountryTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl3"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="BlockingRuleCountryTab"
+                                                             type="excelHTML"
+                                                             filename="BlockingRuleCountry.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print"
+                                                 id="BlockingRuleCountryPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.BlockingRuleCountryIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="BlockingRuleCountryTab"
+                              contentDelivery="immediate"
+                              value="#{bindings.BlockingRuleCountryTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.BlockingRuleCountryTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.BlockingRuleCountryTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.BlockingRuleCountryTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.BlockingRuleCountryTable.rangeSize}"
+                              autoHeightRows="#{bindings.BlockingRuleCountryTable.estimatedRowCount lt 5 ? 5 : bindings.BlockingRuleCountryTable.estimatedRowCount lt bindings.BlockingRuleCountryTable.rangeSize ? bindings.BlockingRuleCountryTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.BlockingRuleCountryTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              binding="#{pageFlowScope.BlockingRuleCountryTable.table}"
+                              partialTriggers=" :::BlockingRuleCountryPC ::BlockingRuleCountryFirst ::BlockingRuleCountryPrevious ::BlockingRuleCountryNext ::BlockingRuleCountryLast"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_BLOCKINGRULECOUNTRY']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="BlockingRuleCountryTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu14">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu15"></af:menu>
+                            <af:commandMenuItem id="BlockingRuleCountryduprm"
+                                                textAndAccessKey="#{nls['DUPLICATE_ROW']}"
+                                                immediate="true"
+                                                icon="/jheadstart/images/duplicateRow.png"
+                                                partialSubmit="true"
+                                                actionListener="#{pageFlowScope.BlockingRuleCountryTable.duplicateRow}"
+                                                rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}"></af:commandMenuItem>
+                            <af:commandMenuItem id="BlockingRuleCountrydelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}">
+                              <af:showPopupBehavior popupId=":::BlockingRuleCountryDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="BlockingRuleCountryActionColumn" width="40"
+                                 align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl6">
+                          <af:commandImageLink id="BlockingRuleCountrydelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::BlockingRuleCountryDeletePopup"/>
+                          </af:commandImageLink>
+                          <af:commandImageLink id="BlockingRuleCountryduprl"
+                                               immediate="true"
+                                               partialSubmit="true"
+                                               actionListener="#{pageFlowScope.BlockingRuleCountryTable.duplicateRow}"
+                                               rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}"
+                                               shortDesc="#{nls['DUPLICATE_ROW']}"
+                                               icon="/jheadstart/images/duplicateRow.png"/>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="BlockingRuleCountryCountryIdCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="LovId" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="Country Id"
+                                          showRequired="#{bindings.BlockingRuleCountryTable.hints.LovId.mandatory}"
+                                          id="ol23"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleCountryCountryId"
+                                      value="#{row.bindings.LovId.inputValue}"
+                                      label="Country Id"
+                                      required="#{bindings.BlockingRuleCountryTable.hints.LovId.mandatory}"
+                                      rows="#{bindings.BlockingRuleCountryTable.hints.LovId.displayHeight}"
+                                      columns="#{bindings.BlockingRuleCountryTable.hints.LovId.displayWidth}"
+                                      maximumLength="20"
+                                      readOnly="#{((pageFlowScope.BlockingRuleCountryTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'))) or ((!pageFlowScope.BlockingRuleCountryTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')))}"
+                                      shortDesc="#{bindings.BlockingRuleCountryTable.hints.LovId.tooltip}">
+                          <f:validator binding="#{row.bindings.LovId.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.BlockingRuleCountryTable.hints.LovId.format}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleCountryBlockingRuleValueCol"
+                                 sortable="true" noWrap="true" width="240"
+                                 sortProperty="BlockingRuleValue"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="Country"
+                                          showRequired="#{bindings.BlockingRuleCountryTable.hints.BlockingRuleValue.mandatory}"
+                                          id="ol24"/>
+                        </f:facet>
+                        <af:selectOneChoice id="BlockingRuleCountryBlockingRuleValue"
+                                            value="#{row.bindings.BlockingRuleValue.inputValue}"
+                                            label="Country"
+                                            required="#{bindings.BlockingRuleCountryTable.hints.BlockingRuleValue.mandatory}"
+                                            readOnly="#{((pageFlowScope.BlockingRuleCountryTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'))) or ((!pageFlowScope.BlockingRuleCountryTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')))}"
+                                            shortDesc="#{bindings.BlockingRuleCountryTable.hints.BlockingRuleValue.tooltip}"
+                                            unselectedLabel="">
+                          <af:forEach var="row2"
+                                      items="#{bindings.CategoryValueCountryLookup.rangeSet}">
+                            <af:selectItem id="si4" label="#{row2.DisplayValue}"
+                                           value="#{row2.InternalValue}"/>
+                          </af:forEach>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="BlockingRuleCountryBlockedFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="BlockedFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleCountryTable.hints.BlockedFlag.label}"
+                                          showRequired="false" id="ol25"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="BlockingRuleCountryBlockedFlag"
+                                                  label="#{bindings.BlockingRuleCountryTable.hints.BlockedFlag.label}"
+                                                  value="#{BlockingRuleCountryBlockedFlagcheckboxInTable.value}"
+                                                  readOnly="#{((pageFlowScope.BlockingRuleCountryTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'))) or ((!pageFlowScope.BlockingRuleCountryTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')))}"
+                                                  shortDesc="#{bindings.BlockingRuleCountryTable.hints.BlockedFlag.tooltip}"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="BlockingRuleCountryCreatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleCountryTable.hints.CreatedBy.label}"
+                                          id="ol26"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleCountryCreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.BlockingRuleCountryTable.hints.CreatedBy.label}"
+                                      required="#{bindings.BlockingRuleCountryTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.BlockingRuleCountryTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.BlockingRuleCountryTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleCountryTable.hints.CreatedBy.tooltip}">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleCountryCreatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleCountryTable.hints.CreatedDate.label}"
+                                          id="ol27"/>
+                        </f:facet>
+                        <af:inputDate id="BlockingRuleCountryCreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.BlockingRuleCountryTable.hints.CreatedDate.label}"
+                                      required="#{bindings.BlockingRuleCountryTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleCountryTable.hints.CreatedDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="BlockingRuleCountryLastUpdatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleCountryTable.hints.LastUpdatedBy.label}"
+                                          id="ol28"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleCountryLastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.BlockingRuleCountryTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.BlockingRuleCountryTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.BlockingRuleCountryTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.BlockingRuleCountryTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleCountryTable.hints.LastUpdatedBy.tooltip}">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleCountryLastUpdatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleCountryTable.hints.LastUpdatedDate.label}"
+                                          id="ol29"/>
+                        </f:facet>
+                        <af:inputDate id="BlockingRuleCountryLastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.BlockingRuleCountryTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.BlockingRuleCountryTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleCountryTable.hints.LastUpdatedDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_BLOCKINGRULEFORMATTYPE']}"
+                               partialTriggers=" BlockingRulePC:BlockingRuleTab BlockingRuleTopLc BlockingRuleFormatTypeDeleteDialog BlockingRuleFormatTypePC:BlockingRuleFormatTypeArm BlockingRuleFormatTypePC:BlockingRuleFormatTypeduprmTM BlockingRuleFormatTypePC:BlockingRuleFormatTypedelrmTM BlockingRuleFormatTypePC:BlockingRuleFormatTypeArl BlockingRuleFormatTypePC:BlockingRuleFormatTypeTab:BlockingRuleFormatTypeduprm BlockingRuleFormatTypePC:BlockingRuleFormatTypeTab:BlockingRuleFormatTypedelrm BlockingRuleFormatTypePC:BlockingRuleFormatTypeTab:BlockingRuleFormatTypedelrl BlockingRuleFormatTypePC:BlockingRuleFormatTypeTab:BlockingRuleFormatTypeduprl"
+                               id="BlockingRuleFormatTypeTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN, BR, BRUSER']}"
+                               disabled="#{!jhsUserRoles['ADMIN, BR, BRUSER']}">
+              <af:panelGroupLayout layout="vertical"
+                                   id="BlockingRuleFormatTypeTopLc"
+                                   partialTriggers=" BlockingRulePC:BlockingRuleTab BlockingRuleTopLc BlockingRuleFormatTypeDeleteDialog BlockingRuleFormatTypePC:BlockingRuleFormatTypeArm BlockingRuleFormatTypePC:BlockingRuleFormatTypeduprmTM BlockingRuleFormatTypePC:BlockingRuleFormatTypedelrmTM BlockingRuleFormatTypePC:BlockingRuleFormatTypeArl BlockingRuleFormatTypePC:BlockingRuleFormatTypeTab:BlockingRuleFormatTypeduprm BlockingRuleFormatTypePC:BlockingRuleFormatTypeTab:BlockingRuleFormatTypedelrm BlockingRuleFormatTypePC:BlockingRuleFormatTypeTab:BlockingRuleFormatTypedelrl BlockingRuleFormatTypePC:BlockingRuleFormatTypeTab:BlockingRuleFormatTypeduprl"
+                                   rendered="#{jhsUserRoles['ADMIN, BR, BRUSER']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp4"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g3"></af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl7">
+                  <af:panelCollection id="BlockingRuleFormatTypePC"
+                                      featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu16">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu17">
+                          <af:group id="BlockingRuleFormatTypetbb"
+                                    rendered="#{ bindings.BlockingRuleFormatTypeIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstBlockingRuleFormatType.execute}"
+                                                id="BlockingRuleFormatTypeFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousBlockingRuleFormatType.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="BlockingRuleFormatTypePrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextBlockingRuleFormatType.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="BlockingRuleFormatTypeNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastBlockingRuleFormatType.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="BlockingRuleFormatTypeLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="BlockingRuleFormatTypeArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.BlockingRuleFormatTypeTable.addRow}"
+                                            rendered="#{ (bindings.BlockingRuleIterator.viewObject!=null and bindings.BlockingRuleIterator.viewObject.currentRow!=null) and (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')}"></af:commandMenuItem>
+                        <af:commandMenuItem id="BlockingRuleFormatTypeduprmTM"
+                                            textAndAccessKey="#{nls['DUPLICATE_ROW']}"
+                                            immediate="true"
+                                            icon="/jheadstart/images/duplicateRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.BlockingRuleFormatTypeTable.duplicateRow}"
+                                            rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}"></af:commandMenuItem>
+                        <af:commandMenuItem id="BlockingRuleFormatTypedelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}">
+                          <af:showPopupBehavior popupId="::BlockingRuleFormatTypeDeletePopup"/>
+                        </af:commandMenuItem>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi4">
+                          <af:exportCollectionActionListener exportedId="BlockingRuleFormatTypeTab"
+                                                             type="excelHTML"
+                                                             filename="BlockingRuleFormatType.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar6">
+                        <!-- Also create CreateBlockingRuleFormatType bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="BlockingRuleFormatTypeArl"
+                                             immediate="false"
+                                             rendered="#{ (bindings.BlockingRuleIterator.viewObject!=null and bindings.BlockingRuleIterator.viewObject.currentRow!=null) and (jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.BlockingRuleFormatTypeTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl4"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="BlockingRuleFormatTypeTab"
+                                                             type="excelHTML"
+                                                             filename="BlockingRuleFormatType.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print"
+                                                 id="BlockingRuleFormatTypePrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.BlockingRuleFormatTypeIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="BlockingRuleFormatTypeTab"
+                              contentDelivery="immediate"
+                              value="#{bindings.BlockingRuleFormatTypeTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.BlockingRuleFormatTypeTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.BlockingRuleFormatTypeTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.BlockingRuleFormatTypeTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.BlockingRuleFormatTypeTable.rangeSize}"
+                              autoHeightRows="#{bindings.BlockingRuleFormatTypeTable.estimatedRowCount lt 5 ? 5 : bindings.BlockingRuleFormatTypeTable.estimatedRowCount lt bindings.BlockingRuleFormatTypeTable.rangeSize ? bindings.BlockingRuleFormatTypeTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.BlockingRuleFormatTypeTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              binding="#{pageFlowScope.BlockingRuleFormatTypeTable.table}"
+                              partialTriggers=" :::BlockingRuleFormatTypePC ::BlockingRuleFormatTypeFirst ::BlockingRuleFormatTypePrevious ::BlockingRuleFormatTypeNext ::BlockingRuleFormatTypeLast"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_BLOCKINGRULEFORMATTYPE']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="BlockingRuleFormatTypeTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu18">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu19"></af:menu>
+                            <af:commandMenuItem id="BlockingRuleFormatTypeduprm"
+                                                textAndAccessKey="#{nls['DUPLICATE_ROW']}"
+                                                immediate="true"
+                                                icon="/jheadstart/images/duplicateRow.png"
+                                                partialSubmit="true"
+                                                actionListener="#{pageFlowScope.BlockingRuleFormatTypeTable.duplicateRow}"
+                                                rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}"></af:commandMenuItem>
+                            <af:commandMenuItem id="BlockingRuleFormatTypedelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}">
+                              <af:showPopupBehavior popupId=":::BlockingRuleFormatTypeDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="BlockingRuleFormatTypeActionColumn"
+                                 width="40" align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl8">
+                          <af:commandImageLink id="BlockingRuleFormatTypedelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::BlockingRuleFormatTypeDeletePopup"/>
+                          </af:commandImageLink>
+                          <af:commandImageLink id="BlockingRuleFormatTypeduprl"
+                                               immediate="true"
+                                               partialSubmit="true"
+                                               actionListener="#{pageFlowScope.BlockingRuleFormatTypeTable.duplicateRow}"
+                                               rendered="#{jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'}"
+                                               shortDesc="#{nls['DUPLICATE_ROW']}"
+                                               icon="/jheadstart/images/duplicateRow.png"/>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="BlockingRuleFormatTypeBlockingRuleValueCol"
+                                 sortable="true" noWrap="true" width="240"
+                                 sortProperty="BlockingRuleValue"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="Delivery Format"
+                                          showRequired="#{bindings.BlockingRuleFormatTypeTable.hints.BlockingRuleValue.mandatory}"
+                                          id="ol30"/>
+                        </f:facet>
+                        <af:selectOneChoice id="BlockingRuleFormatTypeBlockingRuleValue"
+                                            value="#{row.bindings.BlockingRuleValue.inputValue}"
+                                            label="Delivery Format"
+                                            required="#{bindings.BlockingRuleFormatTypeTable.hints.BlockingRuleValue.mandatory}"
+                                            readOnly="#{((pageFlowScope.BlockingRuleFormatTypeTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process'))) or ((!pageFlowScope.BlockingRuleFormatTypeTable.newRow) and (!(jhsUserRoles['ADMIN, BR'] &amp;&amp; bindings.BlockingRuleBlockingRuleStatus.inputValue =='In Process')))}"
+                                            shortDesc="#{bindings.BlockingRuleFormatTypeTable.hints.BlockingRuleValue.tooltip}"
+                                            unselectedLabel="">
+                          <af:forEach var="row2"
+                                      items="#{bindings.BlockingRuleFormatLookup.rangeSet}">
+                            <af:selectItem id="si5" label="#{row2.DisplayValue}"
+                                           value="#{row2.InternalValue}"/>
+                          </af:forEach>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="BlockingRuleFormatTypeBlockedFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="BlockedFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleFormatTypeTable.hints.BlockedFlag.label}"
+                                          id="ol31"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="BlockingRuleFormatTypeBlockedFlag"
+                                                  label="#{bindings.BlockingRuleFormatTypeTable.hints.BlockedFlag.label}"
+                                                  value="#{BlockingRuleFormatTypeBlockedFlagcheckboxInTable.value}"
+                                                  readOnly="true"
+                                                  shortDesc="#{bindings.BlockingRuleFormatTypeTable.hints.BlockedFlag.tooltip}"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="BlockingRuleFormatTypeCreatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleFormatTypeTable.hints.CreatedBy.label}"
+                                          id="ol32"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleFormatTypeCreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.BlockingRuleFormatTypeTable.hints.CreatedBy.label}"
+                                      required="#{bindings.BlockingRuleFormatTypeTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.BlockingRuleFormatTypeTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.BlockingRuleFormatTypeTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleFormatTypeTable.hints.CreatedBy.tooltip}">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleFormatTypeCreatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleFormatTypeTable.hints.CreatedDate.label}"
+                                          id="ol33"/>
+                        </f:facet>
+                        <af:inputDate id="BlockingRuleFormatTypeCreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.BlockingRuleFormatTypeTable.hints.CreatedDate.label}"
+                                      required="#{bindings.BlockingRuleFormatTypeTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleFormatTypeTable.hints.CreatedDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="BlockingRuleFormatTypeLastUpdatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleFormatTypeTable.hints.LastUpdatedBy.label}"
+                                          id="ol34"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleFormatTypeLastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.BlockingRuleFormatTypeTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.BlockingRuleFormatTypeTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.BlockingRuleFormatTypeTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.BlockingRuleFormatTypeTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleFormatTypeTable.hints.LastUpdatedBy.tooltip}">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleFormatTypeLastUpdatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleFormatTypeTable.hints.LastUpdatedDate.label}"
+                                          id="ol35"/>
+                        </f:facet>
+                        <af:inputDate id="BlockingRuleFormatTypeLastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.BlockingRuleFormatTypeTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.BlockingRuleFormatTypeTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleFormatTypeTable.hints.LastUpdatedDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_BLOCKINGRULEOVR']}"
+                               partialTriggers=" BlockingRulePC:BlockingRuleTab BlockingRuleTopLc BlockingRuleOvrDeleteDialog BlockingRuleOvrPC:BlockingRuleOvrArm BlockingRuleOvrPC:BlockingRuleOvrdelrmTM BlockingRuleOvrPC:BlockingRuleOvrArl BlockingRuleOvrPC:BlockingRuleOvrTab:BlockingRuleOvrdelrm BlockingRuleOvrPC:BlockingRuleOvrTab:BlockingRuleOvrdelrl"
+                               id="BlockingRuleOvrTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN, BR, BRUSER']}"
+                               disabled="#{!jhsUserRoles['ADMIN, BR, BRUSER']}">
+              <af:panelGroupLayout layout="vertical" id="BlockingRuleOvrTopLc"
+                                   partialTriggers=" BlockingRulePC:BlockingRuleTab BlockingRuleTopLc BlockingRuleOvrDeleteDialog BlockingRuleOvrPC:BlockingRuleOvrArm BlockingRuleOvrPC:BlockingRuleOvrdelrmTM BlockingRuleOvrPC:BlockingRuleOvrArl BlockingRuleOvrPC:BlockingRuleOvrTab:BlockingRuleOvrdelrm BlockingRuleOvrPC:BlockingRuleOvrTab:BlockingRuleOvrdelrl"
+                                   rendered="#{jhsUserRoles['ADMIN, BR, BRUSER']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp5"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g4"></af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl9">
+                  <af:panelCollection id="BlockingRuleOvrPC" featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu20">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu21">
+                          <af:group id="BlockingRuleOvrtbb"
+                                    rendered="#{ bindings.BlockingRuleOvrIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstBlockingRuleOvr.execute}"
+                                                id="BlockingRuleOvrFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousBlockingRuleOvr.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="BlockingRuleOvrPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextBlockingRuleOvr.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="BlockingRuleOvrNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastBlockingRuleOvr.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="BlockingRuleOvrLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="BlockingRuleOvrArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.BlockingRuleOvrTable.addRow}"
+                                            rendered="#{ (bindings.BlockingRuleIterator.viewObject!=null and bindings.BlockingRuleIterator.viewObject.currentRow!=null) and (jhsUserRoles['ADMIN, BR, BRUSER'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="BlockingRuleOvrdelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true" rendered="false">
+                          <af:showPopupBehavior popupId="::BlockingRuleOvrDeletePopup"/>
+                        </af:commandMenuItem>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi5">
+                          <af:exportCollectionActionListener exportedId="BlockingRuleOvrTab"
+                                                             type="excelHTML"
+                                                             filename="BlockingRuleOvr.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar7">
+                        <!-- Also create CreateBlockingRuleOvr bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="BlockingRuleOvrArl"
+                                             immediate="false"
+                                             rendered="#{ (bindings.BlockingRuleIterator.viewObject!=null and bindings.BlockingRuleIterator.viewObject.currentRow!=null) and (jhsUserRoles['ADMIN, BR, BRUSER'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.BlockingRuleOvrTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl5"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="BlockingRuleOvrTab"
+                                                             type="excelHTML"
+                                                             filename="BlockingRuleOvr.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print"
+                                                 id="BlockingRuleOvrPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.BlockingRuleOvrIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="BlockingRuleOvrTab"
+                              contentDelivery="immediate"
+                              value="#{bindings.BlockingRuleOvrTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.BlockingRuleOvrTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.BlockingRuleOvrTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.BlockingRuleOvrTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.BlockingRuleOvrTable.rangeSize}"
+                              autoHeightRows="#{bindings.BlockingRuleOvrTable.estimatedRowCount lt 5 ? 5 : bindings.BlockingRuleOvrTable.estimatedRowCount lt bindings.BlockingRuleOvrTable.rangeSize ? bindings.BlockingRuleOvrTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.BlockingRuleOvrTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              binding="#{pageFlowScope.BlockingRuleOvrTable.table}"
+                              partialTriggers=" :::BlockingRuleOvrPC ::BlockingRuleOvrFirst ::BlockingRuleOvrPrevious ::BlockingRuleOvrNext ::BlockingRuleOvrLast"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_BLOCKINGRULEOVR']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="BlockingRuleOvrTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu22">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu23"></af:menu>
+                            <af:commandMenuItem id="BlockingRuleOvrdelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="false">
+                              <af:showPopupBehavior popupId=":::BlockingRuleOvrDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="BlockingRuleOvrActionColumn" frozen="true"
+                                 width="20" align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl10">
+                          <af:commandImageLink id="BlockingRuleOvrdelrl"
+                                               partialSubmit="true"
+                                               immediate="true" rendered="false"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::BlockingRuleOvrDeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrOvrIdCol" sortable="true"
+                                 noWrap="true" width="140" sortProperty="OvrId"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.OvrId.label}"
+                                          showRequired="#{bindings.BlockingRuleOvrTable.hints.OvrId.mandatory}"
+                                          id="ol36"/>
+                        </f:facet>
+                        <af:panelGroupLayout id="BlockingRuleOvrOvrIdPgl"
+                                             layout="horizontal">
+                          <af:inputText id="BlockingRuleOvrOvrId"
+                                        label="#{bindings.BlockingRuleOvrTable.hints.OvrId.label}"
+                                        readOnly="#{(((pageFlowScope.BlockingRuleOvrTable.newRow) and (!(jhsUserRoles['ADMIN, BR, BRUSER']))) or ((!pageFlowScope.BlockingRuleOvrTable.newRow) and (!(jhsUserRoles['ADMIN, BR, BRUSER'])))) or (!(pageFlowScope.BlockingRuleOvrTable.newRow))}"
+                                        columns="#{bindings.BlockingRuleOvrTable.hints.OvrId.displayWidth}"
+                                        maximumLength="38"
+                                        shortDesc="#{bindings.BlockingRuleOvrTable.hints.OvrId.tooltip}"
+                                        value="#{row.bindings.OvrId.inputValue}"
+                                        autoSubmit="true"
+                                        valueChangeListener="#{pageFlowScope.BlockingRuleOvrOvrIdLovItemInTable.validateWithLov}"
+                                        binding="#{pageFlowScope.BlockingRuleOvrOvrIdLovItemInTable.lovField}"
+                                        simple="true">
+                            <f:validator binding="#{row.bindings.OvrId.validator}"/>
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.BlockingRuleOvrTable.hints.OvrId.format}"/>
+                          </af:inputText>
+                          <af:commandLink immediate="true" partialSubmit="true"
+                                          rendered="#{!((((pageFlowScope.BlockingRuleOvrTable.newRow) and (!(jhsUserRoles['ADMIN, BR, BRUSER']))) or ((!pageFlowScope.BlockingRuleOvrTable.newRow) and (!(jhsUserRoles['ADMIN, BR, BRUSER'])))) or (!(pageFlowScope.BlockingRuleOvrTable.newRow)))}"
+                                          id="cl6"
+                                          actionListener="#{pageFlowScope.BlockingRuleOvrOvrIdLovItemInTable.lovIconClicked}">
+                            <af:image source="/jheadstart/images/lov.png"
+                                      id="BlockingRuleOvrOvrIdIcon"
+                                      clientComponent="true" shortDesc="OvrId"/>
+                          </af:commandLink>
+                          <af:commandButton text="hidden" id="cb2"
+                                            rendered="false"
+                                            action="#{pageFlowScope.BlockingRuleOvrOvrIdLovItemInTable.validationAction}"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            binding="#{pageFlowScope.BlockingRuleOvrOvrIdLovItemInTable.validationButton}"/>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrPmidCol" sortable="true"
+                                 noWrap="true" width="120" sortProperty="Pmid"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.Pmid.label}"
+                                          id="ol37"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleOvrPmid"
+                                      value="#{row.bindings.Pmid.inputValue}"
+                                      label="#{bindings.BlockingRuleOvrTable.hints.Pmid.label}"
+                                      required="#{bindings.BlockingRuleOvrTable.hints.Pmid.mandatory}"
+                                      rows="#{bindings.BlockingRuleOvrTable.hints.Pmid.displayHeight}"
+                                      columns="#{bindings.BlockingRuleOvrTable.hints.Pmid.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleOvrTable.hints.Pmid.tooltip}">
+                          <f:validator binding="#{row.bindings.Pmid.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrCblIdCol" sortable="true"
+                                 noWrap="true" width="120" sortProperty="CblId"
+                                 align="right" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.CblId.label}"
+                                          id="ol38"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleOvrCblId"
+                                      value="#{row.bindings.CblId.inputValue}"
+                                      label="#{bindings.BlockingRuleOvrTable.hints.CblId.label}"
+                                      required="#{bindings.BlockingRuleOvrTable.hints.CblId.mandatory}"
+                                      rows="#{bindings.BlockingRuleOvrTable.hints.CblId.displayHeight}"
+                                      columns="#{bindings.BlockingRuleOvrTable.hints.CblId.displayWidth}"
+                                      maximumLength="38" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleOvrTable.hints.CblId.tooltip}">
+                          <f:validator binding="#{row.bindings.CblId.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.BlockingRuleOvrTable.hints.CblId.format}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrContentSourceCol"
+                                 sortable="true" noWrap="true" width="180"
+                                 sortProperty="ContentSource" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.ContentSource.label}"
+                                          id="ol39"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleOvrContentSource"
+                                      value="#{row.bindings.ContentSource.inputValue}"
+                                      label="#{bindings.BlockingRuleOvrTable.hints.ContentSource.label}"
+                                      required="#{bindings.BlockingRuleOvrTable.hints.ContentSource.mandatory}"
+                                      rows="#{bindings.BlockingRuleOvrTable.hints.ContentSource.displayHeight}"
+                                      columns="#{bindings.BlockingRuleOvrTable.hints.ContentSource.displayWidth}"
+                                      maximumLength="20" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleOvrTable.hints.ContentSource.tooltip}">
+                          <f:validator binding="#{row.bindings.ContentSource.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrPmTitleCol" sortable="true"
+                                 noWrap="true" width="500"
+                                 sortProperty="PmTitle" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.PmTitle.label}"
+                                          id="ol40"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleOvrPmTitle"
+                                      value="#{row.bindings.PmTitle.inputValue}"
+                                      label="#{bindings.BlockingRuleOvrTable.hints.PmTitle.label}"
+                                      required="#{bindings.BlockingRuleOvrTable.hints.PmTitle.mandatory}"
+                                      rows="#{bindings.BlockingRuleOvrTable.hints.PmTitle.displayHeight}"
+                                      columns="#{bindings.BlockingRuleOvrTable.hints.PmTitle.displayWidth}"
+                                      maximumLength="1000" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleOvrTable.hints.PmTitle.tooltip}">
+                          <f:validator binding="#{row.bindings.PmTitle.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrCreatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.CreatedBy.label}"
+                                          id="ol41"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleOvrCreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.BlockingRuleOvrTable.hints.CreatedBy.label}"
+                                      required="#{bindings.BlockingRuleOvrTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.BlockingRuleOvrTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.BlockingRuleOvrTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleOvrTable.hints.CreatedBy.tooltip}">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrCreatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.CreatedDate.label}"
+                                          id="ol42"/>
+                        </f:facet>
+                        <af:inputDate id="BlockingRuleOvrCreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.BlockingRuleOvrTable.hints.CreatedDate.label}"
+                                      required="#{bindings.BlockingRuleOvrTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleOvrTable.hints.CreatedDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrLastUpdatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.LastUpdatedDate.label}"
+                                          id="ol43"/>
+                        </f:facet>
+                        <af:inputDate id="BlockingRuleOvrLastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.BlockingRuleOvrTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.BlockingRuleOvrTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleOvrTable.hints.LastUpdatedDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrLastUpdatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.LastUpdatedBy.label}"
+                                          id="ol44"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleOvrLastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.BlockingRuleOvrTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.BlockingRuleOvrTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.BlockingRuleOvrTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.BlockingRuleOvrTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleOvrTable.hints.LastUpdatedBy.tooltip}">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrSubTitleCol" sortable="true"
+                                 noWrap="true" width="500"
+                                 sortProperty="SubTitle" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.SubTitle.label}"
+                                          id="ol45"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleOvrSubTitle"
+                                      value="#{row.bindings.SubTitle.inputValue}"
+                                      label="#{bindings.BlockingRuleOvrTable.hints.SubTitle.label}"
+                                      required="#{bindings.BlockingRuleOvrTable.hints.SubTitle.mandatory}"
+                                      rows="#{bindings.BlockingRuleOvrTable.hints.SubTitle.displayHeight}"
+                                      columns="#{bindings.BlockingRuleOvrTable.hints.SubTitle.displayWidth}"
+                                      maximumLength="1000" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleOvrTable.hints.SubTitle.tooltip}">
+                          <f:validator binding="#{row.bindings.SubTitle.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrSortTitleCol"
+                                 sortable="true" noWrap="true" width="500"
+                                 sortProperty="SortTitle" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.SortTitle.label}"
+                                          id="ol46"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleOvrSortTitle"
+                                      value="#{row.bindings.SortTitle.inputValue}"
+                                      label="#{bindings.BlockingRuleOvrTable.hints.SortTitle.label}"
+                                      required="#{bindings.BlockingRuleOvrTable.hints.SortTitle.mandatory}"
+                                      rows="#{bindings.BlockingRuleOvrTable.hints.SortTitle.displayHeight}"
+                                      columns="#{bindings.BlockingRuleOvrTable.hints.SortTitle.displayWidth}"
+                                      maximumLength="1000" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleOvrTable.hints.SortTitle.tooltip}">
+                          <f:validator binding="#{row.bindings.SortTitle.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrEditionCol" sortable="true"
+                                 noWrap="true" width="500"
+                                 sortProperty="Edition" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.Edition.label}"
+                                          id="ol47"/>
+                        </f:facet>
+                        <af:inputText id="BlockingRuleOvrEdition"
+                                      value="#{row.bindings.Edition.inputValue}"
+                                      label="#{bindings.BlockingRuleOvrTable.hints.Edition.label}"
+                                      required="#{bindings.BlockingRuleOvrTable.hints.Edition.mandatory}"
+                                      rows="#{bindings.BlockingRuleOvrTable.hints.Edition.displayHeight}"
+                                      columns="#{bindings.BlockingRuleOvrTable.hints.Edition.displayWidth}"
+                                      maximumLength="400" readOnly="true"
+                                      shortDesc="#{bindings.BlockingRuleOvrTable.hints.Edition.tooltip}">
+                          <f:validator binding="#{row.bindings.Edition.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="BlockingRuleOvrActiveFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="ActiveFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.BlockingRuleOvrTable.hints.ActiveFlag.label}"
+                                          showRequired="#{bindings.BlockingRuleOvrTable.hints.ActiveFlag.mandatory}"
+                                          id="ol48"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="BlockingRuleOvrActiveFlag"
+                                                  label="#{bindings.BlockingRuleOvrTable.hints.ActiveFlag.label}"
+                                                  value="#{BlockingRuleOvrActiveFlagcheckboxInTable.value}"
+                                                  readOnly="#{((pageFlowScope.BlockingRuleOvrTable.newRow) and (!(jhsUserRoles['ADMIN, BR, BRUSER']))) or ((!pageFlowScope.BlockingRuleOvrTable.newRow) and (!(jhsUserRoles['ADMIN, BR, BRUSER'])))}"
+                                                  shortDesc="#{bindings.BlockingRuleOvrTable.hints.ActiveFlag.tooltip}"></af:selectBooleanCheckbox>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="BlockingRuleMarketDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="BlockingRuleMarketDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_BLOCKINGRULEMARKE:#{pageFlowScope.BlockingRuleMarketTable.currentRowAttributeValues.BlockingRuleValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteBlockingRuleMarket.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="SubMarketDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="SubMarketDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_SUBMARKE:#{pageFlowScope.SubMarketTable.currentRowAttributeValues.BlockingRuleValue}']} "
+                           id="ot3"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteSubMarket.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="BlockingRuleCountryDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="BlockingRuleCountryDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_BLOCKINGRULECOUNTR:#{pageFlowScope.BlockingRuleCountryTable.currentRowAttributeValues.BlockingRuleValue}']} "
+                           id="ot6"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteBlockingRuleCountry.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="BlockingRuleFormatTypeDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="BlockingRuleFormatTypeDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_BLOCKINGRULEFORMATTYP:#{pageFlowScope.BlockingRuleFormatTypeTable.currentRowAttributeValues.BlockingRuleValue}']} "
+                           id="ot9"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteBlockingRuleFormatType.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="BlockingRuleOvrDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="BlockingRuleOvrDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_BLOCKINGRULEOV:#{pageFlowScope.BlockingRuleOvrTable.currentRowAttributeValues.OvrId}']} "
+                           id="ot12"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteBlockingRuleOvr.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="jhsLovPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher"
+                  binding="#{pageFlowScope.jhsLovPopup.component}">
+          <af:dialog modal="true" title="#{pageFlowScope.LovItemBean.lovTitle}"
+                     type="none" id="dialog0" resize="on"
+                     stretchChildren="first"
+                     contentWidth="#{pageFlowScope.LovItemBean.lovWidth}"
+                     contentHeight="#{pageFlowScope.LovItemBean.lovHeight}">
+            <af:region value="#{bindings.LovTaskFlow.regionModel}"
+                       id="region0"/>
+            <f:facet name="buttonBar">
+              <af:group id="g5">
+                <af:commandButton textAndAccessKey="#{nls['OK_BUTTON_LABEL']}"
+                                  id="cb0" partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.handleLovSelection}"/>
+                <af:commandButton textAndAccessKey="#{nls['CANCEL']}" id="cb1"
+                                  partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.cancelLov}"/>
+              </af:group>
+            </f:facet>
+          </af:dialog>
+          <af:clientListener method="popupClosedListener" type="popupClosed"/>
+          <af:serverListener type="serverPopupClosed"
+                             method="#{pageFlowScope.LovItemBean.cancelLov}"/>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

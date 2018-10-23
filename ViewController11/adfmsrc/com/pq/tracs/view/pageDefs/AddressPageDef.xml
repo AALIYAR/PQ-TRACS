@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="AddressPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare"
+               value="#{'ContentOwnerPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="AddressIterator" Binds="AddressView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="AddressIteratorAddressViewCriteriaQuery"
+                  Binds="AddressIterator" Criteria="AddressViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AddressLine1"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryAddressInvoke" Binds="ExecuteQueryAddress"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+  </executables>
+  <bindings>
+    <action id="ExecuteQueryAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="s00SiteOrDepartment" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="SiteOrDepartment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00AddressLine1" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="AddressLine1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00AddressLine2" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="AddressLine2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00City" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="City"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00StateOrProvince" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="StateOrProvince"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00ZipOrPostalCode" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="ZipOrPostalCode"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AddressIterator" id="s00Country" Uses="LOV_Country"
+          StaticList="false"/>
+    <attributeValues id="s00County" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="County"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00SitePhoneNumber" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="SitePhoneNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00EffectiveStartDate" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="EffectiveStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s00PrimaryFlag" IterBinding="AddressIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="s00BillToFlag" IterBinding="AddressIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="BillToFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="s00ShipToFlag" IterBinding="AddressIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ShipToFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s00AddressComments" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="AddressComments"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s00ActiveFlag" IterBinding="AddressIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s00CreatedBy" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00CreatedDate" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00LastUpdatedBy" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00LastUpdatedDate" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="AddressTable" IterBinding="AddressIterator">
+      <nodeDefinition Name="Address"
+                      DefName="com.pq.tracs.model.dao.AddressView">
+        <AttrNames>
+          <Item Value="SiteOrDepartment"/>
+          <Item Value="AddressLine1"/>
+          <Item Value="AddressLine2"/>
+          <Item Value="City"/>
+          <Item Value="StateOrProvince"/>
+          <Item Value="ZipOrPostalCode"/>
+          <Item Value="Country"/>
+          <Item Value="County"/>
+          <Item Value="SitePhoneNumber"/>
+          <Item Value="EffectiveStartDate"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="BillToFlag"/>
+          <Item Value="ShipToFlag"/>
+          <Item Value="AddressComments"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{pageFlowScope.rowKeyStrAddress}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

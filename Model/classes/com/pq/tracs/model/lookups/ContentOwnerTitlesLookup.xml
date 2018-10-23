@@ -1,0 +1,364 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="ContentOwnerTitlesLookup"
+   Version="11.1.1.61.92"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   ComponentClass="com.pq.tracs.model.lookups.ContentOwnerTitlesLookupImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   MaxFetchSize="500"
+   FetchSize="50"
+   OrderBy="CATALOG_NUMBER">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Prog|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <Variable
+      Name="contract_id"
+      Kind="where"
+      Type="oracle.jbo.domain.Number">
+      <Properties>
+         <SchemaBasedProperties>
+            <DISPLAYHINT
+               Value="Hide"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </Variable>
+   <SQLQuery><![CDATA[SELECT Title.ID, 
+       Title.CONTENT_OWNER_ID, 
+       Title.LONG_TITLE, 
+       Title.CATALOG_NUMBER, 
+       Title.SHORT_TITLE,
+       Title.CATALOG_ROOT,
+       Title.PUBLICATION_START_YEAR,
+       Title.PUBLICATION_END_YEAR,
+       Title.FILM_AVAILABILITY,
+       TraxContentOwner.NAME Content_Owner,
+       Title.TARGET_TRACKING_NO
+FROM TRAX_TITLE Title
+    LEFT OUTER JOIN TRAX_CONTENT_OWNER TraxContentOwner
+        ON Title.CONTENT_OWNER_ID = TraxContentOwner.ID
+WHERE Title.ACTIVE_FLAG = 'Y'
+AND   Title.CATALOG_NUMBER IS NOT NULL
+AND NOT EXISTS (select 1 from trax_contract_title tct where tct.title_id = Title.ID and tct.contract_id = :contract_id)]]></SQLQuery>
+   <ViewAttribute
+      Name="Id"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="ID"
+      Expression="ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContentOwnerId"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="CONTENT_OWNER_ID"
+      Expression="CONTENT_OWNER_ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.lookups.ContentOwnerTitlesLookup.ContentOwnerId_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongTitle"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="LONG_TITLE"
+      Expression="LONG_TITLE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.lookups.ContentOwnerTitlesLookup.LongTitle_LABEL"/>
+            <DISPLAYWIDTH
+               Value="40"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CatalogNumber"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CATALOG_NUMBER"
+      Expression="CATALOG_NUMBER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.lookups.ContentOwnerTitlesLookup.CatalogNumber_LABEL"/>
+            <DISPLAYWIDTH
+               Value="15"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ShortTitle"
+      IsPersistent="false"
+      Precision="30"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SHORT_TITLE"
+      Expression="SHORT_TITLE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.lookups.ContentOwnerTitlesLookup.ShortTitle_LABEL"/>
+            <DISPLAYWIDTH
+               Value="30"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CatalogRoot"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CATALOG_ROOT"
+      Expression="CATALOG_ROOT"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PublicationStartYear"
+      IsPersistent="false"
+      Precision="4"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PUBLICATION_START_YEAR"
+      Expression="PUBLICATION_START_YEAR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.lookups.ContentOwnerTitlesLookup.PublicationStartYear_LABEL"/>
+            <DISPLAYWIDTH
+               Value="5"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PublicationEndYear"
+      IsPersistent="false"
+      Precision="4"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PUBLICATION_END_YEAR"
+      Expression="PUBLICATION_END_YEAR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.lookups.ContentOwnerTitlesLookup.PublicationEndYear_LABEL"/>
+            <DISPLAYWIDTH
+               Value="5"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="FilmAvailability"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="FILM_AVAILABILITY"
+      Expression="FILM_AVAILABILITY"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.lookups.ContentOwnerTitlesLookup.FilmAvailability_LABEL"/>
+            <DISPLAYWIDTH
+               Value="30"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContentOwner"
+      IsPersistent="false"
+      Precision="400"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CONTENT_OWNER"
+      Expression="CONTENT_OWNER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="400" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.lookups.ContentOwnerTitlesLookup.ContentOwner_LABEL"/>
+            <DISPLAYWIDTH
+               Value="40"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TargetTrackingNo"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="TARGET_TRACKING_NO"
+      Expression="TARGET_TRACKING_NO"
+      SQLType="NUMERIC">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.lookups.ContentOwnerTitlesLookup.TargetTrackingNo_LABEL"/>
+            <DISPLAYWIDTH
+               Value="10"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="ContentOwnerTitlesLookupCriteria"
+      ViewObjectName="com.pq.tracs.model.lookups.ContentOwnerTitlesLookup"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow244"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="LongTitle"
+            ViewAttribute="LongTitle"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContentOwnerTitlesLookupCriteria_vcrow244_CatalogNumber"
+            ViewAttribute="CatalogNumber"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ShortTitle"
+            ViewAttribute="ShortTitle"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContentOwnerTitlesLookupCriteria_vcrow244_CatalogRoot"
+            ViewAttribute="CatalogRoot"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="PublicationStartYear"
+            ViewAttribute="PublicationStartYear"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="PublicationEndYear"
+            ViewAttribute="PublicationEndYear"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="FilmAvailability"
+            ViewAttribute="FilmAvailability"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContentOwnerTitlesLookupCriteria_vcrow244_ContentOwner"
+            ViewAttribute="ContentOwner"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TargetTrackingNo"
+            ViewAttribute="TargetTrackingNo"
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Id" />
+   </AttrArray>
+   <ViewLinkAccessor
+      Name="ContractTitleView"
+      ViewLink="com.pq.tracs.model.custom.dao.COTitlesToContractVL"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="ContentOwnerTitlesLookup1"
+      ViewLink="com.pq.tracs.model.lookups.COTitlesToContractTitlesLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

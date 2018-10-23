@@ -1,0 +1,973 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="ImportsTaskFlow">
+    <template-reference>
+      <document id="__0">/WEB-INF/jhs-fragment-taskflow-template.xml</document>
+      <id id="__1">jhs-fragment-taskflow-template</id>
+    </template-reference>
+    <default-activity id="__2">StartImports</default-activity>
+    <input-parameter-definition id="__3">
+      <name id="__4">createImports</name>
+      <value id="__5">#{pageFlowScope.createImports}</value>
+      <class id="__6">java.lang.Object</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__7">
+      <name id="__8">rowKeyStrImports</name>
+      <value id="__9">#{pageFlowScope.rowKeyStrImports}</value>
+      <class id="__10">java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__11">
+      <name id="__12">rowKeyValueImports</name>
+      <value id="__13">#{pageFlowScope.rowKeyValueImports}</value>
+      <class id="__14">java.lang.Object</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__15">
+      <name id="__16">rowKeyImports</name>
+      <value id="__17">#{pageFlowScope.rowKeyImports}</value>
+      <class id="__18">oracle.jbo.Key</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__19">
+      <name id="__20">altKeyNameImports</name>
+      <value id="__21">#{pageFlowScope.altKeyNameImports}</value>
+      <class id="__22">java.lang.String</class>
+    </input-parameter-definition>
+    <managed-bean id="__23">
+      <managed-bean-name id="__24">jhsTaskFlowManager</managed-bean-name>
+      <managed-bean-class id="__25">oracle.jheadstart.controller.jsf.bean.TaskFlowManager</managed-bean-class>
+      <managed-bean-scope id="__26">pageFlow</managed-bean-scope>
+      <managed-property id="__27">
+        <property-name id="__28">initializeParentContextEntries</property-name>
+        <map-entries id="__29">
+          <map-entry id="__30">
+            <key id="__31">jhsCurrentGroupName</key>
+            <value id="__32">Imports</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__33">
+      <managed-bean-name id="__34">ImportsDefaultValues</managed-bean-name>
+      <managed-bean-class id="__35">oracle.jheadstart.controller.jsf.bean.DefaultValuesBean</managed-bean-class>
+      <managed-bean-scope id="__36">pageFlow</managed-bean-scope>
+      <managed-property id="__37">
+        <property-name id="__38">iteratorBinding</property-name>
+        <value id="__39">#{data.ImportsPageDef.ImportsIterator}</value>
+      </managed-property>
+      <managed-property id="__40">
+        <property-name id="__41">defaultValues</property-name>
+        <map-entries id="__42">
+          <map-entry id="__43">
+            <key id="__44">ImportType</key>
+            <value id="__45">Target</value>
+          </map-entry>
+          <map-entry id="__46">
+            <key id="__47">ImportStatus</key>
+            <value id="__48">New</value>
+          </map-entry>
+          <map-entry id="__49">
+            <key id="__50">OverwriteAutogenFlag</key>
+            <value id="__51">N</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__52">
+        <property-name id="__53">actionResult</property-name>
+        <value id="__54">CreateImports</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__55">
+      <managed-bean-name id="__56">ParseResultsDefaultValues</managed-bean-name>
+      <managed-bean-class id="__57">oracle.jheadstart.controller.jsf.bean.DefaultValuesBean</managed-bean-class>
+      <managed-bean-scope id="__58">pageFlow</managed-bean-scope>
+      <managed-property id="__59">
+        <property-name id="__60">iteratorBinding</property-name>
+        <value id="__61">#{data.ImportsPageDef.ParseResultsIterator}</value>
+      </managed-property>
+      <managed-property id="__62">
+        <property-name id="__63">defaultValues</property-name>
+        <map-entries id="__64">
+          <map-entry id="__65">
+            <key id="__66">PeerReview</key>
+            <value id="__67">N</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__68">
+        <property-name id="__69">actionResult</property-name>
+        <value id="__70">CreateParseResults</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__71">
+      <managed-bean-name id="__72">PotentialMatchesDefaultValues</managed-bean-name>
+      <managed-bean-class id="__73">oracle.jheadstart.controller.jsf.bean.DefaultValuesBean</managed-bean-class>
+      <managed-bean-scope id="__74">pageFlow</managed-bean-scope>
+      <managed-property id="__75">
+        <property-name id="__76">iteratorBinding</property-name>
+        <value id="__77">#{data.ImportsPageDef.PotentialMatchesIterator}</value>
+      </managed-property>
+      <managed-property id="__78">
+        <property-name id="__79">defaultValues</property-name>
+        <map-entries id="__80">
+          <map-entry id="__81">
+            <key id="__82">UseUlrichsFlag</key>
+            <value id="__83">N</value>
+          </map-entry>
+          <map-entry id="__84">
+            <key id="__85">IgnoreMatchFlag</key>
+            <value id="__86">N</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__87">
+        <property-name id="__88">actionResult</property-name>
+        <value id="__89">CreatePotentialMatches</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__90">
+      <managed-bean-name id="__91">ImportResultsDefaultValues</managed-bean-name>
+      <managed-bean-class id="__92">oracle.jheadstart.controller.jsf.bean.DefaultValuesBean</managed-bean-class>
+      <managed-bean-scope id="__93">pageFlow</managed-bean-scope>
+      <managed-property id="__94">
+        <property-name id="__95">iteratorBinding</property-name>
+        <value id="__96">#{data.ImportsPageDef.ImportResultsIterator}</value>
+      </managed-property>
+      <managed-property id="__97">
+        <property-name id="__98">defaultValues</property-name>
+        <map-entries id="__99">
+          <map-entry id="__100">
+            <key id="__101">TargetFlag</key>
+            <value id="__102">'N'</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__103">
+        <property-name id="__104">actionResult</property-name>
+        <value id="__105">CreateImportResults</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__106">
+      <managed-bean-name id="__107">OvrParseResultsDefaultValues</managed-bean-name>
+      <managed-bean-class id="__108">oracle.jheadstart.controller.jsf.bean.DefaultValuesBean</managed-bean-class>
+      <managed-bean-scope id="__109">pageFlow</managed-bean-scope>
+      <managed-property id="__110">
+        <property-name id="__111">iteratorBinding</property-name>
+        <value id="__112">#{data.ImportsPageDef.OvrParseResultsIterator}</value>
+      </managed-property>
+      <managed-property id="__113">
+        <property-name id="__114">defaultValues</property-name>
+        <map-entries id="__115">
+          <map-entry id="__116">
+            <key id="__117">AutoGenFlag</key>
+            <value id="__118">N</value>
+          </map-entry>
+          <map-entry id="__119">
+            <key id="__120">OverwriteAutogenFlag</key>
+            <value id="__121">N</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__122">
+        <property-name id="__123">actionResult</property-name>
+        <value id="__124">CreateOvrParseResults</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__125">
+      <managed-bean-name id="__126">OvrMatchesDefaultValues</managed-bean-name>
+      <managed-bean-class id="__127">oracle.jheadstart.controller.jsf.bean.DefaultValuesBean</managed-bean-class>
+      <managed-bean-scope id="__128">pageFlow</managed-bean-scope>
+      <managed-property id="__129">
+        <property-name id="__130">iteratorBinding</property-name>
+        <value id="__131">#{data.ImportsPageDef.OvrMatchesIterator}</value>
+      </managed-property>
+      <managed-property id="__132">
+        <property-name id="__133">defaultValues</property-name>
+        <map-entries id="__134">
+          <map-entry id="__135">
+            <key id="__136">IgnoreRecordFlag</key>
+            <value id="__137">N</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__138">
+        <property-name id="__139">actionResult</property-name>
+        <value id="__140">CreateOvrMatches</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__141">
+      <managed-bean-name id="__142">OvrImportResultsDefaultValues</managed-bean-name>
+      <managed-bean-class id="__143">oracle.jheadstart.controller.jsf.bean.DefaultValuesBean</managed-bean-class>
+      <managed-bean-scope id="__144">pageFlow</managed-bean-scope>
+      <managed-property id="__145">
+        <property-name id="__146">iteratorBinding</property-name>
+        <value id="__147">#{data.ImportsPageDef.OvrImportResultsIterator}</value>
+      </managed-property>
+      <managed-property id="__148">
+        <property-name id="__149">defaultValues</property-name>
+        <map-entries id="__150">
+          <map-entry id="__151">
+            <key id="__152">OkForExportFlag</key>
+            <value id="__153">N</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__154">
+        <property-name id="__155">actionResult</property-name>
+        <value id="__156">CreateOvrImportResults</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__157">
+      <managed-bean-name id="__158">CreateImports</managed-bean-name>
+      <managed-bean-class id="__159">oracle.jheadstart.controller.jsf.bean.CreateRowBean</managed-bean-class>
+      <managed-bean-scope id="__160">request</managed-bean-scope>
+      <managed-property id="__161">
+        <property-name id="__162">createBinding</property-name>
+        <value id="__163">#{bindings.CreateImports}</value>
+      </managed-property>
+      <managed-property id="__164">
+        <property-name id="__165">defaultValuesBean</property-name>
+        <value id="__166">#{pageFlowScope.ImportsDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__167">
+        <property-name id="__168">successOutcome</property-name>
+        <value id="__169">deepLinkPage</value>
+      </managed-property>
+      <managed-property id="__170">
+        <property-name id="__171">failureOutcome</property-name>
+        <value id="__172">firstPage</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__173">
+      <managed-bean-name id="__174">jhsRollback</managed-bean-name>
+      <managed-bean-class id="__175">oracle.jheadstart.controller.jsf.bean.RollbackBean</managed-bean-class>
+      <managed-bean-scope id="__176">request</managed-bean-scope>
+      <managed-property id="__177">
+        <property-name id="__178">rollbackBinding</property-name>
+        <value id="__179">#{bindings.Rollback}</value>
+      </managed-property>
+      <managed-property id="__180">
+        <property-name id="__181">successOutcome</property-name>
+        <value id="__182">Cancel</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__183">
+      <managed-bean-name id="__184">searchImports</managed-bean-name>
+      <managed-bean-class id="__185">com.pq.tracs.view.beans.TracsSearchBean</managed-bean-class>
+      <managed-bean-scope id="__186">pageFlow</managed-bean-scope>
+      <managed-property id="__187">
+        <property-name id="__188">bindings</property-name>
+        <value id="__189">#{'#{bindings}'}</value>
+      </managed-property>
+      <managed-property id="__190">
+        <property-name id="__191">searchBinding</property-name>
+        <value id="__192">#{'#{bindings.advancedSearchImports}'}</value>
+      </managed-property>
+      <managed-property id="__193">
+        <property-name id="__194">searchItem</property-name>
+        <value id="__195">ImportsFileName</value>
+      </managed-property>
+      <managed-property id="__196">
+        <property-name id="__197">dataCollection</property-name>
+        <value id="__198">TraxImportFileView1</value>
+      </managed-property>
+      <managed-property id="__199">
+        <property-name id="__200">operators</property-name>
+        <map-entries id="__201"></map-entries>
+      </managed-property>
+      <managed-property id="__202">
+        <property-name id="__203">itemAttributes</property-name>
+        <map-entries id="__204">
+          <map-entry id="__205">
+            <key id="__206">ImportsImportNumber</key>
+            <value id="__207">ImportNumber</value>
+          </map-entry>
+          <map-entry id="__208">
+            <key id="__209">ImportsFileName</key>
+            <value id="__210">FileName</value>
+          </map-entry>
+          <map-entry id="__211">
+            <key id="__212">ImportsImportType</key>
+            <value id="__213">ImportType</value>
+          </map-entry>
+          <map-entry id="__214">
+            <key id="__215">ImportsImportStatus</key>
+            <value id="__216">ImportStatus</value>
+          </map-entry>
+          <map-entry id="__217">
+            <key id="__218">ImportsParsedRowCount</key>
+            <value id="__219">ParsedRowCount</value>
+          </map-entry>
+          <map-entry id="__220">
+            <key id="__221">ImportsPotentialMatchCount</key>
+            <value id="__222">PotentialMatchCount</value>
+          </map-entry>
+          <map-entry id="__223">
+            <key id="__224">ImportsValidatedRowCount</key>
+            <value id="__225">ValidatedRowCount</value>
+          </map-entry>
+          <map-entry id="__226">
+            <key id="__227">ImportsValidationWarningCount</key>
+            <value id="__228">ValidationWarningCount</value>
+          </map-entry>
+          <map-entry id="__229">
+            <key id="__230">ImportsValidationErrorCount</key>
+            <value id="__231">ValidationErrorCount</value>
+          </map-entry>
+          <map-entry id="__232">
+            <key id="__233">ImportsOverwriteAutogenFlag</key>
+            <value id="__234">OverwriteAutogenFlag</value>
+          </map-entry>
+          <map-entry id="__235">
+            <key id="__236">ImportsImportedRowCount</key>
+            <value id="__237">ImportedRowCount</value>
+          </map-entry>
+          <map-entry id="__238">
+            <key id="__239">ImportsGroupName</key>
+            <value id="__240">GroupName</value>
+          </map-entry>
+          <map-entry id="__241">
+            <key id="__242">ImportsGroupType</key>
+            <value id="__243">GroupType</value>
+          </map-entry>
+          <map-entry id="__244">
+            <key id="__245">ImportsImportNote</key>
+            <value id="__246">ImportNote</value>
+          </map-entry>
+          <map-entry id="__247">
+            <key id="__248">ImportsCreatedBy</key>
+            <value id="__249">CreatedBy</value>
+          </map-entry>
+          <map-entry id="__250">
+            <key id="__251">ImportsCreatedDate</key>
+            <value id="__252">CreatedDate</value>
+          </map-entry>
+          <map-entry id="__253">
+            <key id="__254">ImportsLastUpdatedBy</key>
+            <value id="__255">LastUpdatedBy</value>
+          </map-entry>
+          <map-entry id="__256">
+            <key id="__257">ImportsLastUpdatedDate</key>
+            <value id="__258">LastUpdatedDate</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__259">
+      <managed-bean-name id="__260">ImportsTable</managed-bean-name>
+      <managed-bean-class id="__261">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__262">pageFlow</managed-bean-scope>
+      <managed-property id="__263">
+        <property-name id="__264">name</property-name>
+        <value id="__265">ImportsTable</value>
+      </managed-property>
+      <managed-property id="__266">
+        <property-name id="__267">rangeBindingExpr</property-name>
+        <value id="__268">#{'#{bindings.ImportsTable}'}</value>
+      </managed-property>
+      <managed-property id="__269">
+        <property-name id="__270">createNewRowAtTop</property-name>
+        <value id="__271">true</value>
+      </managed-property>
+      <managed-property id="__272">
+        <property-name id="__273">defaultValuesBean</property-name>
+        <value id="__274">#{pageFlowScope.ImportsDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__275">
+        <property-name id="__276">focusItemId</property-name>
+        <value id="__277">ImportsImportNumber</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__278">
+      <managed-bean-name id="__279">ImportsImportTypeDependsOnItem</managed-bean-name>
+      <managed-bean-class id="__280">oracle.jheadstart.controller.jsf.bean.DependsOnItemBean</managed-bean-class>
+      <managed-bean-scope id="__281">application</managed-bean-scope>
+      <managed-property id="__282">
+        <property-name id="__283">itemsToClear</property-name>
+        <list-entries id="__284"></list-entries>
+      </managed-property>
+      <managed-property id="__285">
+        <property-name id="__286">componentsToRefresh</property-name>
+        <list-entries id="__287">
+          <value id="__288">ImportsOverwriteAutogenFlag</value>
+        </list-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__289">
+      <managed-bean-name id="__290">ImportsImportFileDLFileHandlerInTable</managed-bean-name>
+      <managed-bean-class id="__291">com.pq.tracs.view.beans.ImportFileHandlerBean</managed-bean-class>
+      <managed-bean-scope id="__292">request</managed-bean-scope>
+      <managed-property id="__293">
+        <property-name id="__294">valueBinding</property-name>
+        <value id="__295">#{bindings.ImportsImportFileDL}</value>
+      </managed-property>
+      <managed-property id="__296">
+        <property-name id="__297">tableBean</property-name>
+        <value id="__298">#{pageFlowScope.ImportsTable}</value>
+      </managed-property>
+      <managed-property id="__299">
+        <property-name id="__300">fileNameWhenEmpty</property-name>
+        <value id="__301">#{'#{bindings.ImportsImportFileDL.hints.tooltip}'}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__302">
+      <managed-bean-name id="__303">DeleteImports</managed-bean-name>
+      <managed-bean-class id="__304">oracle.jheadstart.controller.jsf.bean.DeleteRowBean</managed-bean-class>
+      <managed-bean-scope id="__305">request</managed-bean-scope>
+      <managed-property id="__306">
+        <property-name id="__307">deleteBinding</property-name>
+        <value id="__308">#{bindings.DeleteImports}</value>
+      </managed-property>
+      <managed-property id="__309">
+        <property-name id="__310">commitBean</property-name>
+        <value id="__311">#{jhsCommit}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__312">
+      <managed-bean-name id="__313">SaveImports</managed-bean-name>
+      <managed-bean-class id="__314">oracle.jheadstart.controller.jsf.bean.CommitBean</managed-bean-class>
+      <managed-bean-scope id="__315">request</managed-bean-scope>
+      <managed-property id="__316">
+        <property-name id="__317">commitBinding</property-name>
+        <value id="__318">#{bindings.Commit}</value>
+      </managed-property>
+      <managed-property id="__319">
+        <property-name id="__320">successOutcome</property-name>
+        <value id="__321">Commit</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__322">
+      <managed-bean-name id="__323">ImportsImportFileFileHandlerBean</managed-bean-name>
+      <managed-bean-class id="__324">com.pq.tracs.view.beans.ImportFileHandlerBean</managed-bean-class>
+      <managed-bean-scope id="__325">request</managed-bean-scope>
+      <managed-property id="__326">
+        <property-name id="__327">valueBinding</property-name>
+        <value id="__328">#{bindings.ImportsImportFile}</value>
+      </managed-property>
+      <managed-property id="__329">
+        <property-name id="__330">fileNameWhenEmpty</property-name>
+        <value id="__331">#{'#{bindings.ImportsImportFile.hints.tooltip}'}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__332">
+      <managed-bean-name id="__333">ImportsImportFileDLFileHandlerBean</managed-bean-name>
+      <managed-bean-class id="__334">com.pq.tracs.view.beans.ImportFileHandlerBean</managed-bean-class>
+      <managed-bean-scope id="__335">request</managed-bean-scope>
+      <managed-property id="__336">
+        <property-name id="__337">valueBinding</property-name>
+        <value id="__338">#{bindings.ImportsImportFileDL}</value>
+      </managed-property>
+      <managed-property id="__339">
+        <property-name id="__340">fileNameWhenEmpty</property-name>
+        <value id="__341">#{'#{bindings.ImportsImportFileDL.hints.tooltip}'}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__342">
+      <managed-bean-name id="__343">ParseResultsTable</managed-bean-name>
+      <managed-bean-class id="__344">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__345">pageFlow</managed-bean-scope>
+      <managed-property id="__346">
+        <property-name id="__347">name</property-name>
+        <value id="__348">ParseResultsTable</value>
+      </managed-property>
+      <managed-property id="__349">
+        <property-name id="__350">rangeBindingExpr</property-name>
+        <value id="__351">#{'#{bindings.ParseResultsTable}'}</value>
+      </managed-property>
+      <managed-property id="__352">
+        <property-name id="__353">createNewRowAtTop</property-name>
+        <value id="__354">true</value>
+      </managed-property>
+      <managed-property id="__355">
+        <property-name id="__356">defaultValuesBean</property-name>
+        <value id="__357">#{pageFlowScope.ParseResultsDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__358">
+        <property-name id="__359">focusItemId</property-name>
+        <value id="__360">ParseResultsRowNumber</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__361">
+      <managed-bean-name id="__362">DeleteParseResults</managed-bean-name>
+      <managed-bean-class id="__363">oracle.jheadstart.controller.jsf.bean.DeleteRowBean</managed-bean-class>
+      <managed-bean-scope id="__364">request</managed-bean-scope>
+      <managed-property id="__365">
+        <property-name id="__366">deleteBinding</property-name>
+        <value id="__367">#{bindings.DeleteParseResults}</value>
+      </managed-property>
+      <managed-property id="__368">
+        <property-name id="__369">commitBean</property-name>
+        <value id="__370">#{jhsCommit}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__371">
+      <managed-bean-name id="__372">PotentialMatchesTable</managed-bean-name>
+      <managed-bean-class id="__373">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__374">pageFlow</managed-bean-scope>
+      <managed-property id="__375">
+        <property-name id="__376">name</property-name>
+        <value id="__377">PotentialMatchesTable</value>
+      </managed-property>
+      <managed-property id="__378">
+        <property-name id="__379">rangeBindingExpr</property-name>
+        <value id="__380">#{'#{bindings.PotentialMatchesTable}'}</value>
+      </managed-property>
+      <managed-property id="__381">
+        <property-name id="__382">createNewRowAtTop</property-name>
+        <value id="__383">true</value>
+      </managed-property>
+      <managed-property id="__384">
+        <property-name id="__385">defaultValuesBean</property-name>
+        <value id="__386">#{pageFlowScope.PotentialMatchesDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__387">
+        <property-name id="__388">focusItemId</property-name>
+        <value id="__389">PotentialMatchesContractId</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__390">
+      <managed-bean-name id="__391">PotentialMatchesUseUlrichsFlagcheckboxInTable</managed-bean-name>
+      <managed-bean-class id="__392">oracle.jheadstart.controller.jsf.bean.CheckboxInTableBean</managed-bean-class>
+      <managed-bean-scope id="__393">request</managed-bean-scope>
+      <managed-property id="__394">
+        <property-name id="__395">binding</property-name>
+        <value id="__396">#{bindings.PotentialMatchesUseUlrichsFlag}</value>
+      </managed-property>
+      <managed-property id="__397">
+        <property-name id="__398">tableBean</property-name>
+        <value id="__399">#{pageFlowScope.PotentialMatchesTable}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__400">
+      <managed-bean-name id="__401">PotentialMatchesIgnoreMatchFlagcheckboxInTable</managed-bean-name>
+      <managed-bean-class id="__402">oracle.jheadstart.controller.jsf.bean.CheckboxInTableBean</managed-bean-class>
+      <managed-bean-scope id="__403">request</managed-bean-scope>
+      <managed-property id="__404">
+        <property-name id="__405">binding</property-name>
+        <value id="__406">#{bindings.PotentialMatchesIgnoreMatchFlag}</value>
+      </managed-property>
+      <managed-property id="__407">
+        <property-name id="__408">tableBean</property-name>
+        <value id="__409">#{pageFlowScope.PotentialMatchesTable}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__410">
+      <managed-bean-name id="__411">ValidationMessagesTable</managed-bean-name>
+      <managed-bean-class id="__412">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__413">pageFlow</managed-bean-scope>
+      <managed-property id="__414">
+        <property-name id="__415">name</property-name>
+        <value id="__416">ValidationMessagesTable</value>
+      </managed-property>
+      <managed-property id="__417">
+        <property-name id="__418">rangeBindingExpr</property-name>
+        <value id="__419">#{'#{bindings.ValidationMessagesTable}'}</value>
+      </managed-property>
+      <managed-property id="__420">
+        <property-name id="__421">createNewRowAtTop</property-name>
+        <value id="__422">true</value>
+      </managed-property>
+      <managed-property id="__423">
+        <property-name id="__424">focusItemId</property-name>
+        <value id="__425">ValidationMessagesRowNumber</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__426">
+      <managed-bean-name id="__427">ImportResultsTable</managed-bean-name>
+      <managed-bean-class id="__428">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__429">pageFlow</managed-bean-scope>
+      <managed-property id="__430">
+        <property-name id="__431">name</property-name>
+        <value id="__432">ImportResultsTable</value>
+      </managed-property>
+      <managed-property id="__433">
+        <property-name id="__434">rangeBindingExpr</property-name>
+        <value id="__435">#{'#{bindings.ImportResultsTable}'}</value>
+      </managed-property>
+      <managed-property id="__436">
+        <property-name id="__437">createNewRowAtTop</property-name>
+        <value id="__438">true</value>
+      </managed-property>
+      <managed-property id="__439">
+        <property-name id="__440">defaultValuesBean</property-name>
+        <value id="__441">#{pageFlowScope.ImportResultsDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__442">
+        <property-name id="__443">focusItemId</property-name>
+        <value id="__444">ImportResultsRowNumber</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__445">
+      <managed-bean-name id="__446">ImportResultsTargetFlagcheckboxInTable</managed-bean-name>
+      <managed-bean-class id="__447">oracle.jheadstart.controller.jsf.bean.CheckboxInTableBean</managed-bean-class>
+      <managed-bean-scope id="__448">request</managed-bean-scope>
+      <managed-property id="__449">
+        <property-name id="__450">binding</property-name>
+        <value id="__451">#{bindings.ImportResultsTargetFlag}</value>
+      </managed-property>
+      <managed-property id="__452">
+        <property-name id="__453">tableBean</property-name>
+        <value id="__454">#{pageFlowScope.ImportResultsTable}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__455">
+      <managed-bean-name id="__456">OvrParseResultsTable</managed-bean-name>
+      <managed-bean-class id="__457">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__458">pageFlow</managed-bean-scope>
+      <managed-property id="__459">
+        <property-name id="__460">name</property-name>
+        <value id="__461">OvrParseResultsTable</value>
+      </managed-property>
+      <managed-property id="__462">
+        <property-name id="__463">rangeBindingExpr</property-name>
+        <value id="__464">#{'#{bindings.OvrParseResultsTable}'}</value>
+      </managed-property>
+      <managed-property id="__465">
+        <property-name id="__466">createNewRowAtTop</property-name>
+        <value id="__467">true</value>
+      </managed-property>
+      <managed-property id="__468">
+        <property-name id="__469">defaultValuesBean</property-name>
+        <value id="__470">#{pageFlowScope.OvrParseResultsDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__471">
+        <property-name id="__472">focusItemId</property-name>
+        <value id="__473">OvrParseResultsRowNumber</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__474">
+      <managed-bean-name id="__475">DeleteOvrParseResults</managed-bean-name>
+      <managed-bean-class id="__476">oracle.jheadstart.controller.jsf.bean.DeleteRowBean</managed-bean-class>
+      <managed-bean-scope id="__477">request</managed-bean-scope>
+      <managed-property id="__478">
+        <property-name id="__479">deleteBinding</property-name>
+        <value id="__480">#{bindings.DeleteOvrParseResults}</value>
+      </managed-property>
+      <managed-property id="__481">
+        <property-name id="__482">commitBean</property-name>
+        <value id="__483">#{jhsCommit}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__484">
+      <managed-bean-name id="__485">OvrParseResultsAutoGenFlagcheckboxInTable</managed-bean-name>
+      <managed-bean-class id="__486">oracle.jheadstart.controller.jsf.bean.CheckboxInTableBean</managed-bean-class>
+      <managed-bean-scope id="__487">request</managed-bean-scope>
+      <managed-property id="__488">
+        <property-name id="__489">binding</property-name>
+        <value id="__490">#{bindings.OvrParseResultsAutoGenFlag}</value>
+      </managed-property>
+      <managed-property id="__491">
+        <property-name id="__492">tableBean</property-name>
+        <value id="__493">#{pageFlowScope.OvrParseResultsTable}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__494">
+      <managed-bean-name id="__495">OvrParseResultsAutoGenFlagDependsOnItem</managed-bean-name>
+      <managed-bean-class id="__496">oracle.jheadstart.controller.jsf.bean.DependsOnItemBean</managed-bean-class>
+      <managed-bean-scope id="__497">application</managed-bean-scope>
+      <managed-property id="__498">
+        <property-name id="__499">itemsToClear</property-name>
+        <list-entries id="__500"></list-entries>
+      </managed-property>
+      <managed-property id="__501">
+        <property-name id="__502">componentsToRefresh</property-name>
+        <list-entries id="__503">
+          <value id="__504">OvrParseResultsOverwriteAutogenFlag</value>
+        </list-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__505">
+      <managed-bean-name id="__506">OvrParseResultsOverwriteAutogenFlagcheckboxInTable</managed-bean-name>
+      <managed-bean-class id="__507">oracle.jheadstart.controller.jsf.bean.CheckboxInTableBean</managed-bean-class>
+      <managed-bean-scope id="__508">request</managed-bean-scope>
+      <managed-property id="__509">
+        <property-name id="__510">binding</property-name>
+        <value id="__511">#{bindings.OvrParseResultsOverwriteAutogenFlag}</value>
+      </managed-property>
+      <managed-property id="__512">
+        <property-name id="__513">tableBean</property-name>
+        <value id="__514">#{pageFlowScope.OvrParseResultsTable}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__515">
+      <managed-bean-name id="__516">OvrChildLegacyParseTable</managed-bean-name>
+      <managed-bean-class id="__517">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__518">pageFlow</managed-bean-scope>
+      <managed-property id="__519">
+        <property-name id="__520">name</property-name>
+        <value id="__521">OvrChildLegacyParseTable</value>
+      </managed-property>
+      <managed-property id="__522">
+        <property-name id="__523">rangeBindingExpr</property-name>
+        <value id="__524">#{'#{bindings.OvrChildLegacyParseTable}'}</value>
+      </managed-property>
+      <managed-property id="__525">
+        <property-name id="__526">createNewRowAtTop</property-name>
+        <value id="__527">true</value>
+      </managed-property>
+      <managed-property id="__528">
+        <property-name id="__529">focusItemId</property-name>
+        <value id="__530">OvrChildLegacyParseRowNumber</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__531">
+      <managed-bean-name id="__532">OvrLegacyParseTable</managed-bean-name>
+      <managed-bean-class id="__533">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__534">pageFlow</managed-bean-scope>
+      <managed-property id="__535">
+        <property-name id="__536">name</property-name>
+        <value id="__537">OvrLegacyParseTable</value>
+      </managed-property>
+      <managed-property id="__538">
+        <property-name id="__539">rangeBindingExpr</property-name>
+        <value id="__540">#{'#{bindings.OvrLegacyParseTable}'}</value>
+      </managed-property>
+      <managed-property id="__541">
+        <property-name id="__542">createNewRowAtTop</property-name>
+        <value id="__543">true</value>
+      </managed-property>
+      <managed-property id="__544">
+        <property-name id="__545">focusItemId</property-name>
+        <value id="__546">OvrLegacyParseRowNumber</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__547">
+      <managed-bean-name id="__548">OvrMatchesTable</managed-bean-name>
+      <managed-bean-class id="__549">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__550">pageFlow</managed-bean-scope>
+      <managed-property id="__551">
+        <property-name id="__552">name</property-name>
+        <value id="__553">OvrMatchesTable</value>
+      </managed-property>
+      <managed-property id="__554">
+        <property-name id="__555">rangeBindingExpr</property-name>
+        <value id="__556">#{'#{bindings.OvrMatchesTable}'}</value>
+      </managed-property>
+      <managed-property id="__557">
+        <property-name id="__558">createNewRowAtTop</property-name>
+        <value id="__559">true</value>
+      </managed-property>
+      <managed-property id="__560">
+        <property-name id="__561">defaultValuesBean</property-name>
+        <value id="__562">#{pageFlowScope.OvrMatchesDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__563">
+        <property-name id="__564">focusItemId</property-name>
+        <value id="__565">OvrMatchesRowNumber</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__566">
+      <managed-bean-name id="__567">OvrMatchesIgnoreRecordFlagcheckboxInTable</managed-bean-name>
+      <managed-bean-class id="__568">oracle.jheadstart.controller.jsf.bean.CheckboxInTableBean</managed-bean-class>
+      <managed-bean-scope id="__569">request</managed-bean-scope>
+      <managed-property id="__570">
+        <property-name id="__571">binding</property-name>
+        <value id="__572">#{bindings.OvrMatchesIgnoreRecordFlag}</value>
+      </managed-property>
+      <managed-property id="__573">
+        <property-name id="__574">tableBean</property-name>
+        <value id="__575">#{pageFlowScope.OvrMatchesTable}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__576">
+      <managed-bean-name id="__577">OvrImportResultsTable</managed-bean-name>
+      <managed-bean-class id="__578">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__579">pageFlow</managed-bean-scope>
+      <managed-property id="__580">
+        <property-name id="__581">name</property-name>
+        <value id="__582">OvrImportResultsTable</value>
+      </managed-property>
+      <managed-property id="__583">
+        <property-name id="__584">rangeBindingExpr</property-name>
+        <value id="__585">#{'#{bindings.OvrImportResultsTable}'}</value>
+      </managed-property>
+      <managed-property id="__586">
+        <property-name id="__587">createNewRowAtTop</property-name>
+        <value id="__588">true</value>
+      </managed-property>
+      <managed-property id="__589">
+        <property-name id="__590">defaultValuesBean</property-name>
+        <value id="__591">#{pageFlowScope.OvrImportResultsDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__592">
+        <property-name id="__593">focusItemId</property-name>
+        <value id="__594">OvrImportResultsRowNumber</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__595">
+      <managed-bean-name id="__596">OvrImportResultsOkForExportFlagcheckboxInTable</managed-bean-name>
+      <managed-bean-class id="__597">oracle.jheadstart.controller.jsf.bean.CheckboxInTableBean</managed-bean-class>
+      <managed-bean-scope id="__598">request</managed-bean-scope>
+      <managed-property id="__599">
+        <property-name id="__600">binding</property-name>
+        <value id="__601">#{bindings.OvrImportResultsOkForExportFlag}</value>
+      </managed-property>
+      <managed-property id="__602">
+        <property-name id="__603">tableBean</property-name>
+        <value id="__604">#{pageFlowScope.OvrImportResultsTable}</value>
+      </managed-property>
+    </managed-bean>
+    <router id="StartImports">
+      <case id="__605">
+        <expression id="__606">#{pageFlowScope.createImports!=null}</expression>
+        <outcome id="__607">createImports</outcome>
+      </case>
+      <case id="__608">
+        <expression id="__609">#{pageFlowScope.rowKeyStrImports!=null or
+                               pageFlowScope.rowKeyValueImports!=null or
+                               pageFlowScope.rowKeyImports!=null}</expression>
+        <outcome id="__610">SetCurrentRowImports</outcome>
+      </case>
+      <case id="__611">
+        <expression id="__612">#{pageFlowScope.isDeepLink!=null and
+                               pageFlowScope.isDeepLink}</expression>
+        <outcome id="__613">deepLinkPage</outcome>
+      </case>
+      <default-outcome id="__614">firstPage</default-outcome>
+    </router>
+    <method-call id="CreateImports">
+      <method id="__615">#{CreateImports.execute}</method>
+      <!-- execute condition param -->
+      <parameter>
+        <class id="__616">java.lang.Object</class>
+        <value id="__617">#{pageFlowScope.createImports}</value>
+      </parameter>
+      <outcome id="__618">
+        <to-string/>
+      </outcome>
+    </method-call>
+    <method-call id="SetCurrentRowImports">
+      <method id="__619">#{jhsSetCurrentRow.execute}</method>
+      <!-- iterator param -->
+      <parameter>
+        <class id="__620">oracle.adf.model.binding.DCIteratorBinding</class>
+        <value id="__621">#{bindings.ImportsIterator}</value>
+      </parameter>
+      <!-- rowKeyStr param -->
+      <parameter>
+        <class id="__622">java.lang.String</class>
+        <value id="__623">#{pageFlowScope.rowKeyStrImports}</value>
+      </parameter>
+      <!-- rowKeyValue param -->
+      <parameter>
+        <class id="__624">java.lang.Object</class>
+        <value id="__625">#{pageFlowScope.rowKeyValueImports}</value>
+      </parameter>
+      <!-- rowKey param -->
+      <parameter>
+        <class id="__626">oracle.jbo.Key</class>
+        <value id="__627">#{pageFlowScope.rowKeyImports}</value>
+      </parameter>
+      <!-- altKeyName param -->
+      <parameter>
+        <class id="__628">java.lang.String</class>
+        <value id="__629">#{pageFlowScope.altKeyNameImports}</value>
+      </parameter>
+      <outcome id="__630">
+        <fixed-outcome id="__631">deepLinkPage</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-return id="CancelImportsReturn">
+      <outcome id="__632">
+        <name id="__633">CancelImports</name>
+      </outcome>
+    </task-flow-return>
+    <task-flow-return id="DoneImportsReturn">
+      <outcome id="__634">
+        <name id="__635">DoneImports</name>
+      </outcome>
+    </task-flow-return>
+    <view id="ImportsTable">
+      <page id="__636">/pages/ImportsTable.jsff</page>
+    </view>
+    <view id="Imports">
+      <page id="__637">/pages/Imports.jsff</page>
+    </view>
+    <control-flow-rule id="__638">
+      <from-activity-id id="__639">*</from-activity-id>
+      <control-flow-case id="__640">
+        <from-outcome id="__641">SetCurrentRowImports</from-outcome>
+        <to-activity-id id="__642">SetCurrentRowImports</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__643">
+        <from-outcome id="__644">firstPage</from-outcome>
+        <to-activity-id id="__645">ImportsTable</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__646">
+        <from-outcome id="__647">deepLinkPage</from-outcome>
+        <to-activity-id id="__648">Imports</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__649">
+        <from-outcome id="__650">ImportsTableBreadcrumb</from-outcome>
+        <to-activity-id id="__651">ImportsTable</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__652">
+        <from-outcome id="__653">ImportsBreadcrumb</from-outcome>
+        <to-activity-id id="__654">Imports</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__655">
+        <from-outcome id="__656">Cancel</from-outcome>
+        <to-activity-id id="__657">StartImports</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__658">
+        <from-outcome id="__659">CancelImportsReturn</from-outcome>
+        <to-activity-id id="__660">CancelImportsReturn</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__661">
+        <from-outcome id="__662">DoneImportsReturn</from-outcome>
+        <to-activity-id id="__663">DoneImportsReturn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__664">
+      <from-activity-id id="__665">ImportsTable</from-activity-id>
+      <control-flow-case id="__666">
+        <from-outcome id="__667">CreateImports</from-outcome>
+        <to-activity-id id="__668">Imports</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__669">
+        <from-outcome id="__670">ImportsDetails</from-outcome>
+        <to-activity-id id="__671">Imports</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__672">
+      <from-activity-id id="__673">*</from-activity-id>
+      <control-flow-case id="__674">
+        <from-outcome id="__675">createImports</from-outcome>
+        <to-activity-id id="__676">CreateImports</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+  <!-- This bean must be defined outside the task-flow-definition element
+       because it needs to be available in the pageFlowScope of the unbounded
+       task-flow not in the pageFlowScope of the bounded task flow itself. -->
+  <managed-bean id="__677">
+    <managed-bean-name id="__678">ImportsTaskFlowConfig</managed-bean-name>
+    <managed-bean-class id="__679">oracle.jheadstart.controller.jsf.bean.TaskFlowConfigBean</managed-bean-class>
+    <managed-bean-scope id="__680">pageFlow</managed-bean-scope>
+    <managed-property id="__681">
+      <property-name id="__682">params</property-name>
+      <property-class id="__683">java.util.Map</property-class>
+      <map-entries id="__684">
+        <map-entry id="__685">
+          <key id="__686">parentContext</key>
+          <value id="__687">#{pageFlowScope.parentContext}</value>
+        </map-entry>
+      </map-entries>
+    </managed-property>
+    <managed-property id="__688">
+      <property-name id="__689">name</property-name>
+      <value id="__690">Imports</value>
+    </managed-property>
+    <managed-property id="__691">
+      <property-name id="__692">taskFlowId</property-name>
+      <value id="__693">/WEB-INF/adfc-config-Imports.xml#ImportsTaskFlow</value>
+    </managed-property>
+    <managed-property id="__694">
+      <property-name id="__695">tabUniqueIdentifier</property-name>
+      <value id="__696">Imports</value>
+    </managed-property>
+    <managed-property id="__697">
+      <property-name id="__698">label</property-name>
+      <value id="__699">Imports</value>
+    </managed-property>
+  </managed-bean>
+</adfc-config>

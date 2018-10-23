@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.61.92" id="TargetedProductTitleLookupPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <iterator id="TargetedProductTitleLookupIterator"
+              Binds="PrmTargetedProductTitleLookup1"
+              DataControl="TracsServiceDataControl" RangeSize="50"
+              RefreshCondition="#{pageFlowScope.searchTargetedProductTitleLookup.emptyRowSetCreated}"/>
+    <searchRegion id="TargetedProductTitleLookupIteratorQuery"
+                  Binds="TargetedProductTitleLookupIterator"
+                  Criteria="__ImplicitViewCriteria__"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="LongTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="TargetedProductTitleLookupId"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupTargetTrackingNo"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupCatalogNumber"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupLongTitle"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupPrdId"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="PrdId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupProductName"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="ProductName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupProductFamily"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="ProductFamily"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupTargetGroup"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="TargetGroup"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupCurrentCatalogId"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="CurrentCatalogId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupCurrentCatalogNumber"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="CurrentCatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupAddedDate"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupRemovedDate"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupCreatedBy"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupCreatedDate"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupLastUpdatedBy"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductTitleLookupLastUpdatedDate"
+                     IterBinding="TargetedProductTitleLookupIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="TargetedProductTitleLookupTable"
+          IterBinding="TargetedProductTitleLookupIterator">
+      <nodeDefinition Name="TargetedProductTitleLookup"
+                      DefName="com.pq.tracs.model.lookups.PrmTargetedProductTitleLookup">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="PrdId"/>
+          <Item Value="ProductName"/>
+          <Item Value="ProductFamily"/>
+          <Item Value="TargetGroup"/>
+          <Item Value="CurrentCatalogId"/>
+          <Item Value="CurrentCatalogNumber"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstTargetedProductTitleLookup"
+            IterBinding="TargetedProductTitleLookupIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousTargetedProductTitleLookup"
+            IterBinding="TargetedProductTitleLookupIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextTargetedProductTitleLookup"
+            IterBinding="TargetedProductTitleLookupIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastTargetedProductTitleLookup"
+            IterBinding="TargetedProductTitleLookupIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchTargetedProductTitleLookup"
+                  IterBinding="TargetedProductTitleLookupIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchTargetedProductTitleLookup.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchTargetedProductTitleLookup.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchTargetedProductTitleLookup.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyTargetedProductTitleLookup"
+            IterBinding="TargetedProductTitleLookupIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrTargetedProductTitleLookup}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

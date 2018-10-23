@@ -1,0 +1,830 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="CADashboardPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'CO, ADMIN'}"/>
+  </parameters>
+  <executables>
+    <invokeAction id="applyBindParamsCADashboardInvoke"
+                  Binds="applyBindParamsCADashboard" Refresh="always"/>
+    <iterator id="CADashboardIterator" Binds="CADashboardUserView"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <invokeAction id="ExecuteQueryCADashboardInvoke"
+                  Binds="ExecuteQueryCADashboard" Refresh="renderModel"
+                  RefreshCondition="#{true}"/>
+    <variableIterator id="variables">
+      <variable Name="CADashboardRowKeyVar" Type="java.lang.String"
+                DefaultValue="#{bindings.CADashboardIterator.currentRowKeyString}"/>
+    </variableIterator>
+    <iterator id="CAActivityDashboardIterator" Binds="ActivityDashboardView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="CAActivityDashboardIteratorActivityDashboardViewCriteriaQuery"
+                  Binds="CAActivityDashboardIterator"
+                  Criteria="ActivityDashboardViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Type"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsPageChanged}"/>
+    <invokeAction id="ExecuteQueryCAActivityDashboardInvoke"
+                  Binds="ExecuteQueryCAActivityDashboard" Refresh="renderModel"
+                  RefreshCondition="#{jhsPageChanged}"/>
+    <invokeAction id="applyBindParamsCARecentOpportunitiesInvoke"
+                  Binds="applyBindParamsCARecentOpportunities"
+                  Refresh="always"/>
+    <iterator id="CARecentOpportunitiesIterator"
+              Binds="RecentOpportunitiesDashboardView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="CARecentOpportunitiesIteratorRecentOpportunitiesDashboardViewCriteriaQuery"
+                  Binds="CARecentOpportunitiesIterator"
+                  Criteria="RecentOpportunitiesDashboardViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CurrentStatus"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsPageChanged}"/>
+    <invokeAction id="ExecuteQueryCARecentOpportunitiesInvoke"
+                  Binds="ExecuteQueryCARecentOpportunities"
+                  Refresh="renderModel" RefreshCondition="#{jhsPageChanged}"/>
+    <invokeAction id="applyBindParamsCAInProcessOpportunitiesInvoke"
+                  Binds="applyBindParamsCAInProcessOpportunities"
+                  Refresh="always"/>
+    <iterator id="CAInProcessOpportunitiesIterator"
+              Binds="InProcessOpportunitiesDashboardView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="CAInProcessOpportunitiesIteratorInProcessOpportunitiesDashboardViewCriteriaQuery"
+                  Binds="CAInProcessOpportunitiesIterator"
+                  Criteria="InProcessOpportunitiesDashboardViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="OpportunityName"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsPageChanged}"/>
+    <invokeAction id="ExecuteQueryCAInProcessOpportunitiesInvoke"
+                  Binds="ExecuteQueryCAInProcessOpportunities"
+                  Refresh="renderModel" RefreshCondition="#{jhsPageChanged}"/>
+    <invokeAction id="applyBindParamsCAOnHoldOpportunitiesInvoke"
+                  Binds="applyBindParamsCAOnHoldOpportunities"
+                  Refresh="always"/>
+    <iterator id="CAOnHoldOpportunitiesIterator"
+              Binds="OnHoldOpportunitiesDashboardView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="CAOnHoldOpportunitiesIteratorOnHoldOpportunitiesDashboardViewCriteriaQuery"
+                  Binds="CAOnHoldOpportunitiesIterator"
+                  Criteria="OnHoldOpportunitiesDashboardViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CurrentStatus"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsPageChanged}"/>
+    <invokeAction id="ExecuteQueryCAOnHoldOpportunitiesInvoke"
+                  Binds="ExecuteQueryCAOnHoldOpportunities"
+                  Refresh="renderModel" RefreshCondition="#{jhsPageChanged}"/>
+  </executables>
+  <bindings>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsCADashboard"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="CADashboardUserView"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{CADashboardQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQueryCADashboard" IterBinding="CADashboardIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="CADDisplayName" IterBinding="CADashboardIterator">
+      <AttrNames>
+        <Item Value="DisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="FirstCADashboard" IterBinding="CADashboardIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousCADashboard" IterBinding="CADashboardIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextCADashboard" IterBinding="CADashboardIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastCADashboard" IterBinding="CADashboardIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <attributeValues id="CADashboardRowKey" IterBinding="variables">
+      <AttrNames>
+        <Item Value="CADashboardRowKeyVar"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="SetCurrentRowWithKeyCADashboard"
+            IterBinding="CADashboardIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{bindings.CADashboardRowKey}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryCAActivityDashboard"
+            IterBinding="CAActivityDashboardIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues id="CAcActivityId"
+                     IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="ActivityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcUserId" IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="UserId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcContentOwnerId"
+                     IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcTypeSearch"
+                     IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="Type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcType" IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="Type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcSubType" IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="SubType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcDescription"
+                     IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcDueDate" IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="DueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcUserType" IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="UserType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcStatus" IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="Status"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcTtlId" IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="TtlId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcCatalogNumSearch"
+                     IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcCatalogNumber"
+                     IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcTitle" IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcAccountNo"
+                     IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="AccountNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcAccountNameSearch"
+                     IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcAccountName"
+                     IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcAccountSite"
+                     IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="AccountSite"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcCreatedBy"
+                     IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CAcCreatedDate"
+                     IterBinding="CAActivityDashboardIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="CAActivityDashboardTable"
+          IterBinding="CAActivityDashboardIterator">
+      <nodeDefinition Name="CAActivityDashboard"
+                      DefName="com.pq.tracs.model.ro.ActivityDashboardView">
+        <AttrNames>
+          <Item Value="ActivityId"/>
+          <Item Value="UserId"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="Type"/>
+          <Item Value="Type"/>
+          <Item Value="Type"/>
+          <Item Value="Type"/>
+          <Item Value="SubType"/>
+          <Item Value="Description"/>
+          <Item Value="DueDate"/>
+          <Item Value="UserType"/>
+          <Item Value="Status"/>
+          <Item Value="TtlId"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="AccountNo"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountSite"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstCAActivityDashboard"
+            IterBinding="CAActivityDashboardIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousCAActivityDashboard"
+            IterBinding="CAActivityDashboardIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextCAActivityDashboard"
+            IterBinding="CAActivityDashboardIterator" RequiresUpdateModel="true"
+            Action="next"/>
+    <action id="LastCAActivityDashboard"
+            IterBinding="CAActivityDashboardIterator" RequiresUpdateModel="true"
+            Action="last"/>
+    <action id="SetCurrentRowWithKeyCAActivityDashboard"
+            IterBinding="CAActivityDashboardIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrCAActivityDashboard}"
+                 NDType="java.lang.String"/>
+    </action>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsCARecentOpportunities"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="RecentOpportunitiesDashboardView1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{CARecentOpportunitiesQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQueryCARecentOpportunities"
+            IterBinding="CARecentOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="CROId" IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROAmId" IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AmId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROOpportunityNameSearch"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROOpportunityNo"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROOpportunityName"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CARecentOpportunitiesIterator"
+          id="CROCurrentStatus" Uses="LOV_CurrentStatus" StaticList="false"/>
+    <attributeValues id="CROAccountName"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROCreatedDate"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROAccountManager"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountManager"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROCataloguedCount"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROUncataloguedCount"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="UncataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROAgreementLogindate"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AgreementLogindate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROCurrentPreStatus"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CurrentPreStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROCurrentCatalogingStatus"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CurrentCatalogingStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROCurrentAgreementStatus"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CurrentAgreementStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="CROAgreementDataFlag"
+            IterBinding="CARecentOpportunitiesIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="AgreementDataFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="CROForm" IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Form"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROType" IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CROOpportunityType"
+                     IterBinding="CARecentOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityType"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="CARecentOpportunitiesTable"
+          IterBinding="CARecentOpportunitiesIterator">
+      <nodeDefinition Name="CARecentOpportunities"
+                      DefName="com.pq.tracs.model.ro.RecentOpportunitiesDashboardView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="AmId"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="CurrentStatus"/>
+          <Item Value="AccountName"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="AccountManager"/>
+          <Item Value="CataloguedCount"/>
+          <Item Value="UncataloguedCount"/>
+          <Item Value="AgreementLogindate"/>
+          <Item Value="CurrentPreStatus"/>
+          <Item Value="CurrentCatalogingStatus"/>
+          <Item Value="CurrentAgreementStatus"/>
+          <Item Value="AgreementDataFlag"/>
+          <Item Value="Form"/>
+          <Item Value="Type"/>
+          <Item Value="OpportunityType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstCARecentOpportunities"
+            IterBinding="CARecentOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousCARecentOpportunities"
+            IterBinding="CARecentOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextCARecentOpportunities"
+            IterBinding="CARecentOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastCARecentOpportunities"
+            IterBinding="CARecentOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyCARecentOpportunities"
+            IterBinding="CARecentOpportunitiesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrCARecentOpportunities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsCAInProcessOpportunities"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="InProcessOpportunitiesDashboardView1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{CAInProcessOpportunitiesQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQueryCAInProcessOpportunities"
+            IterBinding="CAInProcessOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="CIOId" IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOAmId"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AmId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOOpportunityNameSearch"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOOpportunityNo"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOOpportunityName"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CAInProcessOpportunitiesIterator"
+          id="CIOCurrentStatus" Uses="LOV_CurrentStatus" StaticList="false"/>
+    <attributeValues id="CIOAccountName"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOCreatedDate"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOAccountManager"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountManager"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOCataloguedCount"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOUncataloguedCount"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="UncataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOAgreementLogindate"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AgreementLogindate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOCurrentPreStatus"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CurrentPreStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOCurrentCatalogingStatus"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CurrentCatalogingStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOCurrentAgreementStatus"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CurrentAgreementStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="CIOAgreementDataFlag"
+            IterBinding="CAInProcessOpportunitiesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="AgreementDataFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="CIOForm"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Form"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOType"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CIOOpportunityType"
+                     IterBinding="CAInProcessOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityType"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="CAInProcessOpportunitiesTable"
+          IterBinding="CAInProcessOpportunitiesIterator">
+      <nodeDefinition Name="CAInProcessOpportunities"
+                      DefName="com.pq.tracs.model.ro.InProcessOpportunitiesDashboardView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="AmId"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="CurrentStatus"/>
+          <Item Value="AccountName"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="AccountManager"/>
+          <Item Value="CataloguedCount"/>
+          <Item Value="UncataloguedCount"/>
+          <Item Value="AgreementLogindate"/>
+          <Item Value="CurrentPreStatus"/>
+          <Item Value="CurrentCatalogingStatus"/>
+          <Item Value="CurrentAgreementStatus"/>
+          <Item Value="AgreementDataFlag"/>
+          <Item Value="Form"/>
+          <Item Value="Type"/>
+          <Item Value="OpportunityType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstCAInProcessOpportunities"
+            IterBinding="CAInProcessOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousCAInProcessOpportunities"
+            IterBinding="CAInProcessOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextCAInProcessOpportunities"
+            IterBinding="CAInProcessOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastCAInProcessOpportunities"
+            IterBinding="CAInProcessOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyCAInProcessOpportunities"
+            IterBinding="CAInProcessOpportunitiesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrCAInProcessOpportunities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsCAOnHoldOpportunities"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="OnHoldOpportunitiesDashboardView1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{CAOnHoldOpportunitiesQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQueryCAOnHoldOpportunities"
+            IterBinding="CAOnHoldOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="COOId" IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOAmId" IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AmId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOOpportunityNameSearch"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOOpportunityNo"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOOpportunityName"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CAOnHoldOpportunitiesIterator"
+          id="COOCurrentStatus" Uses="LOV_CurrentStatus" StaticList="false"/>
+    <attributeValues id="COOAccountName"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOCreatedDate"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOAccountManager"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountManager"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOCataloguedCount"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOUncataloguedCount"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="UncataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOAgreementLogindate"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AgreementLogindate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOCurrentPreStatus"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CurrentPreStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOCurrentCatalogingStatus"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CurrentCatalogingStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOCurrentAgreementStatus"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CurrentAgreementStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="COOAgreementDataFlag"
+            IterBinding="CAOnHoldOpportunitiesIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="AgreementDataFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="COOForm" IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Form"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOType" IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="COOOpportunityType"
+                     IterBinding="CAOnHoldOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityType"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="CAOnHoldOpportunitiesTable"
+          IterBinding="CAOnHoldOpportunitiesIterator">
+      <nodeDefinition Name="CAOnHoldOpportunities"
+                      DefName="com.pq.tracs.model.ro.OnHoldOpportunitiesDashboardView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="AmId"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="CurrentStatus"/>
+          <Item Value="AccountName"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="AccountManager"/>
+          <Item Value="CataloguedCount"/>
+          <Item Value="UncataloguedCount"/>
+          <Item Value="AgreementLogindate"/>
+          <Item Value="CurrentPreStatus"/>
+          <Item Value="CurrentCatalogingStatus"/>
+          <Item Value="CurrentAgreementStatus"/>
+          <Item Value="AgreementDataFlag"/>
+          <Item Value="Form"/>
+          <Item Value="Type"/>
+          <Item Value="OpportunityType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstCAOnHoldOpportunities"
+            IterBinding="CAOnHoldOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousCAOnHoldOpportunities"
+            IterBinding="CAOnHoldOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextCAOnHoldOpportunities"
+            IterBinding="CAOnHoldOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastCAOnHoldOpportunities"
+            IterBinding="CAOnHoldOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyCAOnHoldOpportunities"
+            IterBinding="CAOnHoldOpportunitiesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrCAOnHoldOpportunities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

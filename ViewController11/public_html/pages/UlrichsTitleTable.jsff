@@ -1,0 +1,895 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="UlrTopLc"
+                             partialTriggers=" UlrDeleteDialog UlrSaveButton0 UlrCancelButton0 asAreaUlrSearchOptions qsAreaUlrSearchOptions UlrPC:UlrArm UlrPC:UlrduprmTM UlrPC:UlrdelrmTM UlrPC:UlrArl UlrPC:UlrTab:Ulrduprm UlrPC:UlrTab:Ulrdelrm UlrPC:UlrTab:Ulrdelrl UlrPC:UlrTab:Ulrduprl"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_ULRICHSTITLE']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0"></af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton action="#{SaveUlrichsTitle.execute}"
+                                      rendered="#{!pageFlowScope.hideSaveButton}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="UlrSaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="UlrCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaUlr"
+                                 rendered="#{!pageFlowScope.createModes.CreateUlrichsTitle and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaUlrSearchOptions:qsButtonUlr qsAreaUlrSearchOptions:asButtonUlr ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaUlrSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.UlrichsTitleIteratorTraxUlrichsTitleViewCriteriaAdvQuery.queryDescriptor}"
+                        model="#{bindings.UlrichsTitleIteratorTraxUlrichsTitleViewCriteriaAdvQuery.queryModel}"
+                        queryListener="#{bindings.UlrichsTitleIteratorTraxUlrichsTitleViewCriteriaAdvQuery.processQuery}"
+                        queryOperationListener="#{bindings.UlrichsTitleIteratorTraxUlrichsTitleViewCriteriaAdvQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchUlrichsTitle.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonUlr"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchUlrichsTitle.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaUlrSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.UlrichsTitleIteratorTraxUlrichsTitleViewCriteriaAdvQuery.queryDescriptor}"
+                             model="#{bindings.UlrichsTitleIteratorTraxUlrichsTitleViewCriteriaAdvQuery.queryModel}"
+                             queryListener="#{bindings.UlrichsTitleIteratorTraxUlrichsTitleViewCriteriaAdvQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchUlrichsTitle.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonUlr"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchUlrichsTitle.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="UlrPC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="UlrichsTitleDetails"></af:commandMenuItem>
+                    <af:group id="Ulrtbb"
+                              rendered="#{ (bindings.UlrichsTitleIterator.viewObject!=null and bindings.UlrichsTitleIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstUlrichsTitle.execute}"
+                                          id="UlrFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousUlrichsTitle.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="UlrPrevious" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextUlrichsTitle.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="UlrNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastUlrichsTitle.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="UlrLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem id="UlrArm"
+                                      textAndAccessKey="#{nls['ADD_ROW']}"
+                                      immediate="false"
+                                      icon="/jheadstart/images/addRow.png"
+                                      partialSubmit="true"
+                                      actionListener="#{pageFlowScope.UlrichsTitleTable.addRow}"
+                                      rendered="#{(true) }"></af:commandMenuItem>
+                  <af:commandMenuItem id="UlrduprmTM"
+                                      textAndAccessKey="#{nls['DUPLICATE_ROW']}"
+                                      immediate="true"
+                                      icon="/jheadstart/images/duplicateRow.png"
+                                      partialSubmit="true"
+                                      actionListener="#{pageFlowScope.UlrichsTitleTable.duplicateRow}"></af:commandMenuItem>
+                  <af:commandMenuItem id="UlrdelrmTM"
+                                      textAndAccessKey="#{nls['DELETE_ROW']}"
+                                      icon="/jheadstart/images/deleteRow.png"
+                                      partialSubmit="true" immediate="true">
+                    <af:showPopupBehavior popupId="::UlrDeletePopup"/>
+                  </af:commandMenuItem>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="UlrTab"
+                                                       type="excelHTML"
+                                                       filename="UlrichsTitle.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <!-- Also create CreateUlrichsTitle bean so we can start table group in create mode as well -->
+                  <af:commandImageLink id="UlrArl" immediate="false"
+                                       rendered="#{(true) }"
+                                       partialSubmit="true"
+                                       actionListener="#{pageFlowScope.UlrichsTitleTable.addRow}"
+                                       shortDesc="#{nls['ADD_ROW']}"
+                                       icon="/jheadstart/images/addRow.png"/>
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="UlrTab"
+                                                       type="excelHTML"
+                                                       filename="UlrichsTitle.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="UlrPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.UlrichsTitleIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="UlrTab" contentDelivery="immediate"
+                        value="#{bindings.UlrichsTitleTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.UlrichsTitleTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.UlrichsTitleTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.UlrichsTitleTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.UlrichsTitleTable.rangeSize}"
+                        autoHeightRows="#{bindings.UlrichsTitleTable.estimatedRowCount}"
+                        fetchSize="#{bindings.UlrichsTitleTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.UlrichsTitleIteratorTraxUlrichsTitleViewCriteriaAdvQuery.processQuery}"
+                        filterModel="#{bindings.UlrichsTitleIteratorTraxUlrichsTitleViewCriteriaAdvQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.UlrichsTitleTable.table}"
+                        partialTriggers=":::qsAreaUlrSearchOptions :::asAreaUlrSearchOptions :::UlrPC ::UlrFirst ::UlrPrevious ::UlrNext ::UlrLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_ULRICHSTITLE']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="UlrTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="UlrichsTitleDetails"></af:commandMenuItem>
+                      </af:menu>
+                      <af:commandMenuItem id="Ulrduprm"
+                                          textAndAccessKey="#{nls['DUPLICATE_ROW']}"
+                                          immediate="true"
+                                          icon="/jheadstart/images/duplicateRow.png"
+                                          partialSubmit="true"
+                                          actionListener="#{pageFlowScope.UlrichsTitleTable.duplicateRow}"></af:commandMenuItem>
+                      <af:commandMenuItem id="Ulrdelrm"
+                                          textAndAccessKey="#{nls['DELETE_ROW']}"
+                                          icon="/jheadstart/images/deleteRow.png"
+                                          partialSubmit="true" immediate="true">
+                        <af:showPopupBehavior popupId=":::UlrDeletePopup"/>
+                      </af:commandMenuItem>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="UlrActionColumn" frozen="true" width="40"
+                           align="center" headerText=" ">
+                  <af:panelGroupLayout layout="horizontal" id="pgl1">
+                    <af:commandImageLink id="Ulrdelrl" partialSubmit="true"
+                                         immediate="true"
+                                         shortDesc="#{nls['DELETE_ROW']}"
+                                         icon="/jheadstart/images/deleteRow.png">
+                      <af:showPopupBehavior popupId=":::UlrDeletePopup"/>
+                    </af:commandImageLink>
+                    <af:commandImageLink id="Ulrduprl" immediate="true"
+                                         partialSubmit="true"
+                                         actionListener="#{pageFlowScope.UlrichsTitleTable.duplicateRow}"
+                                         shortDesc="#{nls['DUPLICATE_ROW']}"
+                                         icon="/jheadstart/images/duplicateRow.png"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column id="UlrUlrichsSerialIdCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="UlrichsSerialId" align="right"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.UlrichsSerialId.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.UlrichsSerialId.mandatory}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="UlrUlrichsSerialId"
+                                value="#{row.bindings.UlrichsSerialId.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.UlrichsSerialId.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.UlrichsSerialId.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.UlrichsSerialId.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.UlrichsSerialId.displayWidth}"
+                                maximumLength="38"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.UlrichsSerialId.tooltip}">
+                    <f:validator binding="#{row.bindings.UlrichsSerialId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.UlrichsTitleTable.hints.UlrichsSerialId.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrLinkedTitleFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LinkedTitleFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.LinkedTitleFlag.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="UlrLinkedTitleFlag"
+                                            label="#{bindings.UlrichsTitleTable.hints.LinkedTitleFlag.label}"
+                                            value="#{UlrLinkedTitleFlagcheckboxInTable.value}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.UlrichsTitleTable.hints.LinkedTitleFlag.tooltip}"
+                                            autoSubmit="true"
+                                            valueChangeListener="#{UlrLinkedTitleFlagDependsOnItem.updateModelValue}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="UlrTitleCol" sortable="true" filterable="true"
+                           noWrap="true" width="240" sortProperty="Title"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.Title.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.Title.mandatory}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="cl1"
+                                value="#{row.bindings.Title.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.Title.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.Title.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.Title.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.Title.displayWidth}"
+                                maximumLength="1000"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.Title.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.Title.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="cl2"
+                                  shortDesc="#{bindings.UlrichsTitleTable.hints.Title.tooltip}"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}"
+                                  action="UlrichsTitleDetails"
+                                  text="#{row.Title}"></af:commandLink>
+                </af:column>
+                <af:column id="UlrSubTitleCol" sortable="true" filterable="true"
+                           noWrap="true" width="240" sortProperty="SubTitle"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.SubTitle.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.SubTitle.mandatory}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputText id="UlrSubTitle"
+                                value="#{row.bindings.SubTitle.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.SubTitle.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.SubTitle.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.SubTitle.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.SubTitle.displayWidth}"
+                                maximumLength="1000"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.SubTitle.tooltip}">
+                    <f:validator binding="#{row.bindings.SubTitle.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrCountryCodeCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CountryCode" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.CountryCode.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.CountryCode.mandatory}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:inputText id="UlrCountryCode"
+                                value="#{row.bindings.CountryCode.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.CountryCode.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.CountryCode.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.CountryCode.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.CountryCode.displayWidth}"
+                                maximumLength="10"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.CountryCode.tooltip}">
+                    <f:validator binding="#{row.bindings.CountryCode.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrExplanationOfTitleAcronymCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="ExplanationOfTitleAcronym"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.ExplanationOfTitleAcronym.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.ExplanationOfTitleAcronym.mandatory}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="UlrExplanationOfTitleAcronym"
+                                value="#{row.bindings.ExplanationOfTitleAcronym.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.ExplanationOfTitleAcronym.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.ExplanationOfTitleAcronym.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.ExplanationOfTitleAcronym.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.ExplanationOfTitleAcronym.displayWidth}"
+                                maximumLength="1000"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.ExplanationOfTitleAcronym.tooltip}">
+                    <f:validator binding="#{row.bindings.ExplanationOfTitleAcronym.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrYearFirstPublishedCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="YearFirstPublished" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.YearFirstPublished.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.YearFirstPublished.mandatory}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:inputText id="UlrYearFirstPublished"
+                                value="#{row.bindings.YearFirstPublished.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.YearFirstPublished.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.YearFirstPublished.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.YearFirstPublished.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.YearFirstPublished.displayWidth}"
+                                maximumLength="1000"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.YearFirstPublished.tooltip}">
+                    <f:validator binding="#{row.bindings.YearFirstPublished.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrFrequencyCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="Frequency" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.Frequency.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.Frequency.mandatory}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:inputText id="UlrFrequency"
+                                value="#{row.bindings.Frequency.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.Frequency.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.Frequency.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.Frequency.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.Frequency.displayWidth}"
+                                maximumLength="200"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.Frequency.tooltip}">
+                    <f:validator binding="#{row.bindings.Frequency.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrBibliographicNotesCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="BibliographicNotes" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.BibliographicNotes.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.BibliographicNotes.mandatory}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:inputText id="UlrBibliographicNotes"
+                                value="#{row.bindings.BibliographicNotes.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.BibliographicNotes.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.BibliographicNotes.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.BibliographicNotes.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.BibliographicNotes.displayWidth}"
+                                maximumLength="1000"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.BibliographicNotes.tooltip}">
+                    <f:validator binding="#{row.bindings.BibliographicNotes.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrVariantTitleCatalogingCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="VariantTitleCataloging"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.VariantTitleCataloging.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.VariantTitleCataloging.mandatory}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:inputText id="UlrVariantTitleCataloging"
+                                value="#{row.bindings.VariantTitleCataloging.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.VariantTitleCataloging.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.VariantTitleCataloging.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.VariantTitleCataloging.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.VariantTitleCataloging.displayWidth}"
+                                maximumLength="400"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.VariantTitleCataloging.tooltip}">
+                    <f:validator binding="#{row.bindings.VariantTitleCataloging.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrPublisherSubdivisionCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="PublisherSubdivision" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.PublisherSubdivision.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.PublisherSubdivision.mandatory}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:inputText id="UlrPublisherSubdivision"
+                                value="#{row.bindings.PublisherSubdivision.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.PublisherSubdivision.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.PublisherSubdivision.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.PublisherSubdivision.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.PublisherSubdivision.displayWidth}"
+                                maximumLength="400"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.PublisherSubdivision.tooltip}">
+                    <f:validator binding="#{row.bindings.PublisherSubdivision.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrParentPublisherCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="ParentPublisher" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.ParentPublisher.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.ParentPublisher.mandatory}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <af:inputText id="UlrParentPublisher"
+                                value="#{row.bindings.ParentPublisher.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.ParentPublisher.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.ParentPublisher.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.ParentPublisher.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.ParentPublisher.displayWidth}"
+                                maximumLength="400"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.ParentPublisher.tooltip}">
+                    <f:validator binding="#{row.bindings.ParentPublisher.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrCoPublisherCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CoPublisher" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.CoPublisher.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.CoPublisher.mandatory}"
+                                    id="ol12"/>
+                  </f:facet>
+                  <af:inputText id="UlrCoPublisher"
+                                value="#{row.bindings.CoPublisher.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.CoPublisher.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.CoPublisher.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.CoPublisher.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.CoPublisher.displayWidth}"
+                                maximumLength="400"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.CoPublisher.tooltip}">
+                    <f:validator binding="#{row.bindings.CoPublisher.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrNewspaperOwnershipCol" noWrap="true"
+                           width="240"
+                           visible="#{(!((!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR'])))) and (true)}"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.NewspaperOwnership.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.NewspaperOwnership.mandatory}"
+                                    id="ol13"/>
+                  </f:facet>
+                  <af:inputFile id="UlrNewspaperOwnership"
+                                label="#{bindings.UlrichsTitleTable.hints.NewspaperOwnership.label}"
+                                columns="#{bindings.UlrichsTitleTable.hints.NewspaperOwnership.displayWidth}"
+                                visible="#{(!((!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR'])))) and (true)}"
+                                valueChangeListener="#{UlrNewspaperOwnershipFileHandlerInTable.uploadFile}"
+                                binding="#{UlrNewspaperOwnershipFileHandlerInTable.usesUploadIndicator}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.NewspaperOwnership.tooltip}"/>
+                </af:column>
+                <af:column id="UlrWebAddressUrlCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="WebAddressUrl" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.WebAddressUrl.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.WebAddressUrl.mandatory}"
+                                    id="ol14"/>
+                  </f:facet>
+                  <af:inputText id="UlrWebAddressUrl"
+                                value="#{row.bindings.WebAddressUrl.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.WebAddressUrl.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.WebAddressUrl.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.WebAddressUrl.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.WebAddressUrl.displayWidth}"
+                                maximumLength="400"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.WebAddressUrl.tooltip}">
+                    <f:validator binding="#{row.bindings.WebAddressUrl.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrRefereedSerialFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="RefereedSerialFlag" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.RefereedSerialFlag.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.RefereedSerialFlag.mandatory}"
+                                    id="ol15"/>
+                  </f:facet>
+                  <af:inputText id="UlrRefereedSerialFlag"
+                                value="#{row.bindings.RefereedSerialFlag.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.RefereedSerialFlag.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.RefereedSerialFlag.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.RefereedSerialFlag.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.RefereedSerialFlag.displayWidth}"
+                                maximumLength="10"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.RefereedSerialFlag.tooltip}">
+                    <f:validator binding="#{row.bindings.RefereedSerialFlag.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrNumberOfAnnotationRecordsCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="NumberOfAnnotationRecords"
+                           align="right" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.NumberOfAnnotationRecords.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.NumberOfAnnotationRecords.mandatory}"
+                                    id="ol16"/>
+                  </f:facet>
+                  <af:inputText id="UlrNumberOfAnnotationRecords"
+                                value="#{row.bindings.NumberOfAnnotationRecords.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.NumberOfAnnotationRecords.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.NumberOfAnnotationRecords.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.NumberOfAnnotationRecords.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.NumberOfAnnotationRecords.displayWidth}"
+                                maximumLength="38"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.NumberOfAnnotationRecords.tooltip}">
+                    <f:validator binding="#{row.bindings.NumberOfAnnotationRecords.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.UlrichsTitleTable.hints.NumberOfAnnotationRecords.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrAnnotationCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="Annotation" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.Annotation.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.Annotation.mandatory}"
+                                    id="ol17"/>
+                  </f:facet>
+                  <af:inputText id="UlrAnnotation"
+                                value="#{row.bindings.Annotation.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.Annotation.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.Annotation.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.Annotation.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.Annotation.displayWidth}"
+                                maximumLength="2000"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.Annotation.tooltip}">
+                    <f:validator binding="#{row.bindings.Annotation.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrSpecialIndexCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="SpecialIndex" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.SpecialIndex.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.SpecialIndex.mandatory}"
+                                    id="ol18"/>
+                  </f:facet>
+                  <af:inputText id="UlrSpecialIndex"
+                                value="#{row.bindings.SpecialIndex.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.SpecialIndex.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.SpecialIndex.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.SpecialIndex.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.SpecialIndex.displayWidth}"
+                                maximumLength="200"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.SpecialIndex.tooltip}">
+                    <f:validator binding="#{row.bindings.SpecialIndex.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrRecordNumberCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="RecordNumber" align="right"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.RecordNumber.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.RecordNumber.mandatory}"
+                                    id="ol19"/>
+                  </f:facet>
+                  <af:inputText id="UlrRecordNumber"
+                                value="#{row.bindings.RecordNumber.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.RecordNumber.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.RecordNumber.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.RecordNumber.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.RecordNumber.displayWidth}"
+                                maximumLength="38"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.RecordNumber.tooltip}">
+                    <f:validator binding="#{row.bindings.RecordNumber.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.UlrichsTitleTable.hints.RecordNumber.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrStatusCodeCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="StatusCode" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.StatusCode.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.StatusCode.mandatory}"
+                                    id="ol20"/>
+                  </f:facet>
+                  <af:inputText id="UlrStatusCode"
+                                value="#{row.bindings.StatusCode.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.StatusCode.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.StatusCode.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.StatusCode.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.StatusCode.displayWidth}"
+                                maximumLength="30"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.StatusCode.tooltip}">
+                    <f:validator binding="#{row.bindings.StatusCode.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrPrimaryPmClassCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="PrimaryPmClass" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.PrimaryPmClass.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.PrimaryPmClass.mandatory}"
+                                    id="ol21"/>
+                  </f:facet>
+                  <af:inputText id="UlrPrimaryPmClass"
+                                value="#{row.bindings.PrimaryPmClass.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.PrimaryPmClass.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.PrimaryPmClass.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.PrimaryPmClass.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.PrimaryPmClass.displayWidth}"
+                                maximumLength="40"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.PrimaryPmClass.tooltip}">
+                    <f:validator binding="#{row.bindings.PrimaryPmClass.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrSecondaryPmClassCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="SecondaryPmClass" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.SecondaryPmClass.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.SecondaryPmClass.mandatory}"
+                                    id="ol22"/>
+                  </f:facet>
+                  <af:inputText id="UlrSecondaryPmClass"
+                                value="#{row.bindings.SecondaryPmClass.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.SecondaryPmClass.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.SecondaryPmClass.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.SecondaryPmClass.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.SecondaryPmClass.displayWidth}"
+                                maximumLength="40"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.SecondaryPmClass.tooltip}">
+                    <f:validator binding="#{row.bindings.SecondaryPmClass.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrRightsContactNameCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="RightsContactName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.RightsContactName.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.RightsContactName.mandatory}"
+                                    id="ol23"/>
+                  </f:facet>
+                  <af:inputText id="UlrRightsContactName"
+                                value="#{row.bindings.RightsContactName.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.RightsContactName.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.RightsContactName.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.RightsContactName.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.RightsContactName.displayWidth}"
+                                maximumLength="200"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.RightsContactName.tooltip}">
+                    <f:validator binding="#{row.bindings.RightsContactName.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrOpenAccessIndicatorCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="OpenAccessIndicator" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.OpenAccessIndicator.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.OpenAccessIndicator.mandatory}"
+                                    id="ol24"/>
+                  </f:facet>
+                  <af:inputText id="UlrOpenAccessIndicator"
+                                value="#{row.bindings.OpenAccessIndicator.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.OpenAccessIndicator.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.OpenAccessIndicator.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.OpenAccessIndicator.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.OpenAccessIndicator.displayWidth}"
+                                maximumLength="40"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.OpenAccessIndicator.tooltip}">
+                    <f:validator binding="#{row.bindings.OpenAccessIndicator.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrAvailableOnlineFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="AvailableOnlineFlag" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.AvailableOnlineFlag.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.AvailableOnlineFlag.mandatory}"
+                                    id="ol25"/>
+                  </f:facet>
+                  <af:inputText id="UlrAvailableOnlineFlag"
+                                value="#{row.bindings.AvailableOnlineFlag.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.AvailableOnlineFlag.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.AvailableOnlineFlag.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.AvailableOnlineFlag.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.AvailableOnlineFlag.displayWidth}"
+                                maximumLength="1"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.AvailableOnlineFlag.tooltip}">
+                    <f:validator binding="#{row.bindings.AvailableOnlineFlag.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrFormatCol" sortable="true" filterable="true"
+                           noWrap="true" width="180" sortProperty="Format"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.Format.label}"
+                                    showRequired="#{bindings.UlrichsTitleTable.hints.Format.mandatory}"
+                                    id="ol26"/>
+                  </f:facet>
+                  <af:inputText id="UlrFormat"
+                                value="#{row.bindings.Format.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.Format.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.Format.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.Format.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.Format.displayWidth}"
+                                maximumLength="50"
+                                readOnly="#{(!pageFlowScope.UlrichsTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn, OVR']))}"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.Format.tooltip}">
+                    <f:validator binding="#{row.bindings.Format.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrIssnCol" sortable="true" filterable="true"
+                           noWrap="true" width="180" sortProperty="Issn"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.Issn.label}"
+                                    id="ol27"/>
+                  </f:facet>
+                  <af:inputText id="UlrIssn"
+                                value="#{row.bindings.Issn.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.Issn.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.Issn.mandatory}"
+                                rows="#{bindings.UlrichsTitleTable.hints.Issn.displayHeight}"
+                                columns="#{bindings.UlrichsTitleTable.hints.Issn.displayWidth}"
+                                maximumLength="100" readOnly="true"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.Issn.tooltip}">
+                    <f:validator binding="#{row.bindings.Issn.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UlrCreateAsTargetCol" noWrap="true" width="100"
+                           visible="#{jhsUserRoles['RM, ADMIN']}"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="Create New Title"
+                                    showRequired="false" id="ol28"/>
+                  </f:facet>
+                  <af:commandButton id="UlrCreateAsTarget"
+                                    textAndAccessKey="Create New Title"
+                                    actionListener="#{bindings.UlrCreateAsTarget.execute}"
+                                    visible="#{jhsUserRoles['RM, ADMIN']}"
+                                    disabled="#{row.bindings.LinkedTitleFlag.attributeValue == 'Y'}"></af:commandButton>
+                </af:column>
+                <af:column id="UlrCreatedBySearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedBySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.CreatedBySearch.label}"
+                                    id="ol29"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedBySearch}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="UlrCreatedBySearch"
+                                value="#{row.bindings.CreatedBySearch.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.CreatedBySearch.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.CreatedBySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.CreatedBySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="UlrLastUpdatedbySearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LastUpdatedbySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UlrichsTitleTable.hints.LastUpdatedbySearch.label}"
+                                    id="ol30"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdatedbySearch}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="UlrLastUpdatedbySearch"
+                                value="#{row.bindings.LastUpdatedbySearch.inputValue}"
+                                label="#{bindings.UlrichsTitleTable.hints.LastUpdatedbySearch.label}"
+                                required="#{bindings.UlrichsTitleTable.hints.LastUpdatedbySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.UlrichsTitleTable.hints.LastUpdatedbySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="UlrDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="UlrDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_ULRICHSTITL:#{pageFlowScope.UlrichsTitleTable.currentRowAttributeValues.Title}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteUlrichsTitle.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

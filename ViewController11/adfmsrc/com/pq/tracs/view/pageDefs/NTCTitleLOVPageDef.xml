@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.62.29" id="NTCTitleLOVPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <iterator id="NTCTitleLOVIterator" Binds="NTCTitleLov1"
+              DataControl="TracsServiceDataControl" RangeSize="10"
+              RefreshCondition="#{pageFlowScope.searchNTCTitleLOV.emptyRowSetCreated}"/>
+    <searchRegion id="NTCTitleLOVIteratorNTCTitleLovCriteriaQuery"
+                  Binds="NTCTitleLOVIterator" Criteria="NTCTitleLovCriteria"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="CatalogNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="NTCTitleLOVTitleId" IterBinding="NTCTitleLOVIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleLOVAccountId"
+                     IterBinding="NTCTitleLOVIterator">
+      <AttrNames>
+        <Item Value="AccountId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleLOVTrackingNo"
+                     IterBinding="NTCTitleLOVIterator">
+      <AttrNames>
+        <Item Value="TrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleLOVCatalogNumber"
+                     IterBinding="NTCTitleLOVIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleLOVTitle" IterBinding="NTCTitleLOVIterator">
+      <AttrNames>
+        <Item Value="Title"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleLOVClassificationNumber"
+                     IterBinding="NTCTitleLOVIterator">
+      <AttrNames>
+        <Item Value="ClassificationNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleLOVAccountNo"
+                     IterBinding="NTCTitleLOVIterator">
+      <AttrNames>
+        <Item Value="AccountNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleLOVAccountName"
+                     IterBinding="NTCTitleLOVIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleLOVCatalogRoot"
+                     IterBinding="NTCTitleLOVIterator">
+      <AttrNames>
+        <Item Value="CatalogRoot"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NTCTitleLOVTable" IterBinding="NTCTitleLOVIterator">
+      <nodeDefinition Name="NTCTitleLOV"
+                      DefName="com.pq.tracs.model.lookups.NTCTitleLov">
+        <AttrNames>
+          <Item Value="TitleId"/>
+          <Item Value="AccountId"/>
+          <Item Value="TrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="Title"/>
+          <Item Value="ClassificationNumber"/>
+          <Item Value="AccountNo"/>
+          <Item Value="AccountName"/>
+          <Item Value="CatalogRoot"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNTCTitleLOV" IterBinding="NTCTitleLOVIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousNTCTitleLOV" IterBinding="NTCTitleLOVIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextNTCTitleLOV" IterBinding="NTCTitleLOVIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastNTCTitleLOV" IterBinding="NTCTitleLOVIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchNTCTitleLOV"
+                  IterBinding="NTCTitleLOVIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchNTCTitleLOV.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchNTCTitleLOV.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchNTCTitleLOV.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyNTCTitleLOV"
+            IterBinding="NTCTitleLOVIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNTCTitleLOV}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="LookupSetMappingsPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'ADMIN'}"/>
+  </parameters>
+  <executables>
+    <iterator id="LookupSetMappingsIterator" Binds="LookupSetMappingView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="LookupSetMappingsIteratorLookupSetMappingViewCriteriaQuery"
+                  Binds="LookupSetMappingsIterator"
+                  Criteria="LookupSetMappingViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="SourceCodeSetId"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="LookupCodeMappingIterator" Binds="LookupCodeMappingView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="10"/>
+    <searchRegion id="LookupCodeMappingIteratorLookupCodeMappingViewCriteriaQuery"
+                  Binds="LookupCodeMappingIterator"
+                  Criteria="LookupCodeMappingViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="SourceLookupCodeId"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <list IterBinding="LookupSetMappingsIterator"
+          id="LookupSetMappingsSourceCodeSetId" Uses="LOV_SourceCodeSetId"
+          StaticList="false"/>
+    <list IterBinding="LookupSetMappingsIterator"
+          id="LookupSetMappingsDestinationCodeSetId"
+          Uses="LOV_DestinationCodeSetId" StaticList="false"/>
+    <attributeValues id="LookupSetMappingsDescription"
+                     IterBinding="LookupSetMappingsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LookupSetMappingsCreatedBy"
+                     IterBinding="LookupSetMappingsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LookupSetMappingsCreatedDate"
+                     IterBinding="LookupSetMappingsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LookupSetMappingsLastUpdatedBy"
+                     IterBinding="LookupSetMappingsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LookupSetMappingsLastUpdatedDate"
+                     IterBinding="LookupSetMappingsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="LookupSetMappingsTable" IterBinding="LookupSetMappingsIterator">
+      <nodeDefinition Name="LookupSetMappings"
+                      DefName="com.pq.tracs.model.dao.LookupSetMappingView">
+        <AttrNames>
+          <Item Value="SourceCodeSetId"/>
+          <Item Value="DestinationCodeSetId"/>
+          <Item Value="Description"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstLookupSetMappings" IterBinding="LookupSetMappingsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousLookupSetMappings"
+            IterBinding="LookupSetMappingsIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextLookupSetMappings" IterBinding="LookupSetMappingsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastLookupSetMappings" IterBinding="LookupSetMappingsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyLookupSetMappings"
+            IterBinding="LookupSetMappingsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrLookupSetMappings}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateLookupSetMappings" IterBinding="LookupSetMappingsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <attributeValues id="LookupCodeMappingLookupSetMappingId"
+                     IterBinding="LookupCodeMappingIterator">
+      <AttrNames>
+        <Item Value="LookupSetMappingId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="LookupCodeMappingIterator"
+          id="LookupCodeMappingSourceLookupCodeId"
+          Uses="LOV_SourceLookupCodeId" StaticList="false"/>
+    <list IterBinding="LookupCodeMappingIterator"
+          id="LookupCodeMappingDestinationLookupCodeId"
+          Uses="LOV_DestinationLookupCodeId" StaticList="false"/>
+    <attributeValues id="LookupCodeMappingCreatedBy"
+                     IterBinding="LookupCodeMappingIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LookupCodeMappingCreatedDate"
+                     IterBinding="LookupCodeMappingIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LookupCodeMappingLastUpdatedBy"
+                     IterBinding="LookupCodeMappingIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LookupCodeMappingLastUpdatedDate"
+                     IterBinding="LookupCodeMappingIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="LookupCodeMappingTable" IterBinding="LookupCodeMappingIterator">
+      <nodeDefinition Name="LookupCodeMapping"
+                      DefName="com.pq.tracs.model.dao.LookupCodeMappingView">
+        <AttrNames>
+          <Item Value="LookupSetMappingId"/>
+          <Item Value="SourceLookupCodeId"/>
+          <Item Value="DestinationLookupCodeId"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstLookupCodeMapping" IterBinding="LookupCodeMappingIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousLookupCodeMapping"
+            IterBinding="LookupCodeMappingIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextLookupCodeMapping" IterBinding="LookupCodeMappingIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastLookupCodeMapping" IterBinding="LookupCodeMappingIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyLookupCodeMapping"
+            IterBinding="LookupCodeMappingIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrLookupCodeMapping}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateLookupCodeMapping" IterBinding="LookupCodeMappingIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteLookupCodeMapping" IterBinding="LookupCodeMappingIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

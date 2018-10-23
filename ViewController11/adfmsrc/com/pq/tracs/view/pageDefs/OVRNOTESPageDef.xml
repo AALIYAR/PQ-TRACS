@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="OVRNOTESPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare" value="#{'OVRsPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <variableIterator id="variables">
+      <variable Name="NotesDispItemVar" Type="String"/>
+      <variable Name="OVRNOTESRowKeyVar" Type="java.lang.String"
+                DefaultValue="#{bindings.OVRNOTESIterator.currentRowKeyString}"/>
+    </variableIterator>
+    <iterator id="OVRNOTESIterator" Binds="TitleRecordView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+  </executables>
+  <bindings>
+    <attributeValues id="NotesDispItem" IterBinding="variables">
+      <AttrNames>
+        <Item Value="NotesDispItemVar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NotesPublicationNote" IterBinding="OVRNOTESIterator">
+      <AttrNames>
+        <Item Value="PublicationNote"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NotesPublicationCoverageNote"
+                     IterBinding="OVRNOTESIterator">
+      <AttrNames>
+        <Item Value="PublicationCoverageNote"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="FirstOVRNOTES" IterBinding="OVRNOTESIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOVRNOTES" IterBinding="OVRNOTESIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOVRNOTES" IterBinding="OVRNOTESIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOVRNOTES" IterBinding="OVRNOTESIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <attributeValues id="OVRNOTESRowKey" IterBinding="variables">
+      <AttrNames>
+        <Item Value="OVRNOTESRowKeyVar"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="SetCurrentRowWithKeyOVRNOTES" IterBinding="OVRNOTESIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{bindings.OVRNOTESRowKey}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOVRNOTES" IterBinding="OVRNOTESIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOVRNOTES" IterBinding="OVRNOTESIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

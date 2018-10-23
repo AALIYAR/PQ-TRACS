@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="TraxImportPotentialMatchView"
+  Version="11.1.1.61.92"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  ComponentClass="com.pq.tracs.model.dao.TracsView"
+  PageIterMode="Partial"
+  UseGlueCode="false"
+  OrderBy="ROW_NUMBER, CONTRACT_NUMBER"
+  FetchMode="FETCH_AS_NEEDED"
+  FetchSize="25"
+  RangeSize="20">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <SQLQuery>
+    <![CDATA[SELECT DISTINCT TraxImportPotentialMatch.ID, 
+       TraxImportPotentialMatch.IMPORT_DATA_PARSE_ID, 
+       TraxImportPotentialMatch.IMPORT_FILE_ID, 
+       TraxImportPotentialMatch.TITLE_ID, 
+       TraxImportPotentialMatch.ULRICHS_TITLE_ID,
+       TraxImportDataParse.ROW_NUMBER, 
+       TraxImportPotentialMatch.USE_ULRICHS_FLAG, 
+       TraxImportPotentialMatch.IGNORE_MATCH_FLAG,
+       TraxImportDataParse.TITLE PARSE_TITLE,
+       TraxImportDataParse.ISSN PARSE_ISSN,
+       DECODE(NVL(TraxImportPotentialMatch.TITLE_ID, -1), -1, 'Ulrichs Title', DECODE(NVL(TraxTitle.CATALOG_NUMBER, 'A'), 'A', 'Uncataloged Title', 'Cataloged Title')) TITLE_TYPE,
+       NVL(TraxTitle.LONG_TITLE, TraxUlrichsTitle.TITLE) TITLE,
+       NVL(TraxClassification.CLASSIFICATION_NUMBER, TraxUlrichsClassification.CLASSIFICATION) CLASSIFICATION,
+       TraxContentOwner.CONTENT_OWNER_NO ACCOUNT_NUMBER,
+       PrmOpportunity.OPPORTUNITY_NO,
+       TraxImportPotentialMatch.CREATED_BY, 
+       TraxImportPotentialMatch.CREATED_DATE, 
+       TraxImportPotentialMatch.LAST_UPDATED_BY, 
+       TraxImportPotentialMatch.LAST_UPDATED_DATE,  
+       TraxTitle.CATALOG_NUMBER,
+       TraxUlrichsTitle.ULRICHS_SERIAL_ID,
+       TraxImportDataParse.ID PARSE_ID,
+       TraxContract.ID CONTRACT_ID,
+       TraxContract.CONTRACT_NUMBER, 
+       TraxImportDataParse.ID ID1,
+       TraxTitle.TARGET_TRACKING_NO,
+       PrmOpportunity.ID OPPORTUNITY_ID,
+       PrmOpportunity.NAME OPPORTUNITY_NAME,
+       TraxContentOwner.ID ACCOUNT_ID,
+       TraxContentOwner.NAME ACCOUNT_NAME,
+       TraxImportPotentialMatch.MATCHED_BY
+FROM TRAX_IMPORT_POTENTIAL_MATCH TraxImportPotentialMatch
+    INNER JOIN TRAX_IMPORT_DATA_PARSE TraxImportDataParse
+        ON TraxImportPotentialMatch.IMPORT_DATA_PARSE_ID = TraxImportDataParse.ID
+    LEFT OUTER JOIN TRAX_TITLE_CONTRACT_RIGHT TraxTitleContractRight
+        INNER JOIN TRAX_CONTRACT_RIGHT TraxContractRight
+            INNER JOIN TRAX_CONTRACT TraxContract
+                ON TraxContractRight.CONTRACT_ID = TraxContract.ID
+                    AND TraxContract.STATUS = 'Active'
+                    AND TraxContract.EXPIRATION_DATE > SYSDATE
+            ON TraxTitleContractRight.CONTRACT_RIGHT_ID = TraxContractRight.ID 
+        ON TraxImportPotentialMatch.TITLE_ID = TraxTitleContractRight.TITLE_ID
+    LEFT OUTER JOIN PRM_TARGETED_PRODUCT_TITLE PrmTargetedProductTitle
+        INNER JOIN PRM_OPPORTUNITY_TARGET PrmOpportunityTarget
+            INNER JOIN PRM_OPPORTUNITY PrmOpportunity
+                ON PrmOpportunityTarget.PRM_OPPORTUNITY_ID = PrmOpportunity.ID
+                AND PrmOpportunity.CURRENT_STATUS NOT IN ('08', '09', '10', '11')
+            ON PrmTargetedProductTitle.ID = PrmOpportunityTarget.PRM_TARGETED_PRODUCT_TITLE_ID
+            AND NVL(PrmOpportunityTarget.REMOVED_DATE, SYSDATE + 1) > SYSDATE
+        ON TraxImportPotentialMatch.TITLE_ID = PrmTargetedProductTitle.TITLE_ID
+        AND NVL(PrmTargetedProductTitle.REMOVED_DATE, SYSDATE + 1) > SYSDATE
+    LEFT OUTER JOIN TRAX_TITLE TraxTitle
+        LEFT OUTER JOIN TRAX_CLASSIFICATION TraxClassification
+            ON TraxTitle.ID = TraxClassification.TITLE_ID
+            AND TraxClassification.PRIMARY_FLAG = 'Y'
+        LEFT OUTER JOIN TRAX_CONTENT_OWNER TraxContentOwner
+            ON TraxTitle.CONTENT_OWNER_ID = TraxContentOwner.ID
+        ON TraxImportPotentialMatch.TITLE_ID = TraxTitle.ID
+    LEFT OUTER JOIN TRAX_ULRICHS_TITLE TraxUlrichsTitle
+        LEFT OUTER JOIN TRAX_ULRICHS_CLASSIFICATION TraxUlrichsClassification
+            ON TraxUlrichsTitle.ID = TraxUlrichsClassification.ULRICHS_TITLE_ID
+            AND TraxUlrichsClassification.TYPE = 'ISSN'
+        ON TraxImportPotentialMatch.ULRICHS_SERIAL_ID = TraxUlrichsTitle.ULRICHS_SERIAL_ID]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="TraxImportPotentialMatch"
+    Entity="com.pq.tracs.model.eo.TraxImportPotentialMatch"/>
+  <ViewAttribute
+    Name="Id"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxImportPotentialMatch"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="ImportDataParseId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ImportDataParseId"
+    EntityUsage="TraxImportPotentialMatch"
+    AliasName="IMPORT_DATA_PARSE_ID"/>
+  <ViewAttribute
+    Name="ImportFileId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ImportFileId"
+    EntityUsage="TraxImportPotentialMatch"
+    AliasName="IMPORT_FILE_ID"/>
+  <ViewAttribute
+    Name="TitleId"
+    PrecisionRule="true"
+    EntityAttrName="TitleId"
+    EntityUsage="TraxImportPotentialMatch"
+    AliasName="TITLE_ID"/>
+  <ViewAttribute
+    Name="UlrichsTitleId"
+    PrecisionRule="true"
+    EntityAttrName="UlrichsTitleId"
+    EntityUsage="TraxImportPotentialMatch"
+    AliasName="ULRICHS_TITLE_ID"/>
+  <ViewAttribute
+    Name="RowNumber"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ROW_NUMBER"
+    Expression="ROW_NUMBER"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxImportPotentialMatchView.RowNumber_LABEL"/>
+        <DISPLAYWIDTH
+          Value="5"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UseUlrichsFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UseUlrichsFlag"
+    EntityUsage="TraxImportPotentialMatch"
+    AliasName="USE_ULRICHS_FLAG"/>
+  <ViewAttribute
+    Name="IgnoreMatchFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="IgnoreMatchFlag"
+    EntityUsage="TraxImportPotentialMatch"
+    AliasName="IGNORE_MATCH_FLAG"/>
+  <ViewAttribute
+    Name="ParseTitle"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="400"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PARSE_TITLE"
+    Expression="PARSE_TITLE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="400"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxImportPotentialMatchView.ParseTitle_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ParseIssn"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PARSE_ISSN"
+    Expression="PARSE_ISSN"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxImportPotentialMatchView.ParseIssn_LABEL"/>
+        <DISPLAYWIDTH
+          Value="12"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TitleType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="48"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TITLE_TYPE"
+    Expression="TITLE_TYPE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="48"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Title"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="4000"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TITLE"
+    Expression="TITLE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="4000"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Classification"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="100"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CLASSIFICATION"
+    Expression="CLASSIFICATION"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="12"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountNumber"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ACCOUNT_NUMBER"
+    Expression="ACCOUNT_NUMBER"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxImportPotentialMatchView.AccountNumber_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OpportunityNo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="OPPORTUNITY_NO"
+    Expression="OPPORTUNITY_NO"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="10"/>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxImportPotentialMatchView.OpportunityNo_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="TraxImportPotentialMatch"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="CreatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedDate"
+    EntityUsage="TraxImportPotentialMatch"
+    AliasName="CREATED_DATE"/>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="TraxImportPotentialMatch"
+    AliasName="LAST_UPDATED_BY"/>
+  <ViewAttribute
+    Name="LastUpdatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="TraxImportPotentialMatch"
+    AliasName="LAST_UPDATED_DATE"/>
+  <ViewAttribute
+    Name="CatalogNumber"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CATALOG_NUMBER"
+    Expression="CATALOG_NUMBER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxImportPotentialMatchView.CatalogNumber_LABEL"/>
+        <DISPLAYWIDTH
+          Value="12"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UlrichsSerialId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ULRICHS_SERIAL_ID"
+    Expression="ULRICHS_SERIAL_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxImportPotentialMatchView.UlrichsSerialId_LABEL"/>
+        <DISPLAYWIDTH
+          Value="12"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ParseId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="PARSE_ID"
+    Expression="PARSE_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ContractId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="CONTRACT_ID"
+    Expression="CONTRACT_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ContractNumber"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CONTRACT_NUMBER"
+    Expression="CONTRACT_NUMBER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxImportPotentialMatchView.ContractNumber_LABEL"/>
+        <DISPLAYWIDTH
+          Value="12"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Id1"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ID1"
+    Expression="ID1"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TargetTrackingNo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="TARGET_TRACKING_NO"
+    Expression="TARGET_TRACKING_NO"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxImportPotentialMatchView.TargetTrackingNo_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OpportunityId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="OPPORTUNITY_ID"
+    Expression="OPPORTUNITY_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OpportunityName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="OPPORTUNITY_NAME"
+    Expression="OPPORTUNITY_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxImportPotentialMatchView.OpportunityName_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ACCOUNT_ID"
+    Expression="ACCOUNT_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="400"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ACCOUNT_NAME"
+    Expression="ACCOUNT_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="400"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxImportPotentialMatchView.AccountName_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MatchedBy"
+    PrecisionRule="true"
+    EntityAttrName="MatchedBy"
+    EntityUsage="TraxImportPotentialMatch"
+    AliasName="MATCHED_BY"/>
+  <ViewCriteria
+    Name="TraxImportPotentialMatchViewCriteria"
+    ViewObjectName="com.pq.tracs.model.vo.TraxImportPotentialMatchView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow245"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="RowNumber"
+        ViewAttribute="RowNumber"
+        Conjunction="AND"
+        Required="Optional"
+        Operator="="/>
+      <ViewCriteriaItem
+        Name="UseUlrichsFlag"
+        ViewAttribute="UseUlrichsFlag"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="IgnoreMatchFlag"
+        ViewAttribute="IgnoreMatchFlag"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="ParseTitle"
+        ViewAttribute="ParseTitle"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="ParseIssn"
+        ViewAttribute="ParseIssn"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="TitleType"
+        ViewAttribute="TitleType"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="Title"
+        ViewAttribute="Title"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="Classification"
+        ViewAttribute="Classification"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="AccountNumber"
+        ViewAttribute="AccountNumber"
+        Conjunction="AND"
+        Required="Optional"
+        Operator="="/>
+      <ViewCriteriaItem
+        Name="OpportunityNo"
+        ViewAttribute="OpportunityNo"
+        Conjunction="AND"
+        Required="Optional"
+        Operator="="/>
+      <ViewCriteriaItem
+        Name="CreatedBy"
+        ViewAttribute="CreatedBy"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="CreatedDate"
+        ViewAttribute="CreatedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="LastUpdatedBy"
+        ViewAttribute="LastUpdatedBy"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="LastUpdatedDate"
+        ViewAttribute="LastUpdatedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="Id"/>
+    <Item Value="TitleType"/>
+    <Item Value="ContractId"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

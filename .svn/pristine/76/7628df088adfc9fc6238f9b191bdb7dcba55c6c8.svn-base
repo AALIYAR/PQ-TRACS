@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.61.92" id="ActivityOpportunitiesPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare"
+               value="#{'ActivitiesTabPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="ActivityOpportunitiesIterator"
+              Binds="TraxActivityOpportunityView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+  </executables>
+  <bindings>
+    <attributeValues id="ActivityOpportunitiesId"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActivityOpportunitiesActivityId"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="ActivityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActivityOpportunitiesPrmOpportunityId"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="PrmOpportunityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActivityOpportunitiesAddedDate"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActivityOpportunitiesRemovedDate"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActivityOpportunitiesCreatedBy"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActivityOpportunitiesCreatedDate"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActivityOpportunitiesLastUpdatedBy"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActivityOpportunitiesLastUpdatedDate"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActivityOpportunitiesPrimaryFlag"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ActivityOpportunitiesTable"
+          IterBinding="ActivityOpportunitiesIterator">
+      <nodeDefinition Name="ActivityOpportunities"
+                      DefName="com.pq.tracs.model.vo.TraxActivityOpportunityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ActivityId"/>
+          <Item Value="PrmOpportunityId"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="PrimaryFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrActivityOpportunities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

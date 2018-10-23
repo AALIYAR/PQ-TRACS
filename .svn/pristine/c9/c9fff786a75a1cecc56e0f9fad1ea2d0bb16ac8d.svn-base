@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="TraxOvrBlockingRuleView"
+  Version="11.1.1.59.23"
+  BindingStyle="OracleName"
+  CustomQuery="true"  
+  PageIterMode="Full"
+  UseGlueCode="false"
+  ComponentClass="com.pq.tracs.model.dao.TracsView"
+  FetchMode="FETCH_AS_NEEDED"
+  FetchSize="15"
+  RangeSize="10">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.pq.tracs.model.vo.TraxOvrBlockingRuleView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <SQLQuery>
+    <![CDATA[SELECT TraxBlockingRuleOvr.BLOCKING_RULE_HDR_ID, 
+       TraxBlockingRuleOvr.CREATED_BY, 
+       TraxBlockingRuleOvr.CREATED_DATE, 
+       TraxBlockingRuleOvr.ID, 
+       TraxBlockingRuleOvr.LAST_UPDATED_BY, 
+       TraxBlockingRuleOvr.LAST_UPDATED_DATE, 
+       TraxBlockingRuleOvr.TITLE_RECORD_ID,
+       TraxBlockingRule.BLOCKING_RULE_NAME
+FROM TRACS.TRAX_BLOCKING_RULE_OVR TraxBlockingRuleOvr,
+     TRACS.TRAX_BLOCKING_RULE_HDR TraxBlockingRule
+WHERE TraxBlockingRule.ID = TraxBlockingRuleOvr.BLOCKING_RULE_HDR_ID]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="TraxBlockingRuleOvr"
+    Entity="com.pq.tracs.model.eo.TraxBlockingRuleOvr"/>
+  <ViewAttribute
+    Name="BlockingRuleHdrId"
+    PrecisionRule="true"
+    EntityAttrName="BlockingRuleHdrId"
+    EntityUsage="TraxBlockingRuleOvr"
+    AliasName="BLOCKING_RULE_HDR_ID"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="TraxBlockingRuleOvr"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="CreatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedDate"
+    EntityUsage="TraxBlockingRuleOvr"
+    AliasName="CREATED_DATE"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="Id"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxBlockingRuleOvr"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="TraxBlockingRuleOvr"
+    AliasName="LAST_UPDATED_BY"/>
+  <ViewAttribute
+    Name="LastUpdatedDate"
+    IsUpdateable="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="TraxBlockingRuleOvr"
+    AliasName="LAST_UPDATED_DATE"/>
+  <ViewAttribute
+    Name="TitleRecordId"
+    PrecisionRule="true"
+    EntityAttrName="TitleRecordId"
+    EntityUsage="TraxBlockingRuleOvr"
+    AliasName="TITLE_RECORD_ID"/>
+  <ViewAttribute
+    Name="BlockingRuleName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="BLOCKING_RULE_NAME"
+    Expression="BLOCKING_RULE_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,2209 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplate.jspx">
+    <f:facet name="pageContent">
+      <af:panelStretchLayout topHeight="auto" id="psl0" partialTriggers=""
+                             rendered="#{jhsUserRoles['RM, ADMIN']}">
+        <f:facet name="top">
+          <af:panelGroupLayout layout="scroll" id="RMDTopLc" partialTriggers=""
+                               rendered="#{jhsUserRoles['RM, ADMIN']}">
+            <f:facet name="separator">
+              <af:spacer width="10" height="10" id="sp0"/>
+            </f:facet>
+            <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (default/pageComponent/groupContent.vm) -->
+            <af:group id="g0"></af:group>
+            <af:switcher rendered="#{bindings.RMDashboardIterator.findMode!='true'}"
+                         id="RMDSw" defaultFacet="hasRows"
+                         facetName="#{( bindings.RMDashboardIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+              <f:facet name="noRows">
+                <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                    styleUsage="pageStamp" id="RMDNoRowsFound"/>
+              </f:facet>
+              <f:facet name="hasRows">
+                <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (default/pageComponent/groupContent.vm), disabled (default/pageComponent/formGroup.vm) -->
+                <af:panelGroupLayout id="RMDFC" layout="vertical">
+                  <f:facet name="separator">
+                    <af:spacer width="10" height="10" id="sp1"/>
+                  </f:facet>
+                  <af:panelFormLayout rows="1" labelAlignment="start"
+                                      maxColumns="2" id="RMDFI">
+                    <af:inputText id="RMDDisplayName"
+                                  value="#{bindings.RMDDisplayName.inputValue}"
+                                  label="Welcome"
+                                  required="#{bindings.RMDDisplayName.hints.mandatory}"
+                                  rows="#{bindings.RMDDisplayName.hints.displayHeight}"
+                                  columns="#{bindings.RMDDisplayName.hints.displayWidth}"
+                                  maximumLength="240" readOnly="true"
+                                  shortDesc="#{bindings.RMDDisplayName.hints.tooltip}">
+                      <f:validator binding="#{bindings.RMDDisplayName.validator}"/>
+                    </af:inputText>
+                  </af:panelFormLayout>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: enabled (default), disabled (default/pageComponent/groupContent.vm) -->
+              </f:facet>
+            </af:switcher>
+            <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+            <af:spacer width="10" height="10" id="sp2"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelDashboard id="RMDDb" columns="2" rowHeight="300px">
+            <af:panelBox text="#{nls['TABLE_TITLE_RECENTOPPORTUNITIES']}"
+                         id="RROPb">
+              <f:facet name="toolbar"/>
+              <af:panelStretchLayout topHeight="auto" id="RROTopLc"
+                                     partialTriggers=" RMDTopLc qsAreaRROSearchOptions"
+                                     rendered="#{jhsUserRoles['RM, ADMIN']}">
+                <f:facet name="top">
+                  <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (tracs_templates/pageComponent/dashboardContent.vm) -->
+                  <af:group id="g1">
+                    <af:panelGroupLayout id="modelSearchAreaRRO"
+                                         rendered="#{!pageFlowScope.createModes.CreateRecentOpportunities and !pageFlowScope.hideSearchArea}"
+                                         partialTriggers="">
+                      <f:attribute name="JhsIgnoreChanges" value="true"/>
+                      <af:quickQuery id="qsAreaRROSearchOptions"
+                                     label="#{nls['FILTER_BY']}"
+                                     value="#{bindings.RecentOpportunitiesIteratorRecentOpportunitiesDashboardViewCriteriaQuery.queryDescriptor}"
+                                     model="#{bindings.RecentOpportunitiesIteratorRecentOpportunitiesDashboardViewCriteriaQuery.queryModel}"
+                                     queryListener="#{bindings.RecentOpportunitiesIteratorRecentOpportunitiesDashboardViewCriteriaQuery.processQuery}"></af:quickQuery>
+                    </af:panelGroupLayout>
+                    <af:spacer width="10" height="10" id="sp3"/>
+                  </af:group>
+                  <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelStretchLayout topHeight="0" id="psl1">
+                    <f:facet name="top"></f:facet>
+                    <f:facet name="center">
+                      <af:panelCollection id="RROPC" featuresOff=" "
+                                          styleClass="AFStretchWidth">
+                        <f:facet name="menus">
+                          <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                                   id="menu0">
+                            <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu1">
+                              <af:group id="RROtbb"
+                                        rendered="#{ bindings.RecentOpportunitiesIterator.currentRow!=null }">
+                                <af:commandMenuItem actionListener="#{bindings.FirstRecentOpportunities.execute}"
+                                                    id="RROFirst"
+                                                    partialSubmit="true"
+                                                    icon="/afr/shuttleleftall_ena.png"
+                                                    textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.PreviousRecentOpportunities.execute}"
+                                                    icon="/afr/shuttleleft_ena.png"
+                                                    textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                    id="RROPrevious"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.NextRecentOpportunities.execute}"
+                                                    icon="/afr/shuttleright_ena.png"
+                                                    textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                    id="RRONext"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.LastRecentOpportunities.execute}"
+                                                    icon="/afr/shuttlerightall_ena.png"
+                                                    textAndAccessKey="#{nls['LAST_ROW']}"
+                                                    id="RROLast"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                              </af:group>
+                            </af:menu>
+                            <af:commandMenuItem partialSubmit="true"
+                                                textAndAccessKey="#{nls['EXPORT']}"
+                                                icon="/jheadstart/images/excel.png"
+                                                immediate="true" id="cmi0">
+                              <af:exportCollectionActionListener exportedId="RROTab"
+                                                                 type="excelHTML"
+                                                                 filename="RecentOpportunities.xls"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </f:facet>
+                        <f:facet name="toolbar">
+                          <af:toolbar id="tbar0">
+                            <af:commandImageLink immediate="true"
+                                                 partialSubmit="true" id="cl0"
+                                                 shortDesc="#{nls['EXPORT']}"
+                                                 icon="/jheadstart/images/excel.png">
+                              <af:exportCollectionActionListener exportedId="RROTab"
+                                                                 type="excelHTML"
+                                                                 filename="RecentOpportunities.xls"/>
+                            </af:commandImageLink>
+                            <af:commandToolbarButton text="Print" id="RROPrint"
+                                                     shortDesc="Opens a new tab with printer friendly format.">
+                              <af:showPrintablePageBehavior/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar">
+                          <af:toolbar>
+                            <af:outputText value="#{bindings.RecentOpportunitiesIterator.estimatedRowCount} rows found"/>
+                          </af:toolbar>
+                        </f:facet>
+                        <af:table id="RROTab" contentDelivery="immediate"
+                                  value="#{bindings.RecentOpportunitiesTable.collectionModel}"
+                                  columnStretching="blank"
+                                  rowBandingInterval="0" editingMode="editAll"
+                                  columnSelection="multiple"
+                                  contextMenuSelect="true" rowSelection="single"
+                                  selectionListener="#{pageFlowScope.RecentOpportunitiesTable.makeCurrent}"
+                                  selectedRowKeys="#{pageFlowScope.RecentOpportunitiesTable.selectedRow}"
+                                  rowDisclosureListener="#{pageFlowScope.RecentOpportunitiesTable.discloseRow}"
+                                  var="row" varStatus="status"
+                                  fetchSize="#{bindings.RecentOpportunitiesTable.rangeSize}"
+                                  emptyText="#{nls['NO_ROWS_FOUND']}"
+                                  queryListener="#{bindings.RecentOpportunitiesIteratorRecentOpportunitiesDashboardViewCriteriaQuery.processQuery}"
+                                  filterModel="#{bindings.RecentOpportunitiesIteratorRecentOpportunitiesDashboardViewCriteriaQuery.queryDescriptor}"
+                                  filterVisible="true"
+                                  binding="#{pageFlowScope.RecentOpportunitiesTable.table}"
+                                  partialTriggers=":::qsAreaRROSearchOptions :::RROPC ::RROFirst ::RROPrevious ::RRONext ::RROLast"
+                                  styleClass="AFStretchWidth"
+                                  summary="#{nls['TABLE_TITLE_RECENTOPPORTUNITIES']}">
+                          <f:facet name="contextMenu">
+                            <af:popup id="RROTablePopup"
+                                      childCreation="deferred">
+                              <af:menu id="menu2">
+                                <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                         id="menu3"></af:menu>
+                              </af:menu>
+                            </af:popup>
+                          </f:facet>
+                          <af:column id="RROOpportunityNoCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpportunityNo"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.OpportunityNo.label}"
+                                              id="ol0"/>
+                            </f:facet>
+                            <af:inputText id="RROOpportunityNo"
+                                          value="#{row.bindings.OpportunityNo.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.OpportunityNo.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.OpportunityNo.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.OpportunityNo.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.OpportunityNo.displayWidth}"
+                                          maximumLength="38" readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.OpportunityNo.tooltip}">
+                              <f:validator binding="#{row.bindings.OpportunityNo.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.RecentOpportunitiesTable.hints.OpportunityNo.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RRODocTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="Doctype" align="center"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.Doctype.label}"
+                                              id="ol1"/>
+                            </f:facet>
+                            <af:selectBooleanCheckbox id="RRODocType"
+                                                      label="#{bindings.RecentOpportunitiesTable.hints.Doctype.label}"
+                                                      value="#{RRODocTypecheckboxInTable.value}"
+                                                      readOnly="true"></af:selectBooleanCheckbox>
+                          </af:column>
+                          <af:column id="RROOpportunityNameCol" sortable="true"
+                                     noWrap="true" width="240"
+                                     sortProperty="OpportunityName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.OpportunityName.label}"
+                                              id="ol2"/>
+                            </f:facet>
+                            <af:inputText id="cl1"
+                                          value="#{row.bindings.OpportunityName.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.OpportunityName.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.OpportunityName.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.OpportunityName.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.OpportunityName.displayWidth}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.OpportunityName.tooltip}"
+                                          rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                              <f:validator binding="#{row.bindings.OpportunityName.validator}"/>
+                            </af:inputText>
+                            <af:commandLink id="RROOpportunityName"
+                                            text="#{row.bindings.OpportunityName.attributeValue}"
+                                            shortDesc="#{bindings.RecentOpportunitiesTable.hints.OpportunityName.tooltip}"
+                                            action="LaunchTab"
+                                            rendered="#{adfFacesContext.outputMode != 'printable'}">
+                              <af:setActionListener from="#{(row.OpportunityType != 'Auto-Add') ? 'Opportunities' : 'ProcessingGroups'}"
+                                                    to="#{jhsDynTabLauncher.taskFlowName}"/>
+                              <af:setActionListener from="#{row.Id}"
+                                                    to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                              <af:setActionListener from="#{row.OpportunityName}"
+                                                    to="#{jhsDynTabLauncher.label}"/>
+                              <af:setActionListener from="#{row.Id}"
+                                                    to="#{(row.OpportunityType != 'Auto-Add') ? jhsDynTabLauncher.parameters.rowKeyValueOpportunities : jhsDynTabLauncher.parameters.rowKeyValueProcessingGroups}"/>
+                              <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                    to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                            </af:commandLink>
+                          </af:column>
+                          <af:column id="RROCurrentStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="CurrentStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.CurrentStatus.label}"
+                                              id="ol3"/>
+                            </f:facet>
+                            <af:selectOneChoice id="RROCurrentStatus"
+                                                value="#{row.bindings.CurrentStatus.inputValue}"
+                                                label="#{bindings.RecentOpportunitiesTable.hints.CurrentStatus.label}"
+                                                required="#{bindings.RecentOpportunitiesTable.hints.CurrentStatus.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.RecentOpportunitiesTable.hints.CurrentStatus.tooltip}">
+                              <f:selectItems value="#{row.bindings.CurrentStatus.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                          <af:column id="RROAccountNameCol" sortable="true"
+                                     filterable="true" noWrap="true" width="240"
+                                     sortProperty="AccountName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.AccountName.label}"
+                                              id="ol4"/>
+                            </f:facet>
+                            <af:inputText id="RROAccountName"
+                                          value="#{row.bindings.AccountName.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.AccountName.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.AccountName.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.AccountName.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.AccountName.displayWidth}"
+                                          maximumLength="400" readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.AccountName.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RROCreatedDateCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CreatedDate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.CreatedDate.label}"
+                                              id="ol5"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                            id="id0">
+                                <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="RROCreatedDate"
+                                          value="#{row.bindings.CreatedDate.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.CreatedDate.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.CreatedDate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.CreatedDate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="RROAccountManagerCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="AccountManager"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.AccountManager.label}"
+                                              id="ol6"/>
+                            </f:facet>
+                            <af:inputText id="RROAccountManager"
+                                          value="#{row.bindings.AccountManager.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.AccountManager.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.AccountManager.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.AccountManager.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.AccountManager.displayWidth}"
+                                          maximumLength="101" readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.AccountManager.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountManager.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RROCataloguedCountCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CataloguedCount"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.CataloguedCount.label}"
+                                              id="ol7"/>
+                            </f:facet>
+                            <af:inputText id="RROCataloguedCount"
+                                          value="#{row.bindings.CataloguedCount.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.CataloguedCount.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.CataloguedCount.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.CataloguedCount.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.CataloguedCount.displayWidth}"
+                                          maximumLength="10" readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.CataloguedCount.tooltip}">
+                              <f:validator binding="#{row.bindings.CataloguedCount.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.RecentOpportunitiesTable.hints.CataloguedCount.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RROUncataloguedCountCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="UncataloguedCount"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.UncataloguedCount.label}"
+                                              id="ol8"/>
+                            </f:facet>
+                            <af:inputText id="RROUncataloguedCount"
+                                          value="#{row.bindings.UncataloguedCount.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.UncataloguedCount.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.UncataloguedCount.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.UncataloguedCount.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.UncataloguedCount.displayWidth}"
+                                          maximumLength="10" readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.UncataloguedCount.tooltip}">
+                              <f:validator binding="#{row.bindings.UncataloguedCount.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.RecentOpportunitiesTable.hints.UncataloguedCount.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RROAgreementLogindateCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="AgreementLogindate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.AgreementLogindate.label}"
+                                              id="ol9"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.AgreementLogindate}"
+                                            id="id1">
+                                <af:convertDateTime pattern="#{nls.datepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="RROAgreementLogindate"
+                                          value="#{row.bindings.AgreementLogindate.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.AgreementLogindate.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.AgreementLogindate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.AgreementLogindate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="RROCurrentPreStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="CurrentPreStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.CurrentPreStatus.label}"
+                                              id="ol10"/>
+                            </f:facet>
+                            <af:inputText id="RROCurrentPreStatus"
+                                          value="#{row.bindings.CurrentPreStatus.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.CurrentPreStatus.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.CurrentPreStatus.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.CurrentPreStatus.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.CurrentPreStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.CurrentPreStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentPreStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RROCurrentCatalogingStatusCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="120"
+                                     sortProperty="CurrentCatalogingStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                              id="ol11"/>
+                            </f:facet>
+                            <af:inputText id="RROCurrentCatalogingStatus"
+                                          value="#{row.bindings.CurrentCatalogingStatus.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.CurrentCatalogingStatus.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.CurrentCatalogingStatus.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.CurrentCatalogingStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.CurrentCatalogingStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentCatalogingStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RROCurrentAgreementStatusCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="120"
+                                     sortProperty="CurrentAgreementStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                              id="ol12"/>
+                            </f:facet>
+                            <af:inputText id="RROCurrentAgreementStatus"
+                                          value="#{row.bindings.CurrentAgreementStatus.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.CurrentAgreementStatus.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.CurrentAgreementStatus.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.CurrentAgreementStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.CurrentAgreementStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentAgreementStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RROAgreementDataFlagCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="AgreementDataFlag"
+                                     align="center" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.AgreementDataFlag.label}"
+                                              id="ol13"/>
+                            </f:facet>
+                            <af:selectBooleanCheckbox id="RROAgreementDataFlag"
+                                                      label="#{bindings.RecentOpportunitiesTable.hints.AgreementDataFlag.label}"
+                                                      value="#{RROAgreementDataFlagcheckboxInTable.value}"
+                                                      readOnly="true"
+                                                      shortDesc="#{bindings.RecentOpportunitiesTable.hints.AgreementDataFlag.tooltip}"></af:selectBooleanCheckbox>
+                          </af:column>
+                          <af:column id="RROOpenAccessFlagCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpenAccessFlag"
+                                     align="center" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.OpenAccessFlag.label}"
+                                              id="ol14"/>
+                            </f:facet>
+                            <af:selectBooleanCheckbox id="RROOpenAccessFlag"
+                                                      label="#{bindings.RecentOpportunitiesTable.hints.OpenAccessFlag.label}"
+                                                      value="#{RROOpenAccessFlagcheckboxInTable.value}"
+                                                      readOnly="true"
+                                                      shortDesc="#{bindings.RecentOpportunitiesTable.hints.OpenAccessFlag.tooltip}"></af:selectBooleanCheckbox>
+                          </af:column>
+                          <af:column id="RROKeyAccountLevelCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="KeyAccountLevel"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.KeyAccountLevel.label}"
+                                              id="ol15"/>
+                            </f:facet>
+                            <af:inputText id="RROKeyAccountLevel"
+                                          value="#{row.bindings.KeyAccountLevel.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.KeyAccountLevel.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.KeyAccountLevel.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.KeyAccountLevel.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.KeyAccountLevel.displayWidth}"
+                                          maximumLength="5" readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.KeyAccountLevel.tooltip}">
+                              <f:validator binding="#{row.bindings.KeyAccountLevel.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RROPriorityCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Priority" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.Priority.label}"
+                                              id="ol16"/>
+                            </f:facet>
+                            <af:selectOneChoice id="RROPriority"
+                                                value="#{row.bindings.Priority.inputValue}"
+                                                label="#{bindings.RecentOpportunitiesTable.hints.Priority.label}"
+                                                required="#{bindings.RecentOpportunitiesTable.hints.Priority.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.RecentOpportunitiesTable.hints.Priority.tooltip}">
+                              <f:selectItems value="#{row.bindings.Priority.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                          <af:column id="RROFormCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Form" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.Form.label}"
+                                              id="ol17"/>
+                            </f:facet>
+                            <af:inputText id="RROForm"
+                                          value="#{row.bindings.Form.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.Form.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.Form.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.Form.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.Form.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.Form.tooltip}">
+                              <f:validator binding="#{row.bindings.Form.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RROTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Type" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.Type.label}"
+                                              id="ol18"/>
+                            </f:facet>
+                            <af:inputText id="RROType"
+                                          value="#{row.bindings.Type.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.Type.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.Type.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.Type.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.Type.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.Type.tooltip}">
+                              <f:validator binding="#{row.bindings.Type.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RROOpportunityTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpportunityType"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.OpportunityType.label}"
+                                              id="ol19"/>
+                            </f:facet>
+                            <af:inputText id="RROOpportunityType"
+                                          value="#{row.bindings.OpportunityType.inputValue}"
+                                          label="#{bindings.RecentOpportunitiesTable.hints.OpportunityType.label}"
+                                          required="#{bindings.RecentOpportunitiesTable.hints.OpportunityType.mandatory}"
+                                          rows="#{bindings.RecentOpportunitiesTable.hints.OpportunityType.displayHeight}"
+                                          columns="#{bindings.RecentOpportunitiesTable.hints.OpportunityType.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.RecentOpportunitiesTable.hints.OpportunityType.tooltip}">
+                              <f:validator binding="#{row.bindings.OpportunityType.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RROCountryCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="Country" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.RecentOpportunitiesTable.hints.Country.label}"
+                                              id="ol20"/>
+                            </f:facet>
+                            <af:selectOneChoice id="RROCountry"
+                                                value="#{row.bindings.Country.inputValue}"
+                                                label="#{bindings.RecentOpportunitiesTable.hints.Country.label}"
+                                                required="#{bindings.RecentOpportunitiesTable.hints.Country.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.RecentOpportunitiesTable.hints.Country.tooltip}">
+                              <f:selectItems value="#{row.bindings.Country.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+              </af:panelStretchLayout>
+            </af:panelBox>
+            <af:panelBox text="#{nls['TABLE_TITLE_INPROCESSOPPORTUNITIES']}"
+                         id="RIOPb">
+              <f:facet name="toolbar"/>
+              <af:panelStretchLayout topHeight="auto" id="RIOTopLc"
+                                     partialTriggers=" RMDTopLc qsAreaRIOSearchOptions"
+                                     rendered="#{jhsUserRoles['RM, ADMIN']}">
+                <f:facet name="top">
+                  <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (tracs_templates/pageComponent/dashboardContent.vm) -->
+                  <af:group id="g2">
+                    <af:panelGroupLayout id="modelSearchAreaRIO"
+                                         rendered="#{!pageFlowScope.createModes.CreateInProcessOpportunities and !pageFlowScope.hideSearchArea}"
+                                         partialTriggers="">
+                      <f:attribute name="JhsIgnoreChanges" value="true"/>
+                      <af:quickQuery id="qsAreaRIOSearchOptions"
+                                     label="#{nls['FILTER_BY']}"
+                                     value="#{bindings.InProcessOpportunitiesIteratorInProcessOpportunitiesDashboardViewCriteriaQuery.queryDescriptor}"
+                                     model="#{bindings.InProcessOpportunitiesIteratorInProcessOpportunitiesDashboardViewCriteriaQuery.queryModel}"
+                                     queryListener="#{bindings.InProcessOpportunitiesIteratorInProcessOpportunitiesDashboardViewCriteriaQuery.processQuery}"></af:quickQuery>
+                    </af:panelGroupLayout>
+                    <af:spacer width="10" height="10" id="sp4"/>
+                  </af:group>
+                  <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelStretchLayout topHeight="0" id="psl2">
+                    <f:facet name="top"></f:facet>
+                    <f:facet name="center">
+                      <af:panelCollection id="RIOPC" featuresOff=" "
+                                          styleClass="AFStretchWidth">
+                        <f:facet name="menus">
+                          <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                                   id="menu4">
+                            <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu5">
+                              <af:group id="RIOtbb"
+                                        rendered="#{ bindings.InProcessOpportunitiesIterator.currentRow!=null }">
+                                <af:commandMenuItem actionListener="#{bindings.FirstInProcessOpportunities.execute}"
+                                                    id="RIOFirst"
+                                                    partialSubmit="true"
+                                                    icon="/afr/shuttleleftall_ena.png"
+                                                    textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.PreviousInProcessOpportunities.execute}"
+                                                    icon="/afr/shuttleleft_ena.png"
+                                                    textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                    id="RIOPrevious"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.NextInProcessOpportunities.execute}"
+                                                    icon="/afr/shuttleright_ena.png"
+                                                    textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                    id="RIONext"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.LastInProcessOpportunities.execute}"
+                                                    icon="/afr/shuttlerightall_ena.png"
+                                                    textAndAccessKey="#{nls['LAST_ROW']}"
+                                                    id="RIOLast"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                              </af:group>
+                            </af:menu>
+                            <af:commandMenuItem partialSubmit="true"
+                                                textAndAccessKey="#{nls['EXPORT']}"
+                                                icon="/jheadstart/images/excel.png"
+                                                immediate="true" id="cmi1">
+                              <af:exportCollectionActionListener exportedId="RIOTab"
+                                                                 type="excelHTML"
+                                                                 filename="InProcessOpportunities.xls"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </f:facet>
+                        <f:facet name="toolbar">
+                          <af:toolbar id="tbar1">
+                            <af:commandImageLink immediate="true"
+                                                 partialSubmit="true" id="cl2"
+                                                 shortDesc="#{nls['EXPORT']}"
+                                                 icon="/jheadstart/images/excel.png">
+                              <af:exportCollectionActionListener exportedId="RIOTab"
+                                                                 type="excelHTML"
+                                                                 filename="InProcessOpportunities.xls"/>
+                            </af:commandImageLink>
+                            <af:commandToolbarButton text="Print" id="RIOPrint"
+                                                     shortDesc="Opens a new tab with printer friendly format.">
+                              <af:showPrintablePageBehavior/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar">
+                          <af:toolbar>
+                            <af:outputText value="#{bindings.InProcessOpportunitiesIterator.estimatedRowCount} rows found"/>
+                          </af:toolbar>
+                        </f:facet>
+                        <af:table id="RIOTab" contentDelivery="immediate"
+                                  value="#{bindings.InProcessOpportunitiesTable.collectionModel}"
+                                  columnStretching="blank"
+                                  rowBandingInterval="0" editingMode="editAll"
+                                  columnSelection="multiple"
+                                  contextMenuSelect="true" rowSelection="single"
+                                  selectionListener="#{pageFlowScope.InProcessOpportunitiesTable.makeCurrent}"
+                                  selectedRowKeys="#{pageFlowScope.InProcessOpportunitiesTable.selectedRow}"
+                                  rowDisclosureListener="#{pageFlowScope.InProcessOpportunitiesTable.discloseRow}"
+                                  var="row" varStatus="status"
+                                  fetchSize="#{bindings.InProcessOpportunitiesTable.rangeSize}"
+                                  emptyText="#{nls['NO_ROWS_FOUND']}"
+                                  queryListener="#{bindings.InProcessOpportunitiesIteratorInProcessOpportunitiesDashboardViewCriteriaQuery.processQuery}"
+                                  filterModel="#{bindings.InProcessOpportunitiesIteratorInProcessOpportunitiesDashboardViewCriteriaQuery.queryDescriptor}"
+                                  filterVisible="true"
+                                  binding="#{pageFlowScope.InProcessOpportunitiesTable.table}"
+                                  partialTriggers=":::qsAreaRIOSearchOptions :::RIOPC ::RIOFirst ::RIOPrevious ::RIONext ::RIOLast"
+                                  styleClass="AFStretchWidth"
+                                  summary="#{nls['TABLE_TITLE_INPROCESSOPPORTUNITIES']}">
+                          <f:facet name="contextMenu">
+                            <af:popup id="RIOTablePopup"
+                                      childCreation="deferred">
+                              <af:menu id="menu6">
+                                <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                         id="menu7"></af:menu>
+                              </af:menu>
+                            </af:popup>
+                          </f:facet>
+                          <af:column id="RIOOpportunityNoCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpportunityNo"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.OpportunityNo.label}"
+                                              id="ol21"/>
+                            </f:facet>
+                            <af:inputText id="RIOOpportunityNo"
+                                          value="#{row.bindings.OpportunityNo.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.OpportunityNo.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.OpportunityNo.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.OpportunityNo.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.OpportunityNo.displayWidth}"
+                                          maximumLength="38" readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.OpportunityNo.tooltip}">
+                              <f:validator binding="#{row.bindings.OpportunityNo.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.InProcessOpportunitiesTable.hints.OpportunityNo.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RIODocTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="Doctype" align="center"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.Doctype.label}"
+                                              id="ol22"/>
+                            </f:facet>
+                            <af:selectBooleanCheckbox id="RIODocType"
+                                                      label="#{bindings.InProcessOpportunitiesTable.hints.Doctype.label}"
+                                                      value="#{RIODocTypecheckboxInTable.value}"
+                                                      readOnly="true"></af:selectBooleanCheckbox>
+                          </af:column>
+                          <af:column id="RIOOpportunityNameCol" sortable="true"
+                                     noWrap="true" width="240"
+                                     sortProperty="OpportunityName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.OpportunityName.label}"
+                                              id="ol23"/>
+                            </f:facet>
+                            <af:inputText id="cl3"
+                                          value="#{row.bindings.OpportunityName.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.OpportunityName.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.OpportunityName.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.OpportunityName.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.OpportunityName.displayWidth}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.OpportunityName.tooltip}"
+                                          rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                              <f:validator binding="#{row.bindings.OpportunityName.validator}"/>
+                            </af:inputText>
+                            <af:commandLink id="RIOOpportunityName"
+                                            text="#{row.bindings.OpportunityName.attributeValue}"
+                                            shortDesc="#{bindings.InProcessOpportunitiesTable.hints.OpportunityName.tooltip}"
+                                            action="LaunchTab"
+                                            rendered="#{adfFacesContext.outputMode != 'printable'}">
+                              <af:setActionListener from="#{(row.OpportunityType != 'Auto-Add') ? 'Opportunities' : 'ProcessingGroups'}"
+                                                    to="#{jhsDynTabLauncher.taskFlowName}"/>
+                              <af:setActionListener from="#{row.Id}"
+                                                    to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                              <af:setActionListener from="#{row.OpportunityName}"
+                                                    to="#{jhsDynTabLauncher.label}"/>
+                              <af:setActionListener from="#{row.Id}"
+                                                    to="#{(row.OpportunityType != 'Auto-Add') ? jhsDynTabLauncher.parameters.rowKeyValueOpportunities : jhsDynTabLauncher.parameters.rowKeyValueProcessingGroups}"/>
+                              <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                    to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                            </af:commandLink>
+                          </af:column>
+                          <af:column id="RIOCurrentStatusCol" sortable="true"
+                                     noWrap="true" width="180"
+                                     sortProperty="CurrentStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.CurrentStatus.label}"
+                                              id="ol24"/>
+                            </f:facet>
+                            <af:selectOneChoice id="RIOCurrentStatus"
+                                                value="#{row.bindings.CurrentStatus.inputValue}"
+                                                label="#{bindings.InProcessOpportunitiesTable.hints.CurrentStatus.label}"
+                                                required="#{bindings.InProcessOpportunitiesTable.hints.CurrentStatus.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.InProcessOpportunitiesTable.hints.CurrentStatus.tooltip}">
+                              <f:selectItems value="#{row.bindings.CurrentStatus.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                          <af:column id="RIOAccountNameCol" sortable="true"
+                                     filterable="true" noWrap="true" width="240"
+                                     sortProperty="AccountName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.AccountName.label}"
+                                              id="ol25"/>
+                            </f:facet>
+                            <af:inputText id="RIOAccountName"
+                                          value="#{row.bindings.AccountName.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.AccountName.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.AccountName.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.AccountName.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.AccountName.displayWidth}"
+                                          maximumLength="400" readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.AccountName.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RIOCreatedDateCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CreatedDate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.CreatedDate.label}"
+                                              id="ol26"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                            id="id2">
+                                <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="RIOCreatedDate"
+                                          value="#{row.bindings.CreatedDate.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.CreatedDate.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.CreatedDate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.CreatedDate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="RIOAccountManagerCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="AccountManager"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.AccountManager.label}"
+                                              id="ol27"/>
+                            </f:facet>
+                            <af:inputText id="RIOAccountManager"
+                                          value="#{row.bindings.AccountManager.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.AccountManager.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.AccountManager.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.AccountManager.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.AccountManager.displayWidth}"
+                                          maximumLength="101" readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.AccountManager.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountManager.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RIOCataloguedCountCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CataloguedCount"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.CataloguedCount.label}"
+                                              id="ol28"/>
+                            </f:facet>
+                            <af:inputText id="RIOCataloguedCount"
+                                          value="#{row.bindings.CataloguedCount.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.CataloguedCount.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.CataloguedCount.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.CataloguedCount.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.CataloguedCount.displayWidth}"
+                                          maximumLength="10" readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.CataloguedCount.tooltip}">
+                              <f:validator binding="#{row.bindings.CataloguedCount.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.InProcessOpportunitiesTable.hints.CataloguedCount.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RIOUncataloguedCountCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="UncataloguedCount"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.UncataloguedCount.label}"
+                                              id="ol29"/>
+                            </f:facet>
+                            <af:inputText id="RIOUncataloguedCount"
+                                          value="#{row.bindings.UncataloguedCount.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.UncataloguedCount.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.UncataloguedCount.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.UncataloguedCount.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.UncataloguedCount.displayWidth}"
+                                          maximumLength="10" readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.UncataloguedCount.tooltip}">
+                              <f:validator binding="#{row.bindings.UncataloguedCount.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.InProcessOpportunitiesTable.hints.UncataloguedCount.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RIOAgreementLogindateCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="AgreementLogindate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.AgreementLogindate.label}"
+                                              id="ol30"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.AgreementLogindate}"
+                                            id="id3">
+                                <af:convertDateTime pattern="#{nls.datepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="RIOAgreementLogindate"
+                                          value="#{row.bindings.AgreementLogindate.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.AgreementLogindate.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.AgreementLogindate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.AgreementLogindate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="RIOCurrentPreStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="CurrentPreStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.CurrentPreStatus.label}"
+                                              id="ol31"/>
+                            </f:facet>
+                            <af:inputText id="RIOCurrentPreStatus"
+                                          value="#{row.bindings.CurrentPreStatus.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.CurrentPreStatus.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.CurrentPreStatus.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.CurrentPreStatus.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.CurrentPreStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.CurrentPreStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentPreStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RIOCurrentCatalogingStatusCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="120"
+                                     sortProperty="CurrentCatalogingStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                              id="ol32"/>
+                            </f:facet>
+                            <af:inputText id="RIOCurrentCatalogingStatus"
+                                          value="#{row.bindings.CurrentCatalogingStatus.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.CurrentCatalogingStatus.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.CurrentCatalogingStatus.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.CurrentCatalogingStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.CurrentCatalogingStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentCatalogingStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RIOCurrentAgreementStatusCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="120"
+                                     sortProperty="CurrentAgreementStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                              id="ol33"/>
+                            </f:facet>
+                            <af:inputText id="RIOCurrentAgreementStatus"
+                                          value="#{row.bindings.CurrentAgreementStatus.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.CurrentAgreementStatus.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.CurrentAgreementStatus.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.CurrentAgreementStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.CurrentAgreementStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentAgreementStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RIOAgreementDataFlagCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="AgreementDataFlag"
+                                     align="center" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.AgreementDataFlag.label}"
+                                              id="ol34"/>
+                            </f:facet>
+                            <af:selectBooleanCheckbox id="RIOAgreementDataFlag"
+                                                      label="#{bindings.InProcessOpportunitiesTable.hints.AgreementDataFlag.label}"
+                                                      value="#{RIOAgreementDataFlagcheckboxInTable.value}"
+                                                      readOnly="true"
+                                                      shortDesc="#{bindings.InProcessOpportunitiesTable.hints.AgreementDataFlag.tooltip}"></af:selectBooleanCheckbox>
+                          </af:column>
+                          <af:column id="RIOOpenAccessFlagCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpenAccessFlag"
+                                     align="center" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.OpenAccessFlag.label}"
+                                              id="ol35"/>
+                            </f:facet>
+                            <af:selectBooleanCheckbox id="RIOOpenAccessFlag"
+                                                      label="#{bindings.InProcessOpportunitiesTable.hints.OpenAccessFlag.label}"
+                                                      value="#{RIOOpenAccessFlagcheckboxInTable.value}"
+                                                      readOnly="true"
+                                                      shortDesc="#{bindings.InProcessOpportunitiesTable.hints.OpenAccessFlag.tooltip}"></af:selectBooleanCheckbox>
+                          </af:column>
+                          <af:column id="RIOKeyAccountLevelCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="KeyAccountLevel"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.KeyAccountLevel.label}"
+                                              id="ol36"/>
+                            </f:facet>
+                            <af:inputText id="RIOKeyAccountLevel"
+                                          value="#{row.bindings.KeyAccountLevel.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.KeyAccountLevel.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.KeyAccountLevel.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.KeyAccountLevel.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.KeyAccountLevel.displayWidth}"
+                                          maximumLength="5" readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.KeyAccountLevel.tooltip}">
+                              <f:validator binding="#{row.bindings.KeyAccountLevel.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RIOPriorityCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Priority" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.Priority.label}"
+                                              id="ol37"/>
+                            </f:facet>
+                            <af:selectOneChoice id="RIOPriority"
+                                                value="#{row.bindings.Priority.inputValue}"
+                                                label="#{bindings.InProcessOpportunitiesTable.hints.Priority.label}"
+                                                required="#{bindings.InProcessOpportunitiesTable.hints.Priority.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.InProcessOpportunitiesTable.hints.Priority.tooltip}">
+                              <f:selectItems value="#{row.bindings.Priority.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                          <af:column id="RIOFormCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Form" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.Form.label}"
+                                              id="ol38"/>
+                            </f:facet>
+                            <af:inputText id="RIOForm"
+                                          value="#{row.bindings.Form.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.Form.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.Form.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.Form.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.Form.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.Form.tooltip}">
+                              <f:validator binding="#{row.bindings.Form.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RIOTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Type" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.Type.label}"
+                                              id="ol39"/>
+                            </f:facet>
+                            <af:inputText id="RIOType"
+                                          value="#{row.bindings.Type.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.Type.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.Type.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.Type.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.Type.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.Type.tooltip}">
+                              <f:validator binding="#{row.bindings.Type.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RIOOpportunityTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpportunityType"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.OpportunityType.label}"
+                                              id="ol40"/>
+                            </f:facet>
+                            <af:inputText id="RIOOpportunityType"
+                                          value="#{row.bindings.OpportunityType.inputValue}"
+                                          label="#{bindings.InProcessOpportunitiesTable.hints.OpportunityType.label}"
+                                          required="#{bindings.InProcessOpportunitiesTable.hints.OpportunityType.mandatory}"
+                                          rows="#{bindings.InProcessOpportunitiesTable.hints.OpportunityType.displayHeight}"
+                                          columns="#{bindings.InProcessOpportunitiesTable.hints.OpportunityType.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.InProcessOpportunitiesTable.hints.OpportunityType.tooltip}">
+                              <f:validator binding="#{row.bindings.OpportunityType.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RIOCountryCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="Country" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.InProcessOpportunitiesTable.hints.Country.label}"
+                                              id="ol41"/>
+                            </f:facet>
+                            <af:selectOneChoice id="RIOCountry"
+                                                value="#{row.bindings.Country.inputValue}"
+                                                label="#{bindings.InProcessOpportunitiesTable.hints.Country.label}"
+                                                required="#{bindings.InProcessOpportunitiesTable.hints.Country.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.InProcessOpportunitiesTable.hints.Country.tooltip}">
+                              <f:selectItems value="#{row.bindings.Country.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+              </af:panelStretchLayout>
+            </af:panelBox>
+            <af:panelBox text="#{nls['TABLE_TITLE_ONHOLDOPPORTUNITIES']}"
+                         id="ROOPb">
+              <f:facet name="toolbar"/>
+              <af:panelStretchLayout topHeight="auto" id="ROOTopLc"
+                                     partialTriggers=" RMDTopLc qsAreaROOSearchOptions"
+                                     rendered="#{jhsUserRoles['RM, ADMIN']}">
+                <f:facet name="top">
+                  <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (tracs_templates/pageComponent/dashboardContent.vm) -->
+                  <af:group id="g3">
+                    <af:panelGroupLayout id="modelSearchAreaROO"
+                                         rendered="#{!pageFlowScope.createModes.CreateOnHoldOpportunities and !pageFlowScope.hideSearchArea}"
+                                         partialTriggers="">
+                      <f:attribute name="JhsIgnoreChanges" value="true"/>
+                      <af:quickQuery id="qsAreaROOSearchOptions"
+                                     label="#{nls['FILTER_BY']}"
+                                     value="#{bindings.OnHoldOpportunitiesIteratorOnHoldOpportunitiesDashboardViewCriteriaQuery.queryDescriptor}"
+                                     model="#{bindings.OnHoldOpportunitiesIteratorOnHoldOpportunitiesDashboardViewCriteriaQuery.queryModel}"
+                                     queryListener="#{bindings.OnHoldOpportunitiesIteratorOnHoldOpportunitiesDashboardViewCriteriaQuery.processQuery}"></af:quickQuery>
+                    </af:panelGroupLayout>
+                    <af:spacer width="10" height="10" id="sp5"/>
+                  </af:group>
+                  <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelStretchLayout topHeight="0" id="psl3">
+                    <f:facet name="top"></f:facet>
+                    <f:facet name="center">
+                      <af:panelCollection id="ROOPC" featuresOff=" "
+                                          styleClass="AFStretchWidth">
+                        <f:facet name="menus">
+                          <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                                   id="menu8">
+                            <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu9">
+                              <af:group id="ROOtbb"
+                                        rendered="#{ bindings.OnHoldOpportunitiesIterator.currentRow!=null }">
+                                <af:commandMenuItem actionListener="#{bindings.FirstOnHoldOpportunities.execute}"
+                                                    id="ROOFirst"
+                                                    partialSubmit="true"
+                                                    icon="/afr/shuttleleftall_ena.png"
+                                                    textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.PreviousOnHoldOpportunities.execute}"
+                                                    icon="/afr/shuttleleft_ena.png"
+                                                    textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                    id="ROOPrevious"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.NextOnHoldOpportunities.execute}"
+                                                    icon="/afr/shuttleright_ena.png"
+                                                    textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                    id="ROONext"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.LastOnHoldOpportunities.execute}"
+                                                    icon="/afr/shuttlerightall_ena.png"
+                                                    textAndAccessKey="#{nls['LAST_ROW']}"
+                                                    id="ROOLast"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                              </af:group>
+                            </af:menu>
+                            <af:commandMenuItem partialSubmit="true"
+                                                textAndAccessKey="#{nls['EXPORT']}"
+                                                icon="/jheadstart/images/excel.png"
+                                                immediate="true" id="cmi2">
+                              <af:exportCollectionActionListener exportedId="ROOTab"
+                                                                 type="excelHTML"
+                                                                 filename="OnHoldOpportunities.xls"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </f:facet>
+                        <f:facet name="toolbar">
+                          <af:toolbar id="tbar2">
+                            <af:commandImageLink immediate="true"
+                                                 partialSubmit="true" id="cl4"
+                                                 shortDesc="#{nls['EXPORT']}"
+                                                 icon="/jheadstart/images/excel.png">
+                              <af:exportCollectionActionListener exportedId="ROOTab"
+                                                                 type="excelHTML"
+                                                                 filename="OnHoldOpportunities.xls"/>
+                            </af:commandImageLink>
+                            <af:commandToolbarButton text="Print" id="ROOPrint"
+                                                     shortDesc="Opens a new tab with printer friendly format.">
+                              <af:showPrintablePageBehavior/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar">
+                          <af:toolbar>
+                            <af:outputText value="#{bindings.OnHoldOpportunitiesIterator.estimatedRowCount} rows found"/>
+                          </af:toolbar>
+                        </f:facet>
+                        <af:table id="ROOTab" contentDelivery="immediate"
+                                  value="#{bindings.OnHoldOpportunitiesTable.collectionModel}"
+                                  columnStretching="blank"
+                                  rowBandingInterval="0" editingMode="editAll"
+                                  columnSelection="multiple"
+                                  contextMenuSelect="true" rowSelection="single"
+                                  selectionListener="#{pageFlowScope.OnHoldOpportunitiesTable.makeCurrent}"
+                                  selectedRowKeys="#{pageFlowScope.OnHoldOpportunitiesTable.selectedRow}"
+                                  rowDisclosureListener="#{pageFlowScope.OnHoldOpportunitiesTable.discloseRow}"
+                                  var="row" varStatus="status"
+                                  fetchSize="#{bindings.OnHoldOpportunitiesTable.rangeSize}"
+                                  emptyText="#{nls['NO_ROWS_FOUND']}"
+                                  queryListener="#{bindings.OnHoldOpportunitiesIteratorOnHoldOpportunitiesDashboardViewCriteriaQuery.processQuery}"
+                                  filterModel="#{bindings.OnHoldOpportunitiesIteratorOnHoldOpportunitiesDashboardViewCriteriaQuery.queryDescriptor}"
+                                  filterVisible="true"
+                                  binding="#{pageFlowScope.OnHoldOpportunitiesTable.table}"
+                                  partialTriggers=":::qsAreaROOSearchOptions :::ROOPC ::ROOFirst ::ROOPrevious ::ROONext ::ROOLast"
+                                  styleClass="AFStretchWidth"
+                                  summary="#{nls['TABLE_TITLE_ONHOLDOPPORTUNITIES']}">
+                          <f:facet name="contextMenu">
+                            <af:popup id="ROOTablePopup"
+                                      childCreation="deferred">
+                              <af:menu id="menu10">
+                                <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                         id="menu11"></af:menu>
+                              </af:menu>
+                            </af:popup>
+                          </f:facet>
+                          <af:column id="ROOOpportunityNoCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpportunityNo"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityNo.label}"
+                                              id="ol42"/>
+                            </f:facet>
+                            <af:inputText id="ROOOpportunityNo"
+                                          value="#{row.bindings.OpportunityNo.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityNo.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityNo.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityNo.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityNo.displayWidth}"
+                                          maximumLength="38" readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityNo.tooltip}">
+                              <f:validator binding="#{row.bindings.OpportunityNo.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityNo.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="ROODocTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="Doctype" align="center"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.Doctype.label}"
+                                              id="ol43"/>
+                            </f:facet>
+                            <af:selectBooleanCheckbox id="ROODocType"
+                                                      label="#{bindings.OnHoldOpportunitiesTable.hints.Doctype.label}"
+                                                      value="#{ROODocTypecheckboxInTable.value}"
+                                                      readOnly="true"></af:selectBooleanCheckbox>
+                          </af:column>
+                          <af:column id="ROOOpportunityNameCol" sortable="true"
+                                     noWrap="true" width="240"
+                                     sortProperty="OpportunityName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityName.label}"
+                                              id="ol44"/>
+                            </f:facet>
+                            <af:inputText id="cl5"
+                                          value="#{row.bindings.OpportunityName.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityName.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityName.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityName.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityName.displayWidth}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityName.tooltip}"
+                                          rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                              <f:validator binding="#{row.bindings.OpportunityName.validator}"/>
+                            </af:inputText>
+                            <af:commandLink id="ROOOpportunityName"
+                                            text="#{row.bindings.OpportunityName.attributeValue}"
+                                            shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityName.tooltip}"
+                                            action="LaunchTab"
+                                            rendered="#{adfFacesContext.outputMode != 'printable'}">
+                              <af:setActionListener from="#{(row.OpportunityType != 'Auto-Add') ? 'Opportunities' : 'ProcessingGroups'}"
+                                                    to="#{jhsDynTabLauncher.taskFlowName}"/>
+                              <af:setActionListener from="#{row.Id}"
+                                                    to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                              <af:setActionListener from="#{row.OpportunityName}"
+                                                    to="#{jhsDynTabLauncher.label}"/>
+                              <af:setActionListener from="#{row.Id}"
+                                                    to="#{(row.OpportunityType != 'Auto-Add') ? jhsDynTabLauncher.parameters.rowKeyValueOpportunities : jhsDynTabLauncher.parameters.rowKeyValueProcessingGroups}"/>
+                              <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                    to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                            </af:commandLink>
+                          </af:column>
+                          <af:column id="ROOCurrentStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="CurrentStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.CurrentStatus.label}"
+                                              id="ol45"/>
+                            </f:facet>
+                            <af:selectOneChoice id="ROOCurrentStatus"
+                                                value="#{row.bindings.CurrentStatus.inputValue}"
+                                                label="#{bindings.OnHoldOpportunitiesTable.hints.CurrentStatus.label}"
+                                                required="#{bindings.OnHoldOpportunitiesTable.hints.CurrentStatus.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.CurrentStatus.tooltip}">
+                              <f:selectItems value="#{row.bindings.CurrentStatus.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                          <af:column id="ROOAccountNameCol" sortable="true"
+                                     filterable="true" noWrap="true" width="240"
+                                     sortProperty="AccountName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.AccountName.label}"
+                                              id="ol46"/>
+                            </f:facet>
+                            <af:inputText id="ROOAccountName"
+                                          value="#{row.bindings.AccountName.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.AccountName.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.AccountName.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.AccountName.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.AccountName.displayWidth}"
+                                          maximumLength="400" readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.AccountName.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="ROOCreatedDateCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CreatedDate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.CreatedDate.label}"
+                                              id="ol47"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                            id="id4">
+                                <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="ROOCreatedDate"
+                                          value="#{row.bindings.CreatedDate.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.CreatedDate.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.CreatedDate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.CreatedDate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="ROOAccountManagerCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="AccountManager"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.AccountManager.label}"
+                                              id="ol48"/>
+                            </f:facet>
+                            <af:inputText id="ROOAccountManager"
+                                          value="#{row.bindings.AccountManager.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.AccountManager.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.AccountManager.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.AccountManager.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.AccountManager.displayWidth}"
+                                          maximumLength="101" readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.AccountManager.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountManager.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="ROOCataloguedCountCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CataloguedCount"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.CataloguedCount.label}"
+                                              id="ol49"/>
+                            </f:facet>
+                            <af:inputText id="ROOCataloguedCount"
+                                          value="#{row.bindings.CataloguedCount.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.CataloguedCount.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.CataloguedCount.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.CataloguedCount.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.CataloguedCount.displayWidth}"
+                                          maximumLength="10" readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.CataloguedCount.tooltip}">
+                              <f:validator binding="#{row.bindings.CataloguedCount.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.OnHoldOpportunitiesTable.hints.CataloguedCount.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="ROOUncataloguedCountCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="UncataloguedCount"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.UncataloguedCount.label}"
+                                              id="ol50"/>
+                            </f:facet>
+                            <af:inputText id="ROOUncataloguedCount"
+                                          value="#{row.bindings.UncataloguedCount.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.UncataloguedCount.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.UncataloguedCount.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.UncataloguedCount.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.UncataloguedCount.displayWidth}"
+                                          maximumLength="10" readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.UncataloguedCount.tooltip}">
+                              <f:validator binding="#{row.bindings.UncataloguedCount.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.OnHoldOpportunitiesTable.hints.UncataloguedCount.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="ROOAgreementLogindateCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="AgreementLogindate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.AgreementLogindate.label}"
+                                              id="ol51"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.AgreementLogindate}"
+                                            id="id5">
+                                <af:convertDateTime pattern="#{nls.datepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="ROOAgreementLogindate"
+                                          value="#{row.bindings.AgreementLogindate.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.AgreementLogindate.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.AgreementLogindate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.AgreementLogindate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="ROOCurrentPreStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="CurrentPreStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.CurrentPreStatus.label}"
+                                              id="ol52"/>
+                            </f:facet>
+                            <af:inputText id="ROOCurrentPreStatus"
+                                          value="#{row.bindings.CurrentPreStatus.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.CurrentPreStatus.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.CurrentPreStatus.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.CurrentPreStatus.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.CurrentPreStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.CurrentPreStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentPreStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="ROOCurrentCatalogingStatusCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="120"
+                                     sortProperty="CurrentCatalogingStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                              id="ol53"/>
+                            </f:facet>
+                            <af:inputText id="ROOCurrentCatalogingStatus"
+                                          value="#{row.bindings.CurrentCatalogingStatus.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.CurrentCatalogingStatus.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.CurrentCatalogingStatus.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.CurrentCatalogingStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.CurrentCatalogingStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentCatalogingStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="ROOCurrentAgreementStatusCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="120"
+                                     sortProperty="CurrentAgreementStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                              id="ol54"/>
+                            </f:facet>
+                            <af:inputText id="ROOCurrentAgreementStatus"
+                                          value="#{row.bindings.CurrentAgreementStatus.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.CurrentAgreementStatus.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.CurrentAgreementStatus.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.CurrentAgreementStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.CurrentAgreementStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentAgreementStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="ROOAgreementDataFlagCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="AgreementDataFlag"
+                                     align="center" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.AgreementDataFlag.label}"
+                                              id="ol55"/>
+                            </f:facet>
+                            <af:selectBooleanCheckbox id="ROOAgreementDataFlag"
+                                                      label="#{bindings.OnHoldOpportunitiesTable.hints.AgreementDataFlag.label}"
+                                                      value="#{ROOAgreementDataFlagcheckboxInTable.value}"
+                                                      readOnly="true"
+                                                      shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.AgreementDataFlag.tooltip}"></af:selectBooleanCheckbox>
+                          </af:column>
+                          <af:column id="ROOOpenAccessFlagCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpenAccessFlag"
+                                     align="center" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.OpenAccessFlag.label}"
+                                              id="ol56"/>
+                            </f:facet>
+                            <af:selectBooleanCheckbox id="ROOOpenAccessFlag"
+                                                      label="#{bindings.OnHoldOpportunitiesTable.hints.OpenAccessFlag.label}"
+                                                      value="#{ROOOpenAccessFlagcheckboxInTable.value}"
+                                                      readOnly="true"
+                                                      shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.OpenAccessFlag.tooltip}"></af:selectBooleanCheckbox>
+                          </af:column>
+                          <af:column id="ROOKeyAccountLevelCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="KeyAccountLevel"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.KeyAccountLevel.label}"
+                                              id="ol57"/>
+                            </f:facet>
+                            <af:inputText id="ROOKeyAccountLevel"
+                                          value="#{row.bindings.KeyAccountLevel.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.KeyAccountLevel.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.KeyAccountLevel.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.KeyAccountLevel.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.KeyAccountLevel.displayWidth}"
+                                          maximumLength="5" readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.KeyAccountLevel.tooltip}">
+                              <f:validator binding="#{row.bindings.KeyAccountLevel.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="ROOPriorityCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Priority" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.Priority.label}"
+                                              id="ol58"/>
+                            </f:facet>
+                            <af:selectOneChoice id="ROOPriority"
+                                                value="#{row.bindings.Priority.inputValue}"
+                                                label="#{bindings.OnHoldOpportunitiesTable.hints.Priority.label}"
+                                                required="#{bindings.OnHoldOpportunitiesTable.hints.Priority.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.Priority.tooltip}">
+                              <f:selectItems value="#{row.bindings.Priority.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                          <af:column id="ROOFormCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Form" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.Form.label}"
+                                              id="ol59"/>
+                            </f:facet>
+                            <af:inputText id="ROOForm"
+                                          value="#{row.bindings.Form.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.Form.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.Form.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.Form.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.Form.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.Form.tooltip}">
+                              <f:validator binding="#{row.bindings.Form.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="ROOTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Type" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.Type.label}"
+                                              id="ol60"/>
+                            </f:facet>
+                            <af:inputText id="ROOType"
+                                          value="#{row.bindings.Type.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.Type.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.Type.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.Type.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.Type.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.Type.tooltip}">
+                              <f:validator binding="#{row.bindings.Type.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="ROOOpportunityTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpportunityType"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityType.label}"
+                                              id="ol61"/>
+                            </f:facet>
+                            <af:inputText id="ROOOpportunityType"
+                                          value="#{row.bindings.OpportunityType.inputValue}"
+                                          label="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityType.label}"
+                                          required="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityType.mandatory}"
+                                          rows="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityType.displayHeight}"
+                                          columns="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityType.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.OpportunityType.tooltip}">
+                              <f:validator binding="#{row.bindings.OpportunityType.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="ROOCountryCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="Country" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.OnHoldOpportunitiesTable.hints.Country.label}"
+                                              id="ol62"/>
+                            </f:facet>
+                            <af:selectOneChoice id="ROOCountry"
+                                                value="#{row.bindings.Country.inputValue}"
+                                                label="#{bindings.OnHoldOpportunitiesTable.hints.Country.label}"
+                                                required="#{bindings.OnHoldOpportunitiesTable.hints.Country.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.OnHoldOpportunitiesTable.hints.Country.tooltip}">
+                              <f:selectItems value="#{row.bindings.Country.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+              </af:panelStretchLayout>
+            </af:panelBox>
+            <af:panelBox text="#{nls['TABLE_TITLE_ACTIVITYDASHBOARD']}"
+                         id="RADPb">
+              <f:facet name="toolbar"/>
+              <af:panelStretchLayout topHeight="auto" id="RADTopLc"
+                                     partialTriggers=" RMDTopLc qsAreaRADSearchOptions"
+                                     rendered="#{jhsUserRoles['RM, ADMIN']}">
+                <f:facet name="top">
+                  <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (tracs_templates/pageComponent/dashboardContent.vm) -->
+                  <af:group id="g4">
+                    <af:panelGroupLayout id="modelSearchAreaRAD"
+                                         rendered="#{!pageFlowScope.createModes.CreateActivityDashboard and !pageFlowScope.hideSearchArea}"
+                                         partialTriggers="">
+                      <f:attribute name="JhsIgnoreChanges" value="true"/>
+                      <af:quickQuery id="qsAreaRADSearchOptions"
+                                     label="#{nls['FILTER_BY']}"
+                                     value="#{bindings.ActivityDashboardIteratorActivityDashboardViewCriteriaQuery.queryDescriptor}"
+                                     model="#{bindings.ActivityDashboardIteratorActivityDashboardViewCriteriaQuery.queryModel}"
+                                     queryListener="#{bindings.ActivityDashboardIteratorActivityDashboardViewCriteriaQuery.processQuery}"></af:quickQuery>
+                    </af:panelGroupLayout>
+                    <af:spacer width="10" height="10" id="sp6"/>
+                  </af:group>
+                  <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelStretchLayout topHeight="0" id="psl4">
+                    <f:facet name="top"></f:facet>
+                    <f:facet name="center">
+                      <af:panelCollection id="RADPC" featuresOff=" "
+                                          styleClass="AFStretchWidth">
+                        <f:facet name="menus">
+                          <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                                   id="menu12">
+                            <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu13">
+                              <af:group id="RADtbb"
+                                        rendered="#{ bindings.ActivityDashboardIterator.currentRow!=null }">
+                                <af:commandMenuItem actionListener="#{bindings.FirstActivityDashboard.execute}"
+                                                    id="RADFirst"
+                                                    partialSubmit="true"
+                                                    icon="/afr/shuttleleftall_ena.png"
+                                                    textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.PreviousActivityDashboard.execute}"
+                                                    icon="/afr/shuttleleft_ena.png"
+                                                    textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                    id="RADPrevious"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.NextActivityDashboard.execute}"
+                                                    icon="/afr/shuttleright_ena.png"
+                                                    textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                    id="RADNext"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.LastActivityDashboard.execute}"
+                                                    icon="/afr/shuttlerightall_ena.png"
+                                                    textAndAccessKey="#{nls['LAST_ROW']}"
+                                                    id="RADLast"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                              </af:group>
+                            </af:menu>
+                            <af:commandMenuItem partialSubmit="true"
+                                                textAndAccessKey="#{nls['EXPORT']}"
+                                                icon="/jheadstart/images/excel.png"
+                                                immediate="true" id="cmi3">
+                              <af:exportCollectionActionListener exportedId="RADTab"
+                                                                 type="excelHTML"
+                                                                 filename="ActivityDashboard.xls"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </f:facet>
+                        <f:facet name="toolbar">
+                          <af:toolbar id="tbar3">
+                            <af:commandImageLink immediate="true"
+                                                 partialSubmit="true" id="cl6"
+                                                 shortDesc="#{nls['EXPORT']}"
+                                                 icon="/jheadstart/images/excel.png">
+                              <af:exportCollectionActionListener exportedId="RADTab"
+                                                                 type="excelHTML"
+                                                                 filename="ActivityDashboard.xls"/>
+                            </af:commandImageLink>
+                            <af:commandToolbarButton text="Print" id="RADPrint"
+                                                     shortDesc="Opens a new tab with printer friendly format.">
+                              <af:showPrintablePageBehavior/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar">
+                          <af:toolbar>
+                            <af:outputText value="#{bindings.ActivityDashboardIterator.estimatedRowCount} rows found"/>
+                          </af:toolbar>
+                        </f:facet>
+                        <af:table id="RADTab" contentDelivery="immediate"
+                                  value="#{bindings.ActivityDashboardTable.collectionModel}"
+                                  columnStretching="blank"
+                                  rowBandingInterval="0" editingMode="editAll"
+                                  columnSelection="multiple"
+                                  contextMenuSelect="true" rowSelection="single"
+                                  selectionListener="#{pageFlowScope.ActivityDashboardTable.makeCurrent}"
+                                  selectedRowKeys="#{pageFlowScope.ActivityDashboardTable.selectedRow}"
+                                  rowDisclosureListener="#{pageFlowScope.ActivityDashboardTable.discloseRow}"
+                                  var="row" varStatus="status"
+                                  fetchSize="#{bindings.ActivityDashboardTable.rangeSize}"
+                                  emptyText="#{nls['NO_ROWS_FOUND']}"
+                                  queryListener="#{bindings.ActivityDashboardIteratorActivityDashboardViewCriteriaQuery.processQuery}"
+                                  filterModel="#{bindings.ActivityDashboardIteratorActivityDashboardViewCriteriaQuery.queryDescriptor}"
+                                  filterVisible="true"
+                                  binding="#{pageFlowScope.ActivityDashboardTable.table}"
+                                  partialTriggers=":::qsAreaRADSearchOptions :::RADPC ::RADFirst ::RADPrevious ::RADNext ::RADLast"
+                                  styleClass="AFStretchWidth"
+                                  summary="#{nls['TABLE_TITLE_ACTIVITYDASHBOARD']}">
+                          <f:facet name="contextMenu">
+                            <af:popup id="RADTablePopup"
+                                      childCreation="deferred">
+                              <af:menu id="menu14">
+                                <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                         id="menu15"></af:menu>
+                              </af:menu>
+                            </af:popup>
+                          </f:facet>
+                          <af:column id="RADTypeCol" sortable="true"
+                                     noWrap="true" width="240"
+                                     sortProperty="Type" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.Type.label}"
+                                              id="ol63"/>
+                            </f:facet>
+                            <af:inputText id="cl7"
+                                          value="#{row.bindings.Type.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.Type.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.Type.mandatory}"
+                                          rows="#{bindings.ActivityDashboardTable.hints.Type.displayHeight}"
+                                          columns="#{bindings.ActivityDashboardTable.hints.Type.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.Type.tooltip}"
+                                          rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                              <f:validator binding="#{row.bindings.Type.validator}"/>
+                            </af:inputText>
+                            <af:commandLink id="RADType"
+                                            text="#{row.bindings.Type.attributeValue}"
+                                            shortDesc="#{bindings.ActivityDashboardTable.hints.Type.tooltip}"
+                                            action="LaunchTab"
+                                            rendered="#{adfFacesContext.outputMode != 'printable'}">
+                              <af:setActionListener from="ActivitiesTab"
+                                                    to="#{jhsDynTabLauncher.taskFlowName}"/>
+                              <af:setActionListener from="#{row.ActivityId}"
+                                                    to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                              <af:setActionListener from="Activity"
+                                                    to="#{jhsDynTabLauncher.label}"/>
+                              <af:setActionListener from="#{row.ActivityId}"
+                                                    to="#{jhsDynTabLauncher.parameters.rowKeyValueActivitiesTab}"/>
+                              <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                    to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                            </af:commandLink>
+                          </af:column>
+                          <af:column id="RADSubTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="240"
+                                     sortProperty="SubType" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.SubType.label}"
+                                              id="ol64"/>
+                            </f:facet>
+                            <af:inputText id="RADSubType"
+                                          value="#{row.bindings.SubType.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.SubType.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.SubType.mandatory}"
+                                          rows="#{bindings.ActivityDashboardTable.hints.SubType.displayHeight}"
+                                          columns="#{bindings.ActivityDashboardTable.hints.SubType.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.SubType.tooltip}">
+                              <f:validator binding="#{row.bindings.SubType.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RADDescriptionCol" sortable="true"
+                                     filterable="true" noWrap="true" width="500"
+                                     sortProperty="Description"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.Description.label}"
+                                              id="ol65"/>
+                            </f:facet>
+                            <af:inputText id="RADDescription"
+                                          value="#{row.bindings.Description.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.Description.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.Description.mandatory}"
+                                          rows="#{bindings.ActivityDashboardTable.hints.Description.displayHeight}"
+                                          columns="#{bindings.ActivityDashboardTable.hints.Description.displayWidth}"
+                                          maximumLength="4000" readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.Description.tooltip}">
+                              <f:validator binding="#{row.bindings.Description.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RADDueDateCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="DueDate" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.DueDate.label}"
+                                              id="ol66"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.DueDate}"
+                                            id="id6">
+                                <af:convertDateTime pattern="#{nls.datepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="RADDueDate"
+                                          value="#{row.bindings.DueDate.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.DueDate.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.DueDate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.DueDate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="RADUserTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="UserType" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.UserType.label}"
+                                              id="ol67"/>
+                            </f:facet>
+                            <af:inputText id="RADUserType"
+                                          value="#{row.bindings.UserType.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.UserType.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.UserType.mandatory}"
+                                          rows="#{bindings.ActivityDashboardTable.hints.UserType.displayHeight}"
+                                          columns="#{bindings.ActivityDashboardTable.hints.UserType.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.UserType.tooltip}">
+                              <f:validator binding="#{row.bindings.UserType.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RADStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Status" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.Status.label}"
+                                              id="ol68"/>
+                            </f:facet>
+                            <af:inputText id="RADStatus"
+                                          value="#{row.bindings.Status.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.Status.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.Status.mandatory}"
+                                          rows="#{bindings.ActivityDashboardTable.hints.Status.displayHeight}"
+                                          columns="#{bindings.ActivityDashboardTable.hints.Status.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.Status.tooltip}">
+                              <f:validator binding="#{row.bindings.Status.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RADCatalogNumberCol" sortable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="CatalogNumber"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.CatalogNumber.label}"
+                                              id="ol69"/>
+                            </f:facet>
+                            <af:inputText id="cl8"
+                                          value="#{row.bindings.CatalogNumber.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.CatalogNumber.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.CatalogNumber.mandatory}"
+                                          rows="#{bindings.ActivityDashboardTable.hints.CatalogNumber.displayHeight}"
+                                          columns="#{bindings.ActivityDashboardTable.hints.CatalogNumber.displayWidth}"
+                                          maximumLength="200" readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.CatalogNumber.tooltip}"
+                                          rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                              <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                            </af:inputText>
+                            <af:commandLink id="RADCatalogNumber"
+                                            text="#{row.bindings.CatalogNumber.attributeValue}"
+                                            shortDesc="#{bindings.ActivityDashboardTable.hints.CatalogNumber.tooltip}"
+                                            action="LaunchTab"
+                                            rendered="#{adfFacesContext.outputMode != 'printable'}">
+                              <af:setActionListener from="Titles"
+                                                    to="#{jhsDynTabLauncher.taskFlowName}"/>
+                              <af:setActionListener from="TTL#{row.TtlId}"
+                                                    to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                              <af:setActionListener from="Title - #{row.CatalogNumber}"
+                                                    to="#{jhsDynTabLauncher.label}"/>
+                              <af:setActionListener from="#{row.TtlId}"
+                                                    to="#{jhsDynTabLauncher.parameters.rowKeyValueTitles}"/>
+                              <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                    to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                            </af:commandLink>
+                          </af:column>
+                          <af:column id="RADTitleCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="LongTitle" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.LongTitle.label}"
+                                              id="ol70"/>
+                            </f:facet>
+                            <af:inputText id="RADTitle"
+                                          value="#{row.bindings.LongTitle.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.LongTitle.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.LongTitle.mandatory}"
+                                          rows="#{bindings.ActivityDashboardTable.hints.LongTitle.displayHeight}"
+                                          columns="#{bindings.ActivityDashboardTable.hints.LongTitle.displayWidth}"
+                                          maximumLength="200" readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.LongTitle.tooltip}">
+                              <f:validator binding="#{row.bindings.LongTitle.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RADAccountNoCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="AccountNo" align="right"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.AccountNo.label}"
+                                              id="ol71"/>
+                            </f:facet>
+                            <af:inputText id="RADAccountNo"
+                                          value="#{row.bindings.AccountNo.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.AccountNo.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.AccountNo.mandatory}"
+                                          rows="#{bindings.ActivityDashboardTable.hints.AccountNo.displayHeight}"
+                                          columns="#{bindings.ActivityDashboardTable.hints.AccountNo.displayWidth}"
+                                          maximumLength="38" readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.AccountNo.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountNo.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.ActivityDashboardTable.hints.AccountNo.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RADAccountNameCol" sortable="true"
+                                     noWrap="true" width="180"
+                                     sortProperty="AccountName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.AccountName.label}"
+                                              id="ol72"/>
+                            </f:facet>
+                            <af:inputText id="cl9"
+                                          value="#{row.bindings.AccountName.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.AccountName.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.AccountName.mandatory}"
+                                          rows="#{bindings.ActivityDashboardTable.hints.AccountName.displayHeight}"
+                                          columns="#{bindings.ActivityDashboardTable.hints.AccountName.displayWidth}"
+                                          maximumLength="400" readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.AccountName.tooltip}"
+                                          rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                              <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                            </af:inputText>
+                            <af:commandLink id="RADAccountName"
+                                            text="#{row.bindings.AccountName.attributeValue}"
+                                            shortDesc="#{bindings.ActivityDashboardTable.hints.AccountName.tooltip}"
+                                            action="LaunchTab"
+                                            rendered="#{adfFacesContext.outputMode != 'printable'}">
+                              <af:setActionListener from="ContentOwner"
+                                                    to="#{jhsDynTabLauncher.taskFlowName}"/>
+                              <af:setActionListener from="#{row.ContentOwnerId}"
+                                                    to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                              <af:setActionListener from="#{row.AccountName}"
+                                                    to="#{jhsDynTabLauncher.label}"/>
+                              <af:setActionListener from="#{row.ContentOwnerId}"
+                                                    to="#{jhsDynTabLauncher.parameters.rowKeyValueContentOwner}"/>
+                              <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                    to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                            </af:commandLink>
+                          </af:column>
+                          <af:column id="RADAccountSiteCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="AccountSite"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.AccountSite.label}"
+                                              id="ol73"/>
+                            </f:facet>
+                            <af:inputText id="RADAccountSite"
+                                          value="#{row.bindings.AccountSite.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.AccountSite.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.AccountSite.mandatory}"
+                                          rows="#{bindings.ActivityDashboardTable.hints.AccountSite.displayHeight}"
+                                          columns="#{bindings.ActivityDashboardTable.hints.AccountSite.displayWidth}"
+                                          maximumLength="200" readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.AccountSite.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountSite.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RADCreatedByCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="CreatedBy" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.CreatedBy.label}"
+                                              id="ol74"/>
+                            </f:facet>
+                            <af:inputText id="RADCreatedBy"
+                                          value="#{row.bindings.CreatedBy.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.CreatedBy.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.CreatedBy.mandatory}"
+                                          rows="#{bindings.ActivityDashboardTable.hints.CreatedBy.displayHeight}"
+                                          columns="#{bindings.ActivityDashboardTable.hints.CreatedBy.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.CreatedBy.tooltip}">
+                              <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="RADCreatedDateCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CreatedDate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.CreatedDate.label}"
+                                              id="ol75"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                            id="id7">
+                                <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="RADCreatedDate"
+                                          value="#{row.bindings.CreatedDate.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.CreatedDate.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.CreatedDate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.CreatedDate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="RADCountryCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="Country" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.Country.label}"
+                                              id="ol76"/>
+                            </f:facet>
+                            <af:selectOneChoice id="RADCountry"
+                                                value="#{row.bindings.Country.inputValue}"
+                                                label="#{bindings.ActivityDashboardTable.hints.Country.label}"
+                                                required="#{bindings.ActivityDashboardTable.hints.Country.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.ActivityDashboardTable.hints.Country.tooltip}">
+                              <f:selectItems value="#{row.bindings.Country.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                          <af:column id="RADTargetTrackingNoCol" sortable="true"
+                                     filterable="true" noWrap="true" width="228"
+                                     sortProperty="TargetTrackingNo"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.ActivityDashboardTable.hints.TargetTrackingNo.label}"
+                                              id="ol77"/>
+                            </f:facet>
+                            <af:inputText id="RADTargetTrackingNo"
+                                          value="#{row.bindings.TargetTrackingNo.inputValue}"
+                                          label="#{bindings.ActivityDashboardTable.hints.TargetTrackingNo.label}"
+                                          required="#{bindings.ActivityDashboardTable.hints.TargetTrackingNo.mandatory}"
+                                          rows="#{bindings.ActivityDashboardTable.hints.TargetTrackingNo.displayHeight}"
+                                          columns="#{bindings.ActivityDashboardTable.hints.TargetTrackingNo.displayWidth}"
+                                          maximumLength="38" readOnly="true"
+                                          shortDesc="#{bindings.ActivityDashboardTable.hints.TargetTrackingNo.tooltip}">
+                              <f:validator binding="#{row.bindings.TargetTrackingNo.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.ActivityDashboardTable.hints.TargetTrackingNo.format}"/>
+                            </af:inputText>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+              </af:panelStretchLayout>
+            </af:panelBox>
+          </af:panelDashboard>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="LookUpCodeSetsTaskFlow">
+    <template-reference>
+      <document id="__0">/WEB-INF/jhs-fragment-taskflow-template.xml</document>
+      <id id="__1">jhs-fragment-taskflow-template</id>
+    </template-reference>
+    <default-activity id="__2">StartLookUpCodeSets</default-activity>
+    <input-parameter-definition id="__3">
+      <name id="__4">createLookUpCodeSets</name>
+      <value id="__5">#{pageFlowScope.createLookUpCodeSets}</value>
+      <class id="__6">java.lang.Object</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__7">
+      <name id="__8">rowKeyStrLookUpCodeSets</name>
+      <value id="__9">#{pageFlowScope.rowKeyStrLookUpCodeSets}</value>
+      <class id="__10">java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__11">
+      <name id="__12">rowKeyValueLookUpCodeSets</name>
+      <value id="__13">#{pageFlowScope.rowKeyValueLookUpCodeSets}</value>
+      <class id="__14">java.lang.Object</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__15">
+      <name id="__16">rowKeyLookUpCodeSets</name>
+      <value id="__17">#{pageFlowScope.rowKeyLookUpCodeSets}</value>
+      <class id="__18">oracle.jbo.Key</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__19">
+      <name id="__20">altKeyNameLookUpCodeSets</name>
+      <value id="__21">#{pageFlowScope.altKeyNameLookUpCodeSets}</value>
+      <class id="__22">java.lang.String</class>
+    </input-parameter-definition>
+    <managed-bean id="__23">
+      <managed-bean-name id="__24">jhsTaskFlowManager</managed-bean-name>
+      <managed-bean-class id="__25">oracle.jheadstart.controller.jsf.bean.TaskFlowManager</managed-bean-class>
+      <managed-bean-scope id="__26">pageFlow</managed-bean-scope>
+      <managed-property id="__27">
+        <property-name id="__28">initializeParentContextEntries</property-name>
+        <map-entries id="__29">
+          <map-entry id="__30">
+            <key id="__31">jhsCurrentGroupName</key>
+            <value id="__32">LookUpCodeSets</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__33">
+      <managed-bean-name id="__34">LookUpCodeSetsDefaultValues</managed-bean-name>
+      <managed-bean-class id="__35">oracle.jheadstart.controller.jsf.bean.DefaultValuesBean</managed-bean-class>
+      <managed-bean-scope id="__36">pageFlow</managed-bean-scope>
+      <managed-property id="__37">
+        <property-name id="__38">iteratorBinding</property-name>
+        <value id="__39">#{data.LookUpCodeSetsPageDef.LookUpCodeSetsIterator}</value>
+      </managed-property>
+      <managed-property id="__40">
+        <property-name id="__41">defaultValues</property-name>
+        <map-entries id="__42">
+          <map-entry id="__43">
+            <key id="__44">ActiveFlag</key>
+            <value id="__45">Y</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__46">
+        <property-name id="__47">actionResult</property-name>
+        <value id="__48">CreateLookUpCodeSets</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__49">
+      <managed-bean-name id="__50">LookUpCodeValuesDefaultValues</managed-bean-name>
+      <managed-bean-class id="__51">oracle.jheadstart.controller.jsf.bean.DefaultValuesBean</managed-bean-class>
+      <managed-bean-scope id="__52">pageFlow</managed-bean-scope>
+      <managed-property id="__53">
+        <property-name id="__54">iteratorBinding</property-name>
+        <value id="__55">#{data.LookUpCodeSetsPageDef.LookUpCodeValuesIterator}</value>
+      </managed-property>
+      <managed-property id="__56">
+        <property-name id="__57">defaultValues</property-name>
+        <map-entries id="__58">
+          <map-entry id="__59">
+            <key id="__60">ActiveFlag</key>
+            <value id="__61">Y</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__62">
+        <property-name id="__63">actionResult</property-name>
+        <value id="__64">CreateLookUpCodeValues</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__65">
+      <managed-bean-name id="__66">ChildCodeValuesDefaultValues</managed-bean-name>
+      <managed-bean-class id="__67">oracle.jheadstart.controller.jsf.bean.DefaultValuesBean</managed-bean-class>
+      <managed-bean-scope id="__68">pageFlow</managed-bean-scope>
+      <managed-property id="__69">
+        <property-name id="__70">iteratorBinding</property-name>
+        <value id="__71">#{data.LookUpCodeSetsPageDef.ChildCodeValuesIterator}</value>
+      </managed-property>
+      <managed-property id="__72">
+        <property-name id="__73">defaultValues</property-name>
+        <map-entries id="__74">
+          <map-entry id="__75">
+            <key id="__76">ActiveFlag</key>
+            <value id="__77">Y</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__78">
+        <property-name id="__79">actionResult</property-name>
+        <value id="__80">CreateChildCodeValues</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__81">
+      <managed-bean-name id="__82">CreateLookUpCodeSets</managed-bean-name>
+      <managed-bean-class id="__83">oracle.jheadstart.controller.jsf.bean.CreateRowBean</managed-bean-class>
+      <managed-bean-scope id="__84">request</managed-bean-scope>
+      <managed-property id="__85">
+        <property-name id="__86">createBinding</property-name>
+        <value id="__87">#{bindings.CreateLookUpCodeSets}</value>
+      </managed-property>
+      <managed-property id="__88">
+        <property-name id="__89">defaultValuesBean</property-name>
+        <value id="__90">#{pageFlowScope.LookUpCodeSetsDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__91">
+        <property-name id="__92">successOutcome</property-name>
+        <value id="__93">deepLinkPage</value>
+      </managed-property>
+      <managed-property id="__94">
+        <property-name id="__95">failureOutcome</property-name>
+        <value id="__96">firstPage</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__97">
+      <managed-bean-name id="__98">SaveLookUpCodeSets</managed-bean-name>
+      <managed-bean-class id="__99">oracle.jheadstart.controller.jsf.bean.CommitBean</managed-bean-class>
+      <managed-bean-scope id="__100">request</managed-bean-scope>
+      <managed-property id="__101">
+        <property-name id="__102">commitBinding</property-name>
+        <value id="__103">#{bindings.Commit}</value>
+      </managed-property>
+      <managed-property id="__104">
+        <property-name id="__105">successOutcome</property-name>
+        <value id="__106">Commit</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__107">
+      <managed-bean-name id="__108">jhsRollback</managed-bean-name>
+      <managed-bean-class id="__109">oracle.jheadstart.controller.jsf.bean.RollbackBean</managed-bean-class>
+      <managed-bean-scope id="__110">request</managed-bean-scope>
+      <managed-property id="__111">
+        <property-name id="__112">rollbackBinding</property-name>
+        <value id="__113">#{bindings.Rollback}</value>
+      </managed-property>
+      <managed-property id="__114">
+        <property-name id="__115">successOutcome</property-name>
+        <value id="__116">Cancel</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__117">
+      <managed-bean-name id="__118">searchLookUpCodeSets</managed-bean-name>
+      <managed-bean-class id="__119">com.pq.tracs.view.beans.TracsSearchBean</managed-bean-class>
+      <managed-bean-scope id="__120">pageFlow</managed-bean-scope>
+      <managed-property id="__121">
+        <property-name id="__122">bindings</property-name>
+        <value id="__123">#{'#{bindings}'}</value>
+      </managed-property>
+      <managed-property id="__124">
+        <property-name id="__125">searchBinding</property-name>
+        <value id="__126">#{'#{bindings.advancedSearchLookUpCodeSets}'}</value>
+      </managed-property>
+      <managed-property id="__127">
+        <property-name id="__128">searchItem</property-name>
+        <value id="__129">LCSCodeSet</value>
+      </managed-property>
+      <managed-property id="__130">
+        <property-name id="__131">dataCollection</property-name>
+        <value id="__132">TraxLookupCodeSetView1</value>
+      </managed-property>
+      <managed-property id="__133">
+        <property-name id="__134">operators</property-name>
+        <map-entries id="__135"></map-entries>
+      </managed-property>
+      <managed-property id="__136">
+        <property-name id="__137">itemAttributes</property-name>
+        <map-entries id="__138">
+          <map-entry id="__139">
+            <key id="__140">LCSCodeSet</key>
+            <value id="__141">CodeSet</value>
+          </map-entry>
+          <map-entry id="__142">
+            <key id="__143">LCSActiveFlag</key>
+            <value id="__144">ActiveFlag</value>
+          </map-entry>
+          <map-entry id="__145">
+            <key id="__146">LCSCreatedBy</key>
+            <value id="__147">CreatedBy</value>
+          </map-entry>
+          <map-entry id="__148">
+            <key id="__149">LCSCreatedDate</key>
+            <value id="__150">CreatedDate</value>
+          </map-entry>
+          <map-entry id="__151">
+            <key id="__152">LCSLastUpdatedBy</key>
+            <value id="__153">LastUpdatedBy</value>
+          </map-entry>
+          <map-entry id="__154">
+            <key id="__155">LCSLastUpdatedDate</key>
+            <value id="__156">LastUpdatedDate</value>
+          </map-entry>
+          <map-entry id="__157">
+            <key id="__158">LCSId</key>
+            <value id="__159">Id</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__160">
+      <managed-bean-name id="__161">LookUpCodeSetsTable</managed-bean-name>
+      <managed-bean-class id="__162">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__163">pageFlow</managed-bean-scope>
+      <managed-property id="__164">
+        <property-name id="__165">name</property-name>
+        <value id="__166">LookUpCodeSetsTable</value>
+      </managed-property>
+      <managed-property id="__167">
+        <property-name id="__168">rangeBindingExpr</property-name>
+        <value id="__169">#{'#{bindings.LookUpCodeSetsTable}'}</value>
+      </managed-property>
+      <managed-property id="__170">
+        <property-name id="__171">createNewRowAtTop</property-name>
+        <value id="__172">true</value>
+      </managed-property>
+      <managed-property id="__173">
+        <property-name id="__174">defaultValuesBean</property-name>
+        <value id="__175">#{pageFlowScope.LookUpCodeSetsDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__176">
+        <property-name id="__177">focusItemId</property-name>
+        <value id="__178">LCSCodeSet</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__179">
+      <managed-bean-name id="__180">DeleteLookUpCodeSets</managed-bean-name>
+      <managed-bean-class id="__181">oracle.jheadstart.controller.jsf.bean.DeleteRowBean</managed-bean-class>
+      <managed-bean-scope id="__182">request</managed-bean-scope>
+      <managed-property id="__183">
+        <property-name id="__184">deleteBinding</property-name>
+        <value id="__185">#{bindings.DeleteLookUpCodeSets}</value>
+      </managed-property>
+      <managed-property id="__186">
+        <property-name id="__187">commitBean</property-name>
+        <value id="__188">#{jhsCommit}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__189">
+      <managed-bean-name id="__190">LCSActiveFlagcheckboxInTable</managed-bean-name>
+      <managed-bean-class id="__191">oracle.jheadstart.controller.jsf.bean.CheckboxInTableBean</managed-bean-class>
+      <managed-bean-scope id="__192">request</managed-bean-scope>
+      <managed-property id="__193">
+        <property-name id="__194">binding</property-name>
+        <value id="__195">#{bindings.LCSActiveFlag}</value>
+      </managed-property>
+      <managed-property id="__196">
+        <property-name id="__197">tableBean</property-name>
+        <value id="__198">#{pageFlowScope.LookUpCodeSetsTable}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__199">
+      <managed-bean-name id="__200">LCSParentCodeSetIdDependsOnItem</managed-bean-name>
+      <managed-bean-class id="__201">oracle.jheadstart.controller.jsf.bean.DependsOnItemBean</managed-bean-class>
+      <managed-bean-scope id="__202">application</managed-bean-scope>
+      <managed-property id="__203">
+        <property-name id="__204">itemsToClear</property-name>
+        <list-entries id="__205"></list-entries>
+      </managed-property>
+      <managed-property id="__206">
+        <property-name id="__207">componentsToRefresh</property-name>
+        <list-entries id="__208">
+          <value id="__209">LCSParentLookupCodeId</value>
+        </list-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__210">
+      <managed-bean-name id="__211">LookUpCodeValuesTable</managed-bean-name>
+      <managed-bean-class id="__212">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__213">pageFlow</managed-bean-scope>
+      <managed-property id="__214">
+        <property-name id="__215">name</property-name>
+        <value id="__216">LookUpCodeValuesTable</value>
+      </managed-property>
+      <managed-property id="__217">
+        <property-name id="__218">rangeBindingExpr</property-name>
+        <value id="__219">#{'#{bindings.LookUpCodeValuesTable}'}</value>
+      </managed-property>
+      <managed-property id="__220">
+        <property-name id="__221">createNewRowAtTop</property-name>
+        <value id="__222">true</value>
+      </managed-property>
+      <managed-property id="__223">
+        <property-name id="__224">defaultValuesBean</property-name>
+        <value id="__225">#{pageFlowScope.LookUpCodeValuesDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__226">
+        <property-name id="__227">focusItemId</property-name>
+        <value id="__228">LookUpCodeValuesDisplayValue</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__229">
+      <managed-bean-name id="__230">DeleteLookUpCodeValues</managed-bean-name>
+      <managed-bean-class id="__231">oracle.jheadstart.controller.jsf.bean.DeleteRowBean</managed-bean-class>
+      <managed-bean-scope id="__232">request</managed-bean-scope>
+      <managed-property id="__233">
+        <property-name id="__234">deleteBinding</property-name>
+        <value id="__235">#{bindings.DeleteLookUpCodeValues}</value>
+      </managed-property>
+      <managed-property id="__236">
+        <property-name id="__237">commitBean</property-name>
+        <value id="__238">#{jhsCommit}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__239">
+      <managed-bean-name id="__240">CreateLookUpCodeValues</managed-bean-name>
+      <managed-bean-class id="__241">oracle.jheadstart.controller.jsf.bean.CreateRowBean</managed-bean-class>
+      <managed-bean-scope id="__242">request</managed-bean-scope>
+      <managed-property id="__243">
+        <property-name id="__244">createBinding</property-name>
+        <value id="__245">#{bindings.CreateLookUpCodeValues}</value>
+      </managed-property>
+      <managed-property id="__246">
+        <property-name id="__247">defaultValuesBean</property-name>
+        <value id="__248">#{pageFlowScope.LookUpCodeValuesDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__249">
+        <property-name id="__250">successOutcome</property-name>
+        <value id="__251">deepLinkPage</value>
+      </managed-property>
+      <managed-property id="__252">
+        <property-name id="__253">failureOutcome</property-name>
+        <value id="__254">firstPage</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__255">
+      <managed-bean-name id="__256">LookUpCodeValuesActiveFlagcheckboxInTable</managed-bean-name>
+      <managed-bean-class id="__257">oracle.jheadstart.controller.jsf.bean.CheckboxInTableBean</managed-bean-class>
+      <managed-bean-scope id="__258">request</managed-bean-scope>
+      <managed-property id="__259">
+        <property-name id="__260">binding</property-name>
+        <value id="__261">#{bindings.LookUpCodeValuesActiveFlag}</value>
+      </managed-property>
+      <managed-property id="__262">
+        <property-name id="__263">tableBean</property-name>
+        <value id="__264">#{pageFlowScope.LookUpCodeValuesTable}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__265">
+      <managed-bean-name id="__266">ChildCodeValuesTable</managed-bean-name>
+      <managed-bean-class id="__267">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__268">pageFlow</managed-bean-scope>
+      <managed-property id="__269">
+        <property-name id="__270">name</property-name>
+        <value id="__271">ChildCodeValuesTable</value>
+      </managed-property>
+      <managed-property id="__272">
+        <property-name id="__273">rangeBindingExpr</property-name>
+        <value id="__274">#{'#{bindings.ChildCodeValuesTable}'}</value>
+      </managed-property>
+      <managed-property id="__275">
+        <property-name id="__276">createNewRowAtTop</property-name>
+        <value id="__277">true</value>
+      </managed-property>
+      <managed-property id="__278">
+        <property-name id="__279">defaultValuesBean</property-name>
+        <value id="__280">#{pageFlowScope.ChildCodeValuesDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__281">
+        <property-name id="__282">focusItemId</property-name>
+        <value id="__283">ChildCodeValuesCodeSet</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__284">
+      <managed-bean-name id="__285">ChildCodeValuesActiveFlagcheckboxInTable</managed-bean-name>
+      <managed-bean-class id="__286">oracle.jheadstart.controller.jsf.bean.CheckboxInTableBean</managed-bean-class>
+      <managed-bean-scope id="__287">request</managed-bean-scope>
+      <managed-property id="__288">
+        <property-name id="__289">binding</property-name>
+        <value id="__290">#{bindings.ChildCodeValuesActiveFlag}</value>
+      </managed-property>
+      <managed-property id="__291">
+        <property-name id="__292">tableBean</property-name>
+        <value id="__293">#{pageFlowScope.ChildCodeValuesTable}</value>
+      </managed-property>
+    </managed-bean>
+    <router id="StartLookUpCodeSets">
+      <case id="__294">
+        <expression id="__295">#{pageFlowScope.createLookUpCodeSets!=null}</expression>
+        <outcome id="__296">createLookUpCodeSets</outcome>
+      </case>
+      <case id="__297">
+        <expression id="__298">#{pageFlowScope.rowKeyStrLookUpCodeSets!=null or
+                               pageFlowScope.rowKeyValueLookUpCodeSets!=null or
+                               pageFlowScope.rowKeyLookUpCodeSets!=null}</expression>
+        <outcome id="__299">SetCurrentRowLookUpCodeSets</outcome>
+      </case>
+      <case id="__300">
+        <expression id="__301">#{pageFlowScope.isDeepLink!=null and
+                               pageFlowScope.isDeepLink}</expression>
+        <outcome id="__302">deepLinkPage</outcome>
+      </case>
+      <default-outcome id="__303">firstPage</default-outcome>
+    </router>
+    <method-call id="CreateLookUpCodeSets">
+      <method id="__304">#{CreateLookUpCodeSets.execute}</method>
+      <!-- execute condition param -->
+      <parameter>
+        <class id="__305">java.lang.Object</class>
+        <value id="__306">#{pageFlowScope.createLookUpCodeSets}</value>
+      </parameter>
+      <outcome id="__307">
+        <to-string/>
+      </outcome>
+    </method-call>
+    <method-call id="SetCurrentRowLookUpCodeSets">
+      <method id="__308">#{jhsSetCurrentRow.execute}</method>
+      <!-- iterator param -->
+      <parameter>
+        <class id="__309">oracle.adf.model.binding.DCIteratorBinding</class>
+        <value id="__310">#{bindings.LookUpCodeSetsIterator}</value>
+      </parameter>
+      <!-- rowKeyStr param -->
+      <parameter>
+        <class id="__311">java.lang.String</class>
+        <value id="__312">#{pageFlowScope.rowKeyStrLookUpCodeSets}</value>
+      </parameter>
+      <!-- rowKeyValue param -->
+      <parameter>
+        <class id="__313">java.lang.Object</class>
+        <value id="__314">#{pageFlowScope.rowKeyValueLookUpCodeSets}</value>
+      </parameter>
+      <!-- rowKey param -->
+      <parameter>
+        <class id="__315">oracle.jbo.Key</class>
+        <value id="__316">#{pageFlowScope.rowKeyLookUpCodeSets}</value>
+      </parameter>
+      <!-- altKeyName param -->
+      <parameter>
+        <class id="__317">java.lang.String</class>
+        <value id="__318">#{pageFlowScope.altKeyNameLookUpCodeSets}</value>
+      </parameter>
+      <outcome id="__319">
+        <fixed-outcome id="__320">deepLinkPage</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-return id="CancelLookUpCodeSetsReturn">
+      <outcome id="__321">
+        <name id="__322">CancelLookUpCodeSets</name>
+      </outcome>
+    </task-flow-return>
+    <task-flow-return id="DoneLookUpCodeSetsReturn">
+      <outcome id="__323">
+        <name id="__324">DoneLookUpCodeSets</name>
+      </outcome>
+    </task-flow-return>
+    <view id="LookUpCodeSetsTable">
+      <page id="__325">/adminservice/pages/LookUpCodeSetsTable.jsff</page>
+    </view>
+    <view id="LookUpCodeSets">
+      <page id="__326">/adminservice/pages/LookUpCodeSets.jsff</page>
+    </view>
+    <control-flow-rule id="__327">
+      <from-activity-id id="__328">*</from-activity-id>
+      <control-flow-case id="__329">
+        <from-outcome id="__330">SetCurrentRowLookUpCodeSets</from-outcome>
+        <to-activity-id id="__331">SetCurrentRowLookUpCodeSets</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__332">
+        <from-outcome id="__333">firstPage</from-outcome>
+        <to-activity-id id="__334">LookUpCodeSetsTable</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__335">
+        <from-outcome id="__336">deepLinkPage</from-outcome>
+        <to-activity-id id="__337">LookUpCodeSets</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__338">
+        <from-outcome id="__339">LookUpCodeSetsTableBreadcrumb</from-outcome>
+        <to-activity-id id="__340">LookUpCodeSetsTable</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__341">
+        <from-outcome id="__342">LookUpCodeSetsBreadcrumb</from-outcome>
+        <to-activity-id id="__343">LookUpCodeSets</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__344">
+        <from-outcome id="__345">Cancel</from-outcome>
+        <to-activity-id id="__346">StartLookUpCodeSets</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__347">
+        <from-outcome id="__348">CancelLookUpCodeSetsReturn</from-outcome>
+        <to-activity-id id="__349">CancelLookUpCodeSetsReturn</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__350">
+        <from-outcome id="__351">DoneLookUpCodeSetsReturn</from-outcome>
+        <to-activity-id id="__352">DoneLookUpCodeSetsReturn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__353">
+      <from-activity-id id="__354">LookUpCodeSetsTable</from-activity-id>
+      <control-flow-case id="__355">
+        <from-outcome id="__356">CreateLCS</from-outcome>
+        <to-activity-id id="__357">LookUpCodeSets</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__358">
+        <from-outcome id="__359">LookUpCodeSetsDetails</from-outcome>
+        <to-activity-id id="__360">LookUpCodeSets</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__361">
+      <from-activity-id id="__362">*</from-activity-id>
+      <control-flow-case id="__363">
+        <from-outcome id="__364">createLookUpCodeSets</from-outcome>
+        <to-activity-id id="__365">CreateLookUpCodeSets</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+  <!-- This bean must be defined outside the task-flow-definition element
+       because it needs to be available in the pageFlowScope of the unbounded
+       task-flow not in the pageFlowScope of the bounded task flow itself. -->
+  <managed-bean id="__366">
+    <managed-bean-name id="__367">LookUpCodeSetsTaskFlowConfig</managed-bean-name>
+    <managed-bean-class id="__368">oracle.jheadstart.controller.jsf.bean.TaskFlowConfigBean</managed-bean-class>
+    <managed-bean-scope id="__369">pageFlow</managed-bean-scope>
+    <managed-property id="__370">
+      <property-name id="__371">params</property-name>
+      <property-class id="__372">java.util.Map</property-class>
+      <map-entries id="__373">
+        <map-entry id="__374">
+          <key id="__375">parentContext</key>
+          <value id="__376">#{pageFlowScope.parentContext}</value>
+        </map-entry>
+      </map-entries>
+    </managed-property>
+    <managed-property id="__377">
+      <property-name id="__378">name</property-name>
+      <value id="__379">LookUpCodeSets</value>
+    </managed-property>
+    <managed-property id="__380">
+      <property-name id="__381">taskFlowId</property-name>
+      <value id="__382">/adminservice/beanconfig/adfc-config-LookUpCodeSets.xml#LookUpCodeSetsTaskFlow</value>
+    </managed-property>
+    <managed-property id="__383">
+      <property-name id="__384">tabUniqueIdentifier</property-name>
+      <value id="__385">LookUpCodeSets</value>
+    </managed-property>
+    <managed-property id="__386">
+      <property-name id="__387">label</property-name>
+      <value id="__388">Lookups</value>
+    </managed-property>
+  </managed-bean>
+</adfc-config>

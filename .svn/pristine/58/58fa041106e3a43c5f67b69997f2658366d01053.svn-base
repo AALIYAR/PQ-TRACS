@@ -1,0 +1,1664 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="s14TopLc"
+                             partialTriggers=" s14DeleteDialog s14fbb s14NewButton s14DelB s14SaveButton0 s14CancelButton0 s14SaveButton1 s14CancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateContractRights ? nls['INSERT_TITLE_CONTRACTRIGHTS'] :  (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'] ? nls['EDIT_TITLE_CONTRACTRIGHT: #{bindings.s14RuleNumber.inputValue}'] : nls['VIEW_TITLE_CONTRACTRIGHT: #{bindings.s14RuleNumber.inputValue}'])  }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="s14fbb" layout="horizontal"
+                                       rendered="#{ bindings.ContractRightsIterator.currentRow!=null  and bindings.ContractRightsIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateContractRights and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="s14First s14Previous s14Next s14Last">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstContractRights.execute}"
+                                             id="s14First" partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.ContractRightsIterator.rangeStart+bindings.ContractRightsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.ContractRightsIterator.rangeStart+bindings.ContractRightsIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousContractRights.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="s14Previous"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.ContractRightsIterator.rangeStart+bindings.ContractRightsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.ContractRightsIterator.rangeStart+bindings.ContractRightsIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.ContractRightsIterator.rangeStart+bindings.ContractRightsIterator.currentRowIndexInRange+1} / #{bindings.ContractRightsIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextContractRights.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="s14Next" partialSubmit="true"
+                                             rendered="#{bindings.ContractRightsIterator.rangeStart+bindings.ContractRightsIterator.currentRowIndexInRange+1 lt bindings.ContractRightsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.ContractRightsIterator.rangeStart+bindings.ContractRightsIterator.currentRowIndexInRange+1 lt bindings.ContractRightsIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastContractRights.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="s14Last" partialSubmit="true"
+                                             rendered="#{bindings.ContractRightsIterator.rangeStart+bindings.ContractRightsIterator.currentRowIndexInRange+1 lt bindings.ContractRightsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.ContractRightsIterator.rangeStart+bindings.ContractRightsIterator.currentRowIndexInRange+1 lt bindings.ContractRightsIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateContractRights.execute}"
+                                             action="Creates14"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_CONTRACTRIGHTS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateContractRights and (true) and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             id="s14NewButton"></af:commandToolbarButton>
+                    <af:commandToolbarButton action="DeleteContractRights"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_CONTRACTRIGHTS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateContractRights and  bindings.ContractRightsIterator.currentRow!=null   and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             immediate="true" id="s14DelB">
+                      <af:showPopupBehavior popupId="s14DeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="s14Print"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveContractRights.execute}"
+                                      rendered="#{(((((((((jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['ADMIN'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="s14SaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="s14CancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.ContractRightsIterator.findMode!='true'}"
+                       id="s14Sw" defaultFacet="hasRows"
+                       facetName="#{( bindings.ContractRightsIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="s14NoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="s14FC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="4"
+                                    id="s14FI">
+                  <af:inputText id="s14RNo"
+                                value="#{bindings.s14RuleNumber.inputValue}"
+                                label="#{bindings.s14RuleNumber.hints.label}"
+                                required="false"
+                                rows="#{bindings.s14RuleNumber.hints.displayHeight}"
+                                columns="#{bindings.s14RuleNumber.hints.displayWidth}"
+                                maximumLength="20" readOnly="true">
+                    <f:validator binding="#{bindings.s14RuleNumber.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="s14TemplateName"
+                                      value="#{bindings.s14TemplateName.inputValue}"
+                                      label="#{bindings.s14TemplateName.hints.label}"
+                                      required="false"
+                                      readOnly="#{(((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))) or (!(pageFlowScope.createModes.CreateContractRights))}"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{s14TemplateNameDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{bindings.s14TemplateName.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="s14PermissionType"
+                                      value="#{bindings.s14PermissionType.inputValue}"
+                                      label="#{bindings.s14PermissionType.hints.label}"
+                                      required="#{bindings.s14PermissionType.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{s14PermissionTypeDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{bindings.s14PermissionType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="s14PermissionSubType"
+                                      value="#{bindings.s14PermissionSubType.inputValue}"
+                                      label="#{bindings.s14PermissionSubType.hints.label}"
+                                      required="#{bindings.s14PermissionSubType.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:selectItems value="#{bindings.s14PermissionSubType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="s14RightOrRestrictionType"
+                                      value="#{bindings.s14RightOrRestrictionType.inputValue}"
+                                      label="#{bindings.s14RightOrRestrictionType.hints.label}"
+                                      required="#{bindings.s14RightOrRestrictionType.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:selectItems value="#{bindings.s14RightOrRestrictionType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="s14IncludesOrExcludes"
+                                      value="#{bindings.s14IncludesOrExcludes.inputValue}"
+                                      label="#{bindings.s14IncludesOrExcludes.hints.label}"
+                                      required="#{bindings.s14IncludesOrExcludes.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:selectItems value="#{bindings.s14IncludesOrExcludes.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectBooleanCheckbox id="s14SalesRestrictionFlag"
+                                            value="#{bindings.s14SalesRestrictionFlag.inputValue}"
+                                            label="#{bindings.s14SalesRestrictionFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="s14ComplexFlag"
+                                            value="#{bindings.s14ComplexFlag.inputValue}"
+                                            label="#{bindings.s14ComplexFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="s14TrF"
+                                            value="#{bindings.s14TranslationFlag.inputValue}"
+                                            label="#{bindings.s14TranslationFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="s14RFR"
+                                            value="#{bindings.s14ResellerFyiRequiredFlag.inputValue}"
+                                            label="#{bindings.s14ResellerFyiRequiredFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="s14WAR"
+                                            value="#{bindings.s14WrittenApprovalRequiredFlag.inputValue}"
+                                            label="#{bindings.s14WrittenApprovalRequiredFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"></af:selectBooleanCheckbox>
+                  <af:selectOneChoice id="s14St"
+                                      value="#{bindings.s14Status.inputValue}"
+                                      label="#{bindings.s14Status.hints.label}"
+                                      required="#{bindings.s14Status.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:selectItems value="#{bindings.s14Status.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputDate id="s14ESD"
+                                value="#{bindings.s14EffectiveStartDate.inputValue}"
+                                label="#{bindings.s14EffectiveStartDate.hints.label}"
+                                required="#{bindings.s14EffectiveStartDate.hints.mandatory}"
+                                readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputDate id="s14EED"
+                                value="#{bindings.s14EffectiveEndDate.inputValue}"
+                                label="#{bindings.s14EffectiveEndDate.hints.label}"
+                                required="#{bindings.s14EffectiveEndDate.hints.mandatory}"
+                                readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="s14EmbargoDays"
+                                value="#{bindings.s14EmbargoDays.inputValue}"
+                                label="#{bindings.s14EmbargoDays.hints.label}"
+                                required="#{bindings.s14EmbargoDays.hints.mandatory}"
+                                rows="#{bindings.s14EmbargoDays.hints.displayHeight}"
+                                columns="#{bindings.s14EmbargoDays.hints.displayWidth}"
+                                maximumLength="38"
+                                readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s14EmbargoDays.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s14EmbargoDays.format}"/>
+                  </af:inputText>
+                  <af:inputText id="s14RED"
+                                value="#{bindings.s14ReverseEmbargoDays.inputValue}"
+                                label="#{bindings.s14ReverseEmbargoDays.hints.label}"
+                                required="#{bindings.s14ReverseEmbargoDays.hints.mandatory}"
+                                rows="#{bindings.s14ReverseEmbargoDays.hints.displayHeight}"
+                                columns="#{bindings.s14ReverseEmbargoDays.hints.displayWidth}"
+                                maximumLength="38"
+                                readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s14ReverseEmbargoDays.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s14ReverseEmbargoDays.format}"/>
+                  </af:inputText>
+                  <af:panelLabelAndMessage label="#{bindings.s14ComplexRuleDescription.hints.label}"
+                                           showRequired="#{bindings.s14ComplexRuleDescription.hints.mandatory}"
+                                           id="s14ComplexRuleDescriptionLabel">
+                    <af:inputText id="s14ComplexRuleDescription"
+                                  value="#{bindings.s14ComplexRuleDescription.inputValue}"
+                                  required="#{bindings.s14ComplexRuleDescription.hints.mandatory}"
+                                  rows="#{bindings.s14ComplexRuleDescription.hints.displayHeight}"
+                                  columns="#{bindings.s14ComplexRuleDescription.hints.displayWidth}"
+                                  maximumLength="4000"
+                                  readOnly="#{((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                  autoSubmit="true" simple="true"
+                                  partialTriggers="s14ComplexRuleDescriptionEditorLink s14ComplexRuleDescriptionEditorText">
+                      <f:validator binding="#{bindings.s14ComplexRuleDescription.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl0" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink id="s14ComplexRuleDescriptionEditorLink"
+                                        rendered="#{!(((pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractRights) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))))}"
+                                        immediate="true" partialSubmit="true">
+                          <af:showPopupBehavior popupId="s14ComplexRuleDescriptionPopup"/>
+                          <af:image source="/jheadstart/images/editor.gif"
+                                    id="s14ComplexRuleDescriptionIcon"
+                                    clientComponent="true"/>
+                        </af:commandLink>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:inputText id="s14CB"
+                                value="#{bindings.s14CreatedBy.inputValue}"
+                                label="#{bindings.s14CreatedBy.hints.label}"
+                                required="#{bindings.s14CreatedBy.hints.mandatory}"
+                                rows="#{bindings.s14CreatedBy.hints.displayHeight}"
+                                columns="#{bindings.s14CreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s14CreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s14CD"
+                                value="#{bindings.s14CreatedDate.inputValue}"
+                                label="#{bindings.s14CreatedDate.hints.label}"
+                                required="#{bindings.s14CreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="s14LUB"
+                                value="#{bindings.s14LastUpdatedBy.inputValue}"
+                                label="#{bindings.s14LastUpdatedBy.hints.label}"
+                                required="#{bindings.s14LastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.s14LastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.s14LastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s14LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s14LUD"
+                                value="#{bindings.s14LastUpdatedDate.inputValue}"
+                                label="#{bindings.s14LastUpdatedDate.hints.label}"
+                                required="#{bindings.s14LastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveContractRights.execute}"
+                                            rendered="#{(((((((((jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['ADMIN'])) and (!pageFlowScope.hideSaveButton)}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="s14SaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="s14CancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_CONTRACTRIGHTTITLES']}"
+                               partialTriggers=" s14TopLc s140DeleteDialog qsAreas140SearchOptions s140PC:s140Arm s140PC:s140delrmTM s140PC:s140Arl s140PC:s140Tab:s140delrm s140PC:s140Tab:s140delrl"
+                               id="s140TopLcSdi"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                               disabled="#{!jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+              <af:panelGroupLayout layout="vertical" id="s140TopLc"
+                                   partialTriggers=" s14TopLc s140DeleteDialog qsAreas140SearchOptions s140PC:s140Arm s140PC:s140delrmTM s140PC:s140Arl s140PC:s140Tab:s140delrm s140PC:s140Tab:s140delrl"
+                                   rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0">
+                  <af:panelGroupLayout id="modelSearchAreas140"
+                                       rendered="#{!pageFlowScope.createModes.CreateContractRightTitles and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreas140SearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.ContractRightTitlesIteratorJContractRightTitlesViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.ContractRightTitlesIteratorJContractRightTitlesViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.ContractRightTitlesIteratorJContractRightTitlesViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl1">
+                  <af:panelCollection id="s140PC" featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="s140tbb"
+                                    rendered="#{ bindings.ContractRightTitlesIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstContractRightTitles.execute}"
+                                                id="s140First"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousContractRightTitles.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="s140Previous"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextContractRightTitles.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="s140Next"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastContractRightTitles.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="s140Last"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="s140Arm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.ContractRightTitlesTable.addRow}"
+                                            rendered="#{ bindings.ContractRightsIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="s140delrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                          <af:showPopupBehavior popupId="::s140DeletePopup"/>
+                        </af:commandMenuItem>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi0">
+                          <af:exportCollectionActionListener exportedId="s140Tab"
+                                                             type="excelHTML"
+                                                             filename="ContractRightTitles.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <!-- Also create CreateContractRightTitles bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="s140Arl" immediate="false"
+                                             rendered="#{ bindings.ContractRightsIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.ContractRightTitlesTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl0"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="s140Tab"
+                                                             type="excelHTML"
+                                                             filename="ContractRightTitles.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print" id="s140Print"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                        <af:popup id="confirmDeletePopup0"
+                                  binding="#{pageFlowScope.ContractRightTitlesTable.confirmDeletePopup}">
+                          <af:dialog modal="true" type="okCancel"
+                                     title="Confirm Delete"
+                                     dialogListener="#{pageFlowScope.ContractRightTitlesTable.handleOK}">
+                            <af:outputText value="Are you sure you want to delete the selected rows?"/>
+                          </af:dialog>
+                        </af:popup>
+                        <af:commandButton id="s140MDB"
+                                          textAndAccessKey="Delete Selected">
+                          <af:showPopupBehavior popupId="confirmDeletePopup0"
+                                                align="beforeStart"/>
+                        </af:commandButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.ContractRightTitlesIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="s140Tab" contentDelivery="immediate"
+                              value="#{bindings.ContractRightTitlesTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true"
+                              selectionListener="#{bindings.ContractRightTitlesTable.collectionModel.makeCurrent}"
+                              rowSelection="multiple"
+                              rowDisclosureListener="#{pageFlowScope.ContractRightTitlesTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.ContractRightTitlesTable.rangeSize}"
+                              autoHeightRows="#{bindings.ContractRightTitlesTable.estimatedRowCount lt 5 ? 5 : bindings.ContractRightTitlesTable.estimatedRowCount lt bindings.ContractRightTitlesTable.rangeSize ? bindings.ContractRightTitlesTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.ContractRightTitlesTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.ContractRightTitlesIteratorJContractRightTitlesViewCriteriaQuery.processQuery}"
+                              binding="#{pageFlowScope.ContractRightTitlesTable.table}"
+                              partialTriggers=":::qsAreas140SearchOptions :::s140PC ::s140First ::s140Previous ::s140Next ::s140Last"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_CONTRACTRIGHTTITLES']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="s140TablePopup" childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="s140delrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                              <af:showPopupBehavior popupId=":::s140DeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="s140ActionColumn" frozen="true" width="20"
+                                 align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl2">
+                          <af:commandImageLink id="s140delrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::s140DeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="s140CNoCol" sortable="true" noWrap="true"
+                                 width="110" sortProperty="CatalogNumber"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightTitlesTable.hints.CatalogNumber.label}"
+                                          showRequired="#{bindings.ContractRightTitlesTable.hints.CatalogNumber.mandatory}"
+                                          id="ol0"/>
+                        </f:facet>
+                        <af:panelGroupLayout id="s140CatalogNumberPgl"
+                                             layout="horizontal">
+                          <af:inputText id="s140CNo"
+                                        label="#{bindings.ContractRightTitlesTable.hints.CatalogNumber.label}"
+                                        readOnly="#{(((pageFlowScope.ContractRightTitlesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.ContractRightTitlesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))) or (!(pageFlowScope.ContractRightTitlesTable.newRow))}"
+                                        columns="#{bindings.ContractRightTitlesTable.hints.CatalogNumber.displayWidth}"
+                                        maximumLength="40"
+                                        value="#{pageFlowScope.s140CatalogNumberLovItemInTable.lovFieldValue}"
+                                        autoSubmit="true"
+                                        valueChangeListener="#{pageFlowScope.s140CatalogNumberLovItemInTable.validateWithLov}"
+                                        binding="#{pageFlowScope.s140CatalogNumberLovItemInTable.lovField}"
+                                        simple="true">
+                            <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                          </af:inputText>
+                          <af:commandLink immediate="true" partialSubmit="true"
+                                          rendered="#{!((((pageFlowScope.ContractRightTitlesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.ContractRightTitlesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))) or (!(pageFlowScope.ContractRightTitlesTable.newRow)))}"
+                                          id="cl1"
+                                          actionListener="#{pageFlowScope.s140CatalogNumberLovItemInTable.lovIconClicked}">
+                            <af:image source="/jheadstart/images/lov.png"
+                                      id="s140CatalogNumberIcon"
+                                      clientComponent="true"
+                                      shortDesc="CatalogNumber"/>
+                          </af:commandLink>
+                          <af:commandButton text="hidden" id="cb2"
+                                            rendered="false"
+                                            action="#{pageFlowScope.s140CatalogNumberLovItemInTable.validationAction}"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            binding="#{pageFlowScope.s140CatalogNumberLovItemInTable.validationButton}"/>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="s140TTlCol" sortable="true" noWrap="true"
+                                 width="180" sortProperty="LongTitle"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightTitlesTable.hints.LongTitle.label}"
+                                          id="ol1"/>
+                        </f:facet>
+                        <af:inputText id="s140TTl"
+                                      value="#{row.bindings.LongTitle.inputValue}"
+                                      label="#{bindings.ContractRightTitlesTable.hints.LongTitle.label}"
+                                      required="#{bindings.ContractRightTitlesTable.hints.LongTitle.mandatory}"
+                                      rows="#{bindings.ContractRightTitlesTable.hints.LongTitle.displayHeight}"
+                                      columns="30" maximumLength="4000"
+                                      readOnly="true">
+                          <f:validator binding="#{row.bindings.LongTitle.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s140PLnCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="ProductLine"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightTitlesTable.hints.ProductLine.label}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s140PLn"
+                                            value="#{row.bindings.ProductLine.inputValue}"
+                                            label="#{bindings.ContractRightTitlesTable.hints.ProductLine.label}"
+                                            required="#{bindings.ContractRightTitlesTable.hints.ProductLine.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.ProductLine.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s140PSYCol" sortable="true" noWrap="true"
+                                 width="100" sortProperty="PublicationStartYear"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightTitlesTable.hints.PublicationStartYear.label}"
+                                          id="ol3"/>
+                        </f:facet>
+                        <af:inputText id="s140PSY"
+                                      value="#{row.bindings.PublicationStartYear.inputValue}"
+                                      label="#{bindings.ContractRightTitlesTable.hints.PublicationStartYear.label}"
+                                      required="#{bindings.ContractRightTitlesTable.hints.PublicationStartYear.mandatory}"
+                                      rows="#{bindings.ContractRightTitlesTable.hints.PublicationStartYear.displayHeight}"
+                                      columns="#{bindings.ContractRightTitlesTable.hints.PublicationStartYear.displayWidth}"
+                                      maximumLength="4" readOnly="true">
+                          <f:validator binding="#{row.bindings.PublicationStartYear.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s140PEYCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="PublicationEndYear"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightTitlesTable.hints.PublicationEndYear.label}"
+                                          id="ol4"/>
+                        </f:facet>
+                        <af:inputText id="s140PEY"
+                                      value="#{row.bindings.PublicationEndYear.inputValue}"
+                                      label="#{bindings.ContractRightTitlesTable.hints.PublicationEndYear.label}"
+                                      required="#{bindings.ContractRightTitlesTable.hints.PublicationEndYear.mandatory}"
+                                      rows="#{bindings.ContractRightTitlesTable.hints.PublicationEndYear.displayHeight}"
+                                      columns="#{bindings.ContractRightTitlesTable.hints.PublicationEndYear.displayWidth}"
+                                      maximumLength="4" readOnly="true">
+                          <f:validator binding="#{row.bindings.PublicationEndYear.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s140FACol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="FilmAvailability"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightTitlesTable.hints.FilmAvailability.label}"
+                                          id="ol5"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s140FA"
+                                            value="#{row.bindings.FilmAvailability.inputValue}"
+                                            label="#{bindings.ContractRightTitlesTable.hints.FilmAvailability.label}"
+                                            required="#{bindings.ContractRightTitlesTable.hints.FilmAvailability.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.FilmAvailability.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s140BSCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="BibliographicStatus"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightTitlesTable.hints.BibliographicStatus.label}"
+                                          id="ol6"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s140BS"
+                                            value="#{row.bindings.BibliographicStatus.inputValue}"
+                                            label="#{bindings.ContractRightTitlesTable.hints.BibliographicStatus.label}"
+                                            required="#{bindings.ContractRightTitlesTable.hints.BibliographicStatus.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.BibliographicStatus.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s140ERCol" sortable="true" noWrap="true"
+                                 width="180" sortProperty="ExercisingRights"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightTitlesTable.hints.ExercisingRights.label}"
+                                          id="ol7"/>
+                        </f:facet>
+                        <af:inputText id="s140ER"
+                                      value="#{row.bindings.ExercisingRights.inputValue}"
+                                      label="#{bindings.ContractRightTitlesTable.hints.ExercisingRights.label}"
+                                      required="#{bindings.ContractRightTitlesTable.hints.ExercisingRights.mandatory}"
+                                      rows="#{bindings.ContractRightTitlesTable.hints.ExercisingRights.displayHeight}"
+                                      columns="#{bindings.ContractRightTitlesTable.hints.ExercisingRights.displayWidth}"
+                                      maximumLength="40" readOnly="true">
+                          <f:validator binding="#{row.bindings.ExercisingRights.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s140PMCCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="PrimaryPmClass"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightTitlesTable.hints.PrimaryPmClass.label}"
+                                          id="ol8"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s140PMC"
+                                            value="#{row.bindings.PrimaryPmClass.inputValue}"
+                                            label="#{bindings.ContractRightTitlesTable.hints.PrimaryPmClass.label}"
+                                            required="#{bindings.ContractRightTitlesTable.hints.PrimaryPmClass.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.PrimaryPmClass.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s140StatusCol" sortable="true"
+                                 noWrap="true" width="120" sortProperty="Status"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightTitlesTable.hints.Status.label}"
+                                          id="ol9"/>
+                        </f:facet>
+                        <af:inputText id="s140Status"
+                                      value="#{row.bindings.Status.inputValue}"
+                                      label="#{bindings.ContractRightTitlesTable.hints.Status.label}"
+                                      required="#{bindings.ContractRightTitlesTable.hints.Status.mandatory}"
+                                      rows="#{bindings.ContractRightTitlesTable.hints.Status.displayHeight}"
+                                      columns="#{bindings.ContractRightTitlesTable.hints.Status.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightTitlesTable.hints.Status.tooltip}">
+                          <f:validator binding="#{row.bindings.Status.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_CONTRACTRIGHTCATEGORIES']}"
+                               partialTriggers=" s14TopLc s141DeleteDialog qsAreas141SearchOptions s141PC:s141Arm s141PC:s141delrmTM s141PC:s141Arl s141PC:s141Tab:s141delrm s141PC:s141Tab:s141delrl"
+                               id="s141TopLcSdi"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                               disabled="#{!jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+              <af:panelGroupLayout layout="vertical" id="s141TopLc"
+                                   partialTriggers=" s14TopLc s141DeleteDialog qsAreas141SearchOptions s141PC:s141Arm s141PC:s141delrmTM s141PC:s141Arl s141PC:s141Tab:s141delrm s141PC:s141Tab:s141delrl"
+                                   rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp4"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g2">
+                  <af:panelGroupLayout id="modelSearchAreas141"
+                                       rendered="#{!pageFlowScope.createModes.CreateContractRightCategories and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreas141SearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.ContractRightCategoriesIteratorContractRightCategoryViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.ContractRightCategoriesIteratorContractRightCategoryViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.ContractRightCategoriesIteratorContractRightCategoryViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl3">
+                  <af:panelCollection id="s141PC" featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu4">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu5">
+                          <af:group id="s141tbb"
+                                    rendered="#{ bindings.ContractRightCategoriesIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstContractRightCategories.execute}"
+                                                id="s141First"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousContractRightCategories.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="s141Previous"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextContractRightCategories.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="s141Next"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastContractRightCategories.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="s141Last"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="s141Arm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.ContractRightCategoriesTable.addRow}"
+                                            rendered="#{ bindings.ContractRightsIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="s141delrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                          <af:showPopupBehavior popupId="::s141DeletePopup"/>
+                        </af:commandMenuItem>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi1">
+                          <af:exportCollectionActionListener exportedId="s141Tab"
+                                                             type="excelHTML"
+                                                             filename="ContractRightCategories.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar2">
+                        <!-- Also create CreateContractRightCategories bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="s141Arl" immediate="false"
+                                             rendered="#{ bindings.ContractRightsIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.ContractRightCategoriesTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl2"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="s141Tab"
+                                                             type="excelHTML"
+                                                             filename="ContractRightCategories.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print" id="s141Print"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.ContractRightCategoriesIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="s141Tab" contentDelivery="immediate"
+                              value="#{bindings.ContractRightCategoriesTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.ContractRightCategoriesTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.ContractRightCategoriesTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.ContractRightCategoriesTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.ContractRightCategoriesTable.rangeSize}"
+                              autoHeightRows="#{bindings.ContractRightCategoriesTable.estimatedRowCount lt 5 ? 5 : bindings.ContractRightCategoriesTable.estimatedRowCount lt bindings.ContractRightCategoriesTable.rangeSize ? bindings.ContractRightCategoriesTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.ContractRightCategoriesTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.ContractRightCategoriesIteratorContractRightCategoryViewCriteriaQuery.processQuery}"
+                              filterModel="#{bindings.ContractRightCategoriesIteratorContractRightCategoryViewCriteriaQuery.queryDescriptor}"
+                              filterVisible="true"
+                              binding="#{pageFlowScope.ContractRightCategoriesTable.table}"
+                              partialTriggers=":::qsAreas141SearchOptions :::s141PC ::s141First ::s141Previous ::s141Next ::s141Last"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_CONTRACTRIGHTCATEGORIES']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="s141TablePopup" childCreation="deferred">
+                          <af:menu id="menu6">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu7"></af:menu>
+                            <af:commandMenuItem id="s141delrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                              <af:showPopupBehavior popupId=":::s141DeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="s141ActionColumn" width="20" align="center"
+                                 headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl4">
+                          <af:commandImageLink id="s141delrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::s141DeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="s141CatCol" sortable="true" noWrap="true"
+                                 width="228" sortProperty="CategoryId"
+                                 align="right" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightCategoriesTable.hints.CategoryId.label}"
+                                          showRequired="#{bindings.ContractRightCategoriesTable.hints.CategoryId.mandatory}"
+                                          id="ol10"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s141Cat"
+                                            value="#{row.bindings.CategoryId.inputValue}"
+                                            label="#{bindings.ContractRightCategoriesTable.hints.CategoryId.label}"
+                                            required="#{bindings.ContractRightCategoriesTable.hints.CategoryId.mandatory}"
+                                            readOnly="#{((pageFlowScope.ContractRightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.ContractRightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                            autoSubmit="true"
+                                            valueChangeListener="#{s141CategoryDependsOnItem.updateModelValue}">
+                          <f:selectItems value="#{row.bindings.CategoryId.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s141ValCol" sortable="true"
+                                 filterable="true" noWrap="true" width="180"
+                                 sortProperty="Value" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightCategoriesTable.hints.Value.label}"
+                                          showRequired="true" id="ol11"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s141Val"
+                                            value="#{row.bindings.Value.inputValue}"
+                                            label="#{bindings.ContractRightCategoriesTable.hints.Value.label}"
+                                            required="true"
+                                            readOnly="#{((pageFlowScope.ContractRightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.ContractRightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                            autoSubmit="true"
+                                            valueChangeListener="#{s141ValueDependsOnItem.updateModelValue}">
+                          <f:selectItems value="#{row.bindings.Value.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s141FOPCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="FullOrPartial" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightCategoriesTable.hints.FullOrPartial.label}"
+                                          showRequired="#{bindings.ContractRightCategoriesTable.hints.FullOrPartial.mandatory}"
+                                          id="ol12"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s141FOP"
+                                            value="#{row.bindings.FullOrPartial.inputValue}"
+                                            label="#{bindings.ContractRightCategoriesTable.hints.FullOrPartial.label}"
+                                            required="#{bindings.ContractRightCategoriesTable.hints.FullOrPartial.mandatory}"
+                                            readOnly="#{((pageFlowScope.ContractRightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.ContractRightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                            disabled="#{row.FullOrPartialFlag!='Y'}"
+                                            unselectedLabel="">
+                          <af:selectItem id="si0" value="Full" label="Full"/>
+                          <af:selectItem id="si1" value="Partial"
+                                         label="Partial"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s141PFCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="PermitFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightCategoriesTable.hints.PermitFlag.label}"
+                                          showRequired="#{bindings.ContractRightCategoriesTable.hints.PermitFlag.mandatory}"
+                                          id="ol13"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="s141PF"
+                                                  label="#{bindings.ContractRightCategoriesTable.hints.PermitFlag.label}"
+                                                  value="#{s141PermitFlagcheckboxInTable.value}"
+                                                  readOnly="#{((pageFlowScope.ContractRightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.ContractRightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                                  autoSubmit="true"
+                                                  valueChangeListener="#{s141PermitFlagDependsOnItem.updateModelValue}"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="s141SubValCol" sortable="true"
+                                 filterable="true" noWrap="true" width="180"
+                                 sortProperty="SubcategoryValue"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightCategoriesTable.hints.SubcategoryValue.label}"
+                                          showRequired="false" id="ol14"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s141SubVal"
+                                            value="#{row.bindings.SubcategoryValue.inputValue}"
+                                            label="#{bindings.ContractRightCategoriesTable.hints.SubcategoryValue.label}"
+                                            required="false"
+                                            readOnly="#{(((pageFlowScope.ContractRightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.ContractRightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))) or (!(row.PermitFlag!='Y'))}"
+                                            disabled="#{row.bindings.CategoryId.attributeValue.value== 4 ? false : true}"
+                                            autoSubmit="true">
+                          <f:selectItems value="#{row.bindings.SubcategoryValue.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s141SUBPFCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="SubcategoryValuePermitFlag"
+                                 align="center" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightCategoriesTable.hints.SubcategoryValuePermitFlag.label}"
+                                          showRequired="false" id="ol15"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="s141SUBPF"
+                                                  label="#{bindings.ContractRightCategoriesTable.hints.SubcategoryValuePermitFlag.label}"
+                                                  value="#{s141SubCategoryPermitFlagcheckboxInTable.value}"
+                                                  readOnly="#{(((pageFlowScope.ContractRightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.ContractRightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))) or (!(row.PermitFlag!='Y'))}"
+                                                  disabled="#{row.bindings.CategoryId.attributeValue.value== 4 ? false : true}"></af:selectBooleanCheckbox>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                  <af:spacer width="10" height="10" id="sp5"/>
+                  <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                  <af:panelGroupLayout id="pgl5"
+                                       rendered="#{bindings.ContractRightCategoriesIterator.estimatedRowCount>0}"
+                                       partialTriggers="s141PC:s141Tab"
+                                       layout="scroll">
+                    <f:facet name="separator">
+                      <af:spacer width="10" height="10" id="sp6"/>
+                    </f:facet>
+                    <af:panelFormLayout rows="1" maxColumns="2"
+                                        labelAlignment="start" id="pfl0">
+                      <af:inputText id="s141CB"
+                                    value="#{bindings.s141CreatedBy.inputValue}"
+                                    label="#{bindings.s141CreatedBy.hints.label}"
+                                    required="#{bindings.s141CreatedBy.hints.mandatory}"
+                                    rows="#{bindings.s141CreatedBy.hints.displayHeight}"
+                                    columns="#{bindings.s141CreatedBy.hints.displayWidth}"
+                                    maximumLength="40" readOnly="true"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.s141CreatedBy.validator}"/>
+                      </af:inputText>
+                      <af:inputDate id="s141CD"
+                                    value="#{bindings.s141CreatedDate.inputValue}"
+                                    label="#{bindings.s141CreatedDate.hints.label}"
+                                    required="#{bindings.s141CreatedDate.hints.mandatory}"
+                                    readOnly="true" disabled="true">
+                        <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                      </af:inputDate>
+                      <af:inputText id="s141LUB"
+                                    value="#{bindings.s141LastUpdatedBy.inputValue}"
+                                    label="#{bindings.s141LastUpdatedBy.hints.label}"
+                                    required="#{bindings.s141LastUpdatedBy.hints.mandatory}"
+                                    rows="#{bindings.s141LastUpdatedBy.hints.displayHeight}"
+                                    columns="#{bindings.s141LastUpdatedBy.hints.displayWidth}"
+                                    maximumLength="40" readOnly="true"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.s141LastUpdatedBy.validator}"/>
+                      </af:inputText>
+                      <af:inputDate id="s141LUD"
+                                    value="#{bindings.s141LastUpdatedDate.inputValue}"
+                                    label="#{bindings.s141LastUpdatedDate.hints.label}"
+                                    required="#{bindings.s141LastUpdatedDate.hints.mandatory}"
+                                    readOnly="true" disabled="true">
+                        <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                      </af:inputDate>
+                    </af:panelFormLayout>
+                  </af:panelGroupLayout>
+                  <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_CONTRACTRIGHTCHANGEHISTORY']}"
+                               partialTriggers=" s14TopLc ContractRightChangeHistoryDeleteDialog ContractRightChangeHistoryPC:ContractRightChangeHistorydelrmTM ContractRightChangeHistoryPC:ContractRightChangeHistoryTab:ContractRightChangeHistorydelrm ContractRightChangeHistoryPC:ContractRightChangeHistoryTab:ContractRightChangeHistorydelrl"
+                               id="ContractRightChangeHistoryTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN']}"
+                               disabled="#{!jhsUserRoles['ADMIN']}">
+              <af:panelGroupLayout layout="vertical"
+                                   id="ContractRightChangeHistoryTopLc"
+                                   partialTriggers=" s14TopLc ContractRightChangeHistoryDeleteDialog ContractRightChangeHistoryPC:ContractRightChangeHistorydelrmTM ContractRightChangeHistoryPC:ContractRightChangeHistoryTab:ContractRightChangeHistorydelrm ContractRightChangeHistoryPC:ContractRightChangeHistoryTab:ContractRightChangeHistorydelrl"
+                                   rendered="#{jhsUserRoles['ADMIN']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp7"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g3"></af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl6">
+                  <af:panelCollection id="ContractRightChangeHistoryPC"
+                                      featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu8">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu9">
+                          <af:group id="ContractRightChangeHistorytbb"
+                                    rendered="#{ bindings.ContractRightChangeHistoryIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstContractRightChangeHistory.execute}"
+                                                id="ContractRightChangeHistoryFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousContractRightChangeHistory.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="ContractRightChangeHistoryPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextContractRightChangeHistory.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="ContractRightChangeHistoryNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastContractRightChangeHistory.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="ContractRightChangeHistoryLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="ContractRightChangeHistorydelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['ADMIN']}">
+                          <af:showPopupBehavior popupId="::ContractRightChangeHistoryDeletePopup"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar3">
+                        <af:commandToolbarButton text="Print"
+                                                 id="ContractRightChangeHistoryPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.ContractRightChangeHistoryIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="ContractRightChangeHistoryTab"
+                              contentDelivery="immediate"
+                              value="#{bindings.ContractRightChangeHistoryTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.ContractRightChangeHistoryTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.ContractRightChangeHistoryTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.ContractRightChangeHistoryTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.ContractRightChangeHistoryTable.rangeSize}"
+                              autoHeightRows="#{bindings.ContractRightChangeHistoryTable.estimatedRowCount lt 5 ? 5 : bindings.ContractRightChangeHistoryTable.estimatedRowCount lt bindings.ContractRightChangeHistoryTable.rangeSize ? bindings.ContractRightChangeHistoryTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.ContractRightChangeHistoryTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              binding="#{pageFlowScope.ContractRightChangeHistoryTable.table}"
+                              partialTriggers=" :::ContractRightChangeHistoryPC ::ContractRightChangeHistoryFirst ::ContractRightChangeHistoryPrevious ::ContractRightChangeHistoryNext ::ContractRightChangeHistoryLast"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_CONTRACTRIGHTCHANGEHISTORY']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="ContractRightChangeHistoryTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu10">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu11"></af:menu>
+                            <af:commandMenuItem id="ContractRightChangeHistorydelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['ADMIN']}">
+                              <af:showPopupBehavior popupId=":::ContractRightChangeHistoryDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="ContractRightChangeHistoryActionColumn"
+                                 frozen="true" width="20" align="center"
+                                 headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl7">
+                          <af:commandImageLink id="ContractRightChangeHistorydelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['ADMIN']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::ContractRightChangeHistoryDeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryJournaledUserCol"
+                                 sortable="true" noWrap="true" width="240"
+                                 sortProperty="JournaledUser" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.JournaledUser.label}"
+                                          id="ol16"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryJournaledUser"
+                                      value="#{row.bindings.JournaledUser.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.JournaledUser.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.JournaledUser.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.JournaledUser.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.JournaledUser.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.JournaledUser.tooltip}">
+                          <f:validator binding="#{row.bindings.JournaledUser.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryJournaledDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="JournaledDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.JournaledDate.label}"
+                                          id="ol17"/>
+                        </f:facet>
+                        <af:inputDate id="ContractRightChangeHistoryJournaledDate"
+                                      value="#{row.bindings.JournaledDate.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.JournaledDate.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.JournaledDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.JournaledDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryRuleNumberCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="RuleNumber" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.RuleNumber.label}"
+                                          id="ol18"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryRuleNumber"
+                                      value="#{row.bindings.RuleNumber.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.RuleNumber.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.RuleNumber.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.RuleNumber.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.RuleNumber.displayWidth}"
+                                      maximumLength="20" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.RuleNumber.tooltip}">
+                          <f:validator binding="#{row.bindings.RuleNumber.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryPermissionTypeCol"
+                                 sortable="true" noWrap="true" width="240"
+                                 sortProperty="PermissionType" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.PermissionType.label}"
+                                          id="ol19"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryPermissionType"
+                                      value="#{row.bindings.PermissionType.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.PermissionType.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.PermissionType.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.PermissionType.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.PermissionType.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.PermissionType.tooltip}">
+                          <f:validator binding="#{row.bindings.PermissionType.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryPermissionSubTypeCol"
+                                 sortable="true" noWrap="true" width="240"
+                                 sortProperty="PermissionSubType"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.PermissionSubType.label}"
+                                          id="ol20"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryPermissionSubType"
+                                      value="#{row.bindings.PermissionSubType.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.PermissionSubType.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.PermissionSubType.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.PermissionSubType.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.PermissionSubType.displayWidth}"
+                                      maximumLength="50" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.PermissionSubType.tooltip}">
+                          <f:validator binding="#{row.bindings.PermissionSubType.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryRightOrRestrictionTypeCol"
+                                 sortable="true" noWrap="true" width="240"
+                                 sortProperty="RightOrRestrictionType"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.RightOrRestrictionType.label}"
+                                          id="ol21"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryRightOrRestrictionType"
+                                      value="#{row.bindings.RightOrRestrictionType.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.RightOrRestrictionType.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.RightOrRestrictionType.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.RightOrRestrictionType.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.RightOrRestrictionType.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.RightOrRestrictionType.tooltip}">
+                          <f:validator binding="#{row.bindings.RightOrRestrictionType.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryIncludesOrExcludesCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="IncludesOrExcludes"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.IncludesOrExcludes.label}"
+                                          id="ol22"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryIncludesOrExcludes"
+                                      value="#{row.bindings.IncludesOrExcludes.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.IncludesOrExcludes.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.IncludesOrExcludes.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.IncludesOrExcludes.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.IncludesOrExcludes.displayWidth}"
+                                      maximumLength="20" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.IncludesOrExcludes.tooltip}">
+                          <f:validator binding="#{row.bindings.IncludesOrExcludes.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistorySalesRestrictionFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="SalesRestrictionFlag"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.SalesRestrictionFlag.label}"
+                                          id="ol23"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistorySalesRestrictionFlag"
+                                      value="#{row.bindings.SalesRestrictionFlag.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.SalesRestrictionFlag.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.SalesRestrictionFlag.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.SalesRestrictionFlag.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.SalesRestrictionFlag.displayWidth}"
+                                      maximumLength="1" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.SalesRestrictionFlag.tooltip}">
+                          <f:validator binding="#{row.bindings.SalesRestrictionFlag.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryComplexFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="ComplexFlag" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.ComplexFlag.label}"
+                                          id="ol24"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryComplexFlag"
+                                      value="#{row.bindings.ComplexFlag.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.ComplexFlag.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.ComplexFlag.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.ComplexFlag.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.ComplexFlag.displayWidth}"
+                                      maximumLength="1" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.ComplexFlag.tooltip}">
+                          <f:validator binding="#{row.bindings.ComplexFlag.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryTranslationFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="TranslationFlag"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.TranslationFlag.label}"
+                                          id="ol25"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryTranslationFlag"
+                                      value="#{row.bindings.TranslationFlag.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.TranslationFlag.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.TranslationFlag.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.TranslationFlag.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.TranslationFlag.displayWidth}"
+                                      maximumLength="1" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.TranslationFlag.tooltip}">
+                          <f:validator binding="#{row.bindings.TranslationFlag.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryResellerFyiRequiredFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="ResellerFyiRequiredFlag"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.ResellerFyiRequiredFlag.label}"
+                                          id="ol26"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryResellerFyiRequiredFlag"
+                                      value="#{row.bindings.ResellerFyiRequiredFlag.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.ResellerFyiRequiredFlag.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.ResellerFyiRequiredFlag.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.ResellerFyiRequiredFlag.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.ResellerFyiRequiredFlag.displayWidth}"
+                                      maximumLength="1" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.ResellerFyiRequiredFlag.tooltip}">
+                          <f:validator binding="#{row.bindings.ResellerFyiRequiredFlag.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryWrittenApprovalRequiredFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="WrittenApprovalRequiredFlag"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.WrittenApprovalRequiredFlag.label}"
+                                          id="ol27"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryWrittenApprovalRequiredFlag"
+                                      value="#{row.bindings.WrittenApprovalRequiredFlag.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.WrittenApprovalRequiredFlag.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.WrittenApprovalRequiredFlag.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.WrittenApprovalRequiredFlag.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.WrittenApprovalRequiredFlag.displayWidth}"
+                                      maximumLength="1" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.WrittenApprovalRequiredFlag.tooltip}">
+                          <f:validator binding="#{row.bindings.WrittenApprovalRequiredFlag.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryStatusCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="Status" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.Status.label}"
+                                          id="ol28"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryStatus"
+                                      value="#{row.bindings.Status.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.Status.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.Status.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.Status.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.Status.displayWidth}"
+                                      maximumLength="20" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.Status.tooltip}">
+                          <f:validator binding="#{row.bindings.Status.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryEffectiveStartDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="EffectiveStartDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.EffectiveStartDate.label}"
+                                          id="ol29"/>
+                        </f:facet>
+                        <af:inputDate id="ContractRightChangeHistoryEffectiveStartDate"
+                                      value="#{row.bindings.EffectiveStartDate.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.EffectiveStartDate.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.EffectiveStartDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.EffectiveStartDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryEffectiveEndDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="EffectiveEndDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.EffectiveEndDate.label}"
+                                          id="ol30"/>
+                        </f:facet>
+                        <af:inputDate id="ContractRightChangeHistoryEffectiveEndDate"
+                                      value="#{row.bindings.EffectiveEndDate.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.EffectiveEndDate.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.EffectiveEndDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.EffectiveEndDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryEmbargoDaysCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="EmbargoDays" align="right"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.EmbargoDays.label}"
+                                          id="ol31"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryEmbargoDays"
+                                      value="#{row.bindings.EmbargoDays.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.EmbargoDays.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.EmbargoDays.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.EmbargoDays.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.EmbargoDays.displayWidth}"
+                                      maximumLength="38" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.EmbargoDays.tooltip}">
+                          <f:validator binding="#{row.bindings.EmbargoDays.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.ContractRightChangeHistoryTable.hints.EmbargoDays.format}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryReverseEmbargoDaysCol"
+                                 sortable="true" noWrap="true" width="228"
+                                 sortProperty="ReverseEmbargoDays" align="right"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.ReverseEmbargoDays.label}"
+                                          id="ol32"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryReverseEmbargoDays"
+                                      value="#{row.bindings.ReverseEmbargoDays.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.ReverseEmbargoDays.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.ReverseEmbargoDays.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.ReverseEmbargoDays.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.ReverseEmbargoDays.displayWidth}"
+                                      maximumLength="38" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.ReverseEmbargoDays.tooltip}">
+                          <f:validator binding="#{row.bindings.ReverseEmbargoDays.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.ContractRightChangeHistoryTable.hints.ReverseEmbargoDays.format}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryComplexRuleDescriptionCol"
+                                 sortable="true" noWrap="true" width="240"
+                                 sortProperty="ComplexRuleDescription"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.ComplexRuleDescription.label}"
+                                          id="ol33"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryComplexRuleDescription"
+                                      value="#{row.bindings.ComplexRuleDescription.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.ComplexRuleDescription.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.ComplexRuleDescription.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.ComplexRuleDescription.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.ComplexRuleDescription.displayWidth}"
+                                      maximumLength="4000" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.ComplexRuleDescription.tooltip}">
+                          <f:validator binding="#{row.bindings.ComplexRuleDescription.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryCreatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.CreatedBy.label}"
+                                          id="ol34"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryCreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.CreatedBy.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.CreatedBy.tooltip}">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryCreatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.CreatedDate.label}"
+                                          id="ol35"/>
+                        </f:facet>
+                        <af:inputDate id="ContractRightChangeHistoryCreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.CreatedDate.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.CreatedDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryLastUpdatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.LastUpdatedBy.label}"
+                                          id="ol36"/>
+                        </f:facet>
+                        <af:inputText id="ContractRightChangeHistoryLastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.ContractRightChangeHistoryTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.ContractRightChangeHistoryTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.LastUpdatedBy.tooltip}">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractRightChangeHistoryLastUpdatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractRightChangeHistoryTable.hints.LastUpdatedDate.label}"
+                                          id="ol37"/>
+                        </f:facet>
+                        <af:inputDate id="ContractRightChangeHistoryLastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.ContractRightChangeHistoryTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.ContractRightChangeHistoryTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractRightChangeHistoryTable.hints.LastUpdatedDate.tooltip}">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="s14DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s14DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_CONTRACTRIGHT: #{bindings.s14RuleNumber.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteContractRights.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s14ComplexRuleDescriptionPopup"
+                  contentDelivery="lazyUncached" eventContext="launcher"
+                  childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog0">
+            <af:inputText rows="10" columns="100"
+                          value="#{bindings.s14ComplexRuleDescription.inputValue}"
+                          simple="true" maximumLength="4000"
+                          id="s14ComplexRuleDescriptionEditorText"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s140DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s140DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_CONTRACTRIGHTTITLE:#{pageFlowScope.ContractRightTitlesTable.currentRowAttributeValues.CatalogNumber}']} "
+                           id="ot1"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteContractRightTitles.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="jhsLovPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher"
+                  binding="#{pageFlowScope.jhsLovPopup.component}">
+          <af:dialog modal="true" title="#{pageFlowScope.LovItemBean.lovTitle}"
+                     type="none" id="dialog1" resize="on"
+                     stretchChildren="first"
+                     contentWidth="#{pageFlowScope.LovItemBean.lovWidth}"
+                     contentHeight="#{pageFlowScope.LovItemBean.lovHeight}">
+            <af:region value="#{bindings.LovTaskFlow.regionModel}"
+                       id="region0"/>
+            <f:facet name="buttonBar">
+              <af:group id="g1">
+                <af:commandButton textAndAccessKey="#{nls['OK_BUTTON_LABEL']}"
+                                  id="cb0" partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.handleLovSelection}"/>
+                <af:commandButton textAndAccessKey="#{nls['CANCEL']}" id="cb1"
+                                  partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.cancelLov}"/>
+              </af:group>
+            </f:facet>
+          </af:dialog>
+          <af:clientListener method="popupClosedListener" type="popupClosed"/>
+          <af:serverListener type="serverPopupClosed"
+                             method="#{pageFlowScope.LovItemBean.cancelLov}"/>
+        </af:popup>
+        <af:popup id="s141DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s141DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_CONTRACTRIGHTCATEGORIE:#{pageFlowScope.ContractRightCategoriesTable.currentRowAttributeValues.CategoryId}']} "
+                           id="ot4"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteContractRightCategories.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="ContractRightChangeHistoryDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="ContractRightChangeHistoryDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_CONTRACTRIGHTCHANGEHISTOR:#{pageFlowScope.ContractRightChangeHistoryTable.currentRowAttributeValues.RuleNumber}']} "
+                           id="ot7"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteContractRightChangeHistory.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

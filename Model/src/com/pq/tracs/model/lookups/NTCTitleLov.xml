@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="NTCTitleLov"
+  Version="11.1.1.62.29"
+  InheritPersonalization="true"
+  OrderBy="TRACKING_NO"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  ComponentClass="com.pq.tracs.model.dao.TracsView"
+  PageIterMode="Partial"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.pq.tracs.model.lookups.NTCTitleLov_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <SQLQuery>
+    <![CDATA[select distinct nvl(currcat.id, ttl.id) AS TITLE_ID, 
+       nvl(currcat.CONTENT_OWNER_ID, ttl.CONTENT_OWNER_ID) AS ACCOUNT_ID, 
+       nvl(currcat.LONG_TITLE, ttl.LONG_TITLE) AS TITLE, 
+       nvl(currcat.CATALOG_NUMBER, ttl.CATALOG_NUMBER) AS CATALOG_NUMBER, 
+       nvl(currcat.CATALOG_ROOT, ttl.CATALOG_ROOT) AS CATALOG_ROOT,
+       nvl(currcat.PUBLICATION_START_YEAR, ttl.PUBLICATION_START_YEAR) AS PUB_START_YEAR, 
+       nvl(currcat.PUBLICATION_END_YEAR, ttl.PUBLICATION_END_YEAR) AS PUB_END_YEAR, 
+       nvl(currcat.SHORT_TITLE, ttl.SHORT_TITLE) AS SHORT_TITLE, 
+       nvl(currcat.FILM_AVAILABILITY, ttl.FILM_AVAILABILITY) AS FILM_AVAILABILITY,
+       tco.NAME AS ACCOUNT_NAME,
+       tco.SITE AS ACCOUNT_SITE,
+       nvl(currcat.TARGET_TRACKING_NO, ttl.TARGET_TRACKING_NO) AS TRACKING_NO,
+       tco.CONTENT_OWNER_NO AS ACCOUNT_NO,
+       tcl.CLASSIFICATION_NUMBER
+from trax_title ttl
+  left outer join trax_title currcat
+    on ttl.current_Catalog_id = currcat.id
+  inner join trax_content_owner tco
+    on nvl(currcat.content_owner_id, ttl.content_owner_id) = tco.id
+  inner join trax_classification tcl
+    on nvl(currcat.id, ttl.id) = tcl.title_id
+    and tcl.primary_flag = 'Y'
+where ttl.ACTIVE_FLAG = 'Y'
+and ttl.CATALOG_NUMBER IS NOT NULL]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="TitleId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="TITLE_ID"
+    Expression="TITLE_ID"
+    SQLType="NUMERIC"
+    Precision="38"
+    Scale="0">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ACCOUNT_ID"
+    Expression="ACCOUNT_ID"
+    SQLType="NUMERIC"
+    Precision="38"
+    Scale="0">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Title"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="4000"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TITLE"
+    Expression="TITLE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="4000"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CatalogNumber"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CATALOG_NUMBER"
+    Expression="CATALOG_NUMBER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.lookups.NTCTitleLov.CatalogNumber_LABEL"/>
+        <DISPLAYWIDTH
+          Value="12"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CatalogRoot"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CATALOG_ROOT"
+    Expression="CATALOG_ROOT"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.lookups.NTCTitleLov.CatalogRoot_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PubStartYear"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="4"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PUB_START_YEAR"
+    Expression="PUB_START_YEAR"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="4"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.lookups.NTCTitleLov.PubStartYear_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PubEndYear"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="4"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PUB_END_YEAR"
+    Expression="PUB_END_YEAR"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="4"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.lookups.NTCTitleLov.PubEndYear_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ShortTitle"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="30"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="SHORT_TITLE"
+    Expression="SHORT_TITLE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.lookups.NTCTitleLov.ShortTitle_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="FilmAvailability"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="FILM_AVAILABILITY"
+    Expression="FILM_AVAILABILITY"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.lookups.NTCTitleLov.FilmAvailability_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="400"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ACCOUNT_NAME"
+    Expression="ACCOUNT_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="400"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.lookups.NTCTitleLov.AccountName_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountSite"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="400"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ACCOUNT_SITE"
+    Expression="ACCOUNT_SITE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="400"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.lookups.NTCTitleLov.AccountSite_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TrackingNo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="TRACKING_NO"
+    Expression="TRACKING_NO"
+    SQLType="NUMERIC"
+    Precision="38"
+    Scale="0">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.lookups.NTCTitleLov.TrackingNo_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountNo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ACCOUNT_NO"
+    Expression="ACCOUNT_NO"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.lookups.NTCTitleLov.AccountNo_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ClassificationNumber"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="100"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CLASSIFICATION_NUMBER"
+    Expression="CLASSIFICATION_NUMBER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.lookups.NTCTitleLov.ClassificationNumber_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewCriteria
+    Name="NTCTitleLovCriteria"
+    ViewObjectName="com.pq.tracs.model.lookups.NTCTitleLov"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow240"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="NTCTitleLovCriteria_vcrow240_Title"
+        ViewAttribute="Title"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="NTCTitleLovCriteria_vcrow240_CatalogNumber"
+        ViewAttribute="CatalogNumber"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="NTCTitleLovCriteria_vcrow240_CatalogRoot"
+        ViewAttribute="CatalogRoot"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="NTCTitleLovCriteria_vcrow240_AccountName"
+        ViewAttribute="AccountName"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="NTCTitleLovCriteria_vcrow240_TrackingNo"
+        ViewAttribute="TrackingNo"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="NTCTitleLovCriteria_vcrow240_AccountNo"
+        ViewAttribute="AccountNo"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="NTCTitleLovCriteria_vcrow240_ClassificationNumber"
+        ViewAttribute="ClassificationNumber"
+        Conjunction="AND"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

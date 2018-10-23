@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="LookUpCodeSetsPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'ADMIN'}"/>
+  </parameters>
+  <executables>
+    <iterator id="LookUpCodeSetsIterator" Binds="TraxLookupCodeSetView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="LookUpCodeSetsIteratorLookupCodeSetViewCriteriaQuery"
+                  Binds="LookUpCodeSetsIterator"
+                  Criteria="LookupCodeSetViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CodeSet"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="LookUpCodeValuesIterator" Binds="TraxLookUpCodeViewObj1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="10"/>
+    <searchRegion id="LookUpCodeValuesIteratorLookupCodeViewCriteriaQuery"
+                  Binds="LookUpCodeValuesIterator"
+                  Criteria="LookupCodeViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="DisplayValue"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ChildCodeValuesIterator" Binds="ChildCodeSetView"
+              DataControl="TracsAdminServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ChildCodeValuesIteratorLookupCodeSetViewCriteriaQuery"
+                  Binds="ChildCodeValuesIterator"
+                  Criteria="LookupCodeSetViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CodeSet"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="LCSCodeSet" IterBinding="LookUpCodeSetsIterator">
+      <AttrNames>
+        <Item Value="CodeSet"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="LCSActiveFlag" IterBinding="LookUpCodeSetsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="LookUpCodeSetsIterator"
+          id="LCSParentCodeSetId" Uses="LOV_ParentCodeSetId"
+          StaticList="false"/>
+    <list IterBinding="LookUpCodeSetsIterator"
+          id="LCSParentLookupCodeId" Uses="LOV_ParentLookupCodeId"
+          StaticList="false"/>
+    <attributeValues id="LCSCreatedBy" IterBinding="LookUpCodeSetsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LCSCreatedDate" IterBinding="LookUpCodeSetsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LCSLastUpdatedBy" IterBinding="LookUpCodeSetsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LCSLastUpdatedDate"
+                     IterBinding="LookUpCodeSetsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LCSId" IterBinding="LookUpCodeSetsIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="LookUpCodeSetsTable" IterBinding="LookUpCodeSetsIterator">
+      <nodeDefinition Name="LookUpCodeSets"
+                      DefName="com.pq.tracs.model.dao.LookupCodeSetView">
+        <AttrNames>
+          <Item Value="CodeSet"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="ParentCodeSetId"/>
+          <Item Value="ParentLookupCodeId"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="Id"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="LookupCodeSetView_2"/>
+        </Accessors>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstLookUpCodeSets" IterBinding="LookUpCodeSetsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousLookUpCodeSets" IterBinding="LookUpCodeSetsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextLookUpCodeSets" IterBinding="LookUpCodeSetsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastLookUpCodeSets" IterBinding="LookUpCodeSetsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyLookUpCodeSets"
+            IterBinding="LookUpCodeSetsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrLookUpCodeSets}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateLookUpCodeSets" IterBinding="LookUpCodeSetsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteLookUpCodeSets" IterBinding="LookUpCodeSetsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="LookUpCodeValuesDisplayValue"
+                     IterBinding="LookUpCodeValuesIterator">
+      <AttrNames>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LookUpCodeValuesInternalValue"
+                     IterBinding="LookUpCodeValuesIterator">
+      <AttrNames>
+        <Item Value="InternalValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LookUpCodeValuesOrderBy1"
+                     IterBinding="LookUpCodeValuesIterator">
+      <AttrNames>
+        <Item Value="OrderBy1"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="LookUpCodeValuesActiveFlag"
+            IterBinding="LookUpCodeValuesIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="LookUpCodeValuesCreatedBy"
+                     IterBinding="LookUpCodeValuesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LookUpCodeValuesCreatedDate"
+                     IterBinding="LookUpCodeValuesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LookUpCodeValuesLastUpdatedBy"
+                     IterBinding="LookUpCodeValuesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="LookUpCodeValuesLastUpdatedDate"
+                     IterBinding="LookUpCodeValuesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="LookUpCodeValuesTable" IterBinding="LookUpCodeValuesIterator">
+      <nodeDefinition Name="LookUpCodeValues"
+                      DefName="com.pq.tracs.model.dao.LookupCodeView">
+        <AttrNames>
+          <Item Value="DisplayValue"/>
+          <Item Value="InternalValue"/>
+          <Item Value="OrderBy1"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstLookUpCodeValues" IterBinding="LookUpCodeValuesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousLookUpCodeValues" IterBinding="LookUpCodeValuesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextLookUpCodeValues" IterBinding="LookUpCodeValuesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastLookUpCodeValues" IterBinding="LookUpCodeValuesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyLookUpCodeValues"
+            IterBinding="LookUpCodeValuesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrLookUpCodeValues}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateLookUpCodeValues" IterBinding="LookUpCodeValuesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteLookUpCodeValues" IterBinding="LookUpCodeValuesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="ChildCodeValuesCodeSet"
+                     IterBinding="ChildCodeValuesIterator">
+      <AttrNames>
+        <Item Value="CodeSet"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="ChildCodeValuesActiveFlag" IterBinding="ChildCodeValuesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="ChildCodeValuesParentCodeSet"
+                     IterBinding="ChildCodeValuesIterator">
+      <AttrNames>
+        <Item Value="ParentCodeSet"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ChildCodeValuesParentCode"
+                     IterBinding="ChildCodeValuesIterator">
+      <AttrNames>
+        <Item Value="ParentCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ChildCodeValuesCreatedBy"
+                     IterBinding="ChildCodeValuesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ChildCodeValuesCreatedDate"
+                     IterBinding="ChildCodeValuesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ChildCodeValuesLastUpdatedBy"
+                     IterBinding="ChildCodeValuesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ChildCodeValuesLastUpdatedDate"
+                     IterBinding="ChildCodeValuesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ChildCodeValuesId"
+                     IterBinding="ChildCodeValuesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ChildCodeValuesTable" IterBinding="ChildCodeValuesIterator">
+      <nodeDefinition Name="ChildCodeValues"
+                      DefName="com.pq.tracs.model.dao.LookupCodeSetView">
+        <AttrNames>
+          <Item Value="CodeSet"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="ParentCodeSet"/>
+          <Item Value="ParentCode"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="Id"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="LookupCodeSetView_2"/>
+        </Accessors>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstChildCodeValues" IterBinding="ChildCodeValuesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousChildCodeValues" IterBinding="ChildCodeValuesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextChildCodeValues" IterBinding="ChildCodeValuesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastChildCodeValues" IterBinding="ChildCodeValuesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyChildCodeValues"
+            IterBinding="ChildCodeValuesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrChildCodeValues}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

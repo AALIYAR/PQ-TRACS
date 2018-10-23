@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="TraxOvrAttributeView"
+  Version="11.1.1.61.92"
+  SelectList="TraxOvrAttribute.ID, 
+       TraxOvrAttribute.TITLE_RECORD_ID, 
+       TraxOvrAttribute.ATTRIBUTE_TYPE, 
+       TraxOvrAttribute.LIST_VALUE, 
+       TraxOvrAttribute.TEXT_VALUE, 
+       TraxOvrAttribute.DATE_VALUE, 
+       TraxOvrAttribute.ORDER_BY, 
+       TraxOvrAttribute.CREATED_BY, 
+       TraxOvrAttribute.CREATED_DATE, 
+       TraxOvrAttribute.LAST_UPDATED_BY, 
+       TraxOvrAttribute.LAST_UPDATED_DATE, 
+       TraxOvrAttributeType.CONTENT_SOURCE, 
+       TraxOvrAttributeType.ID AS ID1, 
+       TraxOvrAttributeType.DATA_TYPE, 
+       TraxOvrAttributeType.CODE_SET"
+  FromList="TRAX_OVR_ATTRIBUTE TraxOvrAttribute
+INNER JOIN TRAX_OVR_ATTRIBUTE_TYPE TraxOvrAttributeType ON (TraxOvrAttribute.ATTRIBUTE_TYPE = TraxOvrAttributeType.ATTRIBUTE_TYPE)"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  ComponentClass="com.pq.tracs.model.dao.TracsView"
+  PageIterMode="Partial"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="TraxOvrAttributeTypeView"
+    ViewObjectName="com.pq.tracs.model.vo.TraxOvrAttributeTypeView">
+    <ParameterMap>
+      <PIMap Variable="cont_source">
+        <TransientExpression><![CDATA[ContentSource]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="OvrListLookup"
+    ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+    <ParameterMap>
+      <PIMap Variable="code_set">
+        <TransientExpression><![CDATA[CodeSet]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_AttributeType"
+    ListVOName="TraxOvrAttributeTypeView"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="AttributeType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="AttributeType"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="AttributeType"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ListValue"
+    ListVOName="OvrListLookup"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ListValue"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="InternalValue"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DisplayValue"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <EntityUsage
+    Name="TraxOvrAttribute"
+    Entity="com.pq.tracs.model.eo.TraxOvrAttribute"/>
+  <EntityUsage
+    Name="TraxOvrAttributeType"
+    Entity="com.pq.tracs.model.eo.TraxOvrAttributeType"
+    Association="com.pq.tracs.model.ao.OvrAttributeToTypeAssoc"
+    AssociationEnd="com.pq.tracs.model.ao.OvrAttributeToTypeAssoc.TraxOvrAttributeType"
+    SourceUsage="com.pq.tracs.model.vo.TraxOvrAttributeView.TraxOvrAttribute"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"
+    JoinType="INNER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="com.pq.tracs.model.eo.TraxOvrAttribute.AttributeType"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="com.pq.tracs.model.eo.TraxOvrAttributeType.AttributeType"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <ViewAttribute
+    Name="Id"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxOvrAttribute"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="TitleRecordId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="TitleRecordId"
+    EntityUsage="TraxOvrAttribute"
+    AliasName="TITLE_RECORD_ID"/>
+  <ViewAttribute
+    Name="AttributeType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="AttributeType"
+    EntityUsage="TraxOvrAttribute"
+    AliasName="ATTRIBUTE_TYPE"
+    LOVName="LOV_AttributeType">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ListValue"
+    PrecisionRule="true"
+    EntityAttrName="ListValue"
+    EntityUsage="TraxOvrAttribute"
+    AliasName="LIST_VALUE"
+    LOVName="LOV_ListValue">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TextValue"
+    PrecisionRule="true"
+    EntityAttrName="TextValue"
+    EntityUsage="TraxOvrAttribute"
+    AliasName="TEXT_VALUE"/>
+  <ViewAttribute
+    Name="DateValue"
+    PrecisionRule="true"
+    EntityAttrName="DateValue"
+    EntityUsage="TraxOvrAttribute"
+    AliasName="DATE_VALUE"/>
+  <ViewAttribute
+    Name="OrderBy"
+    PrecisionRule="true"
+    EntityAttrName="OrderBy"
+    EntityUsage="TraxOvrAttribute"
+    AliasName="ORDER_BY"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="TraxOvrAttribute"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="CreatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedDate"
+    EntityUsage="TraxOvrAttribute"
+    AliasName="CREATED_DATE"/>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="TraxOvrAttribute"
+    AliasName="LAST_UPDATED_BY"/>
+  <ViewAttribute
+    Name="LastUpdatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="TraxOvrAttribute"
+    AliasName="LAST_UPDATED_DATE"/>
+  <ViewAttribute
+    Name="ContentSource"
+    PrecisionRule="true"
+    EntityAttrName="ContentSource"
+    EntityUsage="TraxOvrAttributeType"
+    AliasName="CONTENT_SOURCE"/>
+  <ViewAttribute
+    Name="Id1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxOvrAttributeType"
+    AliasName="ID1"/>
+  <ViewAttribute
+    Name="DataType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="DataType"
+    EntityUsage="TraxOvrAttributeType"
+    AliasName="DATA_TYPE"/>
+  <ViewAttribute
+    Name="CodeSet"
+    PrecisionRule="true"
+    EntityAttrName="CodeSet"
+    EntityUsage="TraxOvrAttributeType"
+    AliasName="CODE_SET"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="Id"/>
+  </AttrArray>
+</ViewObject>

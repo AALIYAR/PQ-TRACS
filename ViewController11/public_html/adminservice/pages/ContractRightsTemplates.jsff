@@ -1,0 +1,542 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="ContractRightsTemplatesTopLc"
+                             partialTriggers=" ContractRightsTemplatesfbb ContractRightsTemplatesNewButton ContractRightsTemplatesSaveButton0 ContractRightsTemplatesCancelButton0"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateContractRightsTemplates ? nls['INSERT_TITLE_CONTRACTRIGHTSTEMPLATES'] :  (jhsUserRoles['ContractRightsTemplates.update'] ? nls['EDIT_TITLE_CONTRACTRIGHTSTEMPLATE: #{bindings.ContractRightsTemplatesName.inputValue}'] : nls['VIEW_TITLE_CONTRACTRIGHTSTEMPLATE: #{bindings.ContractRightsTemplatesName.inputValue}'])  }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="ContractRightsTemplatesfbb"
+                                       layout="horizontal"
+                                       rendered="#{ bindings.ContractRightsTemplatesIterator.currentRow!=null  and bindings.ContractRightsTemplatesIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateContractRightsTemplates and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="ContractRightsTemplatesFirst ContractRightsTemplatesPrevious ContractRightsTemplatesNext ContractRightsTemplatesLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstContractRightsTemplates.execute}"
+                                             id="ContractRightsTemplatesFirst"
+                                             partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.ContractRightsTemplatesIterator.rangeStart+bindings.ContractRightsTemplatesIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.ContractRightsTemplatesIterator.rangeStart+bindings.ContractRightsTemplatesIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousContractRightsTemplates.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="ContractRightsTemplatesPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.ContractRightsTemplatesIterator.rangeStart+bindings.ContractRightsTemplatesIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.ContractRightsTemplatesIterator.rangeStart+bindings.ContractRightsTemplatesIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.ContractRightsTemplatesIterator.rangeStart+bindings.ContractRightsTemplatesIterator.currentRowIndexInRange+1} / #{bindings.ContractRightsTemplatesIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextContractRightsTemplates.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="ContractRightsTemplatesNext"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.ContractRightsTemplatesIterator.rangeStart+bindings.ContractRightsTemplatesIterator.currentRowIndexInRange+1 lt bindings.ContractRightsTemplatesIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.ContractRightsTemplatesIterator.rangeStart+bindings.ContractRightsTemplatesIterator.currentRowIndexInRange+1 lt bindings.ContractRightsTemplatesIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastContractRightsTemplates.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="ContractRightsTemplatesLast"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.ContractRightsTemplatesIterator.rangeStart+bindings.ContractRightsTemplatesIterator.currentRowIndexInRange+1 lt bindings.ContractRightsTemplatesIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.ContractRightsTemplatesIterator.rangeStart+bindings.ContractRightsTemplatesIterator.currentRowIndexInRange+1 lt bindings.ContractRightsTemplatesIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateContractRightsTemplates.execute}"
+                                             action="CreateContractRightsTemplates"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_CONTRACTRIGHTSTEMPLATES']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateContractRightsTemplates and (true) and (jhsUserRoles['ContractRightsTemplates.create'])}"
+                                             id="ContractRightsTemplatesNewButton"></af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print"
+                                             id="ContractRightsTemplatesPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveContractRightsTemplates.execute}"
+                                      rendered="#{(((((jhsUserRoles['ContractRightsTemplates.create']) or (jhsUserRoles['ContractRightsTemplates.update'])) or (jhsUserRoles['RightsCategory.create'])) or (jhsUserRoles['RightsCategory.update'])) or (jhsUserRoles['RightsCategory.delete'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="ContractRightsTemplatesSaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel"
+                                      id="ContractRightsTemplatesCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.ContractRightsTemplatesIterator.findMode!='true'}"
+                       id="ContractRightsTemplatesSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.ContractRightsTemplatesIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp"
+                                  id="ContractRightsTemplatesNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="ContractRightsTemplatesFC"
+                                   layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="4"
+                                    id="ContractRightsTemplatesFI">
+                  <af:inputText id="ContractRightsTemplatesName"
+                                value="#{bindings.ContractRightsTemplatesName.inputValue}"
+                                label="#{bindings.ContractRightsTemplatesName.hints.label}"
+                                required="true" rows="1"
+                                columns="#{bindings.ContractRightsTemplatesName.hints.displayWidth}"
+                                maximumLength="2000"
+                                readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}">
+                    <f:validator binding="#{bindings.ContractRightsTemplatesName.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="ContractRightsTemplatesPermissionType"
+                                      value="#{bindings.ContractRightsTemplatesPermissionType.inputValue}"
+                                      label="#{bindings.ContractRightsTemplatesPermissionType.hints.label}"
+                                      required="#{bindings.ContractRightsTemplatesPermissionType.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{ContractRightsTemplatesPermissionTypeDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{bindings.ContractRightsTemplatesPermissionType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="ContractRightsTemplatesPermissionSubType"
+                                      value="#{bindings.ContractRightsTemplatesPermissionSubType.inputValue}"
+                                      label="#{bindings.ContractRightsTemplatesPermissionSubType.hints.label}"
+                                      required="false"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}">
+                    <f:selectItems value="#{bindings.ContractRightsTemplatesPermissionSubType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="ContractRightsTemplatesRightRestrictionType"
+                                      value="#{bindings.ContractRightsTemplatesRightRestrictionType.inputValue}"
+                                      label="#{bindings.ContractRightsTemplatesRightRestrictionType.hints.label}"
+                                      required="#{bindings.ContractRightsTemplatesRightRestrictionType.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}">
+                    <f:selectItems value="#{bindings.ContractRightsTemplatesRightRestrictionType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="ContractRightsTemplatesIncludesOrExcludes"
+                                      value="#{bindings.ContractRightsTemplatesIncludesOrExcludes.inputValue}"
+                                      label="#{bindings.ContractRightsTemplatesIncludesOrExcludes.hints.label}"
+                                      required="#{bindings.ContractRightsTemplatesIncludesOrExcludes.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}">
+                    <f:selectItems value="#{bindings.ContractRightsTemplatesIncludesOrExcludes.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectBooleanCheckbox id="ContractRightsTemplatesSalesRestrictionFlag"
+                                            value="#{bindings.ContractRightsTemplatesSalesRestrictionFlag.inputValue}"
+                                            label="#{bindings.ContractRightsTemplatesSalesRestrictionFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="ContractRightsTemplatesComplexFlag"
+                                            value="#{bindings.ContractRightsTemplatesComplexFlag.inputValue}"
+                                            label="#{bindings.ContractRightsTemplatesComplexFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="ContractRightsTemplatesTranslationFlag"
+                                            value="#{bindings.ContractRightsTemplatesTranslationFlag.inputValue}"
+                                            label="#{bindings.ContractRightsTemplatesTranslationFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="ContractRightsTemplatesResellerFyiRequiredFlag"
+                                            value="#{bindings.ContractRightsTemplatesResellerFyiRequiredFlag.inputValue}"
+                                            label="#{bindings.ContractRightsTemplatesResellerFyiRequiredFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="ContractRightsTemplatesWrittenApprovalRequiredFlag"
+                                            value="#{bindings.ContractRightsTemplatesWrittenApprovalRequiredFlag.inputValue}"
+                                            label="#{bindings.ContractRightsTemplatesWrittenApprovalRequiredFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}"></af:selectBooleanCheckbox>
+                  <af:inputText id="ContractRightsTemplatesEmbargoDays"
+                                value="#{bindings.ContractRightsTemplatesEmbargoDays.inputValue}"
+                                label="#{bindings.ContractRightsTemplatesEmbargoDays.hints.label}"
+                                required="false" rows="1"
+                                columns="#{bindings.ContractRightsTemplatesEmbargoDays.hints.displayWidth}"
+                                maximumLength="10"
+                                readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}">
+                    <f:validator binding="#{bindings.ContractRightsTemplatesEmbargoDays.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ContractRightsTemplatesEmbargoDays.format}"/>
+                  </af:inputText>
+                  <af:inputText id="ContractRightsTemplatesComplexNote"
+                                value="#{bindings.ContractRightsTemplatesComplexNote.inputValue}"
+                                label="#{bindings.ContractRightsTemplatesComplexNote.hints.label}"
+                                required="false" rows="3"
+                                columns="#{bindings.ContractRightsTemplatesComplexNote.hints.displayWidth}"
+                                maximumLength="4000"
+                                readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}">
+                    <f:validator binding="#{bindings.ContractRightsTemplatesComplexNote.validator}"/>
+                  </af:inputText>
+                  <af:selectBooleanCheckbox id="ContractRightsTemplatesActiveFlag"
+                                            value="#{bindings.ContractRightsTemplatesActiveFlag.inputValue}"
+                                            label="#{bindings.ContractRightsTemplatesActiveFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateContractRightsTemplates) and (!(jhsUserRoles['ContractRightsTemplates.update'])))}"></af:selectBooleanCheckbox>
+                  <af:inputText id="ContractRightsTemplatesCreatedBy"
+                                value="#{bindings.ContractRightsTemplatesCreatedBy.inputValue}"
+                                label="#{bindings.ContractRightsTemplatesCreatedBy.hints.label}"
+                                required="#{bindings.ContractRightsTemplatesCreatedBy.hints.mandatory}"
+                                rows="#{bindings.ContractRightsTemplatesCreatedBy.hints.displayHeight}"
+                                columns="#{bindings.ContractRightsTemplatesCreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.ContractRightsTemplatesCreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="ContractRightsTemplatesCreatedDate"
+                                value="#{bindings.ContractRightsTemplatesCreatedDate.inputValue}"
+                                label="#{bindings.ContractRightsTemplatesCreatedDate.hints.label}"
+                                required="#{bindings.ContractRightsTemplatesCreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="ContractRightsTemplatesLastUpdatedBy"
+                                value="#{bindings.ContractRightsTemplatesLastUpdatedBy.inputValue}"
+                                label="#{bindings.ContractRightsTemplatesLastUpdatedBy.hints.label}"
+                                required="#{bindings.ContractRightsTemplatesLastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.ContractRightsTemplatesLastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.ContractRightsTemplatesLastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.ContractRightsTemplatesLastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="ContractRightsTemplatesLastUpdatedDate"
+                                value="#{bindings.ContractRightsTemplatesLastUpdatedDate.inputValue}"
+                                label="#{bindings.ContractRightsTemplatesLastUpdatedDate.hints.label}"
+                                required="#{bindings.ContractRightsTemplatesLastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_RIGHTSCATEGORY']}"
+                               partialTriggers=" ContractRightsTemplatesTopLc RightsCategoryDeleteDialog qsAreaRightsCategorySearchOptions RightsCategoryPC:RightsCategoryArm RightsCategoryPC:RightsCategorydelrmTM RightsCategoryPC:RightsCategoryArl RightsCategoryPC:RightsCategoryTab:RightsCategorydelrm RightsCategoryPC:RightsCategoryTab:RightsCategorydelrl"
+                               id="RightsCategoryTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN']}"
+                               disabled="#{!jhsUserRoles['ADMIN']}">
+              <af:panelGroupLayout layout="vertical" id="RightsCategoryTopLc"
+                                   partialTriggers=" ContractRightsTemplatesTopLc RightsCategoryDeleteDialog qsAreaRightsCategorySearchOptions RightsCategoryPC:RightsCategoryArm RightsCategoryPC:RightsCategorydelrmTM RightsCategoryPC:RightsCategoryArl RightsCategoryPC:RightsCategoryTab:RightsCategorydelrm RightsCategoryPC:RightsCategoryTab:RightsCategorydelrl"
+                                   rendered="#{jhsUserRoles['ADMIN']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0">
+                  <af:panelGroupLayout id="modelSearchAreaRightsCategory"
+                                       rendered="#{!pageFlowScope.createModes.CreateRightsCategory and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreaRightsCategorySearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.RightsCategoryIteratorTraxRightCategoryTemplateViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.RightsCategoryIteratorTraxRightCategoryTemplateViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.RightsCategoryIteratorTraxRightCategoryTemplateViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl0">
+                  <af:panelCollection id="RightsCategoryPC" featuresOff=" "
+                                      inlineStyle=" width:648px; ">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="RightsCategorytbb"
+                                    rendered="#{ bindings.RightsCategoryIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstRightsCategory.execute}"
+                                                id="RightsCategoryFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousRightsCategory.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="RightsCategoryPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextRightsCategory.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="RightsCategoryNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastRightsCategory.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="RightsCategoryLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="RightsCategoryArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.RightsCategoryTable.addRow}"
+                                            rendered="#{ bindings.ContractRightsTemplatesIterator.currentRow!=null  and (jhsUserRoles['RightsCategory.create'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="RightsCategorydelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['RightsCategory.delete']}">
+                          <af:showPopupBehavior popupId="::RightsCategoryDeletePopup"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <!-- Also create CreateRightsCategory bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="RightsCategoryArl"
+                                             immediate="false"
+                                             rendered="#{ bindings.ContractRightsTemplatesIterator.currentRow!=null  and (jhsUserRoles['RightsCategory.create'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.RightsCategoryTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandToolbarButton text="Print"
+                                                 id="RightsCategoryPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.RightsCategoryIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="RightsCategoryTab" contentDelivery="immediate"
+                              value="#{bindings.RightsCategoryTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.RightsCategoryTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.RightsCategoryTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.RightsCategoryTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.RightsCategoryTable.rangeSize}"
+                              autoHeightRows="#{bindings.RightsCategoryTable.estimatedRowCount lt 5 ? 5 : bindings.RightsCategoryTable.estimatedRowCount lt bindings.RightsCategoryTable.rangeSize ? bindings.RightsCategoryTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.RightsCategoryTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.RightsCategoryIteratorTraxRightCategoryTemplateViewCriteriaQuery.processQuery}"
+                              binding="#{pageFlowScope.RightsCategoryTable.table}"
+                              partialTriggers=":::qsAreaRightsCategorySearchOptions :::RightsCategoryPC ::RightsCategoryFirst ::RightsCategoryPrevious ::RightsCategoryNext ::RightsCategoryLast"
+                              width="648px"
+                              summary="#{nls['TABLE_TITLE_RIGHTSCATEGORY']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="RightsCategoryTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="RightsCategorydelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['RightsCategory.delete']}">
+                              <af:showPopupBehavior popupId=":::RightsCategoryDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="RightsCategoryActionColumn" width="20"
+                                 align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl1">
+                          <af:commandImageLink id="RightsCategorydelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['RightsCategory.delete']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::RightsCategoryDeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="RightsCategoryCategoryCol" sortable="true"
+                                 noWrap="true" width="180"
+                                 sortProperty="CategoryId" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightsCategoryTable.hints.CategoryId.label}"
+                                          showRequired="true" id="ol0"/>
+                        </f:facet>
+                        <af:selectOneChoice id="RightsCategoryCategory"
+                                            value="#{row.bindings.CategoryId.inputValue}"
+                                            label="#{bindings.RightsCategoryTable.hints.CategoryId.label}"
+                                            required="true"
+                                            readOnly="#{((pageFlowScope.RightsCategoryTable.newRow) and (!(jhsUserRoles['RightsCategory.create']))) or ((!pageFlowScope.RightsCategoryTable.newRow) and (!(jhsUserRoles['RightsCategory.update'])))}"
+                                            autoSubmit="true"
+                                            valueChangeListener="#{RightsCategoryCategoryDependsOnItem.updateModelValue}">
+                          <f:selectItems value="#{row.bindings.CategoryId.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="RightsCategoryValueCol" sortable="true"
+                                 noWrap="true" width="180" sortProperty="Value"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightsCategoryTable.hints.Value.label}"
+                                          showRequired="true" id="ol1"/>
+                        </f:facet>
+                        <af:selectOneChoice id="RightsCategoryValue"
+                                            value="#{row.bindings.Value.inputValue}"
+                                            label="#{bindings.RightsCategoryTable.hints.Value.label}"
+                                            required="true"
+                                            readOnly="#{((pageFlowScope.RightsCategoryTable.newRow) and (!(jhsUserRoles['RightsCategory.create']))) or ((!pageFlowScope.RightsCategoryTable.newRow) and (!(jhsUserRoles['RightsCategory.update'])))}">
+                          <f:selectItems value="#{row.bindings.Value.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="RightsCategoryFullOrPartialCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="FullOrPartial" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightsCategoryTable.hints.FullOrPartial.label}"
+                                          showRequired="#{bindings.RightsCategoryTable.hints.FullOrPartial.mandatory}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:selectOneChoice id="RightsCategoryFullOrPartial"
+                                            value="#{row.bindings.FullOrPartial.inputValue}"
+                                            label="#{bindings.RightsCategoryTable.hints.FullOrPartial.label}"
+                                            required="#{bindings.RightsCategoryTable.hints.FullOrPartial.mandatory}"
+                                            readOnly="#{((pageFlowScope.RightsCategoryTable.newRow) and (!(jhsUserRoles['RightsCategory.create']))) or ((!pageFlowScope.RightsCategoryTable.newRow) and (!(jhsUserRoles['RightsCategory.update'])))}"
+                                            disabled="#{row.FullOrPartialFlag!='Y'}"
+                                            unselectedLabel="">
+                          <af:selectItem id="si0" value="Full" label="Full"/>
+                          <af:selectItem id="si1" value="Partial"
+                                         label="Partial"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="RightsCategoryPermitFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="PermitFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightsCategoryTable.hints.PermitFlag.label}"
+                                          showRequired="false" id="ol3"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="RightsCategoryPermitFlag"
+                                                  label="#{bindings.RightsCategoryTable.hints.PermitFlag.label}"
+                                                  value="#{RightsCategoryPermitFlagcheckboxInTable.value}"
+                                                  readOnly="#{((pageFlowScope.RightsCategoryTable.newRow) and (!(jhsUserRoles['RightsCategory.create']))) or ((!pageFlowScope.RightsCategoryTable.newRow) and (!(jhsUserRoles['RightsCategory.update'])))}"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                      <f:facet name="detailStamp">
+                        <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                        <af:panelGroupLayout id="pgl2"
+                                             rendered="#{bindings.RightsCategoryIterator.estimatedRowCount>0}"
+                                             layout="scroll">
+                          <f:facet name="separator">
+                            <af:spacer width="10" height="10" id="sp4"/>
+                          </f:facet>
+                          <af:panelFormLayout rows="1" maxColumns="2"
+                                              labelAlignment="start" id="pfl0">
+                            <af:inputText id="RightsCategoryCreatedBy"
+                                          value="#{row.bindings.CreatedBy.inputValue}"
+                                          label="#{bindings.RightsCategoryCreatedBy.hints.label}"
+                                          required="#{bindings.RightsCategoryCreatedBy.hints.mandatory}"
+                                          rows="#{bindings.RightsCategoryTable.hints.CreatedBy.displayHeight}"
+                                          columns="#{bindings.RightsCategoryTable.hints.CreatedBy.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          disabled="true">
+                              <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                            </af:inputText>
+                            <af:inputDate id="RightsCategoryCreatedDate"
+                                          value="#{row.bindings.CreatedDate.inputValue}"
+                                          label="#{bindings.RightsCategoryCreatedDate.hints.label}"
+                                          required="#{bindings.RightsCategoryCreatedDate.hints.mandatory}"
+                                          readOnly="true" disabled="true">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                            <af:inputText id="RightsCategoryLastUpdatedBy"
+                                          value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                          label="#{bindings.RightsCategoryLastUpdatedBy.hints.label}"
+                                          required="#{bindings.RightsCategoryLastUpdatedBy.hints.mandatory}"
+                                          rows="#{bindings.RightsCategoryTable.hints.LastUpdatedBy.displayHeight}"
+                                          columns="#{bindings.RightsCategoryTable.hints.LastUpdatedBy.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          disabled="true">
+                              <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                            </af:inputText>
+                            <af:inputDate id="RightsCategoryLastUpdatedDate"
+                                          value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                          label="#{bindings.RightsCategoryLastUpdatedDate.hints.label}"
+                                          required="#{bindings.RightsCategoryLastUpdatedDate.hints.mandatory}"
+                                          readOnly="true" disabled="true">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                          </af:panelFormLayout>
+                        </af:panelGroupLayout>
+                        <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                      </f:facet>
+                       
+                      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="RightsCategoryDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="RightsCategoryDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_RIGHTSCATEGOR:#{pageFlowScope.RightsCategoryTable.currentRowAttributeValues.Name}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteRightsCategory.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

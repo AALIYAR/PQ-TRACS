@@ -1,0 +1,309 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="TitleLanguageView"
+   Version="11.1.1.64.93"
+   OrderBy="PRIMARY_FLAG DESC NULLS LAST, LANGUAGE"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   ComponentClass="com.pq.tracs.model.dao.TitleLanguageViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10"
+   RowClass="com.pq.tracs.model.dao.TitleLanguageViewRowImpl">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_objectSuperClassName"
+         Value="com.pq.tracs.model.dao.TracsView"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <ViewAccessor
+      Name="GenerationMethodLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Generation Method']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="LanguageLOV"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ViewCriteriaUsage
+         Name="LookupCodeLookupCriteria"
+         FullName="com.pq.tracs.model.lookups.LookupCodeLookup.LookupCodeLookupCriteria"/>
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Language']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_LanguageMeaning"
+      ListVOName="LanguageLOV"
+      ListRangeSize="10"
+      NullValueFlag="none"
+      NullValueId="LOV_LanguageMeaning_LOVUIHints_NullValueId"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="LanguageMeaning"/>
+      </AttrArray>
+      <AttrArray Name="DerivedAttrNames">
+         <Item Value="Language"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="DisplayValue"/>
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria
+         Hint="showAndExecute"
+         Name="LookupCodeLookupCriteria"/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_GenerationMethod"
+      ListVOName="GenerationMethodLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="GenerationMethod"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <SQLQuery><![CDATA[SELECT TitleLanguage.ID, 
+       TitleLanguage.TITLE_ID, 
+       TitleLanguage.LANGUAGE, 
+       TitleLanguage.PRIMARY_FLAG,
+       TitleLanguage.CREATED_BY, 
+       TitleLanguage.CREATED_DATE, 
+       TitleLanguage.LAST_UPDATED_BY, 
+       TitleLanguage.LAST_UPDATED_DATE, 
+       TitleLanguage.TITLE_RECORD_ID,
+       lc.DISPLAY_VALUE language_meaning,
+       lc.DISPLAY_VALUE language_meaning_2,
+       TitleLanguage.GENERATION_METHOD
+FROM TRAX_TITLE_LANGUAGE TitleLanguage 
+    LEFT OUTER JOIN trax_lookup_code lc
+        INNER JOIN trax_lookup_code_set lcs
+            ON lc.lookup_code_set_id = lcs.id 
+            AND lcs.CODE_SET='Language'
+        ON lc.internal_value=TitleLanguage.LANGUAGE]]></SQLQuery>
+   <EntityUsage
+      Name="TitleLanguage"
+      Entity="com.pq.tracs.model.bo.TitleLanguage" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      EntityAttrName="Id"
+      EntityUsage="TitleLanguage"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TitleId"
+      IsNotNull="true"
+      EntityAttrName="TitleId"
+      EntityUsage="TitleLanguage"
+      AliasName="TITLE_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Language"
+      IsNotNull="true"
+      EntityAttrName="Language"
+      EntityUsage="TitleLanguage"
+      AliasName="LANGUAGE" />
+   <ViewAttribute
+      Name="PrimaryFlag"
+      EntityAttrName="PrimaryFlag"
+      EntityUsage="TitleLanguage"
+      AliasName="PRIMARY_FLAG">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TitleLanguageView.PrimaryFlag_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="TitleLanguage"
+      AliasName="CREATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <DISPLAYWIDTH
+               Value="20"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      EntityAttrName="CreatedDate"
+      EntityUsage="TitleLanguage"
+      AliasName="CREATED_DATE" />
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="TitleLanguage"
+      AliasName="LAST_UPDATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <DISPLAYWIDTH
+               Value="20"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      IsUpdateable="false"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="TitleLanguage"
+      AliasName="LAST_UPDATED_DATE" />
+   <ViewAttribute
+      Name="TitleRecordId"
+      EntityAttrName="TitleRecordId"
+      EntityUsage="TitleLanguage"
+      AliasName="TITLE_RECORD_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LanguageMeaning"
+      IsPersistent="false"
+      Precision="80"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="LANGUAGE_MEANING"
+      SQLType="VARCHAR"
+      LOVName="LOV_LanguageMeaning"
+      Expression="LANGUAGE_MEANING">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="80" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TitleLanguageView.LanguageMeaning_LABEL"/>
+            <DISPLAYWIDTH
+               Value="35"/>
+            <CONTROLTYPE
+               Value="input_text_lov"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LanguageMeaning2"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="LANGUAGE_MEANING_2"
+      SQLType="VARCHAR"
+      Expression="LANGUAGE_MEANING_2">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TitleLanguageView.LanguageMeaning2_LABEL"/>
+            <DISPLAYWIDTH
+               Value="30"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="GenerationMethod"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="GenerationMethod"
+      EntityUsage="TitleLanguage"
+      AliasName="GENERATION_METHOD"
+      LOVName="LOV_GenerationMethod">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="TitleLanguageViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.TitleLanguageView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow83"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="TitleLanguageViewCriteria_vcrow83_Language"
+            ViewAttribute="Language"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TitleLanguageViewCriteria_vcrow83_PrimaryFlag"
+            ViewAttribute="PrimaryFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="LanguageMeaning2"
+            ViewAttribute="LanguageMeaning2"
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ViewLinkAccessor
+      Name="TitleRecordView"
+      ViewLink="com.pq.tracs.model.dao.TitleRecordLanguageViewLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="TitleView"
+      ViewLink="com.pq.tracs.model.dao.TitlesToLanguageLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

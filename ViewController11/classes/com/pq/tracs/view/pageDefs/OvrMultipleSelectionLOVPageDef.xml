@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="OvrMultipleSelectionLOVPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <iterator id="OvrMultipleSelectionLOVIterator" Binds="OvrLOV1"
+              DataControl="TracsServiceDataControl" RangeSize="10"
+              RefreshCondition="#{pageFlowScope.searchOvrMultipleSelectionLOV.emptyRowSetCreated}"/>
+  </executables>
+  <bindings>
+    <attributeValues id="OvrMultipleSelectionLOVId"
+                     IterBinding="OvrMultipleSelectionLOVIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrMultipleSelectionLOVTitleId"
+                     IterBinding="OvrMultipleSelectionLOVIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrMultipleSelectionLOVOvrId"
+                     IterBinding="OvrMultipleSelectionLOVIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrMultipleSelectionLOVContentSource"
+                     IterBinding="OvrMultipleSelectionLOVIterator">
+      <AttrNames>
+        <Item Value="ContentSource"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrMultipleSelectionLOVPmid"
+                     IterBinding="OvrMultipleSelectionLOVIterator">
+      <AttrNames>
+        <Item Value="Pmid"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrMultipleSelectionLOVCblId"
+                     IterBinding="OvrMultipleSelectionLOVIterator">
+      <AttrNames>
+        <Item Value="CblId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrMultipleSelectionLOVPmTitle"
+                     IterBinding="OvrMultipleSelectionLOVIterator">
+      <AttrNames>
+        <Item Value="PmTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrMultipleSelectionLOVCatalogNumber"
+                     IterBinding="OvrMultipleSelectionLOVIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrMultipleSelectionLOVLongTitle"
+                     IterBinding="OvrMultipleSelectionLOVIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrMultipleSelectionLOVTable"
+          IterBinding="OvrMultipleSelectionLOVIterator">
+      <nodeDefinition Name="OvrMultipleSelectionLOV"
+                      DefName="com.pq.tracs.model.lookups.OvrLOV">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="TitleId"/>
+          <Item Value="OvrId"/>
+          <Item Value="ContentSource"/>
+          <Item Value="Pmid"/>
+          <Item Value="CblId"/>
+          <Item Value="PmTitle"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrMultipleSelectionLOV"
+            IterBinding="OvrMultipleSelectionLOVIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrMultipleSelectionLOV"
+            IterBinding="OvrMultipleSelectionLOVIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrMultipleSelectionLOV"
+            IterBinding="OvrMultipleSelectionLOVIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrMultipleSelectionLOV"
+            IterBinding="OvrMultipleSelectionLOVIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchOvrMultipleSelectionLOV"
+                  IterBinding="OvrMultipleSelectionLOVIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchOvrMultipleSelectionLOV.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchOvrMultipleSelectionLOV.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchOvrMultipleSelectionLOV.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyOvrMultipleSelectionLOV"
+            IterBinding="OvrMultipleSelectionLOVIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrMultipleSelectionLOV}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

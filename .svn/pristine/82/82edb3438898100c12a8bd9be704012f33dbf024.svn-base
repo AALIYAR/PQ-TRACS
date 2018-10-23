@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="NTCRightsView"
+  Version="11.1.1.64.93"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  RowClass="com.pq.tracs.model.vo.NTCRightsViewRowImpl"
+  ComponentClass="com.pq.tracs.model.vo.NTCRightsViewImpl"
+  PageIterMode="Partial"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.pq.tracs.model.vo.NTCRightsView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewAccessor
+    Name="TracsLookupModule_NTCFormatLookup1"
+    ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup"
+    AMUsageName="TracsLookupModule"
+    ViewInstanceName="NTCFormatLookup"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="TracsLookupModule_NTCProductTypeLookup1"
+    ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup"
+    AMUsageName="TracsLookupModule"
+    ViewInstanceName="NTCProductTypeLookup"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="TracsLookupModule_NTCContentPartnerLookup1"
+    ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup"
+    AMUsageName="TracsLookupModule"
+    ViewInstanceName="NTCContentPartnerLookup"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_FormatsInvolved"
+    ListVOName="TracsLookupModule_NTCFormatLookup1"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_FormatsInvolved_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="FormatsInvolved"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="InternalValue"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DisplayValue"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ProductTypesInvolved"
+    ListVOName="TracsLookupModule_NTCProductTypeLookup1"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_ProductTypesInvolved_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ProductTypesInvolved"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="InternalValue"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DisplayValue"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_RemoveFromContentPartners"
+    ListVOName="TracsLookupModule_NTCContentPartnerLookup1"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_RemoveFromContentPartners_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="RemoveFromContentPartners"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="InternalValue"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DisplayValue"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <SQLQuery>
+    <![CDATA[SELECT Activity.ID, 
+       Activity.SUB_TYPE, 
+       Activity.NTC_NUMBER, 
+       Activity.NTC_PRIORITY, 
+       Activity.NTC_READY_FLAG, 
+       Activity.DESCRIPTION, 
+       Activity.NOTES, 
+       Activity.EMAIL_TEXT, 
+       Activity.LAST_UPDATED_DATE, 
+       TraxRightsChange.ID AS ID1, 
+       TraxRightsChange.ACTIVITY_ID, 
+       TraxRightsChange.FORMATS_INVOLVED, 
+       TraxRightsChange.PRODUCT_TYPES_INVOLVED, 
+       TraxRightsChange.PRODUCT_PARTNERS_AFFECTED, 
+       TraxRightsChange.REMOVAL_IS, 
+       TraxRightsChange.BACKFILE_PRODUCT_PARTNERS, 
+       TraxRightsChange.BACKFILE_PRODUCT_REMOVAL, 
+       TraxRightsChange.REMOVE_FROM_CONTENT_PARTNERS, 
+       TraxRightsChange.VOL_YEAR_CONTINUED_FLAG, 
+       TraxRightsChange.A_AND_I_CONTINUED_FLAG,
+       TraxActivityUser.ID AS ID2, 
+       TraxActivityUser.LAST_UPDATED_DATE AS LAST_UPDATED_DATE1, 
+       TraxActivityUser.ACTIVITY_ID AS ACTIVITY_ID1, 
+       TraxActivityUser.JHS_USERS_ID, 
+       TraxActivityUser.USER_TYPE, 
+       Activity.OWNER, 
+       Activity.TYPE
+FROM TRAX_ACTIVITY Activity
+INNER JOIN TRACS.TRAX_RIGHTS_CHANGE TraxRightsChange ON (Activity.ID = TraxRightsChange.ACTIVITY_ID)
+INNER JOIN TRAX_ACTIVITY_USER TraxActivityUser ON (Activity.ID = TraxActivityUser.ACTIVITY_ID)]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="Activity"
+    Entity="com.pq.tracs.model.bo.Activity"/>
+  <EntityUsage
+    Name="TraxRightsChange"
+    Entity="com.pq.tracs.model.eo.TraxRightsChange"
+    Association="com.pq.tracs.model.ao.ActivityToRightsChangeFkAssoc"
+    AssociationEnd="com.pq.tracs.model.ao.ActivityToRightsChangeFkAssoc.TraxRightsChange"
+    SourceUsage="com.pq.tracs.model.vo.NTCRightsView.Activity"
+    JoinType="INNER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="com.pq.tracs.model.bo.Activity.Id"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="com.pq.tracs.model.eo.TraxRightsChange.ActivityId"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <EntityUsage
+    Name="TraxActivityUser"
+    Entity="com.pq.tracs.model.eo.TraxActivityUser"
+    Association="com.pq.tracs.model.ao.ActivityToActivityUserFkAssoc"
+    AssociationEnd="com.pq.tracs.model.ao.ActivityToActivityUserFkAssoc.TraxActivityUser"
+    SourceUsage="com.pq.tracs.model.vo.NTCRightsView.Activity"
+    JoinType="INNER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="com.pq.tracs.model.bo.Activity.Id"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="com.pq.tracs.model.eo.TraxActivityUser.ActivityId"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <ViewAttribute
+    Name="Id"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="Activity"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="SubType"
+    PrecisionRule="true"
+    EntityAttrName="SubType"
+    EntityUsage="Activity"
+    AliasName="SUB_TYPE"/>
+  <ViewAttribute
+    Name="NtcNumber"
+    PrecisionRule="true"
+    EntityAttrName="NtcNumber"
+    EntityUsage="Activity"
+    AliasName="NTC_NUMBER"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="NtcPriority"
+    PrecisionRule="true"
+    EntityAttrName="NtcPriority"
+    EntityUsage="Activity"
+    AliasName="NTC_PRIORITY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="Description"
+    PrecisionRule="true"
+    EntityAttrName="Description"
+    EntityUsage="Activity"
+    AliasName="DESCRIPTION"/>
+  <ViewAttribute
+    Name="Notes"
+    PrecisionRule="true"
+    EntityAttrName="Notes"
+    EntityUsage="Activity"
+    AliasName="NOTES"/>
+  <ViewAttribute
+    Name="EmailText"
+    IsQueriable="false"
+    PrecisionRule="true"
+    EntityAttrName="EmailText"
+    EntityUsage="Activity"
+    AliasName="EMAIL_TEXT">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="80"/>
+        <DISPLAYHEIGHT
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LastUpdatedDate"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="Activity"
+    AliasName="LAST_UPDATED_DATE"/>
+  <ViewAttribute
+    Name="Id1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxRightsChange"
+    AliasName="ID1"/>
+  <ViewAttribute
+    Name="ActivityId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ActivityId"
+    EntityUsage="TraxRightsChange"
+    AliasName="ACTIVITY_ID"/>
+  <ViewAttribute
+    Name="FormatsInvolved"
+    PrecisionRule="true"
+    EntityAttrName="FormatsInvolved"
+    EntityUsage="TraxRightsChange"
+    AliasName="FORMATS_INVOLVED"
+    LOVName="LOV_FormatsInvolved">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="list"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductTypesInvolved"
+    PrecisionRule="true"
+    EntityAttrName="ProductTypesInvolved"
+    EntityUsage="TraxRightsChange"
+    AliasName="PRODUCT_TYPES_INVOLVED"
+    LOVName="LOV_ProductTypesInvolved">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="list"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductPartnersAffected"
+    PrecisionRule="true"
+    EntityAttrName="ProductPartnersAffected"
+    EntityUsage="TraxRightsChange"
+    AliasName="PRODUCT_PARTNERS_AFFECTED"/>
+  <ViewAttribute
+    Name="RemovalIs"
+    PrecisionRule="true"
+    EntityAttrName="RemovalIs"
+    EntityUsage="TraxRightsChange"
+    AliasName="REMOVAL_IS"/>
+  <ViewAttribute
+    Name="BackfileProductPartners"
+    PrecisionRule="true"
+    EntityAttrName="BackfileProductPartners"
+    EntityUsage="TraxRightsChange"
+    AliasName="BACKFILE_PRODUCT_PARTNERS"/>
+  <ViewAttribute
+    Name="BackfileProductRemoval"
+    PrecisionRule="true"
+    EntityAttrName="BackfileProductRemoval"
+    EntityUsage="TraxRightsChange"
+    AliasName="BACKFILE_PRODUCT_REMOVAL"/>
+  <ViewAttribute
+    Name="RemoveFromContentPartners"
+    PrecisionRule="true"
+    EntityAttrName="RemoveFromContentPartners"
+    EntityUsage="TraxRightsChange"
+    AliasName="REMOVE_FROM_CONTENT_PARTNERS"
+    LOVName="LOV_RemoveFromContentPartners">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="list"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="VolYearContinuedFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="VolYearContinuedFlag"
+    EntityUsage="TraxRightsChange"
+    AliasName="VOL_YEAR_CONTINUED_FLAG"/>
+  <ViewAttribute
+    Name="AAndIContinuedFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="AAndIContinuedFlag"
+    EntityUsage="TraxRightsChange"
+    AliasName="A_AND_I_CONTINUED_FLAG"/>
+  <ViewAttribute
+    Name="Id2"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxActivityUser"
+    AliasName="ID2"/>
+  <ViewAttribute
+    Name="LastUpdatedDate1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="TraxActivityUser"
+    AliasName="LAST_UPDATED_DATE1"/>
+  <ViewAttribute
+    Name="ActivityId1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ActivityId"
+    EntityUsage="TraxActivityUser"
+    AliasName="ACTIVITY_ID1"/>
+  <ViewAttribute
+    Name="JhsUsersId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="JhsUsersId"
+    EntityUsage="TraxActivityUser"
+    AliasName="JHS_USERS_ID"/>
+  <ViewAttribute
+    Name="UserType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UserType"
+    EntityUsage="TraxActivityUser"
+    AliasName="USER_TYPE"/>
+  <ViewAttribute
+    Name="Owner"
+    PrecisionRule="true"
+    EntityAttrName="Owner"
+    EntityUsage="Activity"
+    AliasName="OWNER"/>
+  <ViewAttribute
+    Name="Type"
+    PrecisionRule="true"
+    EntityAttrName="Type"
+    EntityUsage="Activity"
+    AliasName="TYPE"/>
+  <ViewLinkAccessor
+    Name="TraxActivityTitleView"
+    ViewLink="com.pq.tracs.model.vl.NTCRightsToTitleViewLink"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="TraxActivityAttachmentView"
+    ViewLink="com.pq.tracs.model.vl.NTCRightsToAttachmentViewLink"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

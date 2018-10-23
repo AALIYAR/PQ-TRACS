@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="PrmOpportunityTargetAssignmentView"
+  Version="11.1.1.64.93"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  ComponentClass="com.pq.tracs.model.dao.TracsView"
+  PageIterMode="Partial"
+  UseGlueCode="false"
+  OrderBy="TARGET_TRACKING_NO, PRODUCT_NAME">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewAccessor
+    Name="TargetPriorityLookup"
+    ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+    <ParameterMap>
+      <PIMap Variable="code_set">
+        <TransientExpression><![CDATA['Target Priority']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="TargetStatusLookup"
+    ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+    <ParameterMap>
+      <PIMap Variable="code_set">
+        <TransientExpression><![CDATA['Target Status']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="TargetTypeLookup"
+    ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+    <ParameterMap>
+      <PIMap Variable="code_set">
+        <TransientExpression><![CDATA['Target Type']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="TargetedTrackingNumberLookup"
+    ViewObjectName="com.pq.tracs.model.lookups.TargetedProductTitleLookup"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_TargetStatus"
+    ListVOName="TargetStatusLookup"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TargetStatus"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="InternalValue"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DisplayValue"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_TargetPriority"
+    ListVOName="TargetPriorityLookup"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TargetPriority"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="InternalValue"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DisplayValue"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_TargetType"
+    ListVOName="TargetTypeLookup"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TargetType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="InternalValue"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DisplayValue"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_TargetTrackingNo"
+    ListVOName="TargetedTrackingNumberLookup"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_TargetTrackingNo_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TargetTrackingNo"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="CatalogNumber"/>
+      <Item Value="LongTitle"/>
+      <Item Value="PrmTargetedProductTitleId"/>
+      <Item Value="PrdId"/>
+      <Item Value="ProductName"/>
+      <Item Value="GroupName"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="TargetTrackingNo"/>
+      <Item Value="CatalogNumber"/>
+      <Item Value="LongTitle"/>
+      <Item Value="Id"/>
+      <Item Value="PrdId"/>
+      <Item Value="ProductName"/>
+      <Item Value="TargetGroup"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CatalogNumber"/>
+      <Item Value="LongTitle"/>
+      <Item Value="ContentOwnerNo"/>
+      <Item Value="CurrentCatalogNumber"/>
+      <Item Value="Name"/>
+      <Item Value="ProductName"/>
+      <Item Value="TargetGroup"/>
+      <Item Value="TargetTrackingNo"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <SQLQuery>
+    <![CDATA[SELECT PrmOpportunityTarget.ID, 
+       PrmOpportunityTarget.PRM_OPPORTUNITY_ID, 
+       PrmOpportunityTarget.PRM_TARGETED_PRODUCT_TITLE_ID, 
+       PrmOpportunityTarget.TARGET_STATUS, 
+       PrmOpportunityTarget.ADDED_DATE, 
+       PrmOpportunityTarget.REMOVED_DATE, 
+       PrmOpportunityTarget.CREATED_BY, 
+       PrmOpportunityTarget.CREATED_DATE, 
+       PrmOpportunityTarget.LAST_UPDATED_BY, 
+       PrmOpportunityTarget.LAST_UPDATED_DATE, 
+       TraxTitle.CATALOG_NUMBER,
+       TraxTitle.LONG_TITLE,
+       TraxTitle.TARGET_TRACKING_NO, 
+       PrmTargetedProductTitle.TITLE_ID,
+       PrmTargetedProductTitle.TARGET_PRIORITY, 
+       PrmTargetedProductTitle.TARGET_TYPE,
+       PrmTargetedProduct.PRD_ID,
+       PrmTargetedProduct.NAME PRODUCT_NAME,
+       PrmTargetGroup.GROUP_NAME,
+       TraxContentOwner.ID AS ACCOUNT_ID,
+       TraxContentOwner.CONTENT_OWNER_NO AS ACCOUNT_NO,
+       TraxContentOwner.NAME AS ACCOUNT_NAME
+FROM PRM_OPPORTUNITY_TARGET PrmOpportunityTarget
+    INNER JOIN PRM_TARGETED_PRODUCT_TITLE PrmTargetedProductTitle
+        INNER JOIN TRAX_TITLE TraxTitle
+            LEFT OUTER JOIN TRAX_CONTENT_OWNER TraxContentOwner
+                ON TraxTitle.CONTENT_OWNER_ID = TraxContentOwner.ID
+            ON PrmTargetedProductTitle.TITLE_ID = TraxTitle.ID
+        LEFT OUTER JOIN PRM_TARGETED_PRODUCT PrmTargetedProduct
+            ON PrmTargetedProductTitle.PRM_TARGETED_PRODUCT_ID = PrmTargetedProduct.ID
+        LEFT OUTER JOIN PRM_TARGET_GROUP PrmTargetGroup
+            ON PrmTargetedProductTitle.PRM_TARGET_GROUP_ID = PrmTargetGroup.ID
+        ON PrmOpportunityTarget.PRM_TARGETED_PRODUCT_TITLE_ID = PrmTargetedProductTitle.ID]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="PrmOpportunityTarget"
+    Entity="com.pq.tracs.model.eo.PrmOpportunityTarget"/>
+  <ViewAttribute
+    Name="Id"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="PrmOpportunityTarget"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="PrmOpportunityId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PrmOpportunityId"
+    EntityUsage="PrmOpportunityTarget"
+    AliasName="PRM_OPPORTUNITY_ID"/>
+  <ViewAttribute
+    Name="PrmTargetedProductTitleId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PrmTargetedProductTitleId"
+    EntityUsage="PrmOpportunityTarget"
+    AliasName="PRM_TARGETED_PRODUCT_TITLE_ID"/>
+  <ViewAttribute
+    Name="TargetStatus"
+    PrecisionRule="true"
+    EntityAttrName="TargetStatus"
+    EntityUsage="PrmOpportunityTarget"
+    AliasName="TARGET_STATUS"
+    LOVName="LOV_TargetStatus">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="30"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AddedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="AddedDate"
+    EntityUsage="PrmOpportunityTarget"
+    AliasName="ADDED_DATE"/>
+  <ViewAttribute
+    Name="RemovedDate"
+    PrecisionRule="true"
+    EntityAttrName="RemovedDate"
+    EntityUsage="PrmOpportunityTarget"
+    AliasName="REMOVED_DATE"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsUpdateable="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="PrmOpportunityTarget"
+    AliasName="CREATED_BY">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedDate"
+    IsUpdateable="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedDate"
+    EntityUsage="PrmOpportunityTarget"
+    AliasName="CREATED_DATE"/>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="PrmOpportunityTarget"
+    AliasName="LAST_UPDATED_BY"
+    IsUpdateable="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LastUpdatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="PrmOpportunityTarget"
+    AliasName="LAST_UPDATED_DATE"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="CatalogNumber"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CATALOG_NUMBER"
+    Expression="CATALOG_NUMBER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView.CatalogNumber_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LongTitle"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="4000"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="LONG_TITLE"
+    Expression="LONG_TITLE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="4000"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView.LongTitle_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TargetTrackingNo"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="TARGET_TRACKING_NO"
+    Expression="TARGET_TRACKING_NO"
+    SQLType="NUMERIC"
+    LOVName="LOV_TargetTrackingNo">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView.TargetTrackingNo_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TitleId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="TITLE_ID"
+    Expression="TITLE_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TargetPriority"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TARGET_PRIORITY"
+    Expression="TARGET_PRIORITY"
+    SQLType="VARCHAR"
+    LOVName="LOV_TargetPriority">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView.TargetPriority_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TargetType"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TARGET_TYPE"
+    Expression="TARGET_TYPE"
+    SQLType="VARCHAR"
+    LOVName="LOV_TargetType">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView.TargetType_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PrdId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="PRD_ID"
+    Expression="PRD_ID"
+    SQLType="NUMERIC"
+    Precision="38"
+    Scale="0">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView.PrdId_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ProductName"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="400"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PRODUCT_NAME"
+    Expression="PRODUCT_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="400"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView.ProductName_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="GroupName"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="400"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="GROUP_NAME"
+    Expression="GROUP_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="400"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView.GroupName_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountId"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ACCOUNT_ID"
+    Expression="ACCOUNT_ID"
+    SQLType="NUMERIC"
+    IsUpdateable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountNo"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ACCOUNT_NO"
+    Expression="ACCOUNT_NO"
+    SQLType="NUMERIC"
+    IsUpdateable="false">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView.AccountNo_LABEL"/>
+        <DISPLAYWIDTH
+          Value="12"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountName"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="400"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ACCOUNT_NAME"
+    Expression="ACCOUNT_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="400"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView.AccountName_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewCriteria
+    Name="PrmOpportunityTargetAssignmentViewCriteria"
+    ViewObjectName="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow242"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="TargetStatus"
+        ViewAttribute="TargetStatus"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="AddedDate"
+        ViewAttribute="AddedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="RemovedDate"
+        ViewAttribute="RemovedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="CreatedBy"
+        ViewAttribute="CreatedBy"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="CreatedDate"
+        ViewAttribute="CreatedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="LastUpdatedBy"
+        ViewAttribute="LastUpdatedBy"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="LastUpdatedDate"
+        ViewAttribute="LastUpdatedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="CatalogNumber"
+        ViewAttribute="CatalogNumber"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="LongTitle"
+        ViewAttribute="LongTitle"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="TargetTrackingNo"
+        ViewAttribute="TargetTrackingNo"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="TargetPriority"
+        ViewAttribute="TargetPriority"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="TargetType"
+        ViewAttribute="TargetType"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="PrdId"
+        ViewAttribute="PrdId"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="ProductName"
+        ViewAttribute="ProductName"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="GroupName"
+        ViewAttribute="GroupName"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="AccountNo"
+        ViewAttribute="AccountNo"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="AccountName"
+        ViewAttribute="AccountName"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

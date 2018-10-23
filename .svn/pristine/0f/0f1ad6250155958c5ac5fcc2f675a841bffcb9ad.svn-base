@@ -1,0 +1,511 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="s31TopLc"
+                             partialTriggers=" s31DeleteDialog s31fbb s31NewButton s31DelB s31SaveButton0 s31CancelButton0 s31SaveButton1 s31CancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="History">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="s31fbb" layout="horizontal"
+                                       rendered="#{ bindings.OvrHistoryIterator.currentRow!=null  and bindings.OvrHistoryIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateOvrHistory and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="s31First s31Previous s31Next s31Last">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstOvrHistory.execute}"
+                                             id="s31First" partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.OvrHistoryIterator.rangeStart+bindings.OvrHistoryIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.OvrHistoryIterator.rangeStart+bindings.OvrHistoryIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousOvrHistory.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="s31Previous"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.OvrHistoryIterator.rangeStart+bindings.OvrHistoryIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.OvrHistoryIterator.rangeStart+bindings.OvrHistoryIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.OvrHistoryIterator.rangeStart+bindings.OvrHistoryIterator.currentRowIndexInRange+1} / #{bindings.OvrHistoryIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextOvrHistory.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="s31Next" partialSubmit="true"
+                                             rendered="#{bindings.OvrHistoryIterator.rangeStart+bindings.OvrHistoryIterator.currentRowIndexInRange+1 lt bindings.OvrHistoryIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.OvrHistoryIterator.rangeStart+bindings.OvrHistoryIterator.currentRowIndexInRange+1 lt bindings.OvrHistoryIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastOvrHistory.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="s31Last" partialSubmit="true"
+                                             rendered="#{bindings.OvrHistoryIterator.rangeStart+bindings.OvrHistoryIterator.currentRowIndexInRange+1 lt bindings.OvrHistoryIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.OvrHistoryIterator.rangeStart+bindings.OvrHistoryIterator.currentRowIndexInRange+1 lt bindings.OvrHistoryIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateOvrHistory.execute}"
+                                             action="Creates31"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_OVRHISTORY']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateOvrHistory and (true) and (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}"
+                                             id="s31NewButton"></af:commandToolbarButton>
+                    <af:commandToolbarButton action="DeleteOvrHistory"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_OVRHISTORY']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateOvrHistory and  bindings.OvrHistoryIterator.currentRow!=null   and (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}"
+                                             immediate="true" id="s31DelB">
+                      <af:showPopupBehavior popupId="s31DeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="s31Print"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveOvrHistory.execute}"
+                                      rendered="#{((jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="s31SaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="s31CancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.OvrHistoryIterator.findMode!='true'}"
+                       id="s31Sw" defaultFacet="hasRows"
+                       facetName="#{( bindings.OvrHistoryIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="s31NoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="s31FC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="2"
+                                    id="s31FI">
+                  <af:panelLabelAndMessage label="#{bindings.s31PmTitle.hints.label}"
+                                           showRequired="true"
+                                           id="s31PmTitleLabel">
+                    <af:inputText id="s31PmTitle"
+                                  value="#{bindings.s31PmTitle.inputValue}"
+                                  required="true"
+                                  rows="#{bindings.s31PmTitle.hints.displayHeight}"
+                                  columns="#{bindings.s31PmTitle.hints.displayWidth}"
+                                  maximumLength="400"
+                                  readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}"
+                                  autoSubmit="true"
+                                  valueChangeListener="#{s31PmTitleDependsOnItem.updateModelValue}"
+                                  simple="true"
+                                  partialTriggers="s31PmTitleEditorLink s31PmTitleEditorText">
+                      <f:validator binding="#{bindings.s31PmTitle.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl0" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink id="s31PmTitleEditorLink"
+                                        rendered="#{!(((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))))}"
+                                        immediate="true" partialSubmit="true">
+                          <af:showPopupBehavior popupId="s31PmTitlePopup"/>
+                          <af:image source="/jheadstart/images/editor.gif"
+                                    id="s31PmTitleIcon" clientComponent="true"/>
+                        </af:commandLink>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="#{bindings.s31SubTitle.hints.label}"
+                                           showRequired="#{bindings.s31SubTitle.hints.mandatory}"
+                                           id="s31SubTitleLabel">
+                    <af:inputText id="s31SubTitle"
+                                  value="#{bindings.s31SubTitle.inputValue}"
+                                  required="#{bindings.s31SubTitle.hints.mandatory}"
+                                  rows="#{bindings.s31SubTitle.hints.displayHeight}"
+                                  columns="#{bindings.s31SubTitle.hints.displayWidth}"
+                                  maximumLength="400"
+                                  readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}"
+                                  autoSubmit="true" simple="true"
+                                  partialTriggers="s31SubTitleEditorLink s31SubTitleEditorText">
+                      <f:validator binding="#{bindings.s31SubTitle.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl1" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink id="s31SubTitleEditorLink"
+                                        rendered="#{!(((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))))}"
+                                        immediate="true" partialSubmit="true">
+                          <af:showPopupBehavior popupId="s31SubTitlePopup"/>
+                          <af:image source="/jheadstart/images/editor.gif"
+                                    id="s31SubTitleIcon"
+                                    clientComponent="true"/>
+                        </af:commandLink>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="#{bindings.s31SortTitle.hints.label}"
+                                           shortDesc="#{bindings.s31SortTitle.hints.tooltip}"
+                                           showRequired="false"
+                                           id="s31SortTitleLabel">
+                    <af:inputText id="s31SortTitle"
+                                  value="#{bindings.s31SortTitle.inputValue}"
+                                  required="false"
+                                  rows="#{bindings.s31SortTitle.hints.displayHeight}"
+                                  columns="#{bindings.s31SortTitle.hints.displayWidth}"
+                                  maximumLength="1000"
+                                  readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}"
+                                  autoSubmit="true" simple="true"
+                                  partialTriggers="s31SortTitleEditorLink s31SortTitleEditorText">
+                      <f:validator binding="#{bindings.s31SortTitle.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl2" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink id="s31SortTitleEditorLink"
+                                        rendered="#{!(((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))))}"
+                                        immediate="true" partialSubmit="true">
+                          <af:showPopupBehavior popupId="s31SortTitlePopup"/>
+                          <af:image source="/jheadstart/images/editor.gif"
+                                    id="s31SortTitleIcon"
+                                    clientComponent="true"/>
+                        </af:commandLink>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:inputText id="s31PartNumber"
+                                value="#{bindings.s31PartNumber.inputValue}"
+                                label="#{bindings.s31PartNumber.hints.label}"
+                                required="#{bindings.s31PartNumber.hints.mandatory}"
+                                rows="#{bindings.s31PartNumber.hints.displayHeight}"
+                                columns="#{bindings.s31PartNumber.hints.displayWidth}"
+                                maximumLength="40"
+                                readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s31PartNumber.validator}"/>
+                  </af:inputText>
+                  <af:panelLabelAndMessage label="#{bindings.s31PartName.hints.label}"
+                                           showRequired="#{bindings.s31PartName.hints.mandatory}"
+                                           id="s31PartNameLabel">
+                    <af:inputText id="s31PartName"
+                                  value="#{bindings.s31PartName.inputValue}"
+                                  required="#{bindings.s31PartName.hints.mandatory}"
+                                  rows="#{bindings.s31PartName.hints.displayHeight}"
+                                  columns="#{bindings.s31PartName.hints.displayWidth}"
+                                  maximumLength="400"
+                                  readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}"
+                                  autoSubmit="true" simple="true"
+                                  partialTriggers="s31PartNameEditorLink s31PartNameEditorText">
+                      <f:validator binding="#{bindings.s31PartName.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl3" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink id="s31PartNameEditorLink"
+                                        rendered="#{!(((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))))}"
+                                        immediate="true" partialSubmit="true">
+                          <af:showPopupBehavior popupId="s31PartNamePopup"/>
+                          <af:image source="/jheadstart/images/editor.gif"
+                                    id="s31PartNameIcon"
+                                    clientComponent="true"/>
+                        </af:commandLink>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="#{bindings.s31Edition.hints.label}"
+                                           showRequired="#{bindings.s31Edition.hints.mandatory}"
+                                           id="s31EditionLabel">
+                    <af:inputText id="s31Edition"
+                                  value="#{bindings.s31Edition.inputValue}"
+                                  required="#{bindings.s31Edition.hints.mandatory}"
+                                  rows="#{bindings.s31Edition.hints.displayHeight}"
+                                  columns="#{bindings.s31Edition.hints.displayWidth}"
+                                  maximumLength="400"
+                                  readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}"
+                                  autoSubmit="true" simple="true"
+                                  partialTriggers="s31EditionEditorLink s31EditionEditorText">
+                      <f:validator binding="#{bindings.s31Edition.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl4" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink id="s31EditionEditorLink"
+                                        rendered="#{!(((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))))}"
+                                        immediate="true" partialSubmit="true">
+                          <af:showPopupBehavior popupId="s31EditionPopup"/>
+                          <af:image source="/jheadstart/images/editor.gif"
+                                    id="s31EditionIcon" clientComponent="true"/>
+                        </af:commandLink>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="#{bindings.s31Qualifier.hints.label}"
+                                           showRequired="#{bindings.s31Qualifier.hints.mandatory}"
+                                           id="s31QualifierLabel">
+                    <af:inputText id="s31Qualifier"
+                                  value="#{bindings.s31Qualifier.inputValue}"
+                                  required="#{bindings.s31Qualifier.hints.mandatory}"
+                                  rows="#{bindings.s31Qualifier.hints.displayHeight}"
+                                  columns="#{bindings.s31Qualifier.hints.displayWidth}"
+                                  maximumLength="400"
+                                  readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}"
+                                  autoSubmit="true" simple="true"
+                                  partialTriggers="s31QualifierEditorLink s31QualifierEditorText">
+                      <f:validator binding="#{bindings.s31Qualifier.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl5" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink id="s31QualifierEditorLink"
+                                        rendered="#{!(((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))))}"
+                                        immediate="true" partialSubmit="true">
+                          <af:showPopupBehavior popupId="s31QualifierPopup"/>
+                          <af:image source="/jheadstart/images/editor.gif"
+                                    id="s31QualifierIcon"
+                                    clientComponent="true"/>
+                        </af:commandLink>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:inputDate id="s31EndDate"
+                                value="#{bindings.s31EndDate.inputValue}"
+                                label="#{bindings.s31EndDate.hints.label}"
+                                required="false"
+                                readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputListOfValues id="s31CatalogNumber"
+                                        popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.OvrHistoryTable.hints.CatalogNumber.label}"
+                                        searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.OvrHistoryTable.hints.CatalogNumber.label}"
+                                        value="#{bindings.s31CatalogNumber.inputValue}"
+                                        label="#{bindings.s31CatalogNumber.hints.label}"
+                                        required="false"
+                                        columns="#{bindings.s31CatalogNumber.hints.displayWidth}"
+                                        maximumLength="20"
+                                        readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}"
+                                        model="#{bindings.s31CatalogNumber.listOfValuesModel}">
+                    <f:validator binding="#{bindings.s31CatalogNumber.validator}"/>
+                  </af:inputListOfValues>
+                  <af:inputText id="s31Issn"
+                                value="#{bindings.s31Issn.inputValue}"
+                                label="#{bindings.s31Issn.hints.label}"
+                                required="false"
+                                columns="#{bindings.s31Issn.hints.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s31Issn.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s31OnlineIssn"
+                                value="#{bindings.s31OnlineIssn.inputValue}"
+                                label="#{bindings.s31OnlineIssn.hints.label}"
+                                required="false"
+                                columns="#{bindings.s31OnlineIssn.hints.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s31OnlineIssn.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s31Coden"
+                                value="#{bindings.s31Coden.inputValue}"
+                                label="#{bindings.s31Coden.hints.label}"
+                                required="false"
+                                columns="#{bindings.s31Coden.hints.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s31Coden.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s31Isbn"
+                                value="#{bindings.s31Isbn.inputValue}"
+                                label="#{bindings.s31Isbn.hints.label}"
+                                required="false"
+                                columns="#{bindings.s31Isbn.hints.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s31Isbn.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s31Range"
+                                value="#{bindings.s31Range.inputValue}"
+                                label="#{bindings.s31Range.hints.label}"
+                                required="false"
+                                columns="#{bindings.s31Range.hints.displayWidth}"
+                                maximumLength="40"
+                                readOnly="#{((pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateOvrHistory) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s31Range.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="s31GenerationMethod"
+                                      value="#{bindings.s31GenerationMethod.inputValue}"
+                                      label="#{bindings.s31GenerationMethod.hints.label}"
+                                      required="#{bindings.s31GenerationMethod.hints.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.s31GenerationMethod.hints.tooltip}">
+                    <f:selectItems value="#{bindings.s31GenerationMethod.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="s31CreatedBy"
+                                value="#{bindings.s31CreatedBy.inputValue}"
+                                label="#{bindings.s31CreatedBy.hints.label}"
+                                required="#{bindings.s31CreatedBy.hints.mandatory}"
+                                rows="#{bindings.s31CreatedBy.hints.displayHeight}"
+                                columns="#{bindings.s31CreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s31CreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s31CreatedDate"
+                                value="#{bindings.s31CreatedDate.inputValue}"
+                                label="#{bindings.s31CreatedDate.hints.label}"
+                                required="#{bindings.s31CreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="s31LastUpdatedBy"
+                                value="#{bindings.s31LastUpdatedBy.inputValue}"
+                                label="#{bindings.s31LastUpdatedBy.hints.label}"
+                                required="#{bindings.s31LastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.s31LastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.s31LastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s31LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s31LastUpdatedDate"
+                                value="#{bindings.s31LastUpdatedDate.inputValue}"
+                                label="#{bindings.s31LastUpdatedDate.hints.label}"
+                                required="#{bindings.s31LastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveOvrHistory.execute}"
+                                            rendered="#{((jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="s31SaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="s31CancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="s31DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s31DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_OVRHISTOR: #{bindings.s31PmTitle.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteOvrHistory.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s31PmTitlePopup" contentDelivery="lazyUncached"
+                  eventContext="launcher" childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog0">
+            <af:inputText rows="10" columns="100"
+                          value="#{bindings.s31PmTitle.inputValue}"
+                          simple="true" maximumLength="400"
+                          id="s31PmTitleEditorText"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s31SubTitlePopup" contentDelivery="lazyUncached"
+                  eventContext="launcher" childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog1">
+            <af:inputText rows="10" columns="100"
+                          value="#{bindings.s31SubTitle.inputValue}"
+                          simple="true" maximumLength="400"
+                          id="s31SubTitleEditorText"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s31SortTitlePopup" contentDelivery="lazyUncached"
+                  eventContext="launcher" childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog2">
+            <af:inputText rows="10" columns="100"
+                          value="#{bindings.s31SortTitle.inputValue}"
+                          simple="true" maximumLength="1000"
+                          id="s31SortTitleEditorText"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s31PartNamePopup" contentDelivery="lazyUncached"
+                  eventContext="launcher" childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog3">
+            <af:inputText rows="10" columns="100"
+                          value="#{bindings.s31PartName.inputValue}"
+                          simple="true" maximumLength="400"
+                          id="s31PartNameEditorText"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s31EditionPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher" childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog4">
+            <af:inputText rows="10" columns="100"
+                          value="#{bindings.s31Edition.inputValue}"
+                          simple="true" maximumLength="400"
+                          id="s31EditionEditorText"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s31QualifierPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher" childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog5">
+            <af:inputText rows="10" columns="100"
+                          value="#{bindings.s31Qualifier.inputValue}"
+                          simple="true" maximumLength="400"
+                          id="s31QualifierEditorText"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

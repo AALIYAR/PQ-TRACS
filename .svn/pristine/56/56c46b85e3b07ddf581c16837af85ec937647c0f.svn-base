@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.61.92" id="TitleRoyaltyRateMultiLOVPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <invokeAction id="applyBindParamsTitleRoyaltyRateMultiLOVInvoke"
+                  Binds="applyBindParamsTitleRoyaltyRateMultiLOV"
+                  Refresh="always"/>
+    <iterator id="TitleRoyaltyRateMultiLOVIterator"
+              Binds="ContractBasedTitleLOV1"
+              DataControl="TracsServiceDataControl" RangeSize="20"/>
+    <invokeAction id="ExecuteQueryTitleRoyaltyRateMultiLOVInvoke"
+                  Binds="ExecuteQueryTitleRoyaltyRateMultiLOV"
+                  Refresh="renderModel" RefreshCondition="#{jhsPageChanged}"/>
+  </executables>
+  <bindings>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsTitleRoyaltyRateMultiLOV"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="ContractBasedTitleLOV1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{TitleRoyaltyRateMultiLOVQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQueryTitleRoyaltyRateMultiLOV"
+            IterBinding="TitleRoyaltyRateMultiLOVIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="TitleRoyaltyRateMultiLOVId"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleRoyaltyRateMultiLOVContentOwnerId"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleRoyaltyRateMultiLOVCatalogNumber"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleRoyaltyRateMultiLOVLongTitle"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleRoyaltyRateMultiLOVContentOwner"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="ContentOwner"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleRoyaltyRateMultiLOVCatalogRoot"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="CatalogRoot"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleRoyaltyRateMultiLOVPublicationStartYear"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="PublicationStartYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleRoyaltyRateMultiLOVPublicationEndYear"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="PublicationEndYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleRoyaltyRateMultiLOVShortTitle"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="ShortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleRoyaltyRateMultiLOVFilmAvailability"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="FilmAvailability"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleRoyaltyRateMultiLOVBibliographicStatus"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="BibliographicStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleRoyaltyRateMultiLOVContractId"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleRoyaltyRateMultiLOVTitleId"
+                     IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="TitleRoyaltyRateMultiLOVTable"
+          IterBinding="TitleRoyaltyRateMultiLOVIterator">
+      <nodeDefinition Name="TitleRoyaltyRateMultiLOV"
+                      DefName="com.pq.tracs.model.lookups.ContractBasedTitleLOV">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="ContentOwner"/>
+          <Item Value="CatalogRoot"/>
+          <Item Value="PublicationStartYear"/>
+          <Item Value="PublicationEndYear"/>
+          <Item Value="ShortTitle"/>
+          <Item Value="FilmAvailability"/>
+          <Item Value="BibliographicStatus"/>
+          <Item Value="ContractId"/>
+          <Item Value="TitleId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstTitleRoyaltyRateMultiLOV"
+            IterBinding="TitleRoyaltyRateMultiLOVIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousTitleRoyaltyRateMultiLOV"
+            IterBinding="TitleRoyaltyRateMultiLOVIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextTitleRoyaltyRateMultiLOV"
+            IterBinding="TitleRoyaltyRateMultiLOVIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastTitleRoyaltyRateMultiLOV"
+            IterBinding="TitleRoyaltyRateMultiLOVIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchTitleRoyaltyRateMultiLOV"
+                  IterBinding="TitleRoyaltyRateMultiLOVIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchTitleRoyaltyRateMultiLOV.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchTitleRoyaltyRateMultiLOV.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchTitleRoyaltyRateMultiLOV.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyTitleRoyaltyRateMultiLOV"
+            IterBinding="TitleRoyaltyRateMultiLOVIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrTitleRoyaltyRateMultiLOV}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

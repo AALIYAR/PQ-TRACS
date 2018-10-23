@@ -1,0 +1,1280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="ManufacturingTitlesPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'CO, RM, ADMIN'}"/>
+  </parameters>
+  <executables>
+    <iterator id="ManufacturingTitlesIterator" Binds="TitleManufacturingView1"
+              DataControl="TracsServiceDataControl" RangeSize="20"/>
+    <searchRegion id="ManufacturingTitlesIteratorTitleManufacturingViewCriteriaAdvQuery"
+                  Binds="ManufacturingTitlesIterator"
+                  Criteria="TitleManufacturingViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="LongTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryManufacturingTitlesInvoke"
+                  Binds="ExecuteQueryManufacturingTitles" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <variableIterator id="variables">
+      <variable Name="MfTTitleSpacerVar" Type="Number"/>
+      <variable Name="sb1EditLinkVar" Type="String"/>
+    </variableIterator>
+    <iterator id="ManufacturingTitlesContractsIterator"
+              Binds="TitleContractView3" DataControl="TracsServiceDataControl"
+              RangeSize="10"/>
+    <searchRegion id="ManufacturingTitlesContractsIteratorTitleContractViewCriteriaQuery"
+                  Binds="ManufacturingTitlesContractsIterator"
+                  Criteria="TitleContractViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="ContractNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ManufacturingTitlesActivitiesIterator"
+              Binds="TraxTitleActivityView3"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ManufacturingTitlesActivitiesIteratorTraxTitleActivityViewCriteriaQuery"
+                  Binds="ManufacturingTitlesActivitiesIterator"
+                  Criteria="TraxTitleActivityViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Type"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ManufacturingTitlesContractRightsIterator"
+              Binds="JTraxTitleContractRightView3"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ManufacturingTitlesContractRightsIteratorJTraxTitleContractRightViewCriteriaQuery"
+                  Binds="ManufacturingTitlesContractRightsIterator"
+                  Criteria="JTraxTitleContractRightViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="RuleNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ManufacturingTitlesOvrDeliveryRightsIterator"
+              Binds="DeliveryRightView1" DataControl="TracsServiceDataControl"
+              RangeSize="10"/>
+    <searchRegion id="ManufacturingTitlesOvrDeliveryRightsIteratorDeliveryRightViewCriteriaQuery"
+                  Binds="ManufacturingTitlesOvrDeliveryRightsIterator"
+                  Criteria="DeliveryRightViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="RuleNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryManufacturingTitlesOvrDeliveryRightsInvoke"
+                  Binds="ExecuteQueryManufacturingTitlesOvrDeliveryRights"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="ManufacturingTitlesNotesIterator" Binds="TitleNoteView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ManufacturingTitlesNotesIteratorTitleNoteViewCriteriaQuery"
+                  Binds="ManufacturingTitlesNotesIterator"
+                  Criteria="TitleNoteViewCriteria" InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="NoteType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryManufacturingTitlesNotesInvoke"
+                  Binds="ExecuteQueryManufacturingTitlesNotes"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="ManufacturingTitlesOpportunitiesIterator"
+              Binds="TitleOpportunityView3"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ManufacturingTitlesOpportunitiesIteratorTitleOpportunityViewCriteriaQuery"
+                  Binds="ManufacturingTitlesOpportunitiesIterator"
+                  Criteria="TitleOpportunityViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryManufacturingTitlesOpportunitiesInvoke"
+                  Binds="ExecuteQueryManufacturingTitlesOpportunities"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+  </executables>
+  <bindings>
+    <action id="ExecuteQueryManufacturingTitles"
+            IterBinding="ManufacturingTitlesIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues id="MfTId" IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTId1" IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="Id1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTContentOwnerId"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTUlrichsId"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="UlrichsId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTTargetTrackingNoSearch"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTTargetTrackingNo"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTLongTitle"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTCatalogNumberSearch"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTCatalogNumber"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTCheckInRequirements" Uses="LOV_CheckInRequirements"
+          StaticList="false"/>
+    <attributeValues id="MfTOvrIdSearch"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTOvrId" IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTPmTitle" IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="PmTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTQualifier"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="Qualifier"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTContentSource"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="ContentSource"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTPmid" IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="Pmid"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTManufacturingProcess"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="ManufacturingProcess"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTImageStorage"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="ImageStorage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTJournalCode"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="JournalCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTShortTitle"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="ShortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTContentOwnerSearch"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="ContentOwner"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTContentOwnerLink"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="ContentOwner"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTSite" IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="Site"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTContentOwnerCount"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTCatalogRoot"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="CatalogRoot"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTUlrichsSerialIdSearch"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="UlrichsSerialId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTUlrichsSerialId"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="UlrichsSerialId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTPublicationStartYear"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="PublicationStartYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTPublicationEndYear"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="PublicationEndYear"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTFilmAvailability" Uses="LOV_FilmAvailability"
+          StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTBibliographicStatus" Uses="LOV_BibliographicStatus"
+          StaticList="false"/>
+    <attributeValues id="MfTOriginalPublishingCo"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="OriginalPublishingCo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTOriginalPlaceOfPublication"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="OriginalPlaceOfPublication"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTOriginalDatesOfPublication"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="OriginalDatesOfPublication"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTPlaceOfPublicationCode" Uses="LOV_PlaceOfPublicationCode"
+          StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTExercisingRights" Uses="LOV_ExercisingRights"
+          StaticList="false"/>
+    <attributeValues id="MfTNonFilingIndicator"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="NonFilingIndicator"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTEditionStatement"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="EditionStatement"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTAlphaRecordDates"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="AlphaRecordDates"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTPubYearVolumeFormatted"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="PubYearVolumeFormatted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTPubYearVolumeUnformatted"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="PubYearVolumeUnformatted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTCatalogingSourceUrl"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="CatalogingSourceUrl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTTitleSpacer" IterBinding="variables">
+      <AttrNames>
+        <Item Value="MfTTitleSpacerVar"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTSerialSubType" Uses="LOV_SerialSubType" StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTPublicationFrequency" Uses="LOV_PublicationFrequency"
+          StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTRouting" Uses="LOV_Routing" StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTPrimaryPmClass" Uses="LOV_PrimaryPmClass" StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTSecondaryPmClass" Uses="LOV_SecondaryPmClass"
+          StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTProductLine" Uses="LOV_ProductLine" StaticList="false"/>
+    <attributeValues id="MfTPrimaryClassification"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="PrimaryClassification"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTPrimaryClassificationType"
+          Uses="LOV_PrimaryClassificationType" StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTPrimarySubject" Uses="LOV_PrimarySubject" StaticList="false"/>
+    <attributeValues id="MfTNewspaperEditionFilmed"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="NewspaperEditionFilmed"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTContentType" Uses="LOV_ContentType" StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTSubContentType" Uses="LOV_SubContentType" StaticList="false"/>
+    <attributeValues id="MfTEnumeration"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="Enumeration"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTNumberOfUnits"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="NumberOfUnits"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="MfTPeerReviewFlag" IterBinding="ManufacturingTitlesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PeerReviewFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="ManufacturingTitlesIterator"
+          id="MfTOpenAccess" Uses="LOV_OpenAccess" StaticList="false"/>
+    <attributeValues id="MfTCreatedBy"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTCreatedDate"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTCreatedBySearch"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="CreatedBySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTLastUpdatedBy"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTLastUpdatedDate"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTLastUpdatedbySearch"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedbySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="MfTSubjectType"
+                     IterBinding="ManufacturingTitlesIterator">
+      <AttrNames>
+        <Item Value="SubjectType"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ManufacturingTitlesTable"
+          IterBinding="ManufacturingTitlesIterator">
+      <nodeDefinition Name="ManufacturingTitles"
+                      DefName="com.pq.tracs.model.vo.TitleManufacturingView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="Id1"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="UlrichsId"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="LongTitle"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CheckInRequirements"/>
+          <Item Value="OvrId"/>
+          <Item Value="OvrId"/>
+          <Item Value="OvrId"/>
+          <Item Value="OvrId"/>
+          <Item Value="PmTitle"/>
+          <Item Value="Qualifier"/>
+          <Item Value="ContentSource"/>
+          <Item Value="Pmid"/>
+          <Item Value="ManufacturingProcess"/>
+          <Item Value="ImageStorage"/>
+          <Item Value="JournalCode"/>
+          <Item Value="ShortTitle"/>
+          <Item Value="ContentOwner"/>
+          <Item Value="ContentOwner"/>
+          <Item Value="ContentOwner"/>
+          <Item Value="ContentOwner"/>
+          <Item Value="Site"/>
+          <Item Value="ContentOwnerCount"/>
+          <Item Value="CatalogRoot"/>
+          <Item Value="UlrichsSerialId"/>
+          <Item Value="UlrichsSerialId"/>
+          <Item Value="UlrichsSerialId"/>
+          <Item Value="UlrichsSerialId"/>
+          <Item Value="PublicationStartYear"/>
+          <Item Value="PublicationEndYear"/>
+          <Item Value="FilmAvailability"/>
+          <Item Value="BibliographicStatus"/>
+          <Item Value="OriginalPublishingCo"/>
+          <Item Value="OriginalPlaceOfPublication"/>
+          <Item Value="OriginalDatesOfPublication"/>
+          <Item Value="PlaceOfPublicationCode"/>
+          <Item Value="ExercisingRights"/>
+          <Item Value="NonFilingIndicator"/>
+          <Item Value="EditionStatement"/>
+          <Item Value="AlphaRecordDates"/>
+          <Item Value="PubYearVolumeFormatted"/>
+          <Item Value="PubYearVolumeUnformatted"/>
+          <Item Value="CatalogingSourceUrl"/>
+          <Item Value="SerialSubType"/>
+          <Item Value="PublicationFrequency"/>
+          <Item Value="Routing"/>
+          <Item Value="PrimaryPmClass"/>
+          <Item Value="SecondaryPmClass"/>
+          <Item Value="ProductLine"/>
+          <Item Value="PrimaryClassification"/>
+          <Item Value="PrimaryClassificationType"/>
+          <Item Value="PrimarySubject"/>
+          <Item Value="NewspaperEditionFilmed"/>
+          <Item Value="ContentType"/>
+          <Item Value="SubContentType"/>
+          <Item Value="Enumeration"/>
+          <Item Value="NumberOfUnits"/>
+          <Item Value="PeerReviewFlag"/>
+          <Item Value="OpenAccess"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="CreatedBySearch"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="LastUpdatedbySearch"/>
+          <Item Value="SubjectType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstManufacturingTitles"
+            IterBinding="ManufacturingTitlesIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousManufacturingTitles"
+            IterBinding="ManufacturingTitlesIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextManufacturingTitles"
+            IterBinding="ManufacturingTitlesIterator" RequiresUpdateModel="true"
+            Action="next"/>
+    <action id="LastManufacturingTitles"
+            IterBinding="ManufacturingTitlesIterator" RequiresUpdateModel="true"
+            Action="last"/>
+    <action id="SetCurrentRowWithKeyManufacturingTitles"
+            IterBinding="ManufacturingTitlesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrManufacturingTitles}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="sb0ContractId"
+                     IterBinding="ManufacturingTitlesContractsIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb0ContractNumber"
+                     IterBinding="ManufacturingTitlesContractsIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb0ContentOwner"
+                     IterBinding="ManufacturingTitlesContractsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ManufacturingTitlesContractsIterator"
+          id="sb0Form" Uses="LOV_Form" StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesContractsIterator"
+          id="sb0Status" Uses="LOV_Status" StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesContractsIterator"
+          id="sb0Type" Uses="LOV_Type" StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesContractsIterator"
+          id="sb0Division" Uses="LOV_Division" StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesContractsIterator"
+          id="sb0TermLength" Uses="LOV_TermLength" StaticList="false"/>
+    <attributeValues id="sb0EffectiveDate"
+                     IterBinding="ManufacturingTitlesContractsIterator">
+      <AttrNames>
+        <Item Value="EffectiveDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb0ExpirationDate"
+                     IterBinding="ManufacturingTitlesContractsIterator">
+      <AttrNames>
+        <Item Value="ExpirationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ManufacturingTitlesContractsIterator"
+          id="sb0TitleStatus" Uses="LOV_Status1" StaticList="false"/>
+    <button id="sb0NoteFlag" IterBinding="ManufacturingTitlesContractsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="NoteFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <tree id="ManufacturingTitlesContractsTable"
+          IterBinding="ManufacturingTitlesContractsIterator">
+      <nodeDefinition Name="ManufacturingTitlesContracts"
+                      DefName="com.pq.tracs.model.dao.TitleContractView">
+        <AttrNames>
+          <Item Value="ContractId"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="Name"/>
+          <Item Value="Form"/>
+          <Item Value="Status"/>
+          <Item Value="Type"/>
+          <Item Value="Division"/>
+          <Item Value="TermLength"/>
+          <Item Value="EffectiveDate"/>
+          <Item Value="ExpirationDate"/>
+          <Item Value="Status1"/>
+          <Item Value="NoteFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstManufacturingTitlesContracts"
+            IterBinding="ManufacturingTitlesContractsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousManufacturingTitlesContracts"
+            IterBinding="ManufacturingTitlesContractsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextManufacturingTitlesContracts"
+            IterBinding="ManufacturingTitlesContractsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastManufacturingTitlesContracts"
+            IterBinding="ManufacturingTitlesContractsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyManufacturingTitlesContracts"
+            IterBinding="ManufacturingTitlesContractsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrManufacturingTitlesContracts}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="sb1Id"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1JhsUsersId"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="JhsUsersId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1EditLink" IterBinding="variables">
+      <AttrNames>
+        <Item Value="sb1EditLinkVar"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ManufacturingTitlesActivitiesIterator"
+          id="sb1Type" Uses="LOV_Type" StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesActivitiesIterator"
+          id="sb1SubType" Uses="LOV_SubType" StaticList="false"/>
+    <attributeValues id="sb1Description"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1Owner"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="Owner"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ManufacturingTitlesActivitiesIterator"
+          id="sb1Status" Uses="LOV_Status" StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesActivitiesIterator"
+          id="sb1Priority" Uses="LOV_Priority" StaticList="false"/>
+    <attributeValues id="sb1DueDate"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="DueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1ExpectedStartDate"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="ExpectedStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1ActualStartDate"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="ActualStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1CompletionDate"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="CompletionDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1HoursSpent"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="HoursSpent"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1Notes"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="sb1PrimaryFlag"
+            IterBinding="ManufacturingTitlesActivitiesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="sb1CreatedBy"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1CreatedDate"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1LastUpdatedBy"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1LastUpdatedDate"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1AddedDate"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1RemovedDate"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1UserType"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="UserType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb1AddDate"
+                     IterBinding="ManufacturingTitlesActivitiesIterator">
+      <AttrNames>
+        <Item Value="AddDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ManufacturingTitlesActivitiesTable"
+          IterBinding="ManufacturingTitlesActivitiesIterator">
+      <nodeDefinition Name="ManufacturingTitlesActivities"
+                      DefName="com.pq.tracs.model.vo.TraxTitleActivityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="JhsUsersId"/>
+          <Item Value="Type"/>
+          <Item Value="SubType"/>
+          <Item Value="Description"/>
+          <Item Value="Owner"/>
+          <Item Value="Status"/>
+          <Item Value="Priority"/>
+          <Item Value="DueDate"/>
+          <Item Value="ExpectedStartDate"/>
+          <Item Value="ActualStartDate"/>
+          <Item Value="CompletionDate"/>
+          <Item Value="HoursSpent"/>
+          <Item Value="Notes"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="UserType"/>
+          <Item Value="AddDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstManufacturingTitlesActivities"
+            IterBinding="ManufacturingTitlesActivitiesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousManufacturingTitlesActivities"
+            IterBinding="ManufacturingTitlesActivitiesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextManufacturingTitlesActivities"
+            IterBinding="ManufacturingTitlesActivitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastManufacturingTitlesActivities"
+            IterBinding="ManufacturingTitlesActivitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyManufacturingTitlesActivities"
+            IterBinding="ManufacturingTitlesActivitiesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrManufacturingTitlesActivities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateManufacturingTitlesActivities"
+            IterBinding="ManufacturingTitlesActivitiesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <attributeValues id="sb2ContractId"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb2RuleNumber"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="RuleNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb2ContractNumber"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb2ContractNumberLink"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ManufacturingTitlesContractRightsIterator"
+          id="sb2PermissionType" Uses="LOV_PermissionType" StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesContractRightsIterator"
+          id="sb2PermissionSubType" Uses="LOV_PermissionSubType"
+          StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesContractRightsIterator"
+          id="sb2RightOrRestrictionType" Uses="LOV_RightOrRestrictionType"
+          StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesContractRightsIterator"
+          id="sb2IncludesOrExcludes" Uses="LOV_IncludesOrExcludes"
+          StaticList="false"/>
+    <list IterBinding="ManufacturingTitlesContractRightsIterator"
+          id="sb2Status" Uses="LOV_Status" StaticList="false"/>
+    <button id="sb2SalesRestrictionFlag"
+            IterBinding="ManufacturingTitlesContractRightsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="SalesRestrictionFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="sb2ComplexFlag"
+            IterBinding="ManufacturingTitlesContractRightsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ComplexFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="sb2TranslationFlag"
+            IterBinding="ManufacturingTitlesContractRightsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="TranslationFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="sb2ResellerFyiRequiredFlag"
+            IterBinding="ManufacturingTitlesContractRightsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ResellerFyiRequiredFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="sb2WrittenApprovalRequiredFlag"
+            IterBinding="ManufacturingTitlesContractRightsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="WrittenApprovalRequiredFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="sb2EffectiveEndDate"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="EffectiveEndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb2EffectiveStartDate"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="EffectiveStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb2ComplexRuleDescription"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="ComplexRuleDescription"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb2EmbargoDays"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="EmbargoDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb2ReverseEmbargoDays"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="ReverseEmbargoDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb2CreatedBy"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb2CreatedDate"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb2LastUpdatedBy"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb2LastUpdatedDate"
+                     IterBinding="ManufacturingTitlesContractRightsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ManufacturingTitlesContractRightsTable"
+          IterBinding="ManufacturingTitlesContractRightsIterator">
+      <nodeDefinition Name="ManufacturingTitlesContractRights"
+                      DefName="com.pq.tracs.model.dao.JTraxTitleContractRightView">
+        <AttrNames>
+          <Item Value="ContractId"/>
+          <Item Value="RuleNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="PermissionType"/>
+          <Item Value="PermissionSubType"/>
+          <Item Value="RightOrRestrictionType"/>
+          <Item Value="IncludesOrExcludes"/>
+          <Item Value="Status"/>
+          <Item Value="SalesRestrictionFlag"/>
+          <Item Value="ComplexFlag"/>
+          <Item Value="TranslationFlag"/>
+          <Item Value="ResellerFyiRequiredFlag"/>
+          <Item Value="WrittenApprovalRequiredFlag"/>
+          <Item Value="EffectiveEndDate"/>
+          <Item Value="EffectiveStartDate"/>
+          <Item Value="ComplexRuleDescription"/>
+          <Item Value="EmbargoDays"/>
+          <Item Value="ReverseEmbargoDays"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstManufacturingTitlesContractRights"
+            IterBinding="ManufacturingTitlesContractRightsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousManufacturingTitlesContractRights"
+            IterBinding="ManufacturingTitlesContractRightsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextManufacturingTitlesContractRights"
+            IterBinding="ManufacturingTitlesContractRightsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastManufacturingTitlesContractRights"
+            IterBinding="ManufacturingTitlesContractRightsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyManufacturingTitlesContractRights"
+            IterBinding="ManufacturingTitlesContractRightsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrManufacturingTitlesContractRights}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryManufacturingTitlesOvrDeliveryRights"
+            IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="sb3RuleNumber"
+                     IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="RuleNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb3PublicationStartDate"
+                     IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="PublicationStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb3PublicationEndDate"
+                     IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="PublicationEndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb3EmbargoDays"
+                     IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="EmbargoDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb3DeliveryMethod"
+                     IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="DeliveryMethod"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb3DeliveryFormat"
+                     IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="DeliveryFormat"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb3Permit"
+                     IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="Permit"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ManufacturingTitlesOvrDeliveryRightsTable"
+          IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator">
+      <nodeDefinition Name="ManufacturingTitlesOvrDeliveryRights"
+                      DefName="com.pq.tracs.model.ro.DeliveryRightView">
+        <AttrNames>
+          <Item Value="RuleNumber"/>
+          <Item Value="PublicationStartDate"/>
+          <Item Value="PublicationEndDate"/>
+          <Item Value="EmbargoDays"/>
+          <Item Value="DeliveryMethod"/>
+          <Item Value="DeliveryFormat"/>
+          <Item Value="Permit"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstManufacturingTitlesOvrDeliveryRights"
+            IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousManufacturingTitlesOvrDeliveryRights"
+            IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextManufacturingTitlesOvrDeliveryRights"
+            IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastManufacturingTitlesOvrDeliveryRights"
+            IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyManufacturingTitlesOvrDeliveryRights"
+            IterBinding="ManufacturingTitlesOvrDeliveryRightsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrManufacturingTitlesOvrDeliveryRights}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryManufacturingTitlesNotes"
+            IterBinding="ManufacturingTitlesNotesIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <list IterBinding="ManufacturingTitlesNotesIterator"
+          id="sb4NoteType" Uses="LOV_NoteType" StaticList="false"/>
+    <attributeValues id="sb4NoteText"
+                     IterBinding="ManufacturingTitlesNotesIterator">
+      <AttrNames>
+        <Item Value="NoteText"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb4CreatedBy"
+                     IterBinding="ManufacturingTitlesNotesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb4CreatedDate"
+                     IterBinding="ManufacturingTitlesNotesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb4LastUpdatedBy"
+                     IterBinding="ManufacturingTitlesNotesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb4LastUpdatedDate"
+                     IterBinding="ManufacturingTitlesNotesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ManufacturingTitlesNotesTable"
+          IterBinding="ManufacturingTitlesNotesIterator">
+      <nodeDefinition Name="ManufacturingTitlesNotes"
+                      DefName="com.pq.tracs.model.dao.TitleNoteView">
+        <AttrNames>
+          <Item Value="NoteType"/>
+          <Item Value="NoteText"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstManufacturingTitlesNotes"
+            IterBinding="ManufacturingTitlesNotesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousManufacturingTitlesNotes"
+            IterBinding="ManufacturingTitlesNotesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextManufacturingTitlesNotes"
+            IterBinding="ManufacturingTitlesNotesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastManufacturingTitlesNotes"
+            IterBinding="ManufacturingTitlesNotesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyManufacturingTitlesNotes"
+            IterBinding="ManufacturingTitlesNotesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrManufacturingTitlesNotes}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateManufacturingTitlesNotes"
+            IterBinding="ManufacturingTitlesNotesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="ExecuteQueryManufacturingTitlesOpportunities"
+            IterBinding="ManufacturingTitlesOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="sb5Id"
+                     IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb5ContentOwnerId"
+                     IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb5OpportunityNo"
+                     IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb5Name"
+                     IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb5NameLink"
+                     IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb5CurrentStatus"
+                     IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CurrentStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb5OpportunityType"
+                     IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb5AccountName"
+                     IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb5AccountSite"
+                     IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountSite"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb5AccountNum"
+                     IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb5Priority"
+                     IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Priority"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sb5AgreementReceivedDate"
+                     IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AgreementReceivedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ManufacturingTitlesOpportunitiesTable"
+          IterBinding="ManufacturingTitlesOpportunitiesIterator">
+      <nodeDefinition Name="ManufacturingTitlesOpportunities"
+                      DefName="com.pq.tracs.model.ro.TitleOpportunityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="Name"/>
+          <Item Value="Name"/>
+          <Item Value="Name"/>
+          <Item Value="Name"/>
+          <Item Value="CurrentStatus"/>
+          <Item Value="OpportunityType"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountSite"/>
+          <Item Value="AccountNum"/>
+          <Item Value="Priority"/>
+          <Item Value="AgreementReceivedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstManufacturingTitlesOpportunities"
+            IterBinding="ManufacturingTitlesOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousManufacturingTitlesOpportunities"
+            IterBinding="ManufacturingTitlesOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextManufacturingTitlesOpportunities"
+            IterBinding="ManufacturingTitlesOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastManufacturingTitlesOpportunities"
+            IterBinding="ManufacturingTitlesOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyManufacturingTitlesOpportunities"
+            IterBinding="ManufacturingTitlesOpportunitiesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrManufacturingTitlesOpportunities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

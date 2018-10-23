@@ -1,0 +1,449 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="opptestTopLc"
+                             partialTriggers=" opptestDeleteDialog opptestfbb opptestNewButton opptestDelB opptestSaveButton0 opptestCancelButton0 opptestSaveButton1 opptestCancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateOpp ? nls['INSERT_TITLE_OPP'] :  nls['EDIT_TITLE_OP: #{bindings.opptestName.inputValue}'] }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="opptestfbb" layout="horizontal"
+                                       rendered="#{ bindings.OppIterator.currentRow!=null  and bindings.OppIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateOpp and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="opptestFirst opptestPrevious opptestNext opptestLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstOpp.execute}"
+                                             id="opptestFirst"
+                                             partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.OppIterator.rangeStart+bindings.OppIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.OppIterator.rangeStart+bindings.OppIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousOpp.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="opptestPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.OppIterator.rangeStart+bindings.OppIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.OppIterator.rangeStart+bindings.OppIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.OppIterator.rangeStart+bindings.OppIterator.currentRowIndexInRange+1} / #{bindings.OppIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextOpp.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="opptestNext"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.OppIterator.rangeStart+bindings.OppIterator.currentRowIndexInRange+1 lt bindings.OppIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.OppIterator.rangeStart+bindings.OppIterator.currentRowIndexInRange+1 lt bindings.OppIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastOpp.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="opptestLast"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.OppIterator.rangeStart+bindings.OppIterator.currentRowIndexInRange+1 lt bindings.OppIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.OppIterator.rangeStart+bindings.OppIterator.currentRowIndexInRange+1 lt bindings.OppIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateOpp.execute}"
+                                             action="Createopptest"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_OPP']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateOpp and (true) }"
+                                             id="opptestNewButton"></af:commandToolbarButton>
+                    <af:commandToolbarButton action="DeleteOpp"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_OPP']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateOpp and  bindings.OppIterator.currentRow!=null   }"
+                                             immediate="true" id="opptestDelB">
+                      <af:showPopupBehavior popupId="opptestDeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="opptestPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveOpp.execute}"
+                                      rendered="#{!pageFlowScope.hideSaveButton}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="opptestSaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="opptestCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.OppIterator.findMode!='true'}"
+                       id="opptestSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.OppIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp"
+                                  id="opptestNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="opptestFC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="start"
+                                    maxColumns="1" id="opptestFI">
+                  <af:inputDate id="opptestAgreementReceivedDate"
+                                value="#{bindings.opptestAgreementReceivedDate.inputValue}"
+                                label="#{bindings.opptestAgreementReceivedDate.hints.label}"
+                                required="#{bindings.opptestAgreementReceivedDate.hints.mandatory}"
+                                shortDesc="#{bindings.opptestAgreementReceivedDate.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="opptestAutoAddTargetsFlag"
+                                value="#{bindings.opptestAutoAddTargetsFlag.inputValue}"
+                                label="#{bindings.opptestAutoAddTargetsFlag.hints.label}"
+                                required="#{bindings.opptestAutoAddTargetsFlag.hints.mandatory}"
+                                rows="#{bindings.opptestAutoAddTargetsFlag.hints.displayHeight}"
+                                columns="#{bindings.opptestAutoAddTargetsFlag.hints.displayWidth}"
+                                maximumLength="1"
+                                shortDesc="#{bindings.opptestAutoAddTargetsFlag.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestAutoAddTargetsFlag.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestAutoRenewal"
+                                value="#{bindings.opptestAutoRenewal.inputValue}"
+                                label="#{bindings.opptestAutoRenewal.hints.label}"
+                                required="#{bindings.opptestAutoRenewal.hints.mandatory}"
+                                rows="#{bindings.opptestAutoRenewal.hints.displayHeight}"
+                                columns="#{bindings.opptestAutoRenewal.hints.displayWidth}"
+                                maximumLength="1"
+                                shortDesc="#{bindings.opptestAutoRenewal.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestAutoRenewal.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestContentOwnerId"
+                                value="#{bindings.opptestContentOwnerId.inputValue}"
+                                label="#{bindings.opptestContentOwnerId.hints.label}"
+                                required="#{bindings.opptestContentOwnerId.hints.mandatory}"
+                                rows="#{bindings.opptestContentOwnerId.hints.displayHeight}"
+                                columns="#{bindings.opptestContentOwnerId.hints.displayWidth}"
+                                maximumLength="38"
+                                shortDesc="#{bindings.opptestContentOwnerId.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestContentOwnerId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.opptestContentOwnerId.format}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestCreatedBy"
+                                value="#{bindings.opptestCreatedBy.inputValue}"
+                                label="#{bindings.opptestCreatedBy.hints.label}"
+                                required="#{bindings.opptestCreatedBy.hints.mandatory}"
+                                rows="#{bindings.opptestCreatedBy.hints.displayHeight}"
+                                columns="#{bindings.opptestCreatedBy.hints.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{!(pageFlowScope.createModes.CreateOpp)}"
+                                shortDesc="#{bindings.opptestCreatedBy.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestCreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="opptestCreatedDate"
+                                value="#{bindings.opptestCreatedDate.inputValue}"
+                                label="#{bindings.opptestCreatedDate.hints.label}"
+                                required="#{bindings.opptestCreatedDate.hints.mandatory}"
+                                readOnly="#{!(pageFlowScope.createModes.CreateOpp)}"
+                                shortDesc="#{bindings.opptestCreatedDate.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="opptestCurrentAgreementStatus"
+                                value="#{bindings.opptestCurrentAgreementStatus.inputValue}"
+                                label="#{bindings.opptestCurrentAgreementStatus.hints.label}"
+                                required="#{bindings.opptestCurrentAgreementStatus.hints.mandatory}"
+                                rows="#{bindings.opptestCurrentAgreementStatus.hints.displayHeight}"
+                                columns="#{bindings.opptestCurrentAgreementStatus.hints.displayWidth}"
+                                maximumLength="20"
+                                shortDesc="#{bindings.opptestCurrentAgreementStatus.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestCurrentAgreementStatus.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestCurrentCatalogingStatus"
+                                value="#{bindings.opptestCurrentCatalogingStatus.inputValue}"
+                                label="#{bindings.opptestCurrentCatalogingStatus.hints.label}"
+                                required="#{bindings.opptestCurrentCatalogingStatus.hints.mandatory}"
+                                rows="#{bindings.opptestCurrentCatalogingStatus.hints.displayHeight}"
+                                columns="#{bindings.opptestCurrentCatalogingStatus.hints.displayWidth}"
+                                maximumLength="20"
+                                shortDesc="#{bindings.opptestCurrentCatalogingStatus.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestCurrentCatalogingStatus.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestCurrentPreStatus"
+                                value="#{bindings.opptestCurrentPreStatus.inputValue}"
+                                label="#{bindings.opptestCurrentPreStatus.hints.label}"
+                                required="#{bindings.opptestCurrentPreStatus.hints.mandatory}"
+                                rows="#{bindings.opptestCurrentPreStatus.hints.displayHeight}"
+                                columns="#{bindings.opptestCurrentPreStatus.hints.displayWidth}"
+                                maximumLength="20"
+                                shortDesc="#{bindings.opptestCurrentPreStatus.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestCurrentPreStatus.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestCurrentStatus"
+                                value="#{bindings.opptestCurrentStatus.inputValue}"
+                                label="#{bindings.opptestCurrentStatus.hints.label}"
+                                required="#{bindings.opptestCurrentStatus.hints.mandatory}"
+                                rows="#{bindings.opptestCurrentStatus.hints.displayHeight}"
+                                columns="#{bindings.opptestCurrentStatus.hints.displayWidth}"
+                                maximumLength="20"
+                                shortDesc="#{bindings.opptestCurrentStatus.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestCurrentStatus.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestDescription"
+                                value="#{bindings.opptestDescription.inputValue}"
+                                label="#{bindings.opptestDescription.hints.label}"
+                                required="#{bindings.opptestDescription.hints.mandatory}"
+                                rows="#{bindings.opptestDescription.hints.displayHeight}"
+                                columns="#{bindings.opptestDescription.hints.displayWidth}"
+                                maximumLength="4000"
+                                shortDesc="#{bindings.opptestDescription.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestDescription.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestDocumentSigned"
+                                value="#{bindings.opptestDocumentSigned.inputValue}"
+                                label="#{bindings.opptestDocumentSigned.hints.label}"
+                                required="#{bindings.opptestDocumentSigned.hints.mandatory}"
+                                rows="#{bindings.opptestDocumentSigned.hints.displayHeight}"
+                                columns="#{bindings.opptestDocumentSigned.hints.displayWidth}"
+                                maximumLength="20"
+                                shortDesc="#{bindings.opptestDocumentSigned.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestDocumentSigned.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestEstimatedCloseQuarter"
+                                value="#{bindings.opptestEstimatedCloseQuarter.inputValue}"
+                                label="#{bindings.opptestEstimatedCloseQuarter.hints.label}"
+                                required="#{bindings.opptestEstimatedCloseQuarter.hints.mandatory}"
+                                rows="#{bindings.opptestEstimatedCloseQuarter.hints.displayHeight}"
+                                columns="#{bindings.opptestEstimatedCloseQuarter.hints.displayWidth}"
+                                maximumLength="20"
+                                shortDesc="#{bindings.opptestEstimatedCloseQuarter.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestEstimatedCloseQuarter.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestExclusivitySoughtObtained"
+                                value="#{bindings.opptestExclusivitySoughtObtained.inputValue}"
+                                label="#{bindings.opptestExclusivitySoughtObtained.hints.label}"
+                                required="#{bindings.opptestExclusivitySoughtObtained.hints.mandatory}"
+                                rows="#{bindings.opptestExclusivitySoughtObtained.hints.displayHeight}"
+                                columns="#{bindings.opptestExclusivitySoughtObtained.hints.displayWidth}"
+                                maximumLength="1"
+                                shortDesc="#{bindings.opptestExclusivitySoughtObtained.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestExclusivitySoughtObtained.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestExpectedPipelines"
+                                value="#{bindings.opptestExpectedPipelines.inputValue}"
+                                label="#{bindings.opptestExpectedPipelines.hints.label}"
+                                required="#{bindings.opptestExpectedPipelines.hints.mandatory}"
+                                rows="#{bindings.opptestExpectedPipelines.hints.displayHeight}"
+                                columns="#{bindings.opptestExpectedPipelines.hints.displayWidth}"
+                                maximumLength="20"
+                                shortDesc="#{bindings.opptestExpectedPipelines.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestExpectedPipelines.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestId"
+                                value="#{bindings.opptestId.inputValue}"
+                                label="#{bindings.opptestId.hints.label}"
+                                required="#{bindings.opptestId.hints.mandatory}"
+                                rows="#{bindings.opptestId.hints.displayHeight}"
+                                columns="#{bindings.opptestId.hints.displayWidth}"
+                                maximumLength="38"
+                                shortDesc="#{bindings.opptestId.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.opptestId.format}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestLastUpdatedBy"
+                                value="#{bindings.opptestLastUpdatedBy.inputValue}"
+                                label="#{bindings.opptestLastUpdatedBy.hints.label}"
+                                required="#{bindings.opptestLastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.opptestLastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.opptestLastUpdatedBy.hints.displayWidth}"
+                                maximumLength="20"
+                                shortDesc="#{bindings.opptestLastUpdatedBy.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestLastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="opptestLastUpdatedDate"
+                                value="#{bindings.opptestLastUpdatedDate.inputValue}"
+                                label="#{bindings.opptestLastUpdatedDate.hints.label}"
+                                required="#{bindings.opptestLastUpdatedDate.hints.mandatory}"
+                                shortDesc="#{bindings.opptestLastUpdatedDate.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="opptestName"
+                                value="#{bindings.opptestName.inputValue}"
+                                label="#{bindings.opptestName.hints.label}"
+                                required="#{bindings.opptestName.hints.mandatory}"
+                                rows="#{bindings.opptestName.hints.displayHeight}"
+                                columns="#{bindings.opptestName.hints.displayWidth}"
+                                maximumLength="200"
+                                shortDesc="#{bindings.opptestName.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestName.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestOpenAccessFlag"
+                                value="#{bindings.opptestOpenAccessFlag.inputValue}"
+                                label="#{bindings.opptestOpenAccessFlag.hints.label}"
+                                required="#{bindings.opptestOpenAccessFlag.hints.mandatory}"
+                                rows="#{bindings.opptestOpenAccessFlag.hints.displayHeight}"
+                                columns="#{bindings.opptestOpenAccessFlag.hints.displayWidth}"
+                                maximumLength="1"
+                                shortDesc="#{bindings.opptestOpenAccessFlag.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestOpenAccessFlag.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestOpportunityNo"
+                                value="#{bindings.opptestOpportunityNo.inputValue}"
+                                label="#{bindings.opptestOpportunityNo.hints.label}"
+                                required="#{bindings.opptestOpportunityNo.hints.mandatory}"
+                                rows="#{bindings.opptestOpportunityNo.hints.displayHeight}"
+                                columns="#{bindings.opptestOpportunityNo.hints.displayWidth}"
+                                maximumLength="38"
+                                shortDesc="#{bindings.opptestOpportunityNo.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestOpportunityNo.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.opptestOpportunityNo.format}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestOpportunityType"
+                                value="#{bindings.opptestOpportunityType.inputValue}"
+                                label="#{bindings.opptestOpportunityType.hints.label}"
+                                required="#{bindings.opptestOpportunityType.hints.mandatory}"
+                                rows="#{bindings.opptestOpportunityType.hints.displayHeight}"
+                                columns="#{bindings.opptestOpportunityType.hints.displayWidth}"
+                                maximumLength="20"
+                                shortDesc="#{bindings.opptestOpportunityType.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestOpportunityType.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestPriority"
+                                value="#{bindings.opptestPriority.inputValue}"
+                                label="#{bindings.opptestPriority.hints.label}"
+                                required="#{bindings.opptestPriority.hints.mandatory}"
+                                rows="#{bindings.opptestPriority.hints.displayHeight}"
+                                columns="#{bindings.opptestPriority.hints.displayWidth}"
+                                maximumLength="20"
+                                shortDesc="#{bindings.opptestPriority.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestPriority.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestProbabilityPct"
+                                value="#{bindings.opptestProbabilityPct.inputValue}"
+                                label="#{bindings.opptestProbabilityPct.hints.label}"
+                                required="#{bindings.opptestProbabilityPct.hints.mandatory}"
+                                rows="#{bindings.opptestProbabilityPct.hints.displayHeight}"
+                                columns="#{bindings.opptestProbabilityPct.hints.displayWidth}"
+                                maximumLength="10"
+                                shortDesc="#{bindings.opptestProbabilityPct.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestProbabilityPct.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.opptestProbabilityPct.format}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestReasonLost"
+                                value="#{bindings.opptestReasonLost.inputValue}"
+                                label="#{bindings.opptestReasonLost.hints.label}"
+                                required="#{bindings.opptestReasonLost.hints.mandatory}"
+                                rows="#{bindings.opptestReasonLost.hints.displayHeight}"
+                                columns="#{bindings.opptestReasonLost.hints.displayWidth}"
+                                maximumLength="80"
+                                shortDesc="#{bindings.opptestReasonLost.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestReasonLost.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestSummary"
+                                value="#{bindings.opptestSummary.inputValue}"
+                                label="#{bindings.opptestSummary.hints.label}"
+                                required="#{bindings.opptestSummary.hints.mandatory}"
+                                rows="#{bindings.opptestSummary.hints.displayHeight}"
+                                columns="#{bindings.opptestSummary.hints.displayWidth}"
+                                maximumLength="4000"
+                                shortDesc="#{bindings.opptestSummary.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestSummary.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="opptestSummonDeepIndexingFlag"
+                                value="#{bindings.opptestSummonDeepIndexingFlag.inputValue}"
+                                label="#{bindings.opptestSummonDeepIndexingFlag.hints.label}"
+                                required="#{bindings.opptestSummonDeepIndexingFlag.hints.mandatory}"
+                                rows="#{bindings.opptestSummonDeepIndexingFlag.hints.displayHeight}"
+                                columns="#{bindings.opptestSummonDeepIndexingFlag.hints.displayWidth}"
+                                maximumLength="1"
+                                shortDesc="#{bindings.opptestSummonDeepIndexingFlag.hints.tooltip}">
+                    <f:validator binding="#{bindings.opptestSummonDeepIndexingFlag.validator}"/>
+                  </af:inputText>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveOpp.execute}"
+                                            rendered="#{!pageFlowScope.hideSaveButton}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="opptestSaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="opptestCancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="opptestDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="opptestDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_OP: #{bindings.opptestName.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteOpp.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

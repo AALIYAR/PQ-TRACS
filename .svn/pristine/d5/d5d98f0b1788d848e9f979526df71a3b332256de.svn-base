@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="SubTypeLookupCodeView"
+  Version="11.1.1.59.23"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Partial"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.pq.tracs.model.lookups.SubTypeLookupCodeView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="parent_set_id"
+    Kind="where"
+    Type="java.lang.Integer"/>
+  <Variable
+    Name="parent_code"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[select lc.internal_value, lc.display_value, lc.order_by
+from trax_lookup_code lc, trax_lookup_code_set lcs, trax_lookup_code lcparent
+where lc.lookup_code_set_id = lcs.id
+and lcs.parent_lookup_code_id = lcparent.id
+and lcparent.lookup_code_set_id = :parent_set_id
+and lcparent.internal_value = :parent_code
+ORDER BY order_by, display_value]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="InternalValue"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="INTERNAL_VALUE"
+    Expression="INTERNAL_VALUE"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="DisplayValue"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="DISPLAY_VALUE"
+    Expression="DISPLAY_VALUE"
+    SQLType="VARCHAR"/>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="InternalValue"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

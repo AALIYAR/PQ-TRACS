@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="ChangePassword2PageDef"
+                Package="security.pages">
+  <parameters/>
+  <executables>
+    <invokeAction Binds="ExecuteWithParams" id="testChangePassword"
+                  Refresh="always"/>
+    <variableIterator id="variables"/>
+    <iterator Binds="ExUserChangeDetailsView1" RangeSize="25"
+              DataControl="TracsServiceDataControl"
+              id="ExUserChangeDetailsView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="ExUserChangeDetailsView1Iterator"
+            id="ExecuteWithParams"
+            InstanceName="TracsServiceDataControl.ExUserChangeDetailsView1"
+            DataControl="TracsServiceDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="USER_NAME" NDValue="#{jhsUser.userId}"
+                 NDType="java.lang.String" NDOption="3"/>
+    </action>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator"
+                     id="FirstName">
+      <AttrNames>
+        <Item Value="FirstName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator"
+                     id="LastName">
+      <AttrNames>
+        <Item Value="LastName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator"
+                     id="MiddleName">
+      <AttrNames>
+        <Item Value="MiddleName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator"
+                     id="Username">
+      <AttrNames>
+        <Item Value="Username"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator"
+                     id="DisplayName">
+      <AttrNames>
+        <Item Value="DisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator" id="Alias">
+      <AttrNames>
+        <Item Value="Alias"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator"
+                     id="EmailAddress">
+      <AttrNames>
+        <Item Value="EmailAddress"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator"
+                     id="WorkPhone">
+      <AttrNames>
+        <Item Value="WorkPhone"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator"
+                     id="HomePhone">
+      <AttrNames>
+        <Item Value="HomePhone"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator" id="Fax">
+      <AttrNames>
+        <Item Value="Fax"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator"
+                     id="CurrentPassword">
+      <AttrNames>
+        <Item Value="CurrentPassword"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator"
+                     id="NewPassword">
+      <AttrNames>
+        <Item Value="NewPassword"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExUserChangeDetailsView1Iterator"
+                     id="ReTypePassword">
+      <AttrNames>
+        <Item Value="ReTypePassword"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

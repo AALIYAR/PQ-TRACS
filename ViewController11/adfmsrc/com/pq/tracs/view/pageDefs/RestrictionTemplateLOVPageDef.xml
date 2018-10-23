@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="RestrictionTemplateLOVPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <invokeAction id="applyBindParamsRestrictionTemplateLOVInvoke"
+                  Binds="applyBindParamsRestrictionTemplateLOV"
+                  Refresh="always"/>
+    <iterator id="RestrictionTemplateLOVIterator"
+              Binds="RestrictionTemplateROView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+  </executables>
+  <bindings>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsRestrictionTemplateLOV"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="RestrictionTemplateROView2"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{RestrictionTemplateLOVQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <attributeValues id="RestrictionTemplateLOVId"
+                     IterBinding="RestrictionTemplateLOVIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RestrictionTemplateLOVName"
+                     IterBinding="RestrictionTemplateLOVIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RestrictionTemplateLOVTranslationFlag"
+                     IterBinding="RestrictionTemplateLOVIterator">
+      <AttrNames>
+        <Item Value="TranslationFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RestrictionTemplateLOVActiveFlag"
+                     IterBinding="RestrictionTemplateLOVIterator">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RestrictionTemplateLOVRightType"
+                     IterBinding="RestrictionTemplateLOVIterator">
+      <AttrNames>
+        <Item Value="RightType"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="RestrictionTemplateLOVTable"
+          IterBinding="RestrictionTemplateLOVIterator">
+      <nodeDefinition Name="RestrictionTemplateLOV"
+                      DefName="com.pq.tracs.model.lookups.DeliveryRightTemplateROView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="Name"/>
+          <Item Value="TranslationFlag"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="RightType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstRestrictionTemplateLOV"
+            IterBinding="RestrictionTemplateLOVIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousRestrictionTemplateLOV"
+            IterBinding="RestrictionTemplateLOVIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextRestrictionTemplateLOV"
+            IterBinding="RestrictionTemplateLOVIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastRestrictionTemplateLOV"
+            IterBinding="RestrictionTemplateLOVIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchRestrictionTemplateLOV"
+                  IterBinding="RestrictionTemplateLOVIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchRestrictionTemplateLOV.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchRestrictionTemplateLOV.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchRestrictionTemplateLOV.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyRestrictionTemplateLOV"
+            IterBinding="RestrictionTemplateLOVIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrRestrictionTemplateLOV}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

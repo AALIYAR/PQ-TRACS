@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html">
+      <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+      <af:toolbar id="menuGlobalToolbar">
+            <af:navigationPane id="Menu0" var="menuItem" partialTriggers="Item"
+                               value="#{RootMenu}" level="0" hint="buttons">
+                  <f:facet name="nodeStamp">
+                        <af:commandNavigationItem id="Item" partialSubmit="true"
+                                                  textAndAccessKey="#{menuItem.label}"
+                                                  action="#{menuItem.doAction}"
+                                                  immediate="true"
+                                                  rendered="#{menuItem.rendered}"></af:commandNavigationItem>
+                  </f:facet>
+            </af:navigationPane>
+            <af:spacer width="8" id="mgsp0"/>
+            <af:goLink text="Change Password"
+                       visible="#{jhsUser!=null or securityContext.authenticated}"
+                       inlineStyle="color:#A9DFF5;" id="mggl0"
+                       destination="/faces/security/pages/ChangePassword2.jspx"/>
+            <af:spacer width="8" id="mgsp1"/>
+            <af:commandLink actionListener="#{bindings.forwardToApex.execute}"
+                            text="Apex"
+                            visible="#{jhsUser!=null or securityContext.authenticated}"
+                            inlineStyle="color:#A9DFF5;" id="mgcl0"></af:commandLink>
+            <af:spacer width="8" id="mgsp2"/>
+            <af:goLink text="Log Off"
+                       visible="#{jhsUser!=null or securityContext.authenticated}"
+                       inlineStyle="color:#A9DFF5;" id="mggl1"
+                       destination="/faces/security/pages/Logout.jspx"/>
+      </af:toolbar>
+</jsp:root>
+  

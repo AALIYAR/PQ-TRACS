@@ -1,0 +1,791 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="OppTopLc"
+                             partialTriggers=" OppSaveButton0 OppCancelButton0 asAreaOppSearchOptions qsAreaOppSearchOptions"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_OPPORTUNITIES']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0"></af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton action="#{SaveOpportunities.execute}"
+                                      rendered="#{(jhsUserRoles['RM, ADMIN']) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="OppSaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="OppCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaOpp"
+                                 rendered="#{!pageFlowScope.createModes.CreateOpportunities and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaOppSearchOptions:qsButtonOpp qsAreaOppSearchOptions:asButtonOpp ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaOppSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.OpportunitiesIteratorPrmOpportunityViewCriteriaAdvQuery.queryDescriptor}"
+                        model="#{bindings.OpportunitiesIteratorPrmOpportunityViewCriteriaAdvQuery.queryModel}"
+                        queryListener="#{bindings.OpportunitiesIteratorPrmOpportunityViewCriteriaAdvQuery.processQuery}"
+                        queryOperationListener="#{bindings.OpportunitiesIteratorPrmOpportunityViewCriteriaAdvQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchOpportunities.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonOpp"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchOpportunities.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaOppSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.OpportunitiesIteratorPrmOpportunityViewCriteriaAdvQuery.queryDescriptor}"
+                             model="#{bindings.OpportunitiesIteratorPrmOpportunityViewCriteriaAdvQuery.queryModel}"
+                             queryListener="#{bindings.OpportunitiesIteratorPrmOpportunityViewCriteriaAdvQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchOpportunities.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonOpp"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchOpportunities.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="OppPC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="OpportunitiesDetails"></af:commandMenuItem>
+                    <af:group id="Opptbb"
+                              rendered="#{ (bindings.OpportunitiesIterator.viewObject!=null and bindings.OpportunitiesIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstOpportunities.execute}"
+                                          id="OppFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousOpportunities.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="OppPrevious" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextOpportunities.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="OppNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastOpportunities.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="OppLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="OppTab"
+                                                       type="excelHTML"
+                                                       filename="Opportunities.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="OppTab"
+                                                       type="excelHTML"
+                                                       filename="Opportunities.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="OppPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.OpportunitiesIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="OppTab" contentDelivery="immediate"
+                        value="#{bindings.OpportunitiesTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.OpportunitiesTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.OpportunitiesTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.OpportunitiesTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.OpportunitiesTable.rangeSize}"
+                        autoHeightRows="#{bindings.OpportunitiesTable.estimatedRowCount}"
+                        fetchSize="#{bindings.OpportunitiesTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.OpportunitiesIteratorPrmOpportunityViewCriteriaAdvQuery.processQuery}"
+                        filterModel="#{bindings.OpportunitiesIteratorPrmOpportunityViewCriteriaAdvQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.OpportunitiesTable.table}"
+                        partialTriggers=":::qsAreaOppSearchOptions :::asAreaOppSearchOptions :::OppPC ::OppFirst ::OppPrevious ::OppNext ::OppLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_OPPORTUNITIES']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="OppTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="OpportunitiesDetails"></af:commandMenuItem>
+                      </af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="OppOpportunityNoCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="OpportunityNo" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.OpportunityNo.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="OppOpportunityNo"
+                                value="#{row.bindings.OpportunityNo.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.OpportunityNo.label}"
+                                required="#{bindings.OpportunitiesTable.hints.OpportunityNo.mandatory}"
+                                rows="#{bindings.OpportunitiesTable.hints.OpportunityNo.displayHeight}"
+                                columns="#{bindings.OpportunitiesTable.hints.OpportunityNo.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.OpportunityNo.tooltip}">
+                    <f:validator binding="#{row.bindings.OpportunityNo.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.OpportunitiesTable.hints.OpportunityNo.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OppAccountNumberCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="AccountNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.AccountNumber.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="OppAccountNumber"
+                                value="#{row.bindings.AccountNumber.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.AccountNumber.label}"
+                                required="#{bindings.OpportunitiesTable.hints.AccountNumber.mandatory}"
+                                rows="#{bindings.OpportunitiesTable.hints.AccountNumber.displayHeight}"
+                                columns="#{bindings.OpportunitiesTable.hints.AccountNumber.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.AccountNumber.tooltip}">
+                    <f:validator binding="#{row.bindings.AccountNumber.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.OpportunitiesTable.hints.AccountNumber.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OppAccountNameLinkCol" sortable="true"
+                           noWrap="true" width="240" sortProperty="AccountName"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.AccountName.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="cl1"
+                                value="#{row.bindings.AccountName.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.AccountName.label}"
+                                required="#{bindings.OpportunitiesTable.hints.AccountName.mandatory}"
+                                rows="#{bindings.OpportunitiesTable.hints.AccountName.displayHeight}"
+                                columns="#{bindings.OpportunitiesTable.hints.AccountName.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.AccountName.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="OppAccountNameLink"
+                                  text="#{row.bindings.AccountName.attributeValue}"
+                                  shortDesc="#{bindings.OpportunitiesTable.hints.AccountName.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="ContentOwner"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.OppContentOwnerId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="CO - #{bindings.OppAccountName.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.OppContentOwnerId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueContentOwner}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="OppAccountSiteCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="AccountSite" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.AccountSite.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputText id="OppAccountSite"
+                                value="#{row.bindings.AccountSite.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.AccountSite.label}"
+                                required="#{bindings.OpportunitiesTable.hints.AccountSite.mandatory}"
+                                rows="#{bindings.OpportunitiesTable.hints.AccountSite.displayHeight}"
+                                columns="#{bindings.OpportunitiesTable.hints.AccountSite.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.AccountSite.tooltip}">
+                    <f:validator binding="#{row.bindings.AccountSite.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OppCountryCol" sortable="true" filterable="true"
+                           noWrap="true" width="180" sortProperty="Country"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.Country.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppCountry"
+                                      value="#{row.bindings.Country.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.Country.label}"
+                                      required="#{bindings.OpportunitiesTable.hints.Country.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.Country.tooltip}">
+                    <f:selectItems value="#{row.bindings.Country.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppKeyAccountLevelCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="KeyAccountLevel" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.KeyAccountLevel.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="OppKeyAccountLevel"
+                                value="#{row.bindings.KeyAccountLevel.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.KeyAccountLevel.label}"
+                                required="#{bindings.OpportunitiesTable.hints.KeyAccountLevel.mandatory}"
+                                rows="#{bindings.OpportunitiesTable.hints.KeyAccountLevel.displayHeight}"
+                                columns="#{bindings.OpportunitiesTable.hints.KeyAccountLevel.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.KeyAccountLevel.tooltip}">
+                    <f:validator binding="#{row.bindings.KeyAccountLevel.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OppNameCol" sortable="true" filterable="true"
+                           noWrap="true" width="240" sortProperty="Name"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.Name.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:inputText id="cl2" value="#{row.bindings.Name.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.Name.label}"
+                                required="#{bindings.OpportunitiesTable.hints.Name.mandatory}"
+                                rows="#{bindings.OpportunitiesTable.hints.Name.displayHeight}"
+                                columns="#{bindings.OpportunitiesTable.hints.Name.displayWidth}"
+                                maximumLength="200" readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.Name.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.Name.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="cl3"
+                                  shortDesc="#{bindings.OpportunitiesTable.hints.Name.tooltip}"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}"
+                                  action="OpportunitiesDetails"
+                                  text="#{row.Name}"></af:commandLink>
+                </af:column>
+                <af:column id="OppAllianceManagerCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="AllianceManager" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.AllianceManager.label}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:inputText id="OppAllianceManager"
+                                value="#{row.bindings.AllianceManager.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.AllianceManager.label}"
+                                required="#{bindings.OpportunitiesTable.hints.AllianceManager.mandatory}"
+                                rows="#{bindings.OpportunitiesTable.hints.AllianceManager.displayHeight}"
+                                columns="#{bindings.OpportunitiesTable.hints.AllianceManager.displayWidth}"
+                                maximumLength="240" readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.AllianceManager.tooltip}">
+                    <f:validator binding="#{row.bindings.AllianceManager.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OppOpportunityTypeCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="OpportunityType" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.OpportunityType.label}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppOpportunityType"
+                                      value="#{row.bindings.OpportunityType.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.OpportunityType.label}"
+                                      required="#{bindings.OpportunitiesTable.hints.OpportunityType.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.OpportunityType.tooltip}">
+                    <f:selectItems value="#{row.bindings.OpportunityType.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppCurrentStatusCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CurrentStatus" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.CurrentStatus.label}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppCurrentStatus"
+                                      value="#{row.bindings.CurrentStatus.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.CurrentStatus.label}"
+                                      required="#{bindings.OpportunitiesTable.hints.CurrentStatus.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.CurrentStatus.tooltip}"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{OppCurrentStatusDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{row.bindings.CurrentStatus.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppReasonLostCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="ReasonLost" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.ReasonLost.label}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppReasonLost"
+                                      value="#{row.bindings.ReasonLost.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.ReasonLost.label}"
+                                      required="#{bindings.OpportunitiesTable.hints.ReasonLost.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.ReasonLost.tooltip}">
+                    <f:selectItems value="#{row.bindings.ReasonLost.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppCataloguedCountCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CataloguedCount" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.CataloguedCount.label}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <af:inputText id="OppCataloguedCount"
+                                value="#{row.bindings.CataloguedCount.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.CataloguedCount.label}"
+                                required="#{bindings.OpportunitiesTable.hints.CataloguedCount.mandatory}"
+                                rows="#{bindings.OpportunitiesTable.hints.CataloguedCount.displayHeight}"
+                                columns="#{bindings.OpportunitiesTable.hints.CataloguedCount.displayWidth}"
+                                maximumLength="10" readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.CataloguedCount.tooltip}">
+                    <f:validator binding="#{row.bindings.CataloguedCount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.OpportunitiesTable.hints.CataloguedCount.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OppUncataloguedCountCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="UncataloguedCount" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.UncataloguedCount.label}"
+                                    id="ol12"/>
+                  </f:facet>
+                  <af:inputText id="OppUncataloguedCount"
+                                value="#{row.bindings.UncataloguedCount.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.UncataloguedCount.label}"
+                                required="#{bindings.OpportunitiesTable.hints.UncataloguedCount.mandatory}"
+                                rows="#{bindings.OpportunitiesTable.hints.UncataloguedCount.displayHeight}"
+                                columns="#{bindings.OpportunitiesTable.hints.UncataloguedCount.displayWidth}"
+                                maximumLength="10" readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.UncataloguedCount.tooltip}">
+                    <f:validator binding="#{row.bindings.UncataloguedCount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.OpportunitiesTable.hints.UncataloguedCount.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OppCurrentPreStatusCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CurrentPreStatus" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.CurrentPreStatus.label}"
+                                    showRequired="#{bindings.OpportunitiesTable.hints.CurrentPreStatus.mandatory}"
+                                    id="ol13"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppCurrentPreStatus"
+                                      value="#{row.bindings.CurrentPreStatus.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.CurrentPreStatus.label}"
+                                      required="#{bindings.OpportunitiesTable.hints.CurrentPreStatus.mandatory}"
+                                      readOnly="#{!(jhsUserRoles['RM, ADMIN'])}"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.CurrentPreStatus.tooltip}">
+                    <f:selectItems value="#{row.bindings.CurrentPreStatus.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppCurrentCatalogingStatusCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CurrentCatalogingStatus"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                    showRequired="#{bindings.OpportunitiesTable.hints.CurrentCatalogingStatus.mandatory}"
+                                    id="ol14"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppCurrentCatalogingStatus"
+                                      value="#{row.bindings.CurrentCatalogingStatus.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                      required="#{bindings.OpportunitiesTable.hints.CurrentCatalogingStatus.mandatory}"
+                                      readOnly="#{!(jhsUserRoles['RM, ADMIN'])}"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.CurrentCatalogingStatus.tooltip}">
+                    <f:selectItems value="#{row.bindings.CurrentCatalogingStatus.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppCurrentAgreementStatusCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CurrentAgreementStatus"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                    showRequired="#{bindings.OpportunitiesTable.hints.CurrentAgreementStatus.mandatory}"
+                                    id="ol15"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppCurrentAgreementStatus"
+                                      value="#{row.bindings.CurrentAgreementStatus.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                      required="#{bindings.OpportunitiesTable.hints.CurrentAgreementStatus.mandatory}"
+                                      readOnly="#{!(jhsUserRoles['RM, ADMIN'])}"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.CurrentAgreementStatus.tooltip}">
+                    <f:selectItems value="#{row.bindings.CurrentAgreementStatus.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppProbabilityPctCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ProbabilityPct" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.ProbabilityPct.label}"
+                                    id="ol16"/>
+                  </f:facet>
+                  <af:inputText id="OppProbabilityPct"
+                                value="#{row.bindings.ProbabilityPct.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.ProbabilityPct.label}"
+                                required="#{bindings.OpportunitiesTable.hints.ProbabilityPct.mandatory}"
+                                rows="#{bindings.OpportunitiesTable.hints.ProbabilityPct.displayHeight}"
+                                columns="#{bindings.OpportunitiesTable.hints.ProbabilityPct.displayWidth}"
+                                maximumLength="10" readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.ProbabilityPct.tooltip}">
+                    <f:validator binding="#{row.bindings.ProbabilityPct.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.OpportunitiesTable.hints.ProbabilityPct.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OppPriorityCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="Priority"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.Priority.label}"
+                                    id="ol17"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppPriority"
+                                      value="#{row.bindings.Priority.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.Priority.label}"
+                                      required="#{bindings.OpportunitiesTable.hints.Priority.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.Priority.tooltip}">
+                    <f:selectItems value="#{row.bindings.Priority.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppExpectedPipelinesCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="ExpectedPipelines" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.ExpectedPipelines.label}"
+                                    id="ol18"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppExpectedPipelines"
+                                      value="#{row.bindings.ExpectedPipelines.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.ExpectedPipelines.label}"
+                                      required="#{bindings.OpportunitiesTable.hints.ExpectedPipelines.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.ExpectedPipelines.tooltip}">
+                    <f:selectItems value="#{row.bindings.ExpectedPipelines.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppEstimatedCloseQuarterCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="EstimatedCloseQuarter"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.EstimatedCloseQuarter.label}"
+                                    id="ol19"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppEstimatedCloseQuarter"
+                                      value="#{row.bindings.EstimatedCloseQuarter.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.EstimatedCloseQuarter.label}"
+                                      required="#{bindings.OpportunitiesTable.hints.EstimatedCloseQuarter.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.EstimatedCloseQuarter.tooltip}">
+                    <f:selectItems value="#{row.bindings.EstimatedCloseQuarter.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppAgreementReceivedDateCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="AgreementReceivedDate"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.AgreementReceivedDate.label}"
+                                    id="ol20"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.AgreementReceivedDate}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="OppAgreementReceivedDate"
+                                value="#{row.bindings.AgreementReceivedDate.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.AgreementReceivedDate.label}"
+                                required="#{bindings.OpportunitiesTable.hints.AgreementReceivedDate.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.AgreementReceivedDate.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="OppExclusivitySoughtObtainedCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ExclusivitySoughtObtained"
+                           align="center" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.ExclusivitySoughtObtained.label}"
+                                    id="ol21"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="OppExclusivitySoughtObtained"
+                                            label="#{bindings.OpportunitiesTable.hints.ExclusivitySoughtObtained.label}"
+                                            value="#{OppExclusivitySoughtObtainedcheckboxInTable.value}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.OpportunitiesTable.hints.ExclusivitySoughtObtained.tooltip}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="OppDocumentSignedCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="DocumentSigned" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.DocumentSigned.label}"
+                                    id="ol22"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppDocumentSigned"
+                                      value="#{row.bindings.DocumentSigned.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.DocumentSigned.label}"
+                                      required="#{bindings.OpportunitiesTable.hints.DocumentSigned.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.DocumentSigned.tooltip}">
+                    <f:selectItems value="#{row.bindings.DocumentSigned.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppSummonDeepIndexingFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="SummonDeepIndexingFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.SummonDeepIndexingFlag.label}"
+                                    id="ol23"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="OppSummonDeepIndexingFlag"
+                                            label="#{bindings.OpportunitiesTable.hints.SummonDeepIndexingFlag.label}"
+                                            value="#{OppSummonDeepIndexingFlagcheckboxInTable.value}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.OpportunitiesTable.hints.SummonDeepIndexingFlag.tooltip}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="OppOpenAccessFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="OpenAccessFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.OpenAccessFlag.label}"
+                                    showRequired="#{bindings.OpportunitiesTable.hints.OpenAccessFlag.mandatory}"
+                                    id="ol24"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="OppOpenAccessFlag"
+                                            label="#{bindings.OpportunitiesTable.hints.OpenAccessFlag.label}"
+                                            value="#{OppOpenAccessFlagcheckboxInTable.value}"
+                                            readOnly="#{!(jhsUserRoles['RM, ADMIN'])}"
+                                            shortDesc="#{bindings.OpportunitiesTable.hints.OpenAccessFlag.tooltip}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="OppFormCol" sortable="true" filterable="true"
+                           noWrap="true" width="240" sortProperty="Form"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.Form.label}"
+                                    id="ol25"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppForm"
+                                      value="#{row.bindings.Form.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.Form.label}"
+                                      required="false" readOnly="true"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.Form.tooltip}">
+                    <f:selectItems value="#{row.bindings.Form.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppTypeCol" sortable="true" filterable="true"
+                           noWrap="true" width="240" sortProperty="Type"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.Type.label}"
+                                    id="ol26"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OppType"
+                                      value="#{row.bindings.Type.inputValue}"
+                                      label="#{bindings.OpportunitiesTable.hints.Type.label}"
+                                      required="false" readOnly="true"
+                                      shortDesc="#{bindings.OpportunitiesTable.hints.Type.tooltip}">
+                    <f:selectItems value="#{row.bindings.Type.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OppCreatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CreatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.CreatedBy.label}"
+                                    id="ol27"/>
+                  </f:facet>
+                  <af:inputText id="OppCreatedBy"
+                                value="#{row.bindings.CreatedBy.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.CreatedBy.label}"
+                                required="#{bindings.OpportunitiesTable.hints.CreatedBy.mandatory}"
+                                rows="#{bindings.OpportunitiesTable.hints.CreatedBy.displayHeight}"
+                                columns="#{bindings.OpportunitiesTable.hints.CreatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.CreatedBy.tooltip}">
+                    <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OppCreatedDateSearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedBySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.CreatedBySearch.label}"
+                                    id="ol28"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedBySearch}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="OppCreatedDateSearch"
+                                value="#{row.bindings.CreatedBySearch.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.CreatedBySearch.label}"
+                                required="#{bindings.OpportunitiesTable.hints.CreatedBySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.CreatedBySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="OppLastUpdatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="LastUpdatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.LastUpdatedBy.label}"
+                                    id="ol29"/>
+                  </f:facet>
+                  <af:inputText id="OppLastUpdatedBy"
+                                value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.LastUpdatedBy.label}"
+                                required="#{bindings.OpportunitiesTable.hints.LastUpdatedBy.mandatory}"
+                                rows="#{bindings.OpportunitiesTable.hints.LastUpdatedBy.displayHeight}"
+                                columns="#{bindings.OpportunitiesTable.hints.LastUpdatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.LastUpdatedBy.tooltip}">
+                    <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OppLastUpdatedDateSearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LastUpdatedBySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OpportunitiesTable.hints.LastUpdatedBySearch.label}"
+                                    id="ol30"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdatedBySearch}"
+                                  id="id2">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="OppLastUpdatedDateSearch"
+                                value="#{row.bindings.LastUpdatedBySearch.inputValue}"
+                                label="#{bindings.OpportunitiesTable.hints.LastUpdatedBySearch.label}"
+                                required="#{bindings.OpportunitiesTable.hints.LastUpdatedBySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.OpportunitiesTable.hints.LastUpdatedBySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <f:facet name="detailStamp">
+                  <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                  <af:panelGroupLayout id="pgl1"
+                                       rendered="#{bindings.OpportunitiesIterator.estimatedRowCount>0}"
+                                       layout="scroll">
+                    <f:facet name="separator">
+                      <af:spacer width="10" height="10" id="sp1"/>
+                    </f:facet>
+                    <af:panelFormLayout rows="1" maxColumns="4"
+                                        labelAlignment="start" id="pfl0"></af:panelFormLayout>
+                  </af:panelGroupLayout>
+                  <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                </f:facet>
+                 
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

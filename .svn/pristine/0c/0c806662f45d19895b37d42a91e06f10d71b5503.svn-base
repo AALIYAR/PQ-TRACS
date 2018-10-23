@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="RolesPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'ADMIN'}"/>
+  </parameters>
+  <executables>
+    <iterator id="RolesIterator" Binds="Root.JhsModelService.Roles"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="RolesIteratorQuery" Binds="RolesIterator"
+                  Criteria="__ImplicitViewCriteria__"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="RoleUserGrantsIterator"
+              Binds="Root.JhsModelService.RoleUserGrants"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <invokeAction id="ExecuteQueryRoleUserGrantsInvoke"
+                  Binds="ExecuteQueryRoleUserGrants" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="UsersLookupIterator" Binds="Root.JhsModelService.UsersLookup"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <variableIterator id="variables">
+      <variable Name="RoleUserGrantsRowKeyVar" Type="java.lang.String"
+                DefaultValue="#{bindings.RoleUserGrantsIterator.currentRowKeyString}"/>
+    </variableIterator>
+  </executables>
+  <bindings>
+    <attributeValues id="RolesId" IterBinding="RolesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RolesOrgKey" IterBinding="RolesIterator">
+      <AttrNames>
+        <Item Value="OrgKey"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RolesShortName" IterBinding="RolesIterator">
+      <AttrNames>
+        <Item Value="ShortName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RolesName" IterBinding="RolesIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="RolesTable" IterBinding="RolesIterator">
+      <nodeDefinition Name="Roles"
+                      DefName="oracle.jheadstart.model.adfbc.security.query.Roles">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="OrgKey"/>
+          <Item Value="ShortName"/>
+          <Item Value="Name"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstRoles" IterBinding="RolesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousRoles" IterBinding="RolesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextRoles" IterBinding="RolesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastRoles" IterBinding="RolesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyRoles" IterBinding="RolesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{pageFlowScope.rowKeyStrRoles}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateRoles" IterBinding="RolesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteRoles" IterBinding="RolesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryRoleUserGrants" IterBinding="RoleUserGrantsIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="RoleUserGrantsId" IterBinding="RoleUserGrantsIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RoleUserGrantsUsrId"
+                     IterBinding="RoleUserGrantsIterator">
+      <AttrNames>
+        <Item Value="UsrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RoleUserGrantsRleId"
+                     IterBinding="RoleUserGrantsIterator">
+      <AttrNames>
+        <Item Value="RleId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="RoleUserGrantsTable" IterBinding="RoleUserGrantsIterator">
+      <nodeDefinition Name="RoleUserGrants"
+                      DefName="oracle.jheadstart.model.adfbc.security.query.UserRoleGrants">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="UsrId"/>
+          <Item Value="RleId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <table id="UsersLookup" IterBinding="UsersLookupIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+        <Item Value="DisplayName"/>
+      </AttrNames>
+    </table>
+    <methodAction RequiresUpdateModel="false" Action="invokeMethod"
+                  id="processRoleUserGrantsShuttle"
+                  DataControl="TracsAdminServiceDataControl"
+                  InstanceName="TracsAdminServiceDataControl.dataProvider"
+                  MethodName="processIntersectionShuttle"
+                  ReturnName="TracsAdminServiceDataControl.methodResults.TracsAdminServiceDataControl_dataProvider_processIntersectionShuttle_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="parentRow"
+                 NDValue="#{bindings.RolesIterator.currentRow}"
+                 NDType="oracle.jbo.Row"/>
+      <NamedData NDName="childUsage" NDValue="JhsModelService.RoleUserGrants"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="unselectedListUsage"
+                 NDValue="JhsModelService.UsersLookup"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="oldSelectedKeys"
+                 NDValue="#{viewScope.RoleUserGrantsShuttle.selectedKeys}"
+                 NDType="[Loracle.jbo.Key;"/>
+      <NamedData NDName="newSelectedKeys"
+                 NDValue="#{viewScope.RoleUserGrantsShuttle.newSelectedKeys}"
+                 NDType="[Loracle.jbo.Key;"/>
+      <NamedData NDName="parent2ChildRefAttrs"
+                 NDValue="#{viewScope.RoleUserGrantsShuttle.otherParentChildRefAttrs}"
+                 NDType="java.util.HashMap"/>
+    </methodAction>
+    <attributeValues id="RoleUserGrantsRowKey" IterBinding="variables">
+      <AttrNames>
+        <Item Value="RoleUserGrantsRowKeyVar"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="SetCurrentRowWithKeyRoleUserGrants"
+            IterBinding="RoleUserGrantsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{bindings.RoleUserGrantsRowKey}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateRoleUserGrants" IterBinding="RoleUserGrantsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteRoleUserGrants" IterBinding="RoleUserGrantsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

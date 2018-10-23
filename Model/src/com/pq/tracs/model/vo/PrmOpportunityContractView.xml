@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="PrmOpportunityContractView"
+  Version="11.1.1.61.92"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Partial"
+  UseGlueCode="false"
+  ComponentClass="com.pq.tracs.model.dao.TracsView"
+  FetchMode="FETCH_AS_NEEDED"
+  FetchSize="15"
+  RangeSize="10">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="ContractROView"
+    ViewObjectName="com.pq.tracs.model.lookups.ContractROView">
+    <ViewCriteriaUsage
+      Name="ContractPGContractViewCriteria"
+      FullName="com.pq.tracs.model.lookups.ContractROView.ContractPGContractViewCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="ContentOwnerBV">
+        <TransientExpression><![CDATA[if(PrmOpportunityView != null){return PrmOpportunityView.ContentOwnerId}else{return null}]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_ContractNumber2"
+    ListVOName="ContractROView"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ContractNumber2_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ContractNumber2"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="ContentOwnerId"/>
+      <Item Value="ContractId"/>
+      <Item Value="Form"/>
+      <Item Value="Type"/>
+      <Item Value="Status"/>
+      <Item Value="EffectiveDate"/>
+      <Item Value="ExpirationDate"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="ContractNumber"/>
+      <Item Value="ContentOwnerId"/>
+      <Item Value="Id"/>
+      <Item Value="Form"/>
+      <Item Value="Type"/>
+      <Item Value="Status"/>
+      <Item Value="EffectiveDate"/>
+      <Item Value="ExpirationDate"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="ContractNumber"/>
+      <Item Value="Status"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="ContractPGContractViewCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <SQLQuery>
+    <![CDATA[SELECT PrmOpportunityContract.ID, 
+       PrmOpportunityContract.PRM_OPPORTUNITY_ID, 
+       PrmOpportunityContract.CONTRACT_ID, 
+       Contract.CONTENT_OWNER_ID,
+       Contract.CONTRACT_NUMBER,
+       Contract.CONTRACT_NUMBER AS CONTRACT_NUMBER_2,
+       Contract.FORM,
+       Contract.TYPE,
+       Contract.STATUS,
+       Contract.EFFECTIVE_DATE,
+       Contract.EXPIRATION_DATE,
+       PrmOpportunityContract.CREATED_BY, 
+       PrmOpportunityContract.CREATED_DATE, 
+       PrmOpportunityContract.LAST_UPDATED_BY, 
+       PrmOpportunityContract.LAST_UPDATED_DATE,
+       ContentOwner.NAME ACCOUNT_NAME,
+       ContentOwner.CONTENT_OWNER_NO ACCOUNT_NO,
+       Contract.AUTO_ADD
+FROM PRM_OPPORTUNITY_CONTRACT PrmOpportunityContract
+    INNER JOIN TRAX_CONTRACT Contract
+        INNER JOIN TRAX_CONTENT_OWNER ContentOwner
+            ON Contract.CONTENT_OWNER_ID = ContentOwner.ID
+        ON PrmOpportunityContract.CONTRACT_ID = Contract.ID]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="PrmOpportunityContract"
+    Entity="com.pq.tracs.model.eo.PrmOpportunityContract"/>
+  <ViewAttribute
+    Name="Id"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="PrmOpportunityContract"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="PrmOpportunityId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PrmOpportunityId"
+    EntityUsage="PrmOpportunityContract"
+    AliasName="PRM_OPPORTUNITY_ID"/>
+  <ViewAttribute
+    Name="ContractId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ContractId"
+    EntityUsage="PrmOpportunityContract"
+    AliasName="CONTRACT_ID"/>
+  <ViewAttribute
+    Name="ContentOwnerId"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="CONTENT_OWNER_ID"
+    Expression="CONTENT_OWNER_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ContractNumber"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CONTRACT_NUMBER"
+    Expression="CONTRACT_NUMBER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityContractView.ContractNumber_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ContractNumber2"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CONTRACT_NUMBER_2"
+    Expression="CONTRACT_NUMBER_2"
+    SQLType="VARCHAR"
+    LOVName="LOV_ContractNumber2">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityContractView.ContractNumber2_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Form"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="FORM"
+    Expression="FORM"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityContractView.Form_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Type"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TYPE"
+    Expression="TYPE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityContractView.Type_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Status"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STATUS"
+    Expression="STATUS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityContractView.Status_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="EffectiveDate"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="EFFECTIVE_DATE"
+    Expression="EFFECTIVE_DATE"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityContractView.EffectiveDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ExpirationDate"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="EXPIRATION_DATE"
+    Expression="EXPIRATION_DATE"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityContractView.ExpirationDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedBy"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="PrmOpportunityContract"
+    AliasName="CREATED_BY"
+    IsUpdateable="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityContractView.CreatedBy_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedDate"
+    EntityUsage="PrmOpportunityContract"
+    AliasName="CREATED_DATE"
+    IsUpdateable="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityContractView.CreatedDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="PrmOpportunityContract"
+    AliasName="LAST_UPDATED_BY"
+    IsUpdateable="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityContractView.LastUpdatedBy_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LastUpdatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="PrmOpportunityContract"
+    AliasName="LAST_UPDATED_DATE"
+    IsUpdateable="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityContractView.LastUpdatedDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="400"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ACCOUNT_NAME"
+    Expression="ACCOUNT_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="400"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountNo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="ACCOUNT_NO"
+    Expression="ACCOUNT_NO"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AutoAdd"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="AUTO_ADD"
+    Expression="AUTO_ADD"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityContractView.AutoAdd_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewCriteria
+    Name="PrmOpportunityContractViewCriteria"
+    ViewObjectName="com.pq.tracs.model.vo.PrmOpportunityContractView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow152"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="ContractNumber"
+        ViewAttribute="ContractNumber"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="Form"
+        ViewAttribute="Form"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="Type"
+        ViewAttribute="Type"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="Status"
+        ViewAttribute="Status"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="EffectiveDate"
+        ViewAttribute="EffectiveDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="ExpirationDate"
+        ViewAttribute="ExpirationDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="CreatedBy"
+        ViewAttribute="CreatedBy"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="CreatedDate"
+        ViewAttribute="CreatedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="LastUpdatedBy"
+        ViewAttribute="LastUpdatedBy"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="LastUpdatedDate"
+        ViewAttribute="LastUpdatedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="PrmOpportunityContractViewCriteria_vcrow152_AccountName"
+        ViewAttribute="AccountName"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="PrmOpportunityContractViewCriteria_vcrow152_AccountNo"
+        ViewAttribute="AccountNo"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewLinkAccessor
+    Name="PrmOpportunityView"
+    ViewLink="com.pq.tracs.model.vl.OpportunityToOpportunityContractViewLink"
+    Type="oracle.jbo.Row"
+    Reversed="true"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

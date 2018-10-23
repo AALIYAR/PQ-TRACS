@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="UnifiedTitleSearchPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="UnifiedTitleSearchIterator" Binds="UnifiedTitleSearchView1"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="UnifiedTitleSearchIteratorUnifiedTitleSearchViewCriteriaAdvQuery"
+                  Binds="UnifiedTitleSearchIterator"
+                  Criteria="UnifiedTitleSearchViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="Title"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="UTSTitleId" IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSUlrichsId" IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="UlrichsId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSTitleRecordId"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="TitleRecordId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSAccountId" IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="AccountId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSCurrentCatalogId"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="CurrentCatalogId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSTargetTrackingNo"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSCatalogNumberSearch"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSCatalogNumber"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSCatalogRoot"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="CatalogRoot"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSUlrichsSerialId"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="UlrichsSerialId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSOvrId" IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSTitle" IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="Title"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSTitleType" IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="TitleType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSClassification"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="Classification"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSClassificationType"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="ClassificationType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSAccountNumber"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="AccountNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSAccountNameSearch"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSAccountName"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSAccountSite"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="AccountSite"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSCurrentCatalogNumberSearch"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="CurrentCatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSCurrentCatalogNumber"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="CurrentCatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UTSCatalogPublicationCity"
+                     IterBinding="UnifiedTitleSearchIterator">
+      <AttrNames>
+        <Item Value="CatalogPublicationCity"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="UnifiedTitleSearchTable" IterBinding="UnifiedTitleSearchIterator">
+      <nodeDefinition Name="UnifiedTitleSearch"
+                      DefName="com.pq.tracs.model.ro.UnifiedTitleSearchView">
+        <AttrNames>
+          <Item Value="TitleId"/>
+          <Item Value="UlrichsId"/>
+          <Item Value="TitleRecordId"/>
+          <Item Value="AccountId"/>
+          <Item Value="CurrentCatalogId"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogRoot"/>
+          <Item Value="UlrichsSerialId"/>
+          <Item Value="OvrId"/>
+          <Item Value="Title"/>
+          <Item Value="TitleType"/>
+          <Item Value="Classification"/>
+          <Item Value="ClassificationType"/>
+          <Item Value="AccountNumber"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountSite"/>
+          <Item Value="CurrentCatalogNumber"/>
+          <Item Value="CurrentCatalogNumber"/>
+          <Item Value="CurrentCatalogNumber"/>
+          <Item Value="CurrentCatalogNumber"/>
+          <Item Value="CatalogPublicationCity"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstUnifiedTitleSearch"
+            IterBinding="UnifiedTitleSearchIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousUnifiedTitleSearch"
+            IterBinding="UnifiedTitleSearchIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextUnifiedTitleSearch" IterBinding="UnifiedTitleSearchIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastUnifiedTitleSearch" IterBinding="UnifiedTitleSearchIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyUnifiedTitleSearch"
+            IterBinding="UnifiedTitleSearchIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrUnifiedTitleSearch}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateUnifiedTitleSearch"
+            IterBinding="UnifiedTitleSearchIterator" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="DeleteUnifiedTitleSearch"
+            IterBinding="UnifiedTitleSearchIterator" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

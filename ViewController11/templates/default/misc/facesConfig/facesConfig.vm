@@ -1,0 +1,25 @@
+## revision_history
+## 19-nov-2011   Steven Davelaar
+## 1.1           Removed <phase-listener> tag, now set in f:view tag of each page
+##               because we then have access to UITree when a page is initially loaded
+## 05-jul-2008   Steven Davelaar
+## 1.0           Initial creation
+<?xml version="1.0" #ENCODING_PROP()?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">  
+<faces-config xmlns="http://java.sun.com/JSF/Configuration">
+
+  <application>
+    <default-render-kit-id>oracle.adf.rich</default-render-kit-id>
+    <message-bundle>${JHS.application.nlsBundle}</message-bundle>
+    <locale-config>
+      <default-locale>${JHS.application.defaultLocale}</default-locale>
+      #foreach ($locale in ${JHS.application.locales})
+      <supported-locale>$locale</supported-locale>
+      #end
+    </locale-config>
+    <navigation-handler>oracle.jheadstart.controller.jsf.application.JhsNavigationHandlerImpl</navigation-handler>
+  </application>
+  
+</faces-config>

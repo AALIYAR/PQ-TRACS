@@ -1,0 +1,567 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="CategoryTopLc"
+                             partialTriggers=" CategoryDeleteDialog CategorySaveButton0 CategoryCancelButton0 CategoryPC:CategorydelrmTM CategoryPC:CategoryTab:Categorydelrm CategoryPC:CategoryTab:Categorydelrl"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_CATEGORY']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreateCategory.execute}"
+                                      action="CreateCategory"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_CATEGORY']}"
+                                      rendered="#{(true) and (jhsUserRoles['Category.create'])}"
+                                      id="CategoryNewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton action="#{SaveCategory.execute}"
+                                      rendered="#{(jhsUserRoles['Category.delete']) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="CategorySaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel"
+                                      id="CategoryCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:subform id="CategorySbf"
+                        rendered="#{!pageFlowScope.createModes.CreateCategory and !pageFlowScope.hideSearchArea}"
+                        defaultCommand="CategoryQuickSearchButton">
+              <af:panelGroupLayout id="searchAreaCategory"
+                                   partialTriggers=" qsButtonCategory asButtonCategory ">
+                <f:attribute name="JhsIgnoreChanges" value="true"/>
+                <af:showDetailHeader size="1" id="asAreaCategory"
+                                     disclosed="true"
+                                     text="#{nls['ADVANCED_SEARCH']}"
+                                     rendered="#{!pageFlowScope.searchCategory.quickSearchMode}">
+                  <f:facet name="toolbar">
+                    <af:commandButton partialSubmit="true" id="qsButtonCategory"
+                                      immediate="true"
+                                      textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                      action="#{pageFlowScope.searchCategory.switchToQuickSearchMode}"/>
+                  </f:facet>
+                  <af:panelGroupLayout id="asAreaCategorySearchOptions">
+                    <af:selectOneRadio label="#{nls['QUERY_MATCH_LABEL']}"
+                                       layout="horizontal"
+                                       value="#{pageFlowScope.searchCategory.allConditionsMet}"
+                                       id="asAreaCategoryConditions">
+                      <af:selectItem value="true"
+                                     label="#{nls['ALL_CONDITIONS_MET']}"/>
+                      <af:selectItem value="false"
+                                     label="#{nls['ANY_CONDITION_MET']}"/>
+                    </af:selectOneRadio>
+                    <af:selectBooleanCheckbox value="#{pageFlowScope.searchCategory.caseSensitive}"
+                                              label="#{nls['CASE_SENSITIVE']}"
+                                              id="asAreaCategoryCaseSensitive"/>
+                    <af:selectBooleanCheckbox value="#{pageFlowScope.searchCategory.diacriticNeutral}"
+                                              label="Diacritic Neutral?"
+                                              id="asAreaCategoryDiacriticNeutral"/>
+                  </af:panelGroupLayout>
+                  <af:panelFormLayout rows="1" labelAlignment="top"
+                                      maxColumns="4" id="asAreaCategoryItems">
+                    <af:inputText id="SearchCategoryName"
+                                  value="#{pageFlowScope.searchCategory.criteria.CategoryName}"
+                                  label="#{bindings.CategoryTable.hints.Name.label}"
+                                  columns="#{bindings.CategoryTable.hints.Name.displayWidth}"
+                                  maximumLength="4000"></af:inputText>
+                    <af:selectOneChoice id="SearchCategoryType"
+                                        label="#{bindings.CategoryTable.hints.Type.label}"
+                                        value="#{pageFlowScope.searchCategory.criteria.CategoryType}"
+                                        unselectedLabel="">
+                      <af:selectItem id="si0" value="Lookup" label="Lookup"/>
+                    </af:selectOneChoice>
+                    <af:selectOneChoice id="SearchCategorySingularFlag"
+                                        label="#{bindings.CategoryTable.hints.SingularFlag.label}"
+                                        value="#{pageFlowScope.searchCategory.criteria.CategorySingularFlag}"
+                                        unselectedLabel="">
+                      <af:selectItem id="si1" value="Y" label="Yes"/>
+                      <af:selectItem id="si2" value="N" label="No"/>
+                    </af:selectOneChoice>
+                    <af:selectOneChoice id="SearchCategoryActiveFlag"
+                                        label="#{bindings.CategoryTable.hints.ActiveFlag.label}"
+                                        value="#{pageFlowScope.searchCategory.criteria.CategoryActiveFlag}"
+                                        unselectedLabel="">
+                      <af:selectItem id="si3" value="Y" label="Yes"/>
+                      <af:selectItem id="si4" value="N" label="No"/>
+                    </af:selectOneChoice>
+                    <af:selectOneChoice id="SearchCategoryFullOrPartialFlag"
+                                        label="#{bindings.CategoryTable.hints.FullOrPartialFlag.label}"
+                                        value="#{pageFlowScope.searchCategory.criteria.CategoryFullOrPartialFlag}"
+                                        unselectedLabel="">
+                      <af:selectItem id="si5" value="Y" label="Yes"/>
+                      <af:selectItem id="si6" value="N" label="No"/>
+                    </af:selectOneChoice>
+                    <af:inputText id="SearchCategoryCreatedBy"
+                                  value="#{pageFlowScope.searchCategory.criteria.CategoryCreatedBy}"
+                                  label="#{bindings.CategoryTable.hints.CreatedBy.label}"
+                                  columns="#{bindings.CategoryTable.hints.CreatedBy.displayWidth}"
+                                  maximumLength="4000"></af:inputText>
+                    <af:inputDate id="SearchCategoryCreatedDate"
+                                  value="#{pageFlowScope.searchCategory.criteria.CategoryCreatedDate}"
+                                  label="#{bindings.CategoryTable.hints.CreatedDate.label}">
+                      <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                    </af:inputDate>
+                    <af:inputText id="SearchCategoryLastUpdatedBy"
+                                  value="#{pageFlowScope.searchCategory.criteria.CategoryLastUpdatedBy}"
+                                  label="#{bindings.CategoryTable.hints.LastUpdatedBy.label}"
+                                  columns="#{bindings.CategoryTable.hints.LastUpdatedBy.displayWidth}"
+                                  maximumLength="4000"></af:inputText>
+                    <af:inputDate id="SearchCategoryLastUpdatedDate"
+                                  value="#{pageFlowScope.searchCategory.criteria.CategoryLastUpdatedDate}"
+                                  label="#{bindings.CategoryTable.hints.LastUpdatedDate.label}">
+                      <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                    </af:inputDate>
+                  </af:panelFormLayout>
+                  <af:panelGroupLayout id="asAreaCategoryButtons"
+                                       layout="horizontal" halign="right">
+                    <f:facet name="separator">
+                      <af:spacer id="sp1" width="4"/>
+                    </f:facet>
+                    <af:commandButton textAndAccessKey="#{nls['FIND']}"
+                                      action="#{pageFlowScope.searchCategory.advancedSearch}"
+                                      id="cb0"/>
+                    <af:commandButton textAndAccessKey="#{nls['CLEAR']}"
+                                      actionListener="#{pageFlowScope.searchCategory.clearSearchCriteria}"
+                                      id="cb1"/>
+                  </af:panelGroupLayout>
+                </af:showDetailHeader>
+                <af:panelGroupLayout id="qsAreaCategory"
+                                     rendered="#{pageFlowScope.searchCategory.quickSearchMode}"
+                                     layout="horizontal">
+                  <af:selectOneChoice id="qsSelectCategory"
+                                      label="#{nls['FILTER_BY']}"
+                                      value="#{pageFlowScope.searchCategory.searchItem}"
+                                      autoSubmit="true" immediate="true"
+                                      valueChangeListener="#{pageFlowScope.searchCategory.searchItemChanged}">
+                    <af:selectItem label="#{bindings.CategoryTable.hints.Name.label}"
+                                   value="CategoryName" id="si7"/>
+                    <af:selectItem label="#{bindings.CategoryTable.hints.Type.label}"
+                                   value="CategoryType" id="si8"/>
+                    <af:selectItem label="#{bindings.CategoryTable.hints.SingularFlag.label}"
+                                   value="CategorySingularFlag" id="si9"/>
+                    <af:selectItem label="#{bindings.CategoryTable.hints.ActiveFlag.label}"
+                                   value="CategoryActiveFlag" id="si10"/>
+                    <af:selectItem label="#{bindings.CategoryTable.hints.FullOrPartialFlag.label}"
+                                   value="CategoryFullOrPartialFlag" id="si11"/>
+                    <af:selectItem label="#{bindings.CategoryTable.hints.CreatedBy.label}"
+                                   value="CategoryCreatedBy" id="si12"/>
+                    <af:selectItem label="#{bindings.CategoryTable.hints.CreatedDate.label}"
+                                   value="CategoryCreatedDate" id="si13"/>
+                    <af:selectItem label="#{bindings.CategoryTable.hints.LastUpdatedBy.label}"
+                                   value="CategoryLastUpdatedBy" id="si14"/>
+                    <af:selectItem label="#{bindings.CategoryTable.hints.LastUpdatedDate.label}"
+                                   value="CategoryLastUpdatedDate" id="si15"/>
+                  </af:selectOneChoice>
+                  <af:spacer width="4" id="qsAreaCategorySpacer1"/>
+                  <af:panelGroupLayout partialTriggers="qsSelectCategory"
+                                       id="qsAreaCategorypanelGroupLayout">
+                    <af:switcher facetName="#{pageFlowScope.searchCategory.searchItem}"
+                                 id="qsAreaCategorySwitcher">
+                      <f:facet name="CategoryName">
+                        <af:inputText id="QuickSearchCategoryName"
+                                      value="#{pageFlowScope.searchCategory.searchText}"
+                                      label="#{bindings.CategoryTable.hints.Name.label}"
+                                      simple="true"
+                                      columns="#{bindings.CategoryTable.hints.Name.displayWidth}"
+                                      maximumLength="4000"></af:inputText>
+                      </f:facet>
+                      <f:facet name="CategoryType">
+                        <af:selectOneChoice id="QuickSearchCategoryType"
+                                            value="#{pageFlowScope.searchCategory.searchText}"
+                                            label="#{bindings.CategoryTable.hints.Type.label}"
+                                            unselectedLabel="" simple="true">
+                          <af:selectItem id="si16" value="Lookup"
+                                         label="Lookup"/>
+                        </af:selectOneChoice>
+                      </f:facet>
+                      <f:facet name="CategorySingularFlag">
+                        <af:selectOneChoice id="QuickSearchCategorySingularFlag"
+                                            value="#{pageFlowScope.searchCategory.searchText}"
+                                            label="#{bindings.CategoryTable.hints.SingularFlag.label}"
+                                            unselectedLabel="" simple="true">
+                          <af:selectItem id="si17" value="Y" label="Yes"/>
+                          <af:selectItem id="si18" value="N" label="No"/>
+                        </af:selectOneChoice>
+                      </f:facet>
+                      <f:facet name="CategoryActiveFlag">
+                        <af:selectOneChoice id="QuickSearchCategoryActiveFlag"
+                                            value="#{pageFlowScope.searchCategory.searchText}"
+                                            label="#{bindings.CategoryTable.hints.ActiveFlag.label}"
+                                            unselectedLabel="" simple="true">
+                          <af:selectItem id="si19" value="Y" label="Yes"/>
+                          <af:selectItem id="si20" value="N" label="No"/>
+                        </af:selectOneChoice>
+                      </f:facet>
+                      <f:facet name="CategoryFullOrPartialFlag">
+                        <af:selectOneChoice id="QuickSearchCategoryFullOrPartialFlag"
+                                            value="#{pageFlowScope.searchCategory.searchText}"
+                                            label="#{bindings.CategoryTable.hints.FullOrPartialFlag.label}"
+                                            unselectedLabel="" simple="true">
+                          <af:selectItem id="si21" value="Y" label="Yes"/>
+                          <af:selectItem id="si22" value="N" label="No"/>
+                        </af:selectOneChoice>
+                      </f:facet>
+                      <f:facet name="CategoryCreatedBy">
+                        <af:inputText id="QuickSearchCategoryCreatedBy"
+                                      value="#{pageFlowScope.searchCategory.searchText}"
+                                      label="#{bindings.CategoryTable.hints.CreatedBy.label}"
+                                      simple="true"
+                                      columns="#{bindings.CategoryTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="4000"></af:inputText>
+                      </f:facet>
+                      <f:facet name="CategoryCreatedDate">
+                        <af:inputDate id="QuickSearchCategoryCreatedDate"
+                                      value="#{pageFlowScope.searchCategory.searchText}"
+                                      label="#{bindings.CategoryTable.hints.CreatedDate.label}"
+                                      simple="true">
+                          <af:convertDateTime pattern="#{nls.datepattern}"/>
+                        </af:inputDate>
+                      </f:facet>
+                      <f:facet name="CategoryLastUpdatedBy">
+                        <af:inputText id="QuickSearchCategoryLastUpdatedBy"
+                                      value="#{pageFlowScope.searchCategory.searchText}"
+                                      label="#{bindings.CategoryTable.hints.LastUpdatedBy.label}"
+                                      simple="true"
+                                      columns="#{bindings.CategoryTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="4000"></af:inputText>
+                      </f:facet>
+                      <f:facet name="CategoryLastUpdatedDate">
+                        <af:inputDate id="QuickSearchCategoryLastUpdatedDate"
+                                      value="#{pageFlowScope.searchCategory.searchText}"
+                                      label="#{bindings.CategoryTable.hints.LastUpdatedDate.label}"
+                                      simple="true">
+                          <af:convertDateTime pattern="#{nls.datepattern}"/>
+                        </af:inputDate>
+                      </f:facet>
+                    </af:switcher>
+                  </af:panelGroupLayout>
+                  <af:spacer width="4" id="qsAreaCategorySpacer2"/>
+                  <af:commandImageLink action="#{pageFlowScope.searchCategory.quickSearch}"
+                                       shortDesc="#{nls['FILTER_BY']}"
+                                       icon="/jheadstart/images/go_ena.png"
+                                       id="CategoryQuickSearchButton"/>
+                  <af:spacer width="4" id="qsAreaCategorySpacer3"/>
+                  <af:commandLink id="asButtonCategory"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchCategory.switchToAdvancedSearchMode}"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:subform>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="CategoryPC" featuresOff=" "
+                                inlineStyle=" width:1200px; ">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="CategoryDetails"></af:commandMenuItem>
+                    <af:group id="Categorytbb"
+                              rendered="#{ bindings.CategoryIterator.currentRow!=null }">
+                      <af:commandMenuItem actionListener="#{bindings.FirstCategory.execute}"
+                                          id="CategoryFirst"
+                                          partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousCategory.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="CategoryPrevious"
+                                          partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextCategory.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="CategoryNext"
+                                          partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastCategory.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="CategoryLast"
+                                          partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem id="CategorydelrmTM"
+                                      textAndAccessKey="#{nls['DELETE_ROW']}"
+                                      icon="/jheadstart/images/deleteRow.png"
+                                      partialSubmit="true" immediate="true"
+                                      rendered="#{jhsUserRoles['Category.delete']}">
+                    <af:showPopupBehavior popupId="::CategoryDeletePopup"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandToolbarButton text="Print" id="CategoryPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.CategoryIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="CategoryTab" contentDelivery="immediate"
+                        value="#{bindings.CategoryTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.CategoryTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.CategoryTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.CategoryTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.CategoryTable.rangeSize}"
+                        autoHeightRows="#{bindings.CategoryTable.estimatedRowCount lt 5 ? 5 : bindings.CategoryTable.estimatedRowCount lt bindings.CategoryTable.rangeSize ? bindings.CategoryTable.estimatedRowCount : 0 }"
+                        fetchSize="#{bindings.CategoryTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.CategoryIteratorCategoryViewCriteriaQuery.processQuery}"
+                        filterModel="#{bindings.CategoryIteratorCategoryViewCriteriaQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.CategoryTable.table}"
+                        partialTriggers=" :::CategoryPC ::CategoryFirst ::CategoryPrevious ::CategoryNext ::CategoryLast"
+                        width="1200px" summary="#{nls['TABLE_TITLE_CATEGORY']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="CategoryTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="CategoryDetails"></af:commandMenuItem>
+                      </af:menu>
+                      <af:commandMenuItem id="Categorydelrm"
+                                          textAndAccessKey="#{nls['DELETE_ROW']}"
+                                          icon="/jheadstart/images/deleteRow.png"
+                                          partialSubmit="true" immediate="true"
+                                          rendered="#{jhsUserRoles['Category.delete']}">
+                        <af:showPopupBehavior popupId=":::CategoryDeletePopup"/>
+                      </af:commandMenuItem>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="CategoryActionColumn" frozen="true" width="20"
+                           align="center" headerText=" ">
+                  <af:panelGroupLayout layout="horizontal" id="pgl1">
+                    <af:commandImageLink id="Categorydelrl" partialSubmit="true"
+                                         immediate="true"
+                                         rendered="#{jhsUserRoles['Category.delete']}"
+                                         shortDesc="#{nls['DELETE_ROW']}"
+                                         icon="/jheadstart/images/deleteRow.png">
+                      <af:showPopupBehavior popupId=":::CategoryDeletePopup"/>
+                    </af:commandImageLink>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column id="CategoryNameCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="Name" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.CategoryTable.hints.Name.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="cl0" value="#{row.bindings.Name.inputValue}"
+                                label="#{bindings.CategoryTable.hints.Name.label}"
+                                required="true"
+                                rows="#{bindings.CategoryTable.hints.Name.displayHeight}"
+                                columns="#{bindings.CategoryTable.hints.Name.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.Name.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="cl1"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}"
+                                  action="CategoryDetails" text="#{row.Name}"></af:commandLink>
+                </af:column>
+                <af:column id="CategoryTypeCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="Type" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.CategoryTable.hints.Type.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:selectOneChoice id="CategoryType"
+                                      value="#{row.bindings.Type.inputValue}"
+                                      label="#{bindings.CategoryTable.hints.Type.label}"
+                                      required="true" readOnly="true"
+                                      unselectedLabel="">
+                    <af:selectItem id="si23" value="Lookup" label="Lookup"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="CategorySingularFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="SingularFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.CategoryTable.hints.SingularFlag.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="CategorySingularFlag"
+                                            label="#{bindings.CategoryTable.hints.SingularFlag.label}"
+                                            value="#{CategorySingularFlagcheckboxInTable.value}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="CategoryActiveFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ActiveFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.CategoryTable.hints.ActiveFlag.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="CategoryActiveFlag"
+                                            label="#{bindings.CategoryTable.hints.ActiveFlag.label}"
+                                            value="#{CategoryActiveFlagcheckboxInTable.value}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="CategoryFullOrPartialFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="FullOrPartialFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.CategoryTable.hints.FullOrPartialFlag.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="CategoryFullOrPartialFlag"
+                                            label="#{bindings.CategoryTable.hints.FullOrPartialFlag.label}"
+                                            value="#{CategoryFullOrPartialFlagcheckboxInTable.value}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="CategoryCreatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CreatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.CategoryTable.hints.CreatedBy.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="CategoryCreatedBy"
+                                value="#{row.bindings.CreatedBy.inputValue}"
+                                label="#{bindings.CategoryTable.hints.CreatedBy.label}"
+                                required="#{bindings.CategoryTable.hints.CreatedBy.mandatory}"
+                                rows="#{bindings.CategoryTable.hints.CreatedBy.displayHeight}"
+                                columns="#{bindings.CategoryTable.hints.CreatedBy.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CategoryCreatedDateCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedDate" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.CategoryTable.hints.CreatedDate.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="CategoryCreatedDate"
+                                value="#{row.bindings.CreatedDate.inputValue}"
+                                label="#{bindings.CategoryTable.hints.CreatedDate.label}"
+                                required="#{bindings.CategoryTable.hints.CreatedDate.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="CategoryLastUpdatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="LastUpdatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.CategoryTable.hints.LastUpdatedBy.label}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:inputText id="CategoryLastUpdatedBy"
+                                value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                label="#{bindings.CategoryTable.hints.LastUpdatedBy.label}"
+                                required="#{bindings.CategoryTable.hints.LastUpdatedBy.mandatory}"
+                                rows="#{bindings.CategoryTable.hints.LastUpdatedBy.displayHeight}"
+                                columns="#{bindings.CategoryTable.hints.LastUpdatedBy.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CategoryLastUpdatedDateCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LastUpdatedDate" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.CategoryTable.hints.LastUpdatedDate.label}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdatedDate}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="CategoryLastUpdatedDate"
+                                value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                label="#{bindings.CategoryTable.hints.LastUpdatedDate.label}"
+                                required="#{bindings.CategoryTable.hints.LastUpdatedDate.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="CategoryDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="CategoryDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_CATEGOR:#{pageFlowScope.CategoryTable.currentRowAttributeValues.Name}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteCategory.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

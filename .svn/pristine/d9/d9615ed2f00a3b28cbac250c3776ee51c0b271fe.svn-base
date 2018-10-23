@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="DeliveryRightsTemplatesPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'ADMIN'}"/>
+  </parameters>
+  <executables>
+    <invokeAction id="applyBindParamsDeliveryRightsTemplatesInvoke"
+                  Binds="applyBindParamsDeliveryRightsTemplates"
+                  Refresh="always"/>
+    <iterator id="DeliveryRightsTemplatesIterator"
+              Binds="DeliveryRightTemplateView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="DeliveryRightsTemplatesIteratorDeliveryRightTemplateViewCriteriaQuery"
+                  Binds="DeliveryRightsTemplatesIterator"
+                  Criteria="DeliveryRightTemplateViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <invokeAction id="applyBindParamsRightTypeLookupInvoke"
+                  Binds="applyBindParamsRightTypeLookup" Refresh="always"/>
+    <iterator id="RightTypeLookupIterator" Binds="RightTypeLookUp"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <iterator id="DeliveryRightCategoriesIterator"
+              Binds="DeliveryRightTemplateCategoryView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="10"/>
+    <searchRegion id="DeliveryRightCategoriesIteratorDeliveryRightTemplateCategoryViewCriteriaQuery"
+                  Binds="DeliveryRightCategoriesIterator"
+                  Criteria="DeliveryRightTemplateCategoryViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CategoryId"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsDeliveryRightsTemplates"
+                  DataControl="TracsAdminServiceDataControl"
+                  InstanceName="TracsAdminServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsAdminServiceDataControl.methodResults.TracsAdminServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="DeliveryRightTemplateView1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{DeliveryRightsTemplatesQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <attributeValues id="DeliveryRightsTemplatesName"
+                     IterBinding="DeliveryRightsTemplatesIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsRightTypeLookup"
+                  DataControl="TracsAdminServiceDataControl"
+                  InstanceName="TracsAdminServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsAdminServiceDataControl.methodResults.TracsAdminServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="RightTypeLookUp"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{RightTypeLookupQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+    </methodAction>
+    <table id="RightTypeLookup" IterBinding="RightTypeLookupIterator">
+      <AttrNames>
+        <Item Value="InternalValue"/>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </table>
+    <attributeValues id="DeliveryRightsTemplatesRightType"
+                     IterBinding="DeliveryRightsTemplatesIterator">
+      <AttrNames>
+        <Item Value="RightType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightsTemplatesCreatedBy"
+                     IterBinding="DeliveryRightsTemplatesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightsTemplatesCreatedDate"
+                     IterBinding="DeliveryRightsTemplatesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightsTemplatesLastUpdatedBy"
+                     IterBinding="DeliveryRightsTemplatesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightsTemplatesLastUpdatedDate"
+                     IterBinding="DeliveryRightsTemplatesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="DeliveryRightsTemplatesActiveFlag"
+            IterBinding="DeliveryRightsTemplatesIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <tree id="DeliveryRightsTemplatesTable"
+          IterBinding="DeliveryRightsTemplatesIterator">
+      <nodeDefinition Name="DeliveryRightsTemplates"
+                      DefName="com.pq.tracs.model.dao.DeliveryRightTemplateView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="RightType"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="ActiveFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstDeliveryRightsTemplates"
+            IterBinding="DeliveryRightsTemplatesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousDeliveryRightsTemplates"
+            IterBinding="DeliveryRightsTemplatesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextDeliveryRightsTemplates"
+            IterBinding="DeliveryRightsTemplatesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastDeliveryRightsTemplates"
+            IterBinding="DeliveryRightsTemplatesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyDeliveryRightsTemplates"
+            IterBinding="DeliveryRightsTemplatesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrDeliveryRightsTemplates}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateDeliveryRightsTemplates"
+            IterBinding="DeliveryRightsTemplatesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteDeliveryRightsTemplates"
+            IterBinding="DeliveryRightsTemplatesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="DeliveryRightCategoriesIterator"
+          id="DeliveryRightCategoriesCategoryId" Uses="LOV_CategoryId"
+          StaticList="false"/>
+    <attributeValues id="DeliveryRightCategoriesRightTemplateId"
+                     IterBinding="DeliveryRightCategoriesIterator">
+      <AttrNames>
+        <Item Value="RightTemplateId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="DeliveryRightCategoriesIterator"
+          id="DeliveryRightCategoriesValue" Uses="LOV_Value"
+          StaticList="false"/>
+    <button id="DeliveryRightCategoriesPermitFlag"
+            IterBinding="DeliveryRightCategoriesIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PermitFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="DeliveryRightCategoriesCreatedBy"
+                     IterBinding="DeliveryRightCategoriesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightCategoriesCreatedDate"
+                     IterBinding="DeliveryRightCategoriesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightCategoriesLastUpdatedBy"
+                     IterBinding="DeliveryRightCategoriesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightCategoriesLastUpdatedDate"
+                     IterBinding="DeliveryRightCategoriesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="DeliveryRightCategoriesTable"
+          IterBinding="DeliveryRightCategoriesIterator">
+      <nodeDefinition Name="DeliveryRightCategories"
+                      DefName="com.pq.tracs.model.dao.DeliveryRightTemplateCategoryView">
+        <AttrNames>
+          <Item Value="CategoryId"/>
+          <Item Value="RightTemplateId"/>
+          <Item Value="Value"/>
+          <Item Value="PermitFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstDeliveryRightCategories"
+            IterBinding="DeliveryRightCategoriesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousDeliveryRightCategories"
+            IterBinding="DeliveryRightCategoriesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextDeliveryRightCategories"
+            IterBinding="DeliveryRightCategoriesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastDeliveryRightCategories"
+            IterBinding="DeliveryRightCategoriesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyDeliveryRightCategories"
+            IterBinding="DeliveryRightCategoriesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrDeliveryRightCategories}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateDeliveryRightCategories"
+            IterBinding="DeliveryRightCategoriesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteDeliveryRightCategories"
+            IterBinding="DeliveryRightCategoriesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

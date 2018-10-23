@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.61.92" id="OpportunityLookupPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <iterator id="OpportunityLookupIterator" Binds="PrmOpportunityLookupView"
+              DataControl="TracsServiceDataControl" RangeSize="20"/>
+    <searchRegion id="OpportunityLookupIteratorQuery"
+                  Binds="OpportunityLookupIterator"
+                  Criteria="__ImplicitViewCriteria__"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="OpportunityLookupId"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupContentOwnerId"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupOpportunityNo"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupName"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupAllianceManager"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="AllianceManager"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupAccountNumber"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="AccountNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupAccountName"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OpportunityLookupIterator"
+          id="OpportunityLookupCurrentStatus" Uses="LOV_CurrentStatus"
+          StaticList="false"/>
+    <attributeValues id="OpportunityLookupOpportunityType"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="OpportunityType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupDescription"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupSummary"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="Summary"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupProbabilityPct"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="ProbabilityPct"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupPriority"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="Priority"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupExpectedPipelines"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="ExpectedPipelines"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupEstimatedCloseQuarter"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="EstimatedCloseQuarter"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupAgreementReceivedDate"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="AgreementReceivedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupExclusivitySoughtObtained"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="ExclusivitySoughtObtained"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupReasonLost"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="ReasonLost"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OpportunityLookupDocumentSigned"
+                     IterBinding="OpportunityLookupIterator">
+      <AttrNames>
+        <Item Value="DocumentSigned"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityLookupTable" IterBinding="OpportunityLookupIterator">
+      <nodeDefinition Name="OpportunityLookup"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="Name"/>
+          <Item Value="AllianceManager"/>
+          <Item Value="AccountNumber"/>
+          <Item Value="AccountName"/>
+          <Item Value="CurrentStatus"/>
+          <Item Value="OpportunityType"/>
+          <Item Value="Description"/>
+          <Item Value="Summary"/>
+          <Item Value="ProbabilityPct"/>
+          <Item Value="Priority"/>
+          <Item Value="ExpectedPipelines"/>
+          <Item Value="EstimatedCloseQuarter"/>
+          <Item Value="AgreementReceivedDate"/>
+          <Item Value="ExclusivitySoughtObtained"/>
+          <Item Value="ReasonLost"/>
+          <Item Value="DocumentSigned"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityLookup" IterBinding="OpportunityLookupIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunityLookup"
+            IterBinding="OpportunityLookupIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextOpportunityLookup" IterBinding="OpportunityLookupIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityLookup" IterBinding="OpportunityLookupIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchOpportunityLookup"
+                  IterBinding="OpportunityLookupIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchOpportunityLookup.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchOpportunityLookup.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchOpportunityLookup.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyOpportunityLookup"
+            IterBinding="OpportunityLookupIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityLookup}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

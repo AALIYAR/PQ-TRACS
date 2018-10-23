@@ -1,0 +1,215 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="EfeedFormatView"
+   Version="11.1.1.61.92"
+   SelectList="EfeedFormat.ID, 
+       EfeedFormat.CONTENT_OWNER_ID, 
+       EfeedFormat.FORMAT, 
+       EfeedFormat.DESCRIPTION, 
+       EfeedFormat.CREATED_BY, 
+       EfeedFormat.CREATED_DATE, 
+       EfeedFormat.LAST_UPDATED_BY, 
+       EfeedFormat.LAST_UPDATED_DATE"
+   FromList="TRAX_EFEED_FORMAT EfeedFormat"
+   OrderBy="FORMAT, CREATED_DATE DESC"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="com.pq.tracs.model.dao.EfeedFormatViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+      <Attr Name="_objectSuperClassName" Value="com.pq.tracs.model.dao.TracsView" />
+   </DesignTime>
+   <ViewAccessor
+      Name="EfeedFormatLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Efeed Format']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_Format"
+      ListVOName="EfeedFormatLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="Format"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <EntityUsage
+      Name="EfeedFormat"
+      Entity="com.pq.tracs.model.bo.EfeedFormat" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      EntityAttrName="Id"
+      EntityUsage="EfeedFormat"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContentOwnerId"
+      IsNotNull="true"
+      EntityAttrName="ContentOwnerId"
+      EntityUsage="EfeedFormat"
+      AliasName="CONTENT_OWNER_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Format"
+      IsNotNull="true"
+      EntityAttrName="Format"
+      EntityUsage="EfeedFormat"
+      AliasName="FORMAT"
+      LOVName="LOV_Format">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Description"
+      EntityAttrName="Description"
+      EntityUsage="EfeedFormat"
+      AliasName="DESCRIPTION" />
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="EfeedFormat"
+      AliasName="CREATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.EfeedFormatView.CreatedBy_LABEL"/>
+            <DISPLAYWIDTH
+               Value="20"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      EntityAttrName="CreatedDate"
+      EntityUsage="EfeedFormat"
+      AliasName="CREATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.EfeedFormatView.CreatedDate_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="EfeedFormat"
+      AliasName="LAST_UPDATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.EfeedFormatView.LastUpdatedBy_LABEL"/>
+            <DISPLAYWIDTH
+               Value="20"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      IsUpdateable="false"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="EfeedFormat"
+      AliasName="LAST_UPDATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.EfeedFormatView.LastUpdatedDate_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="EfeedFormatViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.EfeedFormatView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow72"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="EfeedFormatViewCriteria_vcrow72_Format"
+            ViewAttribute="Format"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="Description"
+            ViewAttribute="Description"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="EfeedFormatViewCriteria_vcrow72_CreatedBy"
+            ViewAttribute="CreatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="EfeedFormatViewCriteria_vcrow72_CreatedDate"
+            ViewAttribute="CreatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="EfeedFormatViewCriteria_vcrow72_LastUpdatedBy"
+            ViewAttribute="LastUpdatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="EfeedFormatViewCriteria_vcrow72_LastUpdatedDate"
+            ViewAttribute="LastUpdatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

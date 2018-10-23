@@ -1,0 +1,310 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html">
+  <af:pageTemplateDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>This component lays out an entire page.</description>
+        <facet>
+          <description>An optional vertically oriented region of contexual
+                       components for the main content. Often this contains a
+                       list or tree of links for deeper navigation structure
+                       than the global, primary, and secondary regions can
+                       provide.</description>
+          <facet-name>menu3</facet-name>
+        </facet>
+        <facet>
+          <description>The user information region. This region provides a
+                       location for presenting user sign-in and connection
+                       information.</description>
+          <facet-name>infoUser</facet-name>
+        </facet>
+        <facet>
+          <description>The content of all popups used on the page.</description>
+          <facet-name>popups</facet-name>
+        </facet>
+        <facet>
+          <description>The main page content.</description>
+          <facet-name>pageContent</facet-name>
+        </facet>
+        <facet>
+          <description>The process train (wizards).</description>
+          <facet-name>processTrain</facet-name>
+        </facet>
+        <attribute>
+          <description>Specifies the number of pixels tall that the navigation2
+                       content should consume.</description>
+          <attribute-name>navigation2Size</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>26</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the number of pixels wide that the navigation3
+                       content should consume.</description>
+          <attribute-name>navigation3Size</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>150</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the number of pixels tall that the global
+                       content should consume.</description>
+          <attribute-name>headerGlobalSize</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>40</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the number of pixels tall that the global
+                       footer content should consume.</description>
+          <attribute-name>footerGlobalSize</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>30</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the number of pixels tall that the secondary
+                       header content should consume.</description>
+          <attribute-name>header2Size</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>20</default-value>
+        </attribute>
+        <attribute>
+          <description>menu model bean reference</description>
+          <attribute-name>menuModel</attribute-name>
+          <attribute-class>org.apache.myfaces.trinidad.model.XMLMenuModel</attribute-class>
+        </attribute>
+        <attribute>
+          <description>whether the menu level 1 is displayed</description>
+          <attribute-name>showMenu1</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>true</default-value>
+        </attribute>
+        <attribute>
+          <description>whether the menu level 2 is displayed</description>
+          <attribute-name>showMenu2</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>true</default-value>
+        </attribute>
+        <attribute>
+          <description>whether the menu level 3 is displayed</description>
+          <attribute-name>showMenu3</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Initial menu level.</description>
+          <attribute-name>menuStartLevel</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>1</default-value>
+        </attribute>
+        <attribute>
+          <description>display breadcrumbs</description>
+          <attribute-name>showBreadcrumbs</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>display messages</description>
+          <attribute-name>showMessages</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>true</default-value>
+        </attribute>
+        <attribute>
+          <description>display messages</description>
+          <attribute-name>showMessagesInline</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>branding title</description>
+          <attribute-name>brandingTitle</attribute-name>
+          <attribute-class>string</attribute-class>
+          <default-value>Titles, Rights And Contracts System</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:decorativeBox id="db0" centerLandmark="none" topLandmark="none"
+                      styleClass="#{adfFacesContext.skinFamily=='fusion' ? '' : 'AFVisualRoot'}"
+                      theme="#{adfFacesContext.skinFamily=='fusion' ? 'contentBody' : 'dark'}">
+      <f:facet name="center">
+        <af:panelStretchLayout bottomHeight="#{attrs.footerGlobalSize}"
+                               id="pt_psl1">
+          <f:facet name="center">
+            <af:panelSplitter orientation="vertical"
+                              splitterPosition="#{attrs.headerGlobalSize}"
+                              id="pt_ps1">
+              <f:facet name="first">
+                <af:panelGroupLayout id="pt_gPbl" layout="vertical">
+                  <f:attribute name="JhsIgnoreChanges" value="true"/>
+                  <af:panelBorderLayout id="pt_brBar"
+                                        styleClass="AFBrandingBar">
+                    <f:facet name="start">
+                      <af:panelGroupLayout id="pt_brLogo">
+                        <af:image id="pt_imgLogo" source="/images/Tracs1.png"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="innerStart">
+                      <af:panelGroupLayout id="pt_titleWrp"
+                                           styleClass="AFBrandingBarItem">
+                        <af:outputText value="#{attrs.brandingTitle}"
+                                       styleClass="AFBrandingBarTitle"
+                                       inlineStyle="color: white;" id="pt_ot1"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <af:panelBorderLayout id="pt_sepWrp">
+                      <f:facet name="end">
+                        <af:panelGroupLayout id="pt_statPgl" layout="horizontal"
+                                             styleClass="AFBrandingBarItem"
+                                             halign="center" valign="middle">
+                          <!-- In IE 7.0 we cannot place menu global in end facet of parent panelBorderLayout, messes up the layout -->
+                          <af:panelGroupLayout id="pgldcie" layout="horizontal"
+                                               rendered="#{adfFacesContext.agent.agentName=='ie' and adfFacesContext.agent.agentVersion=='7.0'}">
+                            <af:declarativeComponent id="mgie"
+                                                     partialTriggers="::pendingChangesDialog "
+                                                     viewId="/common/regions/menuGlobal.jsff"/>
+                          </af:panelGroupLayout>
+                          <f:facet name="separator">
+                            <af:spacer width="20" id="pt_brEndSp2"/>
+                          </f:facet>
+                        </af:panelGroupLayout>
+                      </f:facet>
+                    </af:panelBorderLayout>
+                    <f:facet name="innerEnd">
+                      <af:spacer width="4" id="pt_brEndSp"/>
+                    </f:facet>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pt_statWrp" layout="horizontal"
+                                           styleClass="AFBrandingBarItem">
+                        <!-- In IE 7.0 we cannot place menu global in this end facet of parent panelBorderLayout, messes up the layout -->
+                        <af:panelGroupLayout id="pgldc" layout="horizontal"
+                                             rendered="#{!(adfFacesContext.agent.agentName=='ie' and adfFacesContext.agent.agentVersion=='7.0')}">
+                          <af:declarativeComponent id="mg"
+                                                   partialTriggers="::pendingChangesDialog "
+                                                   viewId="/common/regions/menuGlobal.jsff"/>
+                        </af:panelGroupLayout>
+                        <af:statusIndicator id="pt_statInd"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                </af:panelGroupLayout>
+              </f:facet>
+              <f:facet name="second">
+                <af:decorativeBox theme="light"
+                                  topHeight="#{attrs.navigation2Size}"
+                                  id="pt_db1">
+                  <f:facet name="center">
+                    <af:panelSplitter orientation="horizontal"
+                                      splitterPosition="200" id="pt_ps2">
+                      <f:facet name="first">
+                        <af:decorativeBox theme="default"
+                                          partialTriggers=" ::mg ::mgie "
+                                          styleClass="TabletPageContent"
+                                          id="pt_db2">
+                          <f:facet name="center">
+                            <af:panelCollection id="pctree">
+                              <af:tree id="Menu1" var="menuItem"
+                                       contentDelivery="immediate"
+                                       immediate="true"
+                                       binding="#{pageFlowScope.MenuTreeBean.tree}"
+                                       value="#{attrs.menuModel}"
+                                       selectedRowKeys="#{attrs.menuModel.selectedRowKeySet}"
+                                       rowSelection="single"
+                                       partialTriggers="Item1"
+                                       summary="Menu Item">
+                                <f:facet name="nodeStamp">
+                                  <!-- partialSubmit="true" only works correctly with common UI shell page but needed to get pending changes alert -->
+                                  <af:commandLink id="Item1"
+                                                  textAndAccessKey="#{menuItem.label}"
+                                                  immediate="true"
+                                                  actionListener="#{pageFlowScope.pendingChangesBean.handle}"
+                                                  action="#{menuItem.doAction}"
+                                                  partialSubmit="true"
+                                                  rendered="#{menuItem.rendered}"/>
+                                </f:facet>
+                              </af:tree>
+                            </af:panelCollection>
+                          </f:facet>
+                        </af:decorativeBox>
+                      </f:facet>
+                      <f:facet name="second">
+                        <af:decorativeBox theme="default"
+                                          styleClass="TabletPageContent"
+                                          id="pt_db3">
+                          <f:facet name="center">
+                            <af:panelStretchLayout topHeight="auto"
+                                                   partialTriggers="pctree"
+                                                   id="pt_psl3">
+                              <f:facet name="top">
+                                <af:group id="pt_g3">
+                                  <af:breadCrumbs rendered="#{attrs.showBreadcrumbs and (pageFlowScope.jhsBreadcrumbStack.size gt 1)}"
+                                                  var="bc" varStatus="vs"
+                                                  value="#{pageFlowScope.jhsBreadcrumbStack}"
+                                                  id="bcp">
+                                    <f:facet name="nodeStamp">
+                                      <af:commandNavigationItem id="ni"
+                                                                action="#{bc.doAction}"
+                                                                text="#{bc.label}"
+                                                                visible="#{pageFlowScope.jhsBreadcrumbStack.rowIndex lt (pageFlowScope.jhsBreadcrumbStack.size-1)}"/>
+                                    </f:facet>
+                                  </af:breadCrumbs>
+                                  <af:messages visible="#{attrs.showMessages}"
+                                               id="msgp"
+                                               inline="#{attrs.showMessagesInline}"/>
+                                  <af:facetRef facetName="processTrain"/>
+                                </af:group>
+                              </f:facet>
+                              <f:facet name="center">
+                                <af:facetRef facetName="pageContent"/>
+                              </f:facet>
+                            </af:panelStretchLayout>
+                          </f:facet>
+                        </af:decorativeBox>
+                      </f:facet>
+                    </af:panelSplitter>
+                  </f:facet>
+                </af:decorativeBox>
+              </f:facet>
+            </af:panelSplitter>
+            <!-- end of global auxiliary splitter -->
+          </f:facet>
+          <!-- end of global top splitter -->
+          <f:facet name="bottom">
+            <af:panelGroupLayout layout="vertical" id="pt_pgl4">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <trh:tableLayout width="100%" id="pt_tl3">
+                <trh:rowLayout id="pt_rl3">
+                  <trh:cellFormat id="pt_cfver">
+                    <af:outputText value="version #{initParam['TRACS_VERSION']}"
+                                   id="pt_otver"/>
+                  </trh:cellFormat>
+                  <trh:cellFormat id="pt_cf4">
+                    <af:outputText value="Copyright ProQuest, 2011"
+                                   id="pt_ot2"/>
+                  </trh:cellFormat>
+                  <trh:cellFormat width="200" inlineStyle="text-align: right;"
+                                  id="pt_cf5">
+                    <af:outputText value="" id="pt_ot3"/>
+                  </trh:cellFormat>
+                </trh:rowLayout>
+              </trh:tableLayout>
+              <af:outputText value="" id="pt_ot4"/>
+              <af:popup id="pendingChangesPopup" childCreation="deferred"
+                        binding="#{pageFlowScope.pendingChangesBean.alertPopup}">
+                <af:dialog id="pendingChangesDialog" type="yesNo"
+                           title="#{nls['PENDING_CHANGES_TITLE']}"
+                           dialogListener="#{pageFlowScope.pendingChangesBean.processDialogEvent}"
+                           modal="true">
+                  <af:outputText value="#{nls['PENDING_CHANGES_TEXT']}"
+                                 id="pt_ot5"/>
+                </af:dialog>
+              </af:popup>
+              <af:facetRef facetName="popups"/>
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:panelStretchLayout>
+      </f:facet>
+    </af:decorativeBox>
+  </af:pageTemplateDef>
+</jsp:root>
+  

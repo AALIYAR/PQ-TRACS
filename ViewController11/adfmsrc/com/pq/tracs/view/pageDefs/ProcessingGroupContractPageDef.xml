@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.62.29" id="ProcessingGroupContractPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare"
+               value="#{'ProcessingGroupsPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="ProcessingGroupContractIterator"
+              Binds="PrmOpportunityContractView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ProcessingGroupContractIteratorPrmOpportunityContractViewCriteriaQuery"
+                  Binds="ProcessingGroupContractIterator"
+                  Criteria="PrmOpportunityContractViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="ContractNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryProcessingGroupContractInvoke"
+                  Binds="ExecuteQueryProcessingGroupContract"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+  </executables>
+  <bindings>
+    <action id="ExecuteQueryProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="sd4Id" IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4PrmOpportunityId"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="PrmOpportunityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4ContractId"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4ContentOwnerId"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4ContractNumber"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false"
+                  IterBinding="ProcessingGroupContractIterator"
+                  id="sd4ContractNumber2" Uses="LOV_ContractNumber2"/>
+    <attributeValues id="sd4Note" IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="Note"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4CreatedBy"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4CreatedDate"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4LastUpdatedBy"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4LastUpdatedDate"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupContractTable"
+          IterBinding="ProcessingGroupContractIterator">
+      <nodeDefinition Name="ProcessingGroupContract"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityContractView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="PrmOpportunityId"/>
+          <Item Value="ContractId"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber2"/>
+          <Item Value="Note"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroupContract}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

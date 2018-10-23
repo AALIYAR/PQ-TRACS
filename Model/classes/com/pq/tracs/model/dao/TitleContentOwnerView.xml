@@ -1,0 +1,333 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="TitleContentOwnerView"
+   Version="11.1.1.62.29"
+   OrderBy="NAME,SITE"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   ComponentClass="com.pq.tracs.model.dao.TitleContentOwnerViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10"
+   RowClass="com.pq.tracs.model.dao.TitleContentOwnerViewRowImpl">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+      <Attr Name="_objectSuperClassName" Value="com.pq.tracs.model.dao.TracsView" />
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <ViewAccessor
+      Name="TitleContentOwnerTypeLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Title Content Owner Type']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_OwnerType"
+      ListVOName="TitleContentOwnerTypeLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="OwnerType"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <SQLQuery>
+      <![CDATA[SELECT ContentOwnerTitle.ID, 
+       ContentOwnerTitle.CONTENT_OWNER_ID, 
+       ContentOwnerTitle.TITLE_ID, 
+       ContentOwner.NAME, 
+       ContentOwnerTitle.OWNER_TYPE, 
+       ContentOwner.SITE, 
+       ContentOwner.ACTIVE_FLAG, 
+       ContentOwnerTitle.CREATED_BY, 
+       ContentOwnerTitle.CREATED_DATE, 
+       ContentOwnerTitle.LAST_UPDATED_BY, 
+       ContentOwnerTitle.LAST_UPDATED_DATE, 
+       ContentOwnerTitle.PRIMARY_FLAG,
+       ContentOwner.ID AS ID1, 
+       ContentOwner.CONTENT_OWNER_NO,
+       ContentOwner.LAST_UPDATED_DATE AS LAST_UPDATED_DATE1
+FROM TRAX_CONTENT_OWNER_TITLE ContentOwnerTitle
+INNER JOIN TRAX_CONTENT_OWNER ContentOwner ON (ContentOwnerTitle.CONTENT_OWNER_ID = ContentOwner.ID)
+WHERE ContentOwnerTitle.CONTENT_OWNER_ID = ContentOwner.ID]]>
+   </SQLQuery>
+   <EntityUsage
+      Name="ContentOwnerTitle"
+      Entity="com.pq.tracs.model.bo.ContentOwnerTitle" >
+   </EntityUsage>
+   <EntityUsage
+      Name="ContentOwner"
+      Entity="com.pq.tracs.model.bo.ContentOwner"
+      Association="com.pq.tracs.model.bo.ContentOwnerTitleFkAssoc"
+      AssociationEnd="com.pq.tracs.model.bo.ContentOwnerTitleFkAssoc.ContentOwner"
+      SourceUsage="com.pq.tracs.model.dao.TitleContentOwnerView.ContentOwnerTitle"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="com.pq.tracs.model.bo.ContentOwnerTitle.ContentOwnerId" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="com.pq.tracs.model.bo.ContentOwner.Id" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      IsNotNull="true"
+      EntityAttrName="Id"
+      EntityUsage="ContentOwnerTitle"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContentOwnerId"
+      IsNotNull="true"
+      EntityAttrName="ContentOwnerId"
+      EntityUsage="ContentOwnerTitle"
+      AliasName="CONTENT_OWNER_ID" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TitleContentOwnerView.ContentOwnerId_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TitleId"
+      IsNotNull="true"
+      EntityAttrName="TitleId"
+      EntityUsage="ContentOwnerTitle"
+      AliasName="TITLE_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Name"
+      IsNotNull="true"
+      EntityAttrName="Name"
+      EntityUsage="ContentOwner"
+      AliasName="NAME"
+      IsUpdateable="false">
+      <Properties>
+         <SchemaBasedProperties>
+            <DISPLAYWIDTH
+               Value="40"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OwnerType"
+      EntityAttrName="OwnerType"
+      EntityUsage="ContentOwnerTitle"
+      AliasName="OWNER_TYPE"
+      LOVName="LOV_OwnerType">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TitleContentOwnerView.OwnerType_LABEL"/>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Site"
+      IsUnique="true"
+      EntityAttrName="Site"
+      EntityUsage="ContentOwner"
+      AliasName="SITE"/>
+   <ViewAttribute
+      Name="ActiveFlag"
+      EntityAttrName="ActiveFlag"
+      EntityUsage="ContentOwner"
+      AliasName="ACTIVE_FLAG">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TitleContentOwnerView.ActiveFlag_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="ContentOwnerTitle"
+      AliasName="CREATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <DISPLAYWIDTH
+               Value="20"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      EntityAttrName="CreatedDate"
+      EntityUsage="ContentOwnerTitle"
+      AliasName="CREATED_DATE" />
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="ContentOwnerTitle"
+      AliasName="LAST_UPDATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TitleContentOwnerView.LastUpdatedBy_LABEL"/>
+            <DISPLAYWIDTH
+               Value="20"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      IsUpdateable="false"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="ContentOwnerTitle"
+      AliasName="LAST_UPDATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TitleContentOwnerView.LastUpdatedDate_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PrimaryFlag"
+      PrecisionRule="true"
+      AliasName="PRIMARY_FLAG"
+      EntityAttrName="PrimaryFlag"
+      EntityUsage="ContentOwnerTitle">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TitleContentOwnerView.PrimaryFlag_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Id1"
+      IsUpdateable="false"
+      EntityAttrName="Id"
+      EntityUsage="ContentOwner"
+      AliasName="ID1" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContentOwnerNo"
+      PrecisionRule="true"
+      EntityAttrName="ContentOwnerNo"
+      EntityUsage="ContentOwner"
+      AliasName="CONTENT_OWNER_NO"/>
+   <ViewAttribute
+      Name="LastUpdatedDate1"
+      PrecisionRule="true"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="ContentOwner"
+      AliasName="LAST_UPDATED_DATE1"/>
+   <ViewCriteria
+      Name="TitleContentOwnerViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.TitleContentOwnerView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow77"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="TitleContentOwnerViewCriteria_vcrow77_Name"
+            ViewAttribute="Name"
+            Conjunction="AND"
+            Required="Optional"
+            Operator="="/>
+         <ViewCriteriaItem
+            Name="OwnerType"
+            ViewAttribute="OwnerType"
+            Conjunction="AND"
+            Required="Optional"
+            Operator="="
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="TitleContentOwnerViewCriteria_vcrow77_Site"
+            ViewAttribute="Site"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TitleContentOwnerViewCriteria_vcrow77_ActiveFlag"
+            ViewAttribute="ActiveFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TitleContentOwnerViewCriteria_vcrow77_CreatedBy"
+            ViewAttribute="CreatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TitleContentOwnerViewCriteria_vcrow77_CreatedDate"
+            ViewAttribute="CreatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TitleContentOwnerViewCriteria_vcrow77_LastUpdatedBy"
+            ViewAttribute="LastUpdatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TitleContentOwnerViewCriteria_vcrow77_LastUpdatedDate"
+            ViewAttribute="LastUpdatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Id" />
+   </AttrArray>
+   <ViewLinkAccessor
+      Name="TitleView"
+      ViewLink="com.pq.tracs.model.dao.TitleContentOwnerTitleViewLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

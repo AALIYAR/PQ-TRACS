@@ -1,0 +1,323 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="LookupSetMappingsTopLc"
+                             partialTriggers=" LookupSetMappingsCancelButton0 asAreaLookupSetMappingsSearchOptions qsAreaLookupSetMappingsSearchOptions"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{nls['TABLE_TITLE_LOOKUPSETMAPPINGS']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreateLookupSetMappings.execute}"
+                                      action="CreateLookupSetMappings"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_LOOKUPSETMAPPINGS']}"
+                                      rendered="#{(true) }"
+                                      id="LookupSetMappingsNewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel"
+                                      id="LookupSetMappingsCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaLookupSetMappings"
+                                 rendered="#{!pageFlowScope.createModes.CreateLookupSetMappings and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaLookupSetMappingsSearchOptions:qsButtonLookupSetMappings qsAreaLookupSetMappingsSearchOptions:asButtonLookupSetMappings ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaLookupSetMappingsSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.LookupSetMappingsIteratorLookupSetMappingViewCriteriaQuery.queryDescriptor}"
+                        model="#{bindings.LookupSetMappingsIteratorLookupSetMappingViewCriteriaQuery.queryModel}"
+                        queryListener="#{bindings.LookupSetMappingsIteratorLookupSetMappingViewCriteriaQuery.processQuery}"
+                        queryOperationListener="#{bindings.LookupSetMappingsIteratorLookupSetMappingViewCriteriaQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchLookupSetMappings.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true"
+                                    id="qsButtonLookupSetMappings"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchLookupSetMappings.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaLookupSetMappingsSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.LookupSetMappingsIteratorLookupSetMappingViewCriteriaQuery.queryDescriptor}"
+                             model="#{bindings.LookupSetMappingsIteratorLookupSetMappingViewCriteriaQuery.queryModel}"
+                             queryListener="#{bindings.LookupSetMappingsIteratorLookupSetMappingViewCriteriaQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchLookupSetMappings.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonLookupSetMappings"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchLookupSetMappings.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="LookupSetMappingsPC" featuresOff=" "
+                                inlineStyle=" width:1200px; ">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="LookupSetMappingsDetails"></af:commandMenuItem>
+                    <af:group id="LookupSetMappingstbb"
+                              rendered="#{ bindings.LookupSetMappingsIterator.currentRow!=null }">
+                      <af:commandMenuItem actionListener="#{bindings.FirstLookupSetMappings.execute}"
+                                          id="LookupSetMappingsFirst"
+                                          partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousLookupSetMappings.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="LookupSetMappingsPrevious"
+                                          partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextLookupSetMappings.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="LookupSetMappingsNext"
+                                          partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastLookupSetMappings.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="LookupSetMappingsLast"
+                                          partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandToolbarButton text="Print"
+                                           id="LookupSetMappingsPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.LookupSetMappingsIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="LookupSetMappingsTab" contentDelivery="immediate"
+                        value="#{bindings.LookupSetMappingsTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.LookupSetMappingsTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.LookupSetMappingsTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.LookupSetMappingsTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.LookupSetMappingsTable.rangeSize}"
+                        autoHeightRows="#{bindings.LookupSetMappingsTable.estimatedRowCount lt 5 ? 5 : bindings.LookupSetMappingsTable.estimatedRowCount lt bindings.LookupSetMappingsTable.rangeSize ? bindings.LookupSetMappingsTable.estimatedRowCount : 0 }"
+                        fetchSize="#{bindings.LookupSetMappingsTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.LookupSetMappingsIteratorLookupSetMappingViewCriteriaQuery.processQuery}"
+                        filterModel="#{bindings.LookupSetMappingsIteratorLookupSetMappingViewCriteriaQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.LookupSetMappingsTable.table}"
+                        partialTriggers=":::qsAreaLookupSetMappingsSearchOptions :::asAreaLookupSetMappingsSearchOptions :::LookupSetMappingsPC ::LookupSetMappingsFirst ::LookupSetMappingsPrevious ::LookupSetMappingsNext ::LookupSetMappingsLast"
+                        width="1200px"
+                        summary="#{nls['TABLE_TITLE_LOOKUPSETMAPPINGS']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="LookupSetMappingsTablePopup"
+                            childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="LookupSetMappingsDetails"></af:commandMenuItem>
+                      </af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="LookupSetMappingsActionColumn" frozen="true"
+                           width="20" align="center" headerText=" ">
+                  <af:panelGroupLayout layout="horizontal" id="pgl1">
+                    <af:commandLink action="LookupSetMappingsDetails"
+                                    id="LookupSetMappingsGtd">
+                      <af:image shortDesc="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                source="/jheadstart/images/editRow.png"
+                                id="im0"/>
+                    </af:commandLink>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column id="LookupSetMappingsSourceCodeSetIdCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="228" sortProperty="SourceCodeSetId"
+                           align="right" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.LookupSetMappingsTable.hints.SourceCodeSetId.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:selectOneChoice id="LookupSetMappingsSourceCodeSetId"
+                                      value="#{row.bindings.SourceCodeSetId.inputValue}"
+                                      label="#{bindings.LookupSetMappingsTable.hints.SourceCodeSetId.label}"
+                                      required="#{bindings.LookupSetMappingsTable.hints.SourceCodeSetId.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{row.bindings.SourceCodeSetId.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="LookupSetMappingsDestinationCodeSetIdCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="228" sortProperty="DestinationCodeSetId"
+                           align="right" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.LookupSetMappingsTable.hints.DestinationCodeSetId.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:selectOneChoice id="LookupSetMappingsDestinationCodeSetId"
+                                      value="#{row.bindings.DestinationCodeSetId.inputValue}"
+                                      label="#{bindings.LookupSetMappingsTable.hints.DestinationCodeSetId.label}"
+                                      required="#{bindings.LookupSetMappingsTable.hints.DestinationCodeSetId.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{row.bindings.DestinationCodeSetId.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="LookupSetMappingsDescriptionCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="Description" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.LookupSetMappingsTable.hints.Description.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="LookupSetMappingsDescription"
+                                value="#{row.bindings.Description.inputValue}"
+                                label="#{bindings.LookupSetMappingsTable.hints.Description.label}"
+                                required="#{bindings.LookupSetMappingsTable.hints.Description.mandatory}"
+                                rows="#{bindings.LookupSetMappingsTable.hints.Description.displayHeight}"
+                                columns="#{bindings.LookupSetMappingsTable.hints.Description.displayWidth}"
+                                maximumLength="1000" readOnly="true">
+                    <f:validator binding="#{row.bindings.Description.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="LookupSetMappingsCreatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CreatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.LookupSetMappingsTable.hints.CreatedBy.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputText id="LookupSetMappingsCreatedBy"
+                                value="#{row.bindings.CreatedBy.inputValue}"
+                                label="#{bindings.LookupSetMappingsTable.hints.CreatedBy.label}"
+                                required="#{bindings.LookupSetMappingsTable.hints.CreatedBy.mandatory}"
+                                rows="#{bindings.LookupSetMappingsTable.hints.CreatedBy.displayHeight}"
+                                columns="#{bindings.LookupSetMappingsTable.hints.CreatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true">
+                    <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="LookupSetMappingsCreatedDateCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedDate" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.LookupSetMappingsTable.hints.CreatedDate.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="LookupSetMappingsCreatedDate"
+                                value="#{row.bindings.CreatedDate.inputValue}"
+                                label="#{bindings.LookupSetMappingsTable.hints.CreatedDate.label}"
+                                required="#{bindings.LookupSetMappingsTable.hints.CreatedDate.mandatory}"
+                                readOnly="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="LookupSetMappingsLastUpdatedByCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="120" sortProperty="LastUpdatedBy"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.LookupSetMappingsTable.hints.LastUpdatedBy.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="LookupSetMappingsLastUpdatedBy"
+                                value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                label="#{bindings.LookupSetMappingsTable.hints.LastUpdatedBy.label}"
+                                required="#{bindings.LookupSetMappingsTable.hints.LastUpdatedBy.mandatory}"
+                                rows="#{bindings.LookupSetMappingsTable.hints.LastUpdatedBy.displayHeight}"
+                                columns="#{bindings.LookupSetMappingsTable.hints.LastUpdatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true">
+                    <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="LookupSetMappingsLastUpdatedDateCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="100" sortProperty="LastUpdatedDate"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.LookupSetMappingsTable.hints.LastUpdatedDate.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdatedDate}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="LookupSetMappingsLastUpdatedDate"
+                                value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                label="#{bindings.LookupSetMappingsTable.hints.LastUpdatedDate.label}"
+                                required="#{bindings.LookupSetMappingsTable.hints.LastUpdatedDate.mandatory}"
+                                readOnly="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

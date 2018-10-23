@@ -1,0 +1,2207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="ContentOwnerPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <invokeAction id="applyBindParamsContentOwnerInvoke"
+                  Binds="applyBindParamsContentOwner" Refresh="always"/>
+    <iterator id="ContentOwnerIterator" Binds="ContentOwnerView1"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="ContentOwnerIteratorContentOwnerViewCriteriaQuery"
+                  Binds="ContentOwnerIterator"
+                  Criteria="ContentOwnerViewCriteria"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryContentOwnerInvoke"
+                  Binds="ExecuteQueryContentOwner" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="AddressIterator" Binds="AddressView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="AddressIteratorAddressViewCriteriaQuery"
+                  Binds="AddressIterator" Criteria="AddressViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AddressLine1"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryAddressInvoke" Binds="ExecuteQueryAddress"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="ContactIterator" Binds="ContentOwnerContactView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContactIteratorContentOwnerContactViewCriteriaQuery"
+                  Binds="ContactIterator"
+                  Criteria="ContentOwnerContactViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="FirstName2"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryContactInvoke" Binds="ExecuteQueryContact"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <variableIterator id="variables">
+      <variable Name="s01EditLinkVar" Type="String"/>
+      <variable Name="s01NewContactVar" Type="String"/>
+      <variable Name="s04EditLinkVar" Type="String"/>
+    </variableIterator>
+    <iterator id="ContractIterator" Binds="ContractView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContractIteratorChildTabContractViewCriteriaQuery"
+                  Binds="ContractIterator"
+                  Criteria="ChildTabContractViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="ContractNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContentOwnerNoteIterator" Binds="ContentOwnerNoteView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContentOwnerNoteIteratorContentOwnerNoteViewCriteriaQuery"
+                  Binds="ContentOwnerNoteIterator"
+                  Criteria="ContentOwnerNoteViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="NoteType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryContentOwnerNoteInvoke"
+                  Binds="ExecuteQueryContentOwnerNote" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="ContentOwnerActivitiesIterator"
+              Binds="TraxContentOwnerActivityView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContentOwnerActivitiesIteratorTraxContentOwnerActivityViewCriteriaQuery"
+                  Binds="ContentOwnerActivitiesIterator"
+                  Criteria="TraxContentOwnerActivityViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Type"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContentOwnerTitlesIterator" Binds="COTitlesReadOnlyView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContentOwnerTitlesIteratorCOTitlesReadOnlyViewCriteriaQuery"
+                  Binds="ContentOwnerTitlesIterator"
+                  Criteria="COTitlesReadOnlyViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="LongTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContentOwnerContactMethodsIterator"
+              Binds="PrmAccountContactMethodView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContentOwnerContactMethodsIteratorPrmAccountContactMethodViewCriteriaQuery"
+                  Binds="ContentOwnerContactMethodsIterator"
+                  Criteria="PrmAccountContactMethodViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="ContactMethodType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContentOwnerAttachmentsIterator"
+              Binds="TraxContentOwnerAttachmentView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContentOwnerAttachmentsIteratorTraxContentOwnerAttachmentViewCriteriaQuery"
+                  Binds="ContentOwnerAttachmentsIterator"
+                  Criteria="TraxContentOwnerAttachmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttachmentType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContentOwnerOpportunityIterator" Binds="PrmOpportunityView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContentOwnerOpportunityIteratorSubTabCOPrmOpportunityViewCriteriaQuery"
+                  Binds="ContentOwnerOpportunityIterator"
+                  Criteria="SubTabCOPrmOpportunityViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContentOwnerEfeedFormatsIterator" Binds="EfeedFormatView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContentOwnerEfeedFormatsIteratorEfeedFormatViewCriteriaQuery"
+                  Binds="ContentOwnerEfeedFormatsIterator"
+                  Criteria="EfeedFormatViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Format"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContentOwnerAdditionalURLsIterator" Binds="AdditionalUrlView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContentOwnerAdditionalURLsIteratorAdditionalUrlViewCriteriaQuery"
+                  Binds="ContentOwnerAdditionalURLsIterator"
+                  Criteria="AdditionalUrlViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Description"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContentOwnerPublishersIterator" Binds="PublisherView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContentOwnerPublishersIteratorSubTabPublisherViewCriteriaQuery"
+                  Binds="ContentOwnerPublishersIterator"
+                  Criteria="SubTabPublisherViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContentOwnerProcessingGroupsIterator"
+              Binds="ProcessingGroupView1" DataControl="TracsServiceDataControl"
+              RangeSize="10"/>
+    <searchRegion id="ContentOwnerProcessingGroupsIteratorProcessingGroupViewCriteriaQuery"
+                  Binds="ContentOwnerProcessingGroupsIterator"
+                  Criteria="ProcessingGroupViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContentOwnerChangeHistoryIterator"
+              Binds="TraxJuContentOwnerView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <invokeAction id="ExecuteQueryContentOwnerChangeHistoryInvoke"
+                  Binds="ExecuteQueryContentOwnerChangeHistory"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+  </executables>
+  <bindings>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsContentOwner"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="ContentOwnerView1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{ContentOwnerQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged"
+                 NDValue="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQueryContentOwner" IterBinding="ContentOwnerIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="CtOAccountNo" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOName" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOSite" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="Site"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOAllianceManager" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="AllianceManager"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOVanLoozenId" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="VanLoozenId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOMainPhoneNumber" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="MainPhoneNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOMainFaxNumber" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="MainFaxNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOMainEmailAddress"
+                     IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="MainEmailAddress"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtORasNumber" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="RasNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOPCOId" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="ParentContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="ContentOwnerIterator"
+                  id="CtOParentContentOwner" Uses="LOV_ParentContentOwner"/>
+    <attributeValues id="CtOkeyAccountLevel" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="KeyAccountLevel"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOMainUrl" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="MainUrl"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="CtOEfeedSampleAvailableFlag" IterBinding="ContentOwnerIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="EfeedSampleAvailableFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="CtOEfeedInProductionFlag" IterBinding="ContentOwnerIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="EfeedInProductionFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="CtOEfeedInformationLastUpdated"
+                     IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="EfeedInformationLastUpdated"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerIterator" id="CtOContentOwnerType"
+          Uses="LOV_ContentOwnerType" StaticList="false"/>
+    <list IterBinding="ContentOwnerIterator" id="CtOContentOwnerSubType"
+          Uses="LOV_ContentOwnerSubType" StaticList="false"/>
+    <list IterBinding="ContentOwnerIterator" id="CtOPrimaryLanguage"
+          Uses="LOV_PrimaryLanguage" StaticList="false"/>
+    <button id="CtOCustomerFlag" IterBinding="ContentOwnerIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="CustomerFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="CtOActiveFlag" IterBinding="ContentOwnerIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="CtOProblematicPublisher" IterBinding="ContentOwnerIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ProblematicPublisher"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="CtOCreatedBy" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOCreatedDate" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOCreatedDateSearch"
+                     IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="CreatedBySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOLastUpdatedBy" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOLastUpdatedDate" IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CtOLastUpdatedbySearch"
+                     IterBinding="ContentOwnerIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedbySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerTable" IterBinding="ContentOwnerIterator">
+      <nodeDefinition Name="ContentOwner"
+                      DefName="com.pq.tracs.model.dao.ContentOwnerView">
+        <AttrNames>
+          <Item Value="ContentOwnerNo"/>
+          <Item Value="Name"/>
+          <Item Value="Site"/>
+          <Item Value="AllianceManager"/>
+          <Item Value="VanLoozenId"/>
+          <Item Value="MainPhoneNumber"/>
+          <Item Value="MainFaxNumber"/>
+          <Item Value="MainEmailAddress"/>
+          <Item Value="RasNumber"/>
+          <Item Value="ParentContentOwnerId"/>
+          <Item Value="ParentContentOwner"/>
+          <Item Value="KeyAccountLevel"/>
+          <Item Value="MainUrl"/>
+          <Item Value="EfeedSampleAvailableFlag"/>
+          <Item Value="EfeedInProductionFlag"/>
+          <Item Value="EfeedInformationLastUpdated"/>
+          <Item Value="ContentOwnerType"/>
+          <Item Value="ContentOwnerSubType"/>
+          <Item Value="PrimaryLanguage"/>
+          <Item Value="CustomerFlag"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="ProblematicPublisher"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="CreatedBySearch"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="LastUpdatedbySearch"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwner" IterBinding="ContentOwnerIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwner" IterBinding="ContentOwnerIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwner" IterBinding="ContentOwnerIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwner" IterBinding="ContentOwnerIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwner"
+            IterBinding="ContentOwnerIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwner}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContentOwner" IterBinding="ContentOwnerIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="ExecuteQueryAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="s00SiteOrDepartment" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="SiteOrDepartment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00AddressLine1" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="AddressLine1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00AddressLine2" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="AddressLine2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00City" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="City"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00StateOrProvince" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="StateOrProvince"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00ZipOrPostalCode" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="ZipOrPostalCode"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AddressIterator" id="s00Country" Uses="LOV_Country"
+          StaticList="false"/>
+    <attributeValues id="s00County" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="County"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00SitePhoneNumber" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="SitePhoneNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00EffectiveStartDate" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="EffectiveStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s00PrimaryFlag" IterBinding="AddressIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="s00BillToFlag" IterBinding="AddressIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="BillToFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="s00ShipToFlag" IterBinding="AddressIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ShipToFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s00AddressComments" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="AddressComments"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s00ActiveFlag" IterBinding="AddressIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s00CreatedBy" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00CreatedDate" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00LastUpdatedBy" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s00LastUpdatedDate" IterBinding="AddressIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="AddressTable" IterBinding="AddressIterator">
+      <nodeDefinition Name="Address"
+                      DefName="com.pq.tracs.model.dao.AddressView">
+        <AttrNames>
+          <Item Value="SiteOrDepartment"/>
+          <Item Value="AddressLine1"/>
+          <Item Value="AddressLine2"/>
+          <Item Value="City"/>
+          <Item Value="StateOrProvince"/>
+          <Item Value="ZipOrPostalCode"/>
+          <Item Value="Country"/>
+          <Item Value="County"/>
+          <Item Value="SitePhoneNumber"/>
+          <Item Value="EffectiveStartDate"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="BillToFlag"/>
+          <Item Value="ShipToFlag"/>
+          <Item Value="AddressComments"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{pageFlowScope.rowKeyStrAddress}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteAddress" IterBinding="AddressIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryContact" IterBinding="ContactIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="s01ContactId" IterBinding="ContactIterator">
+      <AttrNames>
+        <Item Value="ContactId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="ContactIterator"
+                  id="s01FirstName" Uses="LOV_FirstName"/>
+    <attributeValues id="s01EditLink" IterBinding="variables">
+      <AttrNames>
+        <Item Value="s01EditLinkVar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s01MiddleName" IterBinding="ContactIterator">
+      <AttrNames>
+        <Item Value="MiddleName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s01LastName" IterBinding="ContactIterator">
+      <AttrNames>
+        <Item Value="LastName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s01JobTitle" IterBinding="ContactIterator">
+      <AttrNames>
+        <Item Value="JobTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContactIterator" id="s01JobRole" Uses="LOV_JobRole"
+          StaticList="false"/>
+    <button id="s01PrimaryFlag" IterBinding="ContactIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s01Gender" IterBinding="ContactIterator">
+      <AttrNames>
+        <Item Value="Gender"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s01Pronunciation" IterBinding="ContactIterator">
+      <AttrNames>
+        <Item Value="Pronunciation"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s01ContentOwnerContactActiveFlag" IterBinding="ContactIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s01CreatedBy" IterBinding="ContactIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s01CreatedDate" IterBinding="ContactIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s01LastUpdatedBy" IterBinding="ContactIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s01LastUpdatedDate" IterBinding="ContactIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s01ActiveFlag" IterBinding="ContactIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s01NewContact" IterBinding="variables">
+      <AttrNames>
+        <Item Value="s01NewContactVar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s01FirstName2" IterBinding="ContactIterator">
+      <AttrNames>
+        <Item Value="FirstName2"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContactTable" IterBinding="ContactIterator">
+      <nodeDefinition Name="Contact"
+                      DefName="com.pq.tracs.model.vo.ContentOwnerContactView">
+        <AttrNames>
+          <Item Value="ContactId"/>
+          <Item Value="FirstName"/>
+          <Item Value="MiddleName"/>
+          <Item Value="LastName"/>
+          <Item Value="JobTitle"/>
+          <Item Value="JobRole"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="Gender"/>
+          <Item Value="Pronunciation"/>
+          <Item Value="ActiveFlag1"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="FirstName2"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContact" IterBinding="ContactIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContact" IterBinding="ContactIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContact" IterBinding="ContactIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContact" IterBinding="ContactIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContact" IterBinding="ContactIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{pageFlowScope.rowKeyStrContact}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContact" IterBinding="ContactIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContact" IterBinding="ContactIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s02Id" IterBinding="ContractIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s02ContractNumber" IterBinding="ContractIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s02ContractNumberLink" IterBinding="ContractIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContractIterator" id="s02Status" Uses="LOV_Status"
+          StaticList="false"/>
+    <list IterBinding="ContractIterator" id="s02Type" Uses="LOV_Type"
+          StaticList="false"/>
+    <list IterBinding="ContractIterator" id="s02Division" Uses="LOV_Division"
+          StaticList="false"/>
+    <attributeValues id="s02EffectiveDate" IterBinding="ContractIterator">
+      <AttrNames>
+        <Item Value="EffectiveDate"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContractIterator" id="s02TermLength"
+          Uses="LOV_TermLength" StaticList="false"/>
+    <attributeValues id="s02ExpirationDate" IterBinding="ContractIterator">
+      <AttrNames>
+        <Item Value="ExpirationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s02AutoRenewsFlag" IterBinding="ContractIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="AutoRenewsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="ContractIterator" id="s02Exclusivity"
+          Uses="LOV_Exclusivity" StaticList="false"/>
+    <list IterBinding="ContractIterator" id="s02Form" Uses="LOV_Form"
+          StaticList="false"/>
+    <list IterBinding="ContractIterator" id="s02AutoRenewTermMonths"
+          Uses="LOV_AutoRenewTermMonths" StaticList="false"/>
+    <attributeValues id="s02NoteFlag" IterBinding="ContractIterator">
+      <AttrNames>
+        <Item Value="NoteFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s02PublisherChangeContractFlag" IterBinding="ContractIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PublisherChangeContractFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="ContractIterator" id="s02AutoAdd" Uses="LOV_AutoAdd"
+          StaticList="false"/>
+    <tree id="ContractTable" IterBinding="ContractIterator">
+      <nodeDefinition Name="Contract"
+                      DefName="com.pq.tracs.model.dao.ContractView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="Status"/>
+          <Item Value="Type"/>
+          <Item Value="Division"/>
+          <Item Value="EffectiveDate"/>
+          <Item Value="TermLength"/>
+          <Item Value="ExpirationDate"/>
+          <Item Value="AutoRenewsFlag"/>
+          <Item Value="Exclusivity"/>
+          <Item Value="Form"/>
+          <Item Value="AutoRenewTermMonths"/>
+          <Item Value="NoteFlag"/>
+          <Item Value="PublisherChangeContractFlag"/>
+          <Item Value="AutoAdd"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContract" IterBinding="ContractIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContract" IterBinding="ContractIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContract" IterBinding="ContractIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContract" IterBinding="ContractIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContract" IterBinding="ContractIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{pageFlowScope.rowKeyStrContract}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContract" IterBinding="ContractIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="ExecuteQueryContentOwnerNote"
+            IterBinding="ContentOwnerNoteIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <list IterBinding="ContentOwnerNoteIterator" id="s03NoteType"
+          Uses="LOV_NoteType" StaticList="false"/>
+    <attributeValues id="s03NoteText" IterBinding="ContentOwnerNoteIterator">
+      <AttrNames>
+        <Item Value="NoteText"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s03CreatedBy" IterBinding="ContentOwnerNoteIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s03CreatedDate" IterBinding="ContentOwnerNoteIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s03LastUpdatedBy"
+                     IterBinding="ContentOwnerNoteIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s03LastUpdatedDate"
+                     IterBinding="ContentOwnerNoteIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerNoteTable" IterBinding="ContentOwnerNoteIterator">
+      <nodeDefinition Name="ContentOwnerNote"
+                      DefName="com.pq.tracs.model.dao.ContentOwnerNoteView">
+        <AttrNames>
+          <Item Value="NoteType"/>
+          <Item Value="NoteText"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerNote" IterBinding="ContentOwnerNoteIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwnerNote" IterBinding="ContentOwnerNoteIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwnerNote" IterBinding="ContentOwnerNoteIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerNote" IterBinding="ContentOwnerNoteIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwnerNote"
+            IterBinding="ContentOwnerNoteIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerNote}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContentOwnerNote" IterBinding="ContentOwnerNoteIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContentOwnerNote" IterBinding="ContentOwnerNoteIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s04Id" IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04JhsUsersId"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="JhsUsersId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerActivitiesIterator"
+          id="s04Type" Uses="LOV_Type" StaticList="false"/>
+    <list IterBinding="ContentOwnerActivitiesIterator"
+          id="s04SubType" Uses="LOV_SubType" StaticList="false"/>
+    <attributeValues id="s04EditLink" IterBinding="variables">
+      <AttrNames>
+        <Item Value="s04EditLinkVar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04Description"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false"
+                  IterBinding="ContentOwnerActivitiesIterator"
+                  id="s04Owner" Uses="LOV_Owner"/>
+    <list IterBinding="ContentOwnerActivitiesIterator"
+          id="s04Status" Uses="LOV_Status" StaticList="false"/>
+    <list IterBinding="ContentOwnerActivitiesIterator"
+          id="s04Priority" Uses="LOV_Priority" StaticList="false"/>
+    <attributeValues id="s04DueDate"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="DueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04ExpectedStartDate"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="ExpectedStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04ActualStartDate"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="ActualStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04CompletionDate"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="CompletionDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04HoursSpent"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="HoursSpent"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04Notes" IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s04PrimaryFlag" IterBinding="ContentOwnerActivitiesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s04CreatedBy"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04CreatedDate"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04LastUpdatedBy"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04LastUpdatedDate"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04AddedDate"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04UserType"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="UserType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s04AddDate"
+                     IterBinding="ContentOwnerActivitiesIterator">
+      <AttrNames>
+        <Item Value="AddDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerActivitiesTable"
+          IterBinding="ContentOwnerActivitiesIterator">
+      <nodeDefinition Name="ContentOwnerActivities"
+                      DefName="com.pq.tracs.model.vo.TraxContentOwnerActivityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="JhsUsersId"/>
+          <Item Value="Type"/>
+          <Item Value="SubType"/>
+          <Item Value="Description"/>
+          <Item Value="Owner"/>
+          <Item Value="Status"/>
+          <Item Value="Priority"/>
+          <Item Value="DueDate"/>
+          <Item Value="ExpectedStartDate"/>
+          <Item Value="ActualStartDate"/>
+          <Item Value="CompletionDate"/>
+          <Item Value="HoursSpent"/>
+          <Item Value="Notes"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="AddedDate"/>
+          <Item Value="UserType"/>
+          <Item Value="AddDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerActivities"
+            IterBinding="ContentOwnerActivitiesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwnerActivities"
+            IterBinding="ContentOwnerActivitiesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwnerActivities"
+            IterBinding="ContentOwnerActivitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerActivities"
+            IterBinding="ContentOwnerActivitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwnerActivities"
+            IterBinding="ContentOwnerActivitiesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerActivities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContentOwnerActivities"
+            IterBinding="ContentOwnerActivitiesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <attributeValues id="s05Id" IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s05TargetTrackingNo"
+                     IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s05TargetTrackingNoLink"
+                     IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s05CatalogNumber"
+                     IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s05CatalogNumberLink"
+                     IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s05LongTitle" IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerTitlesIterator"
+          id="s05ProductLine" Uses="LOV_ProductLine" StaticList="false"/>
+    <attributeValues id="s05PublicationStartYear"
+                     IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="PublicationStartYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s05PublicationEndYear"
+                     IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="PublicationEndYear"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerTitlesIterator"
+          id="s05FilmAvailability" Uses="LOV_FilmAvailability"
+          StaticList="false"/>
+    <list IterBinding="ContentOwnerTitlesIterator"
+          id="s05BibliographicStatus" Uses="LOV_BibliographicStatus"
+          StaticList="false"/>
+    <attributeValues id="s05ExercisingRights"
+                     IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="ExercisingRights"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerTitlesIterator"
+          id="s05PrimaryPmClass" Uses="LOV_PrimaryPmClass" StaticList="false"/>
+    <attributeValues id="s05PrimaryClassification"
+                     IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="PrimaryClassification"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s05OwnerType" IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="OwnerType"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s05PrimaryFlag" IterBinding="ContentOwnerTitlesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s05CreatedBy" IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s05CreatedDate"
+                     IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s05LastUpdatedBy"
+                     IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s05LastUpdatedDate"
+                     IterBinding="ContentOwnerTitlesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerTitlesTable" IterBinding="ContentOwnerTitlesIterator">
+      <nodeDefinition Name="ContentOwnerTitles"
+                      DefName="com.pq.tracs.model.dao.COTitlesReadOnlyView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="ProductLine"/>
+          <Item Value="PublicationStartYear"/>
+          <Item Value="PublicationEndYear"/>
+          <Item Value="FilmAvailability"/>
+          <Item Value="BibliographicStatus"/>
+          <Item Value="ExercisingRights"/>
+          <Item Value="PrimaryPmClass"/>
+          <Item Value="PrimaryClassification"/>
+          <Item Value="OwnerType"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerTitles"
+            IterBinding="ContentOwnerTitlesIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousContentOwnerTitles"
+            IterBinding="ContentOwnerTitlesIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextContentOwnerTitles" IterBinding="ContentOwnerTitlesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerTitles" IterBinding="ContentOwnerTitlesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwnerTitles"
+            IterBinding="ContentOwnerTitlesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerTitles}"
+                 NDType="java.lang.String"/>
+    </action>
+    <list IterBinding="ContentOwnerContactMethodsIterator"
+          id="s06ContactMethodType" Uses="LOV_ContactMethodType"
+          StaticList="false"/>
+    <list IterBinding="ContentOwnerContactMethodsIterator"
+          id="s06ContactMethodSubType" Uses="LOV_ContactMethodSubType"
+          StaticList="false"/>
+    <attributeValues id="s06ContactDetail1"
+                     IterBinding="ContentOwnerContactMethodsIterator">
+      <AttrNames>
+        <Item Value="ContactDetail1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s06ContactDetail2"
+                     IterBinding="ContentOwnerContactMethodsIterator">
+      <AttrNames>
+        <Item Value="ContactDetail2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s06ContactMethodNote"
+                     IterBinding="ContentOwnerContactMethodsIterator">
+      <AttrNames>
+        <Item Value="ContactMethodNote"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s06PrimaryFlag" IterBinding="ContentOwnerContactMethodsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s06CreatedBy"
+                     IterBinding="ContentOwnerContactMethodsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s06CreatedDate"
+                     IterBinding="ContentOwnerContactMethodsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s06LastUpdatedBy"
+                     IterBinding="ContentOwnerContactMethodsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s06LastUpdatedDate"
+                     IterBinding="ContentOwnerContactMethodsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerContactMethodsTable"
+          IterBinding="ContentOwnerContactMethodsIterator">
+      <nodeDefinition Name="ContentOwnerContactMethods"
+                      DefName="com.pq.tracs.model.vo.PrmAccountContactMethodView">
+        <AttrNames>
+          <Item Value="ContactMethodType"/>
+          <Item Value="ContactMethodSubType"/>
+          <Item Value="ContactDetail1"/>
+          <Item Value="ContactDetail2"/>
+          <Item Value="ContactMethodNote"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerContactMethods"
+            IterBinding="ContentOwnerContactMethodsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwnerContactMethods"
+            IterBinding="ContentOwnerContactMethodsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwnerContactMethods"
+            IterBinding="ContentOwnerContactMethodsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerContactMethods"
+            IterBinding="ContentOwnerContactMethodsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwnerContactMethods"
+            IterBinding="ContentOwnerContactMethodsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerContactMethods}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContentOwnerContactMethods"
+            IterBinding="ContentOwnerContactMethodsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContentOwnerContactMethods"
+            IterBinding="ContentOwnerContactMethodsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s07Name" IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07AttachmentType"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="AttachmentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07Attachment"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07AttachmentDL"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07Description"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07FileSize"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="FileSize"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07CreatedBy"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07CreatedDate"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07LastUpdatedBy"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07LastUpdatedDate"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerAttachmentsTable"
+          IterBinding="ContentOwnerAttachmentsIterator">
+      <nodeDefinition Name="ContentOwnerAttachments"
+                      DefName="com.pq.tracs.model.vo.TraxContentOwnerAttachmentView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="AttachmentType"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Description"/>
+          <Item Value="FileSize"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerAttachments}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="copId" IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copOpportunityNo"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copName1"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copName" IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copAllianceManager"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="AllianceManager"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copDescription"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerOpportunityIterator"
+          id="copOpportunityType" Uses="LOV_OpportunityType"
+          StaticList="false"/>
+    <list IterBinding="ContentOwnerOpportunityIterator"
+          id="copCurrentStatus" Uses="LOV_CurrentStatus" StaticList="false"/>
+    <list IterBinding="ContentOwnerOpportunityIterator"
+          id="copReasonLost" Uses="LOV_ReasonLost" StaticList="false"/>
+    <attributeValues id="copCataloguedCount"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="CataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copUncataloguedCount"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="UncataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerOpportunityIterator"
+          id="copCurrentPreStatus" Uses="LOV_CurrentPreStatus"
+          StaticList="false"/>
+    <list IterBinding="ContentOwnerOpportunityIterator"
+          id="copCurrentCatalogingStatus" Uses="LOV_CurrentCatalogingStatus"
+          StaticList="false"/>
+    <list IterBinding="ContentOwnerOpportunityIterator"
+          id="copCurrentAgreementStatus" Uses="LOV_CurrentAgreementStatus"
+          StaticList="false"/>
+    <attributeValues id="copProbabilityPct"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="ProbabilityPct"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerOpportunityIterator"
+          id="copPriority" Uses="LOV_Priority" StaticList="false"/>
+    <list IterBinding="ContentOwnerOpportunityIterator"
+          id="copExpectedPipelines" Uses="LOV_ExpectedPipelines"
+          StaticList="false"/>
+    <list IterBinding="ContentOwnerOpportunityIterator"
+          id="copEstimatedCloseQuarter" Uses="LOV_EstimatedCloseQuarter"
+          StaticList="false"/>
+    <attributeValues id="copAgreementReceivedDate"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="AgreementReceivedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copExclusivitySoughtObtained"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="ExclusivitySoughtObtained"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerOpportunityIterator"
+          id="copDocumentSigned" Uses="LOV_DocumentSigned" StaticList="false"/>
+    <attributeValues id="copSummonDeepIndexingFlag"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="SummonDeepIndexingFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copSummary"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="Summary"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerOpportunityIterator"
+          id="copForm" Uses="LOV_Form" StaticList="false"/>
+    <list IterBinding="ContentOwnerOpportunityIterator"
+          id="copType" Uses="LOV_Type" StaticList="false"/>
+    <attributeValues id="copTechnicalContact"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="TechnicalContact"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copCreatedBy"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copCreatedDate"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copLastUpdatedBy"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copLastUpdatedDate"
+                     IterBinding="ContentOwnerOpportunityIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerOpportunityTable"
+          IterBinding="ContentOwnerOpportunityIterator">
+      <nodeDefinition Name="ContentOwnerOpportunity"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="Name"/>
+          <Item Value="Name"/>
+          <Item Value="Name"/>
+          <Item Value="Name"/>
+          <Item Value="AllianceManager"/>
+          <Item Value="Description"/>
+          <Item Value="OpportunityType"/>
+          <Item Value="CurrentStatus"/>
+          <Item Value="ReasonLost"/>
+          <Item Value="CataloguedCount"/>
+          <Item Value="UncataloguedCount"/>
+          <Item Value="CurrentPreStatus"/>
+          <Item Value="CurrentCatalogingStatus"/>
+          <Item Value="CurrentAgreementStatus"/>
+          <Item Value="ProbabilityPct"/>
+          <Item Value="Priority"/>
+          <Item Value="ExpectedPipelines"/>
+          <Item Value="EstimatedCloseQuarter"/>
+          <Item Value="AgreementReceivedDate"/>
+          <Item Value="ExclusivitySoughtObtained"/>
+          <Item Value="DocumentSigned"/>
+          <Item Value="SummonDeepIndexingFlag"/>
+          <Item Value="Summary"/>
+          <Item Value="Form"/>
+          <Item Value="Type"/>
+          <Item Value="TechnicalContact"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerOpportunity"
+            IterBinding="ContentOwnerOpportunityIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwnerOpportunity"
+            IterBinding="ContentOwnerOpportunityIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwnerOpportunity"
+            IterBinding="ContentOwnerOpportunityIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerOpportunity"
+            IterBinding="ContentOwnerOpportunityIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwnerOpportunity"
+            IterBinding="ContentOwnerOpportunityIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerOpportunity}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContentOwnerOpportunity"
+            IterBinding="ContentOwnerOpportunityIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContentOwnerOpportunity"
+            IterBinding="ContentOwnerOpportunityIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="ContentOwnerEfeedFormatsIterator"
+          id="s08Format" Uses="LOV_Format" StaticList="false"/>
+    <attributeValues id="s08Description"
+                     IterBinding="ContentOwnerEfeedFormatsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s08CreatedBy"
+                     IterBinding="ContentOwnerEfeedFormatsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s08CreatedDate"
+                     IterBinding="ContentOwnerEfeedFormatsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s08LastUpdatedBy"
+                     IterBinding="ContentOwnerEfeedFormatsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s08LastUpdatedDate"
+                     IterBinding="ContentOwnerEfeedFormatsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerEfeedFormatsTable"
+          IterBinding="ContentOwnerEfeedFormatsIterator">
+      <nodeDefinition Name="ContentOwnerEfeedFormats"
+                      DefName="com.pq.tracs.model.dao.EfeedFormatView">
+        <AttrNames>
+          <Item Value="Format"/>
+          <Item Value="Description"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerEfeedFormats"
+            IterBinding="ContentOwnerEfeedFormatsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwnerEfeedFormats"
+            IterBinding="ContentOwnerEfeedFormatsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwnerEfeedFormats"
+            IterBinding="ContentOwnerEfeedFormatsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerEfeedFormats"
+            IterBinding="ContentOwnerEfeedFormatsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwnerEfeedFormats"
+            IterBinding="ContentOwnerEfeedFormatsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerEfeedFormats}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContentOwnerEfeedFormats"
+            IterBinding="ContentOwnerEfeedFormatsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContentOwnerEfeedFormats"
+            IterBinding="ContentOwnerEfeedFormatsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s09Url"
+                     IterBinding="ContentOwnerAdditionalURLsIterator">
+      <AttrNames>
+        <Item Value="Url"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s09Description"
+                     IterBinding="ContentOwnerAdditionalURLsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s09CreatedBy"
+                     IterBinding="ContentOwnerAdditionalURLsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s09CreatedDate"
+                     IterBinding="ContentOwnerAdditionalURLsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s09LastUpdatedBy"
+                     IterBinding="ContentOwnerAdditionalURLsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s09LastUpdatedDate"
+                     IterBinding="ContentOwnerAdditionalURLsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerAdditionalURLsTable"
+          IterBinding="ContentOwnerAdditionalURLsIterator">
+      <nodeDefinition Name="ContentOwnerAdditionalURLs"
+                      DefName="com.pq.tracs.model.dao.AdditionalUrlView">
+        <AttrNames>
+          <Item Value="Url"/>
+          <Item Value="Description"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerAdditionalURLs"
+            IterBinding="ContentOwnerAdditionalURLsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwnerAdditionalURLs"
+            IterBinding="ContentOwnerAdditionalURLsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwnerAdditionalURLs"
+            IterBinding="ContentOwnerAdditionalURLsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerAdditionalURLs"
+            IterBinding="ContentOwnerAdditionalURLsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwnerAdditionalURLs"
+            IterBinding="ContentOwnerAdditionalURLsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerAdditionalURLs}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContentOwnerAdditionalURLs"
+            IterBinding="ContentOwnerAdditionalURLsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContentOwnerAdditionalURLs"
+            IterBinding="ContentOwnerAdditionalURLsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s0aId" IterBinding="ContentOwnerPublishersIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0aName" IterBinding="ContentOwnerPublishersIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0aSortName"
+                     IterBinding="ContentOwnerPublishersIterator">
+      <AttrNames>
+        <Item Value="SortName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0aUrl" IterBinding="ContentOwnerPublishersIterator">
+      <AttrNames>
+        <Item Value="Url"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0aNotes" IterBinding="ContentOwnerPublishersIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0aMsId" IterBinding="ContentOwnerPublishersIterator">
+      <AttrNames>
+        <Item Value="MsId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0aOrgId" IterBinding="ContentOwnerPublishersIterator">
+      <AttrNames>
+        <Item Value="OrgId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0aPubId" IterBinding="ContentOwnerPublishersIterator">
+      <AttrNames>
+        <Item Value="PubId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0aCreatedBy"
+                     IterBinding="ContentOwnerPublishersIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0aCreatedDate"
+                     IterBinding="ContentOwnerPublishersIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0aLastUpdatedBy"
+                     IterBinding="ContentOwnerPublishersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0aLastUpdatedDate"
+                     IterBinding="ContentOwnerPublishersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerPublishersTable"
+          IterBinding="ContentOwnerPublishersIterator">
+      <nodeDefinition Name="ContentOwnerPublishers"
+                      DefName="com.pq.tracs.model.dao.PublisherView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="Name"/>
+          <Item Value="SortName"/>
+          <Item Value="Url"/>
+          <Item Value="Notes"/>
+          <Item Value="MsId"/>
+          <Item Value="OrgId"/>
+          <Item Value="PubId"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerPublishers"
+            IterBinding="ContentOwnerPublishersIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwnerPublishers"
+            IterBinding="ContentOwnerPublishersIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwnerPublishers"
+            IterBinding="ContentOwnerPublishersIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerPublishers"
+            IterBinding="ContentOwnerPublishersIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwnerPublishers"
+            IterBinding="ContentOwnerPublishersIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerPublishers}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="copgId"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copgContractId"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copgOpportunityNo"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copgName1"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copgName"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copgDescription"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerProcessingGroupsIterator"
+          id="copgProcessingGrouType" Uses="LOV_ProcessingGroupType"
+          StaticList="false"/>
+    <list IterBinding="ContentOwnerProcessingGroupsIterator"
+          id="copgCurrentStatus" Uses="LOV_CurrentStatus" StaticList="false"/>
+    <attributeValues id="copgCataloguedCount"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="CataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copgUncataloguedCount"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="UncataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerProcessingGroupsIterator"
+          id="copgCurrentPreStatus" Uses="LOV_CurrentPreStatus"
+          StaticList="false"/>
+    <list IterBinding="ContentOwnerProcessingGroupsIterator"
+          id="copgCurrentCatalogingStatus" Uses="LOV_CurrentCatalogingStatus"
+          StaticList="false"/>
+    <list IterBinding="ContentOwnerProcessingGroupsIterator"
+          id="copgCurrentAgreementStatus" Uses="LOV_CurrentAgreementStatus"
+          StaticList="false"/>
+    <attributeValues id="copgSummary"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="Summary"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContentOwnerProcessingGroupsIterator"
+          id="copgForm" Uses="LOV_Form" StaticList="false"/>
+    <list IterBinding="ContentOwnerProcessingGroupsIterator"
+          id="copgType" Uses="LOV_Type" StaticList="false"/>
+    <attributeValues id="copgTechnicalContact"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="TechnicalContact"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copgContractNumber"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copgCreatedBy"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copgCreatedDate"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copgLastUpdatedBy"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="copgLastUpdatedDate"
+                     IterBinding="ContentOwnerProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerProcessingGroupsTable"
+          IterBinding="ContentOwnerProcessingGroupsIterator">
+      <nodeDefinition Name="ContentOwnerProcessingGroups"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContractId"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="Name"/>
+          <Item Value="Name"/>
+          <Item Value="Name"/>
+          <Item Value="Name"/>
+          <Item Value="Description"/>
+          <Item Value="ProcessingGroupType"/>
+          <Item Value="CurrentStatus"/>
+          <Item Value="CataloguedCount"/>
+          <Item Value="UncataloguedCount"/>
+          <Item Value="CurrentPreStatus"/>
+          <Item Value="CurrentCatalogingStatus"/>
+          <Item Value="CurrentAgreementStatus"/>
+          <Item Value="Summary"/>
+          <Item Value="Form"/>
+          <Item Value="Type"/>
+          <Item Value="TechnicalContact"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerProcessingGroups"
+            IterBinding="ContentOwnerProcessingGroupsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwnerProcessingGroups"
+            IterBinding="ContentOwnerProcessingGroupsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwnerProcessingGroups"
+            IterBinding="ContentOwnerProcessingGroupsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerProcessingGroups"
+            IterBinding="ContentOwnerProcessingGroupsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwnerProcessingGroups"
+            IterBinding="ContentOwnerProcessingGroupsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerProcessingGroups}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContentOwnerProcessingGroups"
+            IterBinding="ContentOwnerProcessingGroupsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContentOwnerProcessingGroups"
+            IterBinding="ContentOwnerProcessingGroupsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryContentOwnerChangeHistory"
+            IterBinding="ContentOwnerChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="s0bId" IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bParentContentOwnerId"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ParentContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bContentOwnerId"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bJournaledUser"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="JournaledUser"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bJournaledDate"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="JournaledDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bContentOwnerNo"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bName"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bSite"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Site"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bVanLoozenId"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="VanLoozenId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bMainPhoneNumber"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="MainPhoneNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bMainFaxNumber"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="MainFaxNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bMainEmailAddress"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="MainEmailAddress"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bRasNumber"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="RasNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bMainUrl"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="MainUrl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bEfeedSampleAvailableFlag"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="EfeedSampleAvailableFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bEfeedInProductionFlag"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="EfeedInProductionFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bEfeedInformationLastUpdated"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="EfeedInformationLastUpdated"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bContentOwnerType"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bContentOwnerSubType"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerSubType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bPrimaryLanguage"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PrimaryLanguage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bCustomerFlag"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CustomerFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bCreatedBy"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bCreatedDate"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bLastUpdatedBy"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s0bLastUpdatedDate"
+                     IterBinding="ContentOwnerChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerChangeHistoryTable"
+          IterBinding="ContentOwnerChangeHistoryIterator">
+      <nodeDefinition Name="ContentOwnerChangeHistory"
+                      DefName="com.pq.tracs.model.vo.TraxJuContentOwnerView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ParentContentOwnerId"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="JournaledUser"/>
+          <Item Value="JournaledDate"/>
+          <Item Value="ContentOwnerNo"/>
+          <Item Value="Name"/>
+          <Item Value="Site"/>
+          <Item Value="VanLoozenId"/>
+          <Item Value="MainPhoneNumber"/>
+          <Item Value="MainFaxNumber"/>
+          <Item Value="MainEmailAddress"/>
+          <Item Value="RasNumber"/>
+          <Item Value="MainUrl"/>
+          <Item Value="EfeedSampleAvailableFlag"/>
+          <Item Value="EfeedInProductionFlag"/>
+          <Item Value="EfeedInformationLastUpdated"/>
+          <Item Value="ContentOwnerType"/>
+          <Item Value="ContentOwnerSubType"/>
+          <Item Value="PrimaryLanguage"/>
+          <Item Value="CustomerFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerChangeHistory"
+            IterBinding="ContentOwnerChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwnerChangeHistory"
+            IterBinding="ContentOwnerChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwnerChangeHistory"
+            IterBinding="ContentOwnerChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerChangeHistory"
+            IterBinding="ContentOwnerChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwnerChangeHistory"
+            IterBinding="ContentOwnerChangeHistoryIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerChangeHistory}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

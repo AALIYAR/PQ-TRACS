@@ -1,0 +1,519 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="DeliveryRightsTemplatesTopLc"
+                             partialTriggers=" DeliveryRightsTemplatesDeleteDialog DeliveryRightsTemplatesfbb DeliveryRightsTemplatesNewButton DeliveryRightsTemplatesDelB DeliveryRightsTemplatesSaveButton0 DeliveryRightsTemplatesCancelButton0"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateDeliveryRightsTemplates ? nls['INSERT_TITLE_DELIVERYRIGHTSTEMPLATES'] :  (jhsUserRoles['DeliveryRightsTemplates.update'] ? nls['EDIT_TITLE_DELIVERYRIGHTSTEMPLATE: #{bindings.DeliveryRightsTemplatesName.inputValue}'] : nls['VIEW_TITLE_DELIVERYRIGHTSTEMPLATE: #{bindings.DeliveryRightsTemplatesName.inputValue}'])  }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="DeliveryRightsTemplatesfbb"
+                                       layout="horizontal"
+                                       rendered="#{ bindings.DeliveryRightsTemplatesIterator.currentRow!=null  and bindings.DeliveryRightsTemplatesIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateDeliveryRightsTemplates and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="DeliveryRightsTemplatesFirst DeliveryRightsTemplatesPrevious DeliveryRightsTemplatesNext DeliveryRightsTemplatesLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstDeliveryRightsTemplates.execute}"
+                                             id="DeliveryRightsTemplatesFirst"
+                                             partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.DeliveryRightsTemplatesIterator.rangeStart+bindings.DeliveryRightsTemplatesIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.DeliveryRightsTemplatesIterator.rangeStart+bindings.DeliveryRightsTemplatesIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousDeliveryRightsTemplates.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="DeliveryRightsTemplatesPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.DeliveryRightsTemplatesIterator.rangeStart+bindings.DeliveryRightsTemplatesIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.DeliveryRightsTemplatesIterator.rangeStart+bindings.DeliveryRightsTemplatesIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.DeliveryRightsTemplatesIterator.rangeStart+bindings.DeliveryRightsTemplatesIterator.currentRowIndexInRange+1} / #{bindings.DeliveryRightsTemplatesIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextDeliveryRightsTemplates.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="DeliveryRightsTemplatesNext"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.DeliveryRightsTemplatesIterator.rangeStart+bindings.DeliveryRightsTemplatesIterator.currentRowIndexInRange+1 lt bindings.DeliveryRightsTemplatesIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.DeliveryRightsTemplatesIterator.rangeStart+bindings.DeliveryRightsTemplatesIterator.currentRowIndexInRange+1 lt bindings.DeliveryRightsTemplatesIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastDeliveryRightsTemplates.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="DeliveryRightsTemplatesLast"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.DeliveryRightsTemplatesIterator.rangeStart+bindings.DeliveryRightsTemplatesIterator.currentRowIndexInRange+1 lt bindings.DeliveryRightsTemplatesIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.DeliveryRightsTemplatesIterator.rangeStart+bindings.DeliveryRightsTemplatesIterator.currentRowIndexInRange+1 lt bindings.DeliveryRightsTemplatesIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateDeliveryRightsTemplates.execute}"
+                                             action="CreateDeliveryRightsTemplates"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_DELIVERYRIGHTSTEMPLATES']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateDeliveryRightsTemplates and (true) and (jhsUserRoles['DeliveryRightsTemplates.create'])}"
+                                             id="DeliveryRightsTemplatesNewButton"></af:commandToolbarButton>
+                    <af:commandToolbarButton action="DeleteDeliveryRightsTemplates"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_DELIVERYRIGHTSTEMPLATES']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateDeliveryRightsTemplates and  bindings.DeliveryRightsTemplatesIterator.currentRow!=null   and (jhsUserRoles['DeliveryRightsTemplates.delete'])}"
+                                             immediate="true"
+                                             id="DeliveryRightsTemplatesDelB">
+                      <af:showPopupBehavior popupId="DeliveryRightsTemplatesDeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print"
+                                             id="DeliveryRightsTemplatesPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveDeliveryRightsTemplates.execute}"
+                                      rendered="#{!pageFlowScope.hideSaveButton}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="DeliveryRightsTemplatesSaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel"
+                                      id="DeliveryRightsTemplatesCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.DeliveryRightsTemplatesIterator.findMode!='true'}"
+                       id="DeliveryRightsTemplatesSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.DeliveryRightsTemplatesIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp"
+                                  id="DeliveryRightsTemplatesNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="DeliveryRightsTemplatesFC"
+                                   layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="3"
+                                    id="DeliveryRightsTemplatesFI">
+                  <af:inputText id="DeliveryRightsTemplatesName"
+                                value="#{bindings.DeliveryRightsTemplatesName.inputValue}"
+                                label="#{bindings.DeliveryRightsTemplatesName.hints.label}"
+                                required="true"
+                                rows="#{bindings.DeliveryRightsTemplatesName.hints.displayHeight}"
+                                columns="#{bindings.DeliveryRightsTemplatesName.hints.displayWidth}"
+                                maximumLength="200"
+                                readOnly="#{((pageFlowScope.createModes.CreateDeliveryRightsTemplates) and (!(jhsUserRoles['DeliveryRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateDeliveryRightsTemplates) and (!(jhsUserRoles['DeliveryRightsTemplates.update'])))}">
+                    <f:validator binding="#{bindings.DeliveryRightsTemplatesName.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="DeliveryRightsTemplatesRightType"
+                                      value="#{bindings.DeliveryRightsTemplatesRightType.inputValue}"
+                                      label="#{bindings.DeliveryRightsTemplatesRightType.hints.label}"
+                                      required="#{bindings.DeliveryRightsTemplatesRightType.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateDeliveryRightsTemplates) and (!(jhsUserRoles['DeliveryRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateDeliveryRightsTemplates) and (!(jhsUserRoles['DeliveryRightsTemplates.update'])))}"
+                                      unselectedLabel="">
+                    <af:forEach var="row2"
+                                items="#{bindings.RightTypeLookup.rangeSet}">
+                      <af:selectItem id="si0" label="#{row2.DisplayValue}"
+                                     value="#{row2.InternalValue}"/>
+                    </af:forEach>
+                  </af:selectOneChoice>
+                  <af:inputText id="DeliveryRightsTemplatesCreatedBy"
+                                value="#{bindings.DeliveryRightsTemplatesCreatedBy.inputValue}"
+                                label="#{bindings.DeliveryRightsTemplatesCreatedBy.hints.label}"
+                                required="#{bindings.DeliveryRightsTemplatesCreatedBy.hints.mandatory}"
+                                rows="#{bindings.DeliveryRightsTemplatesCreatedBy.hints.displayHeight}"
+                                columns="#{bindings.DeliveryRightsTemplatesCreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true">
+                    <f:validator binding="#{bindings.DeliveryRightsTemplatesCreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="DeliveryRightsTemplatesCreatedDate"
+                                value="#{bindings.DeliveryRightsTemplatesCreatedDate.inputValue}"
+                                label="#{bindings.DeliveryRightsTemplatesCreatedDate.hints.label}"
+                                required="#{bindings.DeliveryRightsTemplatesCreatedDate.hints.mandatory}"
+                                readOnly="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="DeliveryRightsTemplatesLastUpdatedBy"
+                                value="#{bindings.DeliveryRightsTemplatesLastUpdatedBy.inputValue}"
+                                label="#{bindings.DeliveryRightsTemplatesLastUpdatedBy.hints.label}"
+                                required="#{bindings.DeliveryRightsTemplatesLastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.DeliveryRightsTemplatesLastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.DeliveryRightsTemplatesLastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true">
+                    <f:validator binding="#{bindings.DeliveryRightsTemplatesLastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="DeliveryRightsTemplatesLastUpdatedDate"
+                                value="#{bindings.DeliveryRightsTemplatesLastUpdatedDate.inputValue}"
+                                label="#{bindings.DeliveryRightsTemplatesLastUpdatedDate.hints.label}"
+                                required="#{bindings.DeliveryRightsTemplatesLastUpdatedDate.hints.mandatory}"
+                                readOnly="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:selectBooleanCheckbox id="DeliveryRightsTemplatesActiveFlag"
+                                            value="#{bindings.DeliveryRightsTemplatesActiveFlag.inputValue}"
+                                            label="#{bindings.DeliveryRightsTemplatesActiveFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateDeliveryRightsTemplates) and (!(jhsUserRoles['DeliveryRightsTemplates.create']))) or ((!pageFlowScope.createModes.CreateDeliveryRightsTemplates) and (!(jhsUserRoles['DeliveryRightsTemplates.update'])))}"></af:selectBooleanCheckbox>
+                </af:panelFormLayout>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_DELIVERYRIGHTCATEGORIES']}"
+                               partialTriggers=" DeliveryRightsTemplatesTopLc DeliveryRightCategoriesDeleteDialog qsAreaDeliveryRightCategoriesSearchOptions DeliveryRightCategoriesPC:DeliveryRightCategoriesArm DeliveryRightCategoriesPC:DeliveryRightCategoriesduprmTM DeliveryRightCategoriesPC:DeliveryRightCategoriesdelrmTM DeliveryRightCategoriesPC:DeliveryRightCategoriesArl DeliveryRightCategoriesPC:DeliveryRightCategoriesTab:DeliveryRightCategoriesduprm DeliveryRightCategoriesPC:DeliveryRightCategoriesTab:DeliveryRightCategoriesdelrm DeliveryRightCategoriesPC:DeliveryRightCategoriesTab:DeliveryRightCategoriesdelrl DeliveryRightCategoriesPC:DeliveryRightCategoriesTab:DeliveryRightCategoriesduprl"
+                               id="DeliveryRightCategoriesTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN']}"
+                               disabled="#{!jhsUserRoles['ADMIN']}">
+              <af:panelGroupLayout layout="vertical"
+                                   id="DeliveryRightCategoriesTopLc"
+                                   partialTriggers=" DeliveryRightsTemplatesTopLc DeliveryRightCategoriesDeleteDialog qsAreaDeliveryRightCategoriesSearchOptions DeliveryRightCategoriesPC:DeliveryRightCategoriesArm DeliveryRightCategoriesPC:DeliveryRightCategoriesduprmTM DeliveryRightCategoriesPC:DeliveryRightCategoriesdelrmTM DeliveryRightCategoriesPC:DeliveryRightCategoriesArl DeliveryRightCategoriesPC:DeliveryRightCategoriesTab:DeliveryRightCategoriesduprm DeliveryRightCategoriesPC:DeliveryRightCategoriesTab:DeliveryRightCategoriesdelrm DeliveryRightCategoriesPC:DeliveryRightCategoriesTab:DeliveryRightCategoriesdelrl DeliveryRightCategoriesPC:DeliveryRightCategoriesTab:DeliveryRightCategoriesduprl"
+                                   rendered="#{jhsUserRoles['ADMIN']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0">
+                  <af:panelGroupLayout id="modelSearchAreaDeliveryRightCategories"
+                                       rendered="#{!pageFlowScope.createModes.CreateDeliveryRightCategories and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreaDeliveryRightCategoriesSearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.DeliveryRightCategoriesIteratorDeliveryRightTemplateCategoryViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.DeliveryRightCategoriesIteratorDeliveryRightTemplateCategoryViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.DeliveryRightCategoriesIteratorDeliveryRightTemplateCategoryViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl0">
+                  <af:panelCollection id="DeliveryRightCategoriesPC"
+                                      featuresOff=" "
+                                      inlineStyle=" width:1200px; ">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="DeliveryRightCategoriestbb"
+                                    rendered="#{ bindings.DeliveryRightCategoriesIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstDeliveryRightCategories.execute}"
+                                                id="DeliveryRightCategoriesFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousDeliveryRightCategories.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="DeliveryRightCategoriesPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextDeliveryRightCategories.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="DeliveryRightCategoriesNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastDeliveryRightCategories.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="DeliveryRightCategoriesLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="DeliveryRightCategoriesArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.DeliveryRightCategoriesTable.addRow}"
+                                            rendered="#{ bindings.DeliveryRightsTemplatesIterator.currentRow!=null  }"></af:commandMenuItem>
+                        <af:commandMenuItem id="DeliveryRightCategoriesduprmTM"
+                                            textAndAccessKey="#{nls['DUPLICATE_ROW']}"
+                                            immediate="true"
+                                            icon="/jheadstart/images/duplicateRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.DeliveryRightCategoriesTable.duplicateRow}"></af:commandMenuItem>
+                        <af:commandMenuItem id="DeliveryRightCategoriesdelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true">
+                          <af:showPopupBehavior popupId="::DeliveryRightCategoriesDeletePopup"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <!-- Also create CreateDeliveryRightCategories bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="DeliveryRightCategoriesArl"
+                                             immediate="false"
+                                             rendered="#{ bindings.DeliveryRightsTemplatesIterator.currentRow!=null  }"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.DeliveryRightCategoriesTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandToolbarButton text="Print"
+                                                 id="DeliveryRightCategoriesPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.DeliveryRightCategoriesIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="DeliveryRightCategoriesTab"
+                              contentDelivery="immediate"
+                              value="#{bindings.DeliveryRightCategoriesTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.DeliveryRightCategoriesTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.DeliveryRightCategoriesTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.DeliveryRightCategoriesTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.DeliveryRightCategoriesTable.rangeSize}"
+                              autoHeightRows="#{bindings.DeliveryRightCategoriesTable.estimatedRowCount lt 5 ? 5 : bindings.DeliveryRightCategoriesTable.estimatedRowCount lt bindings.DeliveryRightCategoriesTable.rangeSize ? bindings.DeliveryRightCategoriesTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.DeliveryRightCategoriesTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.DeliveryRightCategoriesIteratorDeliveryRightTemplateCategoryViewCriteriaQuery.processQuery}"
+                              binding="#{pageFlowScope.DeliveryRightCategoriesTable.table}"
+                              partialTriggers=":::qsAreaDeliveryRightCategoriesSearchOptions :::DeliveryRightCategoriesPC ::DeliveryRightCategoriesFirst ::DeliveryRightCategoriesPrevious ::DeliveryRightCategoriesNext ::DeliveryRightCategoriesLast"
+                              width="1200px"
+                              summary="#{nls['TABLE_TITLE_DELIVERYRIGHTCATEGORIES']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="DeliveryRightCategoriesTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="DeliveryRightCategoriesduprm"
+                                                textAndAccessKey="#{nls['DUPLICATE_ROW']}"
+                                                immediate="true"
+                                                icon="/jheadstart/images/duplicateRow.png"
+                                                partialSubmit="true"
+                                                actionListener="#{pageFlowScope.DeliveryRightCategoriesTable.duplicateRow}"></af:commandMenuItem>
+                            <af:commandMenuItem id="DeliveryRightCategoriesdelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true">
+                              <af:showPopupBehavior popupId=":::DeliveryRightCategoriesDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="DeliveryRightCategoriesActionColumn"
+                                 frozen="true" width="40" align="center"
+                                 headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl1">
+                          <af:commandImageLink id="DeliveryRightCategoriesdelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::DeliveryRightCategoriesDeletePopup"/>
+                          </af:commandImageLink>
+                          <af:commandImageLink id="DeliveryRightCategoriesduprl"
+                                               immediate="true"
+                                               partialSubmit="true"
+                                               actionListener="#{pageFlowScope.DeliveryRightCategoriesTable.duplicateRow}"
+                                               shortDesc="#{nls['DUPLICATE_ROW']}"
+                                               icon="/jheadstart/images/duplicateRow.png"/>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="DeliveryRightCategoriesCategoryIdCol"
+                                 sortable="true" noWrap="true" width="180"
+                                 sortProperty="CategoryId" align="right"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.DeliveryRightCategoriesTable.hints.CategoryId.label}"
+                                          showRequired="#{bindings.DeliveryRightCategoriesTable.hints.CategoryId.mandatory}"
+                                          id="ol0"/>
+                        </f:facet>
+                        <af:selectOneChoice id="DeliveryRightCategoriesCategoryId"
+                                            value="#{row.bindings.CategoryId.inputValue}"
+                                            label="#{bindings.DeliveryRightCategoriesTable.hints.CategoryId.label}"
+                                            required="#{bindings.DeliveryRightCategoriesTable.hints.CategoryId.mandatory}"
+                                            autoSubmit="true"
+                                            valueChangeListener="#{DeliveryRightCategoriesCategoryIdDependsOnItem.updateModelValue}">
+                          <f:selectItems value="#{row.bindings.CategoryId.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="DeliveryRightCategoriesValueCol"
+                                 sortable="true" noWrap="true" width="180"
+                                 sortProperty="Value" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.DeliveryRightCategoriesTable.hints.Value.label}"
+                                          showRequired="#{bindings.DeliveryRightCategoriesTable.hints.Value.mandatory}"
+                                          id="ol1"/>
+                        </f:facet>
+                        <af:selectOneChoice id="DeliveryRightCategoriesValue"
+                                            value="#{row.bindings.Value.inputValue}"
+                                            label="#{bindings.DeliveryRightCategoriesTable.hints.Value.label}"
+                                            required="#{bindings.DeliveryRightCategoriesTable.hints.Value.mandatory}">
+                          <f:selectItems value="#{row.bindings.Value.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="DeliveryRightCategoriesPermitFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="PermitFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.DeliveryRightCategoriesTable.hints.PermitFlag.label}"
+                                          showRequired="false" id="ol2"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="DeliveryRightCategoriesPermitFlag"
+                                                  label="#{bindings.DeliveryRightCategoriesTable.hints.PermitFlag.label}"
+                                                  value="#{DeliveryRightCategoriesPermitFlagcheckboxInTable.value}"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="DeliveryRightCategoriesCreatedByCol"
+                                 sortable="true" noWrap="true" width="240"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.DeliveryRightCategoriesTable.hints.CreatedBy.label}"
+                                          id="ol3"/>
+                        </f:facet>
+                        <af:inputText id="DeliveryRightCategoriesCreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.DeliveryRightCategoriesTable.hints.CreatedBy.label}"
+                                      required="#{bindings.DeliveryRightCategoriesTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.DeliveryRightCategoriesTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.DeliveryRightCategoriesTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="DeliveryRightCategoriesCreatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.DeliveryRightCategoriesTable.hints.CreatedDate.label}"
+                                          id="ol4"/>
+                        </f:facet>
+                        <af:inputDate id="DeliveryRightCategoriesCreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.DeliveryRightCategoriesTable.hints.CreatedDate.label}"
+                                      required="#{bindings.DeliveryRightCategoriesTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="DeliveryRightCategoriesLastUpdatedByCol"
+                                 sortable="true" noWrap="true" width="240"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.DeliveryRightCategoriesTable.hints.LastUpdatedBy.label}"
+                                          id="ol5"/>
+                        </f:facet>
+                        <af:inputText id="DeliveryRightCategoriesLastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.DeliveryRightCategoriesTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.DeliveryRightCategoriesTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.DeliveryRightCategoriesTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.DeliveryRightCategoriesTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="DeliveryRightCategoriesLastUpdatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.DeliveryRightCategoriesTable.hints.LastUpdatedDate.label}"
+                                          id="ol6"/>
+                        </f:facet>
+                        <af:inputDate id="DeliveryRightCategoriesLastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.DeliveryRightCategoriesTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.DeliveryRightCategoriesTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="DeliveryRightsTemplatesDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="DeliveryRightsTemplatesDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_DELIVERYRIGHTSTEMPLATE: #{bindings.DeliveryRightsTemplatesName.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteDeliveryRightsTemplates.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="DeliveryRightCategoriesDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="DeliveryRightCategoriesDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_DELIVERYRIGHTCATEGORIE:#{pageFlowScope.DeliveryRightCategoriesTable.currentRowAttributeValues.Value}']} "
+                           id="ot1"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteDeliveryRightCategories.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

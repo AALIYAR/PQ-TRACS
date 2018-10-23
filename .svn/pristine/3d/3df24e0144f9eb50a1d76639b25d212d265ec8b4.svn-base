@@ -1,0 +1,401 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="NTCTitleLOVTopLc"
+                             partialTriggers="">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_NTCTITLELOV']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0"></af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2"></af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:subform id="NTCTitleLOVSbf"
+                        rendered="#{!pageFlowScope.createModes.CreateNTCTitleLOV and !pageFlowScope.hideSearchArea}"
+                        defaultCommand="NTCTitleLOVQuickSearchButton">
+              <af:panelGroupLayout id="searchAreaNTCTitleLOV"
+                                   partialTriggers="">
+                <f:attribute name="JhsIgnoreChanges" value="true"/>
+                <af:panelGroupLayout id="qsAreaNTCTitleLOV"
+                                     rendered="#{pageFlowScope.searchNTCTitleLOV.quickSearchMode}"
+                                     layout="horizontal">
+                  <af:selectOneChoice id="qsSelectNTCTitleLOV"
+                                      label="#{nls['FILTER_BY']}"
+                                      value="#{pageFlowScope.searchNTCTitleLOV.searchItem}"
+                                      autoSubmit="true" immediate="true"
+                                      valueChangeListener="#{pageFlowScope.searchNTCTitleLOV.searchItemChanged}">
+                    <af:selectItem label="#{bindings.NTCTitleLOVTable.hints.TitleId.label}"
+                                   value="NTCTitleLOVTitleId" id="si0"/>
+                    <af:selectItem label="#{bindings.NTCTitleLOVTable.hints.AccountId.label}"
+                                   value="NTCTitleLOVAccountId" id="si1"/>
+                    <af:selectItem label="#{bindings.NTCTitleLOVTable.hints.TrackingNo.label}"
+                                   value="NTCTitleLOVTrackingNo" id="si2"/>
+                    <af:selectItem label="#{bindings.NTCTitleLOVTable.hints.CatalogNumber.label}"
+                                   value="NTCTitleLOVCatalogNumber" id="si3"/>
+                    <af:selectItem label="#{bindings.NTCTitleLOVTable.hints.Title.label}"
+                                   value="NTCTitleLOVTitle" id="si4"/>
+                    <af:selectItem label="#{bindings.NTCTitleLOVTable.hints.ClassificationNumber.label}"
+                                   value="NTCTitleLOVClassificationNumber"
+                                   id="si5"/>
+                    <af:selectItem label="#{bindings.NTCTitleLOVTable.hints.AccountNo.label}"
+                                   value="NTCTitleLOVAccountNo" id="si6"/>
+                    <af:selectItem label="#{bindings.NTCTitleLOVTable.hints.AccountName.label}"
+                                   value="NTCTitleLOVAccountName" id="si7"/>
+                    <af:selectItem label="#{bindings.NTCTitleLOVTable.hints.CatalogRoot.label}"
+                                   value="NTCTitleLOVCatalogRoot" id="si8"/>
+                  </af:selectOneChoice>
+                  <af:spacer width="4" id="qsAreaNTCTitleLOVSpacer1"/>
+                  <af:panelGroupLayout partialTriggers="qsSelectNTCTitleLOV"
+                                       id="qsAreaNTCTitleLOVpanelGroupLayout">
+                    <af:switcher facetName="#{pageFlowScope.searchNTCTitleLOV.searchItem}"
+                                 id="qsAreaNTCTitleLOVSwitcher">
+                      <f:facet name="NTCTitleLOVTitleId">
+                        <af:inputText id="QuickSearchNTCTitleLOVTitleId"
+                                      value="#{pageFlowScope.searchNTCTitleLOV.searchText}"
+                                      label="#{bindings.NTCTitleLOVTable.hints.TitleId.label}"
+                                      shortDesc="#{bindings.NTCTitleLOVTitleId.hints.tooltip}"
+                                      simple="true"
+                                      columns="#{bindings.NTCTitleLOVTitleId.hints.displayWidth}"
+                                      maximumLength="4000">
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.NTCTitleLOVTitleId.format}"/>
+                        </af:inputText>
+                      </f:facet>
+                      <f:facet name="NTCTitleLOVAccountId">
+                        <af:inputText id="QuickSearchNTCTitleLOVAccountId"
+                                      value="#{pageFlowScope.searchNTCTitleLOV.searchText}"
+                                      label="#{bindings.NTCTitleLOVTable.hints.AccountId.label}"
+                                      shortDesc="#{bindings.NTCTitleLOVAccountId.hints.tooltip}"
+                                      simple="true"
+                                      columns="#{bindings.NTCTitleLOVAccountId.hints.displayWidth}"
+                                      maximumLength="4000">
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.NTCTitleLOVAccountId.format}"/>
+                        </af:inputText>
+                      </f:facet>
+                      <f:facet name="NTCTitleLOVTrackingNo">
+                        <af:inputText id="QuickSearchNTCTitleLOVTrackingNo"
+                                      value="#{pageFlowScope.searchNTCTitleLOV.searchText}"
+                                      label="#{bindings.NTCTitleLOVTable.hints.TrackingNo.label}"
+                                      shortDesc="#{bindings.NTCTitleLOVTable.hints.TrackingNo.tooltip}"
+                                      simple="true"
+                                      columns="#{bindings.NTCTitleLOVTable.hints.TrackingNo.displayWidth}"
+                                      maximumLength="4000">
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.NTCTitleLOVTable.hints.TrackingNo.format}"/>
+                        </af:inputText>
+                      </f:facet>
+                      <f:facet name="NTCTitleLOVCatalogNumber">
+                        <af:inputText id="QuickSearchNTCTitleLOVCatalogNumber"
+                                      value="#{pageFlowScope.searchNTCTitleLOV.searchText}"
+                                      label="#{bindings.NTCTitleLOVTable.hints.CatalogNumber.label}"
+                                      shortDesc="#{bindings.NTCTitleLOVTable.hints.CatalogNumber.tooltip}"
+                                      simple="true"
+                                      columns="#{bindings.NTCTitleLOVTable.hints.CatalogNumber.displayWidth}"
+                                      maximumLength="4000"></af:inputText>
+                      </f:facet>
+                      <f:facet name="NTCTitleLOVTitle">
+                        <af:inputText id="QuickSearchNTCTitleLOVTitle"
+                                      value="#{pageFlowScope.searchNTCTitleLOV.searchText}"
+                                      label="#{bindings.NTCTitleLOVTable.hints.Title.label}"
+                                      shortDesc="#{bindings.NTCTitleLOVTable.hints.Title.tooltip}"
+                                      simple="true"
+                                      columns="#{bindings.NTCTitleLOVTable.hints.Title.displayWidth}"
+                                      maximumLength="4000"></af:inputText>
+                      </f:facet>
+                      <f:facet name="NTCTitleLOVClassificationNumber">
+                        <af:inputText id="QuickSearchNTCTitleLOVClassificationNumber"
+                                      value="#{pageFlowScope.searchNTCTitleLOV.searchText}"
+                                      label="#{bindings.NTCTitleLOVTable.hints.ClassificationNumber.label}"
+                                      shortDesc="#{bindings.NTCTitleLOVTable.hints.ClassificationNumber.tooltip}"
+                                      simple="true"
+                                      columns="#{bindings.NTCTitleLOVTable.hints.ClassificationNumber.displayWidth}"
+                                      maximumLength="4000"></af:inputText>
+                      </f:facet>
+                      <f:facet name="NTCTitleLOVAccountNo">
+                        <af:inputText id="QuickSearchNTCTitleLOVAccountNo"
+                                      value="#{pageFlowScope.searchNTCTitleLOV.searchText}"
+                                      label="#{bindings.NTCTitleLOVTable.hints.AccountNo.label}"
+                                      shortDesc="#{bindings.NTCTitleLOVTable.hints.AccountNo.tooltip}"
+                                      simple="true"
+                                      columns="#{bindings.NTCTitleLOVTable.hints.AccountNo.displayWidth}"
+                                      maximumLength="4000">
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.NTCTitleLOVTable.hints.AccountNo.format}"/>
+                        </af:inputText>
+                      </f:facet>
+                      <f:facet name="NTCTitleLOVAccountName">
+                        <af:inputText id="QuickSearchNTCTitleLOVAccountName"
+                                      value="#{pageFlowScope.searchNTCTitleLOV.searchText}"
+                                      label="#{bindings.NTCTitleLOVTable.hints.AccountName.label}"
+                                      shortDesc="#{bindings.NTCTitleLOVTable.hints.AccountName.tooltip}"
+                                      simple="true"
+                                      columns="#{bindings.NTCTitleLOVTable.hints.AccountName.displayWidth}"
+                                      maximumLength="4000"></af:inputText>
+                      </f:facet>
+                      <f:facet name="NTCTitleLOVCatalogRoot">
+                        <af:inputText id="QuickSearchNTCTitleLOVCatalogRoot"
+                                      value="#{pageFlowScope.searchNTCTitleLOV.searchText}"
+                                      label="#{bindings.NTCTitleLOVTable.hints.CatalogRoot.label}"
+                                      shortDesc="#{bindings.NTCTitleLOVTable.hints.CatalogRoot.tooltip}"
+                                      simple="true"
+                                      columns="#{bindings.NTCTitleLOVTable.hints.CatalogRoot.displayWidth}"
+                                      maximumLength="4000"></af:inputText>
+                      </f:facet>
+                    </af:switcher>
+                  </af:panelGroupLayout>
+                  <af:spacer width="4" id="qsAreaNTCTitleLOVSpacer2"/>
+                  <af:commandImageLink action="#{pageFlowScope.searchNTCTitleLOV.quickSearch}"
+                                       shortDesc="#{nls['FILTER_BY']}"
+                                       icon="/jheadstart/images/go_ena.png"
+                                       id="NTCTitleLOVQuickSearchButton"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:subform>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="NTCTitleLOVPC" featuresOff=" "
+                                inlineStyle=" width:934px; ">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:group id="NTCTitleLOVtbb"
+                              rendered="#{ (bindings.NTCTitleLOVIterator.viewObject!=null and bindings.NTCTitleLOVIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstNTCTitleLOV.execute}"
+                                          id="NTCTitleLOVFirst"
+                                          partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousNTCTitleLOV.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="NTCTitleLOVPrevious"
+                                          partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextNTCTitleLOV.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="NTCTitleLOVNext"
+                                          partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastNTCTitleLOV.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="NTCTitleLOVLast"
+                                          partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandToolbarButton text="Print" id="NTCTitleLOVPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.NTCTitleLOVIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="NTCTitleLOVTab" contentDelivery="immediate"
+                        value="#{bindings.NTCTitleLOVTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="multiple"
+                        selectionListener="#{pageFlowScope.NTCTitleLOVPage.selectionListener}"
+                        selectedRowKeys="#{pageFlowScope.NTCTitleLOVPage.selectedRowKeySet}"
+                        rowDisclosureListener="#{pageFlowScope.NTCTitleLOVTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.NTCTitleLOVTable.rangeSize}"
+                        autoHeightRows="#{bindings.NTCTitleLOVTable.estimatedRowCount lt 5 ? 5 : bindings.NTCTitleLOVTable.estimatedRowCount lt bindings.NTCTitleLOVTable.rangeSize ? bindings.NTCTitleLOVTable.estimatedRowCount : 0 }"
+                        fetchSize="#{bindings.NTCTitleLOVTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.NTCTitleLOVIteratorNTCTitleLovCriteriaQuery.processQuery}"
+                        filterModel="#{bindings.NTCTitleLOVIteratorNTCTitleLovCriteriaQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.NTCTitleLOVPage.lovTable}"
+                        partialTriggers=" :::NTCTitleLOVPC ::NTCTitleLOVFirst ::NTCTitleLOVPrevious ::NTCTitleLOVNext ::NTCTitleLOVLast"
+                        width="934px"
+                        summary="#{nls['TABLE_TITLE_NTCTITLELOV']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="NTCTitleLOVTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3"></af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="NTCTitleLOVTrackingNoCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="TrackingNo" align="right"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.NTCTitleLOVTable.hints.TrackingNo.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="NTCTitleLOVTrackingNo"
+                                value="#{row.bindings.TrackingNo.inputValue}"
+                                label="#{bindings.NTCTitleLOVTable.hints.TrackingNo.label}"
+                                required="#{bindings.NTCTitleLOVTable.hints.TrackingNo.mandatory}"
+                                rows="#{bindings.NTCTitleLOVTable.hints.TrackingNo.displayHeight}"
+                                columns="#{bindings.NTCTitleLOVTable.hints.TrackingNo.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.NTCTitleLOVTable.hints.TrackingNo.tooltip}">
+                    <f:validator binding="#{row.bindings.TrackingNo.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NTCTitleLOVTable.hints.TrackingNo.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="NTCTitleLOVCatalogNumberCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CatalogNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.NTCTitleLOVTable.hints.CatalogNumber.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="NTCTitleLOVCatalogNumber"
+                                value="#{row.bindings.CatalogNumber.inputValue}"
+                                label="#{bindings.NTCTitleLOVTable.hints.CatalogNumber.label}"
+                                required="#{bindings.NTCTitleLOVTable.hints.CatalogNumber.mandatory}"
+                                rows="#{bindings.NTCTitleLOVTable.hints.CatalogNumber.displayHeight}"
+                                columns="#{bindings.NTCTitleLOVTable.hints.CatalogNumber.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                shortDesc="#{bindings.NTCTitleLOVTable.hints.CatalogNumber.tooltip}">
+                    <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="NTCTitleLOVTitleCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="Title" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.NTCTitleLOVTable.hints.Title.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="NTCTitleLOVTitle"
+                                value="#{row.bindings.Title.inputValue}"
+                                label="#{bindings.NTCTitleLOVTable.hints.Title.label}"
+                                required="#{bindings.NTCTitleLOVTable.hints.Title.mandatory}"
+                                rows="#{bindings.NTCTitleLOVTable.hints.Title.displayHeight}"
+                                columns="#{bindings.NTCTitleLOVTable.hints.Title.displayWidth}"
+                                maximumLength="4000" readOnly="true"
+                                shortDesc="#{bindings.NTCTitleLOVTable.hints.Title.tooltip}">
+                    <f:validator binding="#{row.bindings.Title.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="NTCTitleLOVClassificationNumberCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="120" sortProperty="ClassificationNumber"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.NTCTitleLOVTable.hints.ClassificationNumber.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputText id="NTCTitleLOVClassificationNumber"
+                                value="#{row.bindings.ClassificationNumber.inputValue}"
+                                label="#{bindings.NTCTitleLOVTable.hints.ClassificationNumber.label}"
+                                required="#{bindings.NTCTitleLOVTable.hints.ClassificationNumber.mandatory}"
+                                rows="#{bindings.NTCTitleLOVTable.hints.ClassificationNumber.displayHeight}"
+                                columns="#{bindings.NTCTitleLOVTable.hints.ClassificationNumber.displayWidth}"
+                                maximumLength="100" readOnly="true"
+                                shortDesc="#{bindings.NTCTitleLOVTable.hints.ClassificationNumber.tooltip}">
+                    <f:validator binding="#{row.bindings.ClassificationNumber.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="NTCTitleLOVAccountNoCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="AccountNo" align="right"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.NTCTitleLOVTable.hints.AccountNo.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:inputText id="NTCTitleLOVAccountNo"
+                                value="#{row.bindings.AccountNo.inputValue}"
+                                label="#{bindings.NTCTitleLOVTable.hints.AccountNo.label}"
+                                required="#{bindings.NTCTitleLOVTable.hints.AccountNo.mandatory}"
+                                rows="#{bindings.NTCTitleLOVTable.hints.AccountNo.displayHeight}"
+                                columns="#{bindings.NTCTitleLOVTable.hints.AccountNo.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.NTCTitleLOVTable.hints.AccountNo.tooltip}">
+                    <f:validator binding="#{row.bindings.AccountNo.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NTCTitleLOVTable.hints.AccountNo.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="NTCTitleLOVAccountNameCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="AccountName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.NTCTitleLOVTable.hints.AccountName.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="NTCTitleLOVAccountName"
+                                value="#{row.bindings.AccountName.inputValue}"
+                                label="#{bindings.NTCTitleLOVTable.hints.AccountName.label}"
+                                required="#{bindings.NTCTitleLOVTable.hints.AccountName.mandatory}"
+                                rows="#{bindings.NTCTitleLOVTable.hints.AccountName.displayHeight}"
+                                columns="#{bindings.NTCTitleLOVTable.hints.AccountName.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                shortDesc="#{bindings.NTCTitleLOVTable.hints.AccountName.tooltip}">
+                    <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="NTCTitleLOVCatalogRootCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CatalogRoot" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.NTCTitleLOVTable.hints.CatalogRoot.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:inputText id="NTCTitleLOVCatalogRoot"
+                                value="#{row.bindings.CatalogRoot.inputValue}"
+                                label="#{bindings.NTCTitleLOVTable.hints.CatalogRoot.label}"
+                                required="#{bindings.NTCTitleLOVTable.hints.CatalogRoot.mandatory}"
+                                rows="#{bindings.NTCTitleLOVTable.hints.CatalogRoot.displayHeight}"
+                                columns="#{bindings.NTCTitleLOVTable.hints.CatalogRoot.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.NTCTitleLOVTable.hints.CatalogRoot.tooltip}">
+                    <f:validator binding="#{row.bindings.CatalogRoot.validator}"/>
+                  </af:inputText>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

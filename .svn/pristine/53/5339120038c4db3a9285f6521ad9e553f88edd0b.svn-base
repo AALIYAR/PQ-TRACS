@@ -1,0 +1,48 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig xmlns="http://xmlns.oracle.com/bc4j/configuration" version="11.1">
+   <AppModuleConfigBag ApplicationName="com.pq.tracs.model.services.TracsService">
+      <AppModuleConfig jbo.project="com.pq.tracs.model.Model" DeployPlatform="LOCAL" name="TracsServiceLocal" ApplicationName="com.pq.tracs.model.services.TracsService" jbo.txn.handleafterpostexc="true">
+         <AM-Pooling jbo.ampool.maxinactiveage="900000" jbo.ampool.initpoolsize="15" jbo.ampool.maxpoolsize="50" jbo.ampool.maxavailablesize="50" jbo.ampool.minavailablesize="15"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="com.pq.tracs.model.services.TracsService"/>
+         <Custom JDBCDataSource="java:comp/env/jdbc/TRACS_CONNDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig jbo.project="com.pq.tracs.model.Model" DeployPlatform="LOCAL" name="TracsServiceShared" ApplicationName="com.pq.tracs.model.services.TracsService">
+         <AM-Pooling jbo.ampool.maxinactiveage="900000" jbo.ampool.initpoolsize="25" jbo.recyclethreshold="50" jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.maxavailablesize="100" jbo.ampool.isuseexclusive="false" jbo.ampool.minavailablesize="50" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="com.pq.tracs.model.services.TracsService"/>
+         <Custom JDBCDataSource="java:comp/env/jdbc/TRACS_CONNDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig jbo.project="com.pq.tracs.model.Model" DeployPlatform="LOCAL" JDBCName="TRACS_CONN" name="TracsServiceTest" ApplicationName="com.pq.tracs.model.services.TracsService">
+         <AM-Pooling jbo.ampool.maxinactiveage="900000" jbo.ampool.initpoolsize="1" jbo.ampool.maxpoolsize="50" jbo.ampool.maxavailablesize="50" jbo.ampool.doampooling="false" jbo.ampool.minavailablesize="15"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="com.pq.tracs.model.services.TracsService"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="com.pq.tracs.model.services.TracsAdminService">
+      <AppModuleConfig jbo.project="com.pq.tracs.model.Model" DeployPlatform="LOCAL" name="TracsAdminServiceLocal" ApplicationName="com.pq.tracs.model.services.TracsAdminService">
+         <AM-Pooling jbo.ampool.maxinactiveage="900000" jbo.ampool.initpoolsize="2" jbo.ampool.maxpoolsize="10" jbo.recyclethreshold="2" jbo.ampool.maxavailablesize="10" jbo.ampool.minavailablesize="2"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="com.pq.tracs.model.services.TracsAdminService"/>
+         <Custom JDBCDataSource="java:comp/env/jdbc/TRACS_CONNDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig jbo.project="com.pq.tracs.model.Model" DeployPlatform="LOCAL" name="TracsAdminServiceShared" ApplicationName="com.pq.tracs.model.services.TracsAdminService" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.maxavailablesize="15" jbo.ampool.isuseexclusive="false" jbo.ampool.minavailablesize="1" jbo.ampool.maxinactiveage="900000" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="com.pq.tracs.model.services.TracsAdminService"/>
+         <Custom JDBCDataSource="java:comp/env/jdbc/TRACS_CONNDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="com.pq.tracs.model.services.TracsLookupModule" default="TracsLookupModuleShared">
+      <AppModuleConfig name="TracsLookupModuleLocal" jbo.project="com.pq.tracs.model.Model" ApplicationName="com.pq.tracs.model.services.TracsLookupModule" DeployPlatform="LOCAL" JDBCName="TRACS_CONN" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <Database jbo.TypeMapEntries="Java"/>
+         <Security AppModuleJndiName="com.pq.tracs.model.services.TracsLookupModule"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="com.pq.tracs.model.Model" name="TracsLookupModuleShared" ApplicationName="com.pq.tracs.model.services.TracsLookupModule" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+         <AM-Pooling jbo.ampool.initpoolsize="1" jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.TypeMapEntries="Java" jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="com.pq.tracs.model.services.TracsLookupModule"/>
+         <Custom JDBCDataSource="java:comp/env/jdbc/TRACS_CONNDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+</BC4JConfig>

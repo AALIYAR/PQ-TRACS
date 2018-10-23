@@ -1,0 +1,694 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplate.jspx">
+    <f:facet name="pageContent">
+      <af:panelStretchLayout topHeight="auto"
+                             id="TargetedProductTitleLookupTopLc"
+                             partialTriggers="">
+        <f:facet name="top">
+          <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (default/pageComponent/groupContent.vm) -->
+          <af:group id="g0">
+            <af:panelHeader id="ph0"
+                            text="#{nls['TABLE_TITLE_TARGETEDPRODUCTTITLELOOKUP']}">
+              <f:facet name="toolbar">
+                <af:toolbox id="tbox0">
+                  <af:toolbar id="tbar0">
+                    <af:group id="gr0"></af:group>
+                    <af:group id="gr1"></af:group>
+                    <af:group id="gr2"></af:group>
+                  </af:toolbar>
+                </af:toolbox>
+              </f:facet>
+              <f:facet name="context"></f:facet>
+              <af:subform id="TargetedProductTitleLookupSbf"
+                          rendered="#{!pageFlowScope.createModes.CreateTargetedProductTitleLookup and !pageFlowScope.hideSearchArea}"
+                          defaultCommand="TargetedProductTitleLookupQuickSearchButton">
+                <af:panelGroupLayout id="searchAreaTargetedProductTitleLookup"
+                                     partialTriggers="">
+                  <f:attribute name="JhsIgnoreChanges" value="true"/>
+                  <af:panelGroupLayout id="qsAreaTargetedProductTitleLookup"
+                                       rendered="#{pageFlowScope.searchTargetedProductTitleLookup.quickSearchMode}"
+                                       layout="horizontal">
+                    <af:selectOneChoice id="qsSelectTargetedProductTitleLookup"
+                                        label="#{nls['FILTER_BY']}"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchItem}"
+                                        autoSubmit="true" immediate="true"
+                                        valueChangeListener="#{pageFlowScope.searchTargetedProductTitleLookup.searchItemChanged}">
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.Id.label}"
+                                     value="TargetedProductTitleLookupId"
+                                     id="si0"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.TargetTrackingNo.label}"
+                                     value="TargetedProductTitleLookupTargetTrackingNo"
+                                     id="si1"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.CatalogNumber.label}"
+                                     value="TargetedProductTitleLookupCatalogNumber"
+                                     id="si2"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.LongTitle.label}"
+                                     value="TargetedProductTitleLookupLongTitle"
+                                     id="si3"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.PrdId.label}"
+                                     value="TargetedProductTitleLookupPrdId"
+                                     id="si4"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.ProductName.label}"
+                                     value="TargetedProductTitleLookupProductName"
+                                     id="si5"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.ProductFamily.label}"
+                                     value="TargetedProductTitleLookupProductFamily"
+                                     id="si6"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.TargetGroup.label}"
+                                     value="TargetedProductTitleLookupTargetGroup"
+                                     id="si7"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogId.label}"
+                                     value="TargetedProductTitleLookupCurrentCatalogId"
+                                     id="si8"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogNumber.label}"
+                                     value="TargetedProductTitleLookupCurrentCatalogNumber"
+                                     id="si9"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.AddedDate.label}"
+                                     value="TargetedProductTitleLookupAddedDate"
+                                     id="si10"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.RemovedDate.label}"
+                                     value="TargetedProductTitleLookupRemovedDate"
+                                     id="si11"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.CreatedBy.label}"
+                                     value="TargetedProductTitleLookupCreatedBy"
+                                     id="si12"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.CreatedDate.label}"
+                                     value="TargetedProductTitleLookupCreatedDate"
+                                     id="si13"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedBy.label}"
+                                     value="TargetedProductTitleLookupLastUpdatedBy"
+                                     id="si14"/>
+                      <af:selectItem label="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedDate.label}"
+                                     value="TargetedProductTitleLookupLastUpdatedDate"
+                                     id="si15"/>
+                    </af:selectOneChoice>
+                    <af:spacer width="4"
+                               id="qsAreaTargetedProductTitleLookupSpacer1"/>
+                    <af:panelGroupLayout partialTriggers="qsSelectTargetedProductTitleLookup"
+                                         id="qsAreaTargetedProductTitleLookuppanelGroupLayout">
+                      <af:switcher facetName="#{pageFlowScope.searchTargetedProductTitleLookup.searchItem}"
+                                   id="qsAreaTargetedProductTitleLookupSwitcher">
+                        <f:facet name="TargetedProductTitleLookupId">
+                          <af:inputText id="QuickSearchTargetedProductTitleLookupId"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.Id.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.Id.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetedProductTitleLookupTable.hints.Id.displayWidth}"
+                                        maximumLength="4000">
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.TargetedProductTitleLookupTable.hints.Id.format}"/>
+                          </af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupTargetTrackingNo">
+                          <af:inputText id="QuickSearchTargetedProductTitleLookupTargetTrackingNo"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.TargetTrackingNo.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.TargetTrackingNo.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetedProductTitleLookupTable.hints.TargetTrackingNo.displayWidth}"
+                                        maximumLength="4000">
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.TargetedProductTitleLookupTable.hints.TargetTrackingNo.format}"/>
+                          </af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupCatalogNumber">
+                          <af:inputText id="QuickSearchTargetedProductTitleLookupCatalogNumber"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.CatalogNumber.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.CatalogNumber.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetedProductTitleLookupTable.hints.CatalogNumber.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupLongTitle">
+                          <af:inputText id="QuickSearchTargetedProductTitleLookupLongTitle"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.LongTitle.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.LongTitle.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetedProductTitleLookupTable.hints.LongTitle.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupPrdId">
+                          <af:inputText id="QuickSearchTargetedProductTitleLookupPrdId"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.PrdId.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.PrdId.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetedProductTitleLookupTable.hints.PrdId.displayWidth}"
+                                        maximumLength="4000">
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.TargetedProductTitleLookupTable.hints.PrdId.format}"/>
+                          </af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupProductName">
+                          <af:inputText id="QuickSearchTargetedProductTitleLookupProductName"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.ProductName.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.ProductName.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetedProductTitleLookupTable.hints.ProductName.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupProductFamily">
+                          <af:inputText id="QuickSearchTargetedProductTitleLookupProductFamily"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.ProductFamily.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.ProductFamily.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetedProductTitleLookupTable.hints.ProductFamily.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupTargetGroup">
+                          <af:inputText id="QuickSearchTargetedProductTitleLookupTargetGroup"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.TargetGroup.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.TargetGroup.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetedProductTitleLookupTable.hints.TargetGroup.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupCurrentCatalogId">
+                          <af:inputText id="QuickSearchTargetedProductTitleLookupCurrentCatalogId"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogId.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogId.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogId.displayWidth}"
+                                        maximumLength="4000">
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogId.format}"/>
+                          </af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupCurrentCatalogNumber">
+                          <af:inputText id="QuickSearchTargetedProductTitleLookupCurrentCatalogNumber"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogNumber.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogNumber.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogNumber.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupAddedDate">
+                          <af:inputDate id="QuickSearchTargetedProductTitleLookupAddedDate"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.AddedDate.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.AddedDate.tooltip}"
+                                        simple="true">
+                            <af:convertDateTime pattern="#{nls.datepattern}"/>
+                          </af:inputDate>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupRemovedDate">
+                          <af:inputDate id="QuickSearchTargetedProductTitleLookupRemovedDate"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.RemovedDate.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.RemovedDate.tooltip}"
+                                        simple="true">
+                            <af:convertDateTime pattern="#{nls.datepattern}"/>
+                          </af:inputDate>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupCreatedBy">
+                          <af:inputText id="QuickSearchTargetedProductTitleLookupCreatedBy"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.CreatedBy.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.CreatedBy.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetedProductTitleLookupTable.hints.CreatedBy.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupCreatedDate">
+                          <af:inputDate id="QuickSearchTargetedProductTitleLookupCreatedDate"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.CreatedDate.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.CreatedDate.tooltip}"
+                                        simple="true">
+                            <af:convertDateTime pattern="#{nls.datepattern}"/>
+                          </af:inputDate>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupLastUpdatedBy">
+                          <af:inputText id="QuickSearchTargetedProductTitleLookupLastUpdatedBy"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedBy.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedBy.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedBy.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetedProductTitleLookupLastUpdatedDate">
+                          <af:inputDate id="QuickSearchTargetedProductTitleLookupLastUpdatedDate"
+                                        value="#{pageFlowScope.searchTargetedProductTitleLookup.searchText}"
+                                        label="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedDate.label}"
+                                        shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedDate.tooltip}"
+                                        simple="true">
+                            <af:convertDateTime pattern="#{nls.datepattern}"/>
+                          </af:inputDate>
+                        </f:facet>
+                      </af:switcher>
+                    </af:panelGroupLayout>
+                    <af:spacer width="4"
+                               id="qsAreaTargetedProductTitleLookupSpacer2"/>
+                    <af:commandImageLink action="#{pageFlowScope.searchTargetedProductTitleLookup.quickSearch}"
+                                         shortDesc="#{nls['FILTER_BY']}"
+                                         icon="/jheadstart/images/go_ena.png"
+                                         id="TargetedProductTitleLookupQuickSearchButton"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:subform>
+            </af:panelHeader>
+            <af:spacer width="10" height="10" id="sp0"/>
+          </af:group>
+          <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+        </f:facet>
+        <f:facet name="center">
+          <af:panelStretchLayout topHeight="0" id="psl0">
+            <f:facet name="top"></f:facet>
+            <f:facet name="center">
+              <af:panelCollection id="TargetedProductTitleLookupPC"
+                                  featuresOff=" " styleClass="AFStretchWidth">
+                <f:facet name="menus">
+                  <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                           id="menu0">
+                    <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                             id="menu1">
+                      <af:group id="TargetedProductTitleLookuptbb"
+                                rendered="#{ (bindings.TargetedProductTitleLookupIterator.viewObject!=null and bindings.TargetedProductTitleLookupIterator.viewObject.currentRow!=null)}">
+                        <af:commandMenuItem actionListener="#{bindings.FirstTargetedProductTitleLookup.execute}"
+                                            id="TargetedProductTitleLookupFirst"
+                                            partialSubmit="true"
+                                            icon="/afr/shuttleleftall_ena.png"
+                                            textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.PreviousTargetedProductTitleLookup.execute}"
+                                            icon="/afr/shuttleleft_ena.png"
+                                            textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                            id="TargetedProductTitleLookupPrevious"
+                                            partialSubmit="true"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.NextTargetedProductTitleLookup.execute}"
+                                            icon="/afr/shuttleright_ena.png"
+                                            textAndAccessKey="#{nls['NEXT_ROW']}"
+                                            id="TargetedProductTitleLookupNext"
+                                            partialSubmit="true"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.LastTargetedProductTitleLookup.execute}"
+                                            icon="/afr/shuttlerightall_ena.png"
+                                            textAndAccessKey="#{nls['LAST_ROW']}"
+                                            id="TargetedProductTitleLookupLast"
+                                            partialSubmit="true"></af:commandMenuItem>
+                      </af:group>
+                    </af:menu>
+                  </af:menu>
+                </f:facet>
+                <f:facet name="toolbar">
+                  <af:toolbar id="tbar1">
+                    <af:commandToolbarButton text="Print"
+                                             id="TargetedProductTitleLookupPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="statusbar">
+                  <af:toolbar>
+                    <af:outputText value="#{bindings.TargetedProductTitleLookupIterator.estimatedRowCount} rows found"/>
+                  </af:toolbar>
+                </f:facet>
+                <af:table id="TargetedProductTitleLookupTab"
+                          contentDelivery="immediate"
+                          value="#{bindings.TargetedProductTitleLookupTable.collectionModel}"
+                          columnStretching="blank" rowBandingInterval="0"
+                          editingMode="editAll" columnSelection="multiple"
+                          contextMenuSelect="true" rowSelection="multiple"
+                          selectionListener="#{pageFlowScope.TargetedProductTitleLookupPage.selectionListener}"
+                          selectedRowKeys="#{pageFlowScope.TargetedProductTitleLookupPage.selectedRowKeySet}"
+                          rowDisclosureListener="#{pageFlowScope.TargetedProductTitleLookupTable.discloseRow}"
+                          var="row" varStatus="status"
+                          fetchSize="#{bindings.TargetedProductTitleLookupTable.rangeSize}"
+                          emptyText="#{nls['NO_ROWS_FOUND']}"
+                          queryListener="#{bindings.TargetedProductTitleLookupIteratorQuery.processQuery}"
+                          filterModel="#{bindings.TargetedProductTitleLookupIteratorQuery.queryDescriptor}"
+                          filterVisible="true"
+                          binding="#{pageFlowScope.TargetedProductTitleLookupPage.lovTable}"
+                          partialTriggers=" :::TargetedProductTitleLookupPC ::TargetedProductTitleLookupFirst ::TargetedProductTitleLookupPrevious ::TargetedProductTitleLookupNext ::TargetedProductTitleLookupLast"
+                          styleClass="AFStretchWidth"
+                          summary="#{nls['TABLE_TITLE_TARGETEDPRODUCTTITLELOOKUP']}">
+                  <f:facet name="contextMenu">
+                    <af:popup id="TargetedProductTitleLookupTablePopup"
+                              childCreation="deferred">
+                      <af:menu id="menu2">
+                        <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3"></af:menu>
+                      </af:menu>
+                    </af:popup>
+                  </f:facet>
+                  <af:column id="TargetedProductTitleLookupIdCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="228" sortProperty="Id" align="right"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.Id.label}"
+                                      id="ol0"/>
+                    </f:facet>
+                    <af:inputText id="TargetedProductTitleLookupId"
+                                  value="#{row.bindings.Id.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.Id.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.Id.mandatory}"
+                                  rows="#{bindings.TargetedProductTitleLookupTable.hints.Id.displayHeight}"
+                                  columns="#{bindings.TargetedProductTitleLookupTable.hints.Id.displayWidth}"
+                                  maximumLength="38" readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.Id.tooltip}">
+                      <f:validator binding="#{row.bindings.Id.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.TargetedProductTitleLookupTable.hints.Id.format}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupTargetTrackingNoCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100" sortProperty="TargetTrackingNo"
+                             align="right" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.TargetTrackingNo.label}"
+                                      id="ol1"/>
+                    </f:facet>
+                    <af:inputText id="TargetedProductTitleLookupTargetTrackingNo"
+                                  value="#{row.bindings.TargetTrackingNo.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.TargetTrackingNo.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.TargetTrackingNo.mandatory}"
+                                  rows="#{bindings.TargetedProductTitleLookupTable.hints.TargetTrackingNo.displayHeight}"
+                                  columns="#{bindings.TargetedProductTitleLookupTable.hints.TargetTrackingNo.displayWidth}"
+                                  maximumLength="38" readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.TargetTrackingNo.tooltip}">
+                      <f:validator binding="#{row.bindings.TargetTrackingNo.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.TargetedProductTitleLookupTable.hints.TargetTrackingNo.format}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupCatalogNumberCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100" sortProperty="CatalogNumber"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.CatalogNumber.label}"
+                                      id="ol2"/>
+                    </f:facet>
+                    <af:inputText id="TargetedProductTitleLookupCatalogNumber"
+                                  value="#{row.bindings.CatalogNumber.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.CatalogNumber.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.CatalogNumber.mandatory}"
+                                  rows="#{bindings.TargetedProductTitleLookupTable.hints.CatalogNumber.displayHeight}"
+                                  columns="#{bindings.TargetedProductTitleLookupTable.hints.CatalogNumber.displayWidth}"
+                                  maximumLength="40" readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.CatalogNumber.tooltip}">
+                      <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupLongTitleCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="240" sortProperty="LongTitle"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.LongTitle.label}"
+                                      id="ol3"/>
+                    </f:facet>
+                    <af:inputText id="TargetedProductTitleLookupLongTitle"
+                                  value="#{row.bindings.LongTitle.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.LongTitle.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.LongTitle.mandatory}"
+                                  rows="#{bindings.TargetedProductTitleLookupTable.hints.LongTitle.displayHeight}"
+                                  columns="#{bindings.TargetedProductTitleLookupTable.hints.LongTitle.displayWidth}"
+                                  maximumLength="4000" readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.LongTitle.tooltip}">
+                      <f:validator binding="#{row.bindings.LongTitle.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupPrdIdCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100" sortProperty="PrdId" align="right"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.PrdId.label}"
+                                      id="ol4"/>
+                    </f:facet>
+                    <af:inputText id="TargetedProductTitleLookupPrdId"
+                                  value="#{row.bindings.PrdId.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.PrdId.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.PrdId.mandatory}"
+                                  rows="#{bindings.TargetedProductTitleLookupTable.hints.PrdId.displayHeight}"
+                                  columns="#{bindings.TargetedProductTitleLookupTable.hints.PrdId.displayWidth}"
+                                  readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.PrdId.tooltip}">
+                      <f:validator binding="#{row.bindings.PrdId.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.TargetedProductTitleLookupTable.hints.PrdId.format}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupProductNameCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="240" sortProperty="ProductName"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.ProductName.label}"
+                                      id="ol5"/>
+                    </f:facet>
+                    <af:inputText id="TargetedProductTitleLookupProductName"
+                                  value="#{row.bindings.ProductName.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.ProductName.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.ProductName.mandatory}"
+                                  rows="#{bindings.TargetedProductTitleLookupTable.hints.ProductName.displayHeight}"
+                                  columns="#{bindings.TargetedProductTitleLookupTable.hints.ProductName.displayWidth}"
+                                  maximumLength="400" readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.ProductName.tooltip}">
+                      <f:validator binding="#{row.bindings.ProductName.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupProductFamilyCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="180" sortProperty="ProductFamily"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.ProductFamily.label}"
+                                      id="ol6"/>
+                    </f:facet>
+                    <af:inputText id="TargetedProductTitleLookupProductFamily"
+                                  value="#{row.bindings.ProductFamily.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.ProductFamily.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.ProductFamily.mandatory}"
+                                  rows="#{bindings.TargetedProductTitleLookupTable.hints.ProductFamily.displayHeight}"
+                                  columns="#{bindings.TargetedProductTitleLookupTable.hints.ProductFamily.displayWidth}"
+                                  maximumLength="100" readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.ProductFamily.tooltip}">
+                      <f:validator binding="#{row.bindings.ProductFamily.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupTargetGroupCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="120" sortProperty="TargetGroup"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.TargetGroup.label}"
+                                      id="ol7"/>
+                    </f:facet>
+                    <af:inputText id="TargetedProductTitleLookupTargetGroup"
+                                  value="#{row.bindings.TargetGroup.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.TargetGroup.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.TargetGroup.mandatory}"
+                                  rows="#{bindings.TargetedProductTitleLookupTable.hints.TargetGroup.displayHeight}"
+                                  columns="#{bindings.TargetedProductTitleLookupTable.hints.TargetGroup.displayWidth}"
+                                  maximumLength="400" readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.TargetGroup.tooltip}">
+                      <f:validator binding="#{row.bindings.TargetGroup.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupCurrentCatalogIdCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="228" sortProperty="CurrentCatalogId"
+                             align="right" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogId.label}"
+                                      id="ol8"/>
+                    </f:facet>
+                    <af:inputText id="TargetedProductTitleLookupCurrentCatalogId"
+                                  value="#{row.bindings.CurrentCatalogId.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogId.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogId.mandatory}"
+                                  rows="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogId.displayHeight}"
+                                  columns="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogId.displayWidth}"
+                                  maximumLength="38" readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogId.tooltip}">
+                      <f:validator binding="#{row.bindings.CurrentCatalogId.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogId.format}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupCurrentCatalogNumberCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100" sortProperty="CurrentCatalogNumber"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogNumber.label}"
+                                      id="ol9"/>
+                    </f:facet>
+                    <af:inputText id="TargetedProductTitleLookupCurrentCatalogNumber"
+                                  value="#{row.bindings.CurrentCatalogNumber.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogNumber.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogNumber.mandatory}"
+                                  rows="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogNumber.displayHeight}"
+                                  columns="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogNumber.displayWidth}"
+                                  maximumLength="40" readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.CurrentCatalogNumber.tooltip}">
+                      <f:validator binding="#{row.bindings.CurrentCatalogNumber.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupAddedDateCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100" sortProperty="AddedDate"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.AddedDate.label}"
+                                      id="ol10"/>
+                    </f:facet>
+                    <f:facet name="filter">
+                      <af:inputDate value="#{status.filterCriteria.AddedDate}"
+                                    id="id0">
+                        <af:convertDateTime pattern="#{nls.datepattern}"/>
+                      </af:inputDate>
+                    </f:facet>
+                    <af:inputDate id="TargetedProductTitleLookupAddedDate"
+                                  value="#{row.bindings.AddedDate.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.AddedDate.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.AddedDate.mandatory}"
+                                  readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.AddedDate.tooltip}">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupRemovedDateCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100" sortProperty="RemovedDate"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.RemovedDate.label}"
+                                      id="ol11"/>
+                    </f:facet>
+                    <f:facet name="filter">
+                      <af:inputDate value="#{status.filterCriteria.RemovedDate}"
+                                    id="id1">
+                        <af:convertDateTime pattern="#{nls.datepattern}"/>
+                      </af:inputDate>
+                    </f:facet>
+                    <af:inputDate id="TargetedProductTitleLookupRemovedDate"
+                                  value="#{row.bindings.RemovedDate.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.RemovedDate.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.RemovedDate.mandatory}"
+                                  readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.RemovedDate.tooltip}">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupCreatedByCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="120" sortProperty="CreatedBy"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.CreatedBy.label}"
+                                      id="ol12"/>
+                    </f:facet>
+                    <af:inputText id="TargetedProductTitleLookupCreatedBy"
+                                  value="#{row.bindings.CreatedBy.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.CreatedBy.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.CreatedBy.mandatory}"
+                                  rows="#{bindings.TargetedProductTitleLookupTable.hints.CreatedBy.displayHeight}"
+                                  columns="#{bindings.TargetedProductTitleLookupTable.hints.CreatedBy.displayWidth}"
+                                  maximumLength="20" readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.CreatedBy.tooltip}">
+                      <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupCreatedDateCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100" sortProperty="CreatedDate"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.CreatedDate.label}"
+                                      id="ol13"/>
+                    </f:facet>
+                    <f:facet name="filter">
+                      <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                    id="id2">
+                        <af:convertDateTime pattern="#{nls.datepattern}"/>
+                      </af:inputDate>
+                    </f:facet>
+                    <af:inputDate id="TargetedProductTitleLookupCreatedDate"
+                                  value="#{row.bindings.CreatedDate.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.CreatedDate.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.CreatedDate.mandatory}"
+                                  readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.CreatedDate.tooltip}">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupLastUpdatedByCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="120" sortProperty="LastUpdatedBy"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedBy.label}"
+                                      id="ol14"/>
+                    </f:facet>
+                    <af:inputText id="TargetedProductTitleLookupLastUpdatedBy"
+                                  value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedBy.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedBy.mandatory}"
+                                  rows="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedBy.displayHeight}"
+                                  columns="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedBy.displayWidth}"
+                                  maximumLength="20" readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedBy.tooltip}">
+                      <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetedProductTitleLookupLastUpdatedDateCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100" sortProperty="LastUpdatedDate"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedDate.label}"
+                                      id="ol15"/>
+                    </f:facet>
+                    <f:facet name="filter">
+                      <af:inputDate value="#{status.filterCriteria.LastUpdatedDate}"
+                                    id="id3">
+                        <af:convertDateTime pattern="#{nls.datepattern}"/>
+                      </af:inputDate>
+                    </f:facet>
+                    <af:inputDate id="TargetedProductTitleLookupLastUpdatedDate"
+                                  value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                  label="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedDate.label}"
+                                  required="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedDate.mandatory}"
+                                  readOnly="true"
+                                  shortDesc="#{bindings.TargetedProductTitleLookupTable.hints.LastUpdatedDate.tooltip}">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

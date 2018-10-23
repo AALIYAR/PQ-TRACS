@@ -1,0 +1,621 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="UTSTopLc"
+                             partialTriggers=" UTSDeleteDialog UTSSaveButton0 UTSCancelButton0 asAreaUTSSearchOptions qsAreaUTSSearchOptions UTSPC:UTSArm UTSPC:UTSduprmTM UTSPC:UTSdelrmTM UTSPC:UTSArl UTSPC:UTSTab:UTSduprm UTSPC:UTSTab:UTSdelrm UTSPC:UTSTab:UTSdelrl UTSPC:UTSTab:UTSduprl"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{nls['TABLE_TITLE_UNIFIEDTITLESEARCH']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0"></af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton action="#{SaveUnifiedTitleSearch.execute}"
+                                      rendered="#{!pageFlowScope.hideSaveButton}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="UTSSaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="UTSCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaUTS"
+                                 rendered="#{!pageFlowScope.createModes.CreateUnifiedTitleSearch and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaUTSSearchOptions:qsButtonUTS qsAreaUTSSearchOptions:asButtonUTS ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaUTSSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.UnifiedTitleSearchIteratorUnifiedTitleSearchViewCriteriaAdvQuery.queryDescriptor}"
+                        model="#{bindings.UnifiedTitleSearchIteratorUnifiedTitleSearchViewCriteriaAdvQuery.queryModel}"
+                        queryListener="#{bindings.UnifiedTitleSearchIteratorUnifiedTitleSearchViewCriteriaAdvQuery.processQuery}"
+                        queryOperationListener="#{bindings.UnifiedTitleSearchIteratorUnifiedTitleSearchViewCriteriaAdvQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchUnifiedTitleSearch.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="3">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonUTS"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchUnifiedTitleSearch.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaUTSSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.UnifiedTitleSearchIteratorUnifiedTitleSearchViewCriteriaAdvQuery.queryDescriptor}"
+                             model="#{bindings.UnifiedTitleSearchIteratorUnifiedTitleSearchViewCriteriaAdvQuery.queryModel}"
+                             queryListener="#{bindings.UnifiedTitleSearchIteratorUnifiedTitleSearchViewCriteriaAdvQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchUnifiedTitleSearch.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonUTS"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchUnifiedTitleSearch.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="UTSPC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:group id="UTStbb"
+                              rendered="#{ (bindings.UnifiedTitleSearchIterator.viewObject!=null and bindings.UnifiedTitleSearchIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstUnifiedTitleSearch.execute}"
+                                          id="UTSFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousUnifiedTitleSearch.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="UTSPrevious" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextUnifiedTitleSearch.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="UTSNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastUnifiedTitleSearch.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="UTSLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem id="UTSArm"
+                                      textAndAccessKey="#{nls['ADD_ROW']}"
+                                      immediate="false"
+                                      icon="/jheadstart/images/addRow.png"
+                                      partialSubmit="true"
+                                      actionListener="#{pageFlowScope.UnifiedTitleSearchTable.addRow}"
+                                      rendered="#{(true) }"></af:commandMenuItem>
+                  <af:commandMenuItem id="UTSduprmTM"
+                                      textAndAccessKey="#{nls['DUPLICATE_ROW']}"
+                                      immediate="true"
+                                      icon="/jheadstart/images/duplicateRow.png"
+                                      partialSubmit="true"
+                                      actionListener="#{pageFlowScope.UnifiedTitleSearchTable.duplicateRow}"></af:commandMenuItem>
+                  <af:commandMenuItem id="UTSdelrmTM"
+                                      textAndAccessKey="#{nls['DELETE_ROW']}"
+                                      icon="/jheadstart/images/deleteRow.png"
+                                      partialSubmit="true" immediate="true">
+                    <af:showPopupBehavior popupId="::UTSDeletePopup"/>
+                  </af:commandMenuItem>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="UTSTab"
+                                                       type="excelHTML"
+                                                       filename="UnifiedTitleSearch.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <!-- Also create CreateUnifiedTitleSearch bean so we can start table group in create mode as well -->
+                  <af:commandImageLink id="UTSArl" immediate="false"
+                                       rendered="#{(true) }"
+                                       partialSubmit="true"
+                                       actionListener="#{pageFlowScope.UnifiedTitleSearchTable.addRow}"
+                                       shortDesc="#{nls['ADD_ROW']}"
+                                       icon="/jheadstart/images/addRow.png"/>
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="UTSTab"
+                                                       type="excelHTML"
+                                                       filename="UnifiedTitleSearch.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="UTSPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.UnifiedTitleSearchIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="UTSTab" contentDelivery="immediate"
+                        value="#{bindings.UnifiedTitleSearchTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.UnifiedTitleSearchTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.UnifiedTitleSearchTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.UnifiedTitleSearchTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.UnifiedTitleSearchTable.rangeSize}"
+                        autoHeightRows="#{bindings.UnifiedTitleSearchTable.estimatedRowCount}"
+                        fetchSize="#{bindings.UnifiedTitleSearchTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.UnifiedTitleSearchIteratorUnifiedTitleSearchViewCriteriaAdvQuery.processQuery}"
+                        filterModel="#{bindings.UnifiedTitleSearchIteratorUnifiedTitleSearchViewCriteriaAdvQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.UnifiedTitleSearchTable.table}"
+                        partialTriggers=":::qsAreaUTSSearchOptions :::asAreaUTSSearchOptions :::UTSPC ::UTSFirst ::UTSPrevious ::UTSNext ::UTSLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_UNIFIEDTITLESEARCH']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="UTSTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3"></af:menu>
+                      <af:commandMenuItem id="UTSduprm"
+                                          textAndAccessKey="#{nls['DUPLICATE_ROW']}"
+                                          immediate="true"
+                                          icon="/jheadstart/images/duplicateRow.png"
+                                          partialSubmit="true"
+                                          actionListener="#{pageFlowScope.UnifiedTitleSearchTable.duplicateRow}"></af:commandMenuItem>
+                      <af:commandMenuItem id="UTSdelrm"
+                                          textAndAccessKey="#{nls['DELETE_ROW']}"
+                                          icon="/jheadstart/images/deleteRow.png"
+                                          partialSubmit="true" immediate="true">
+                        <af:showPopupBehavior popupId=":::UTSDeletePopup"/>
+                      </af:commandMenuItem>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="UTSActionColumn" frozen="true" width="40"
+                           align="center" headerText=" ">
+                  <af:panelGroupLayout layout="horizontal" id="pgl1">
+                    <af:commandImageLink id="UTSdelrl" partialSubmit="true"
+                                         immediate="true"
+                                         shortDesc="#{nls['DELETE_ROW']}"
+                                         icon="/jheadstart/images/deleteRow.png">
+                      <af:showPopupBehavior popupId=":::UTSDeletePopup"/>
+                    </af:commandImageLink>
+                    <af:commandImageLink id="UTSduprl" immediate="true"
+                                         partialSubmit="true"
+                                         actionListener="#{pageFlowScope.UnifiedTitleSearchTable.duplicateRow}"
+                                         shortDesc="#{nls['DUPLICATE_ROW']}"
+                                         icon="/jheadstart/images/duplicateRow.png"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column id="UTSTargetTrackingNoCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="TargetTrackingNo" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.TargetTrackingNo.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="cl1"
+                                value="#{row.bindings.TargetTrackingNo.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.TargetTrackingNo.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.TargetTrackingNo.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.TargetTrackingNo.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.TargetTrackingNo.displayWidth}"
+                                readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.TargetTrackingNo.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.TargetTrackingNo.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.UnifiedTitleSearchTable.hints.TargetTrackingNo.format}"/>
+                  </af:inputText>
+                  <af:commandLink id="UTSTargetTrackingNo"
+                                  text="#{row.bindings.TargetTrackingNo.attributeValue}"
+                                  shortDesc="#{bindings.UnifiedTitleSearchTable.hints.TargetTrackingNo.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="NewTitles"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="NTL#{bindings.UTSTitleId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="Title #{bindings.UTSTargetTrackingNo.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.UTSTitleId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueNewTitles}"/>
+                    <af:setActionListener from="1"
+                                          to="#{jhsDynTabLauncher.parameters.withCat}"/>
+                    <af:setActionListener from="1"
+                                          to="#{jhsDynTabLauncher.parameters.noCat}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="UTSCatalogNumberCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CatalogNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.CatalogNumber.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="cl2"
+                                value="#{row.bindings.CatalogNumber.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.CatalogNumber.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.CatalogNumber.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.CatalogNumber.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.CatalogNumber.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.CatalogNumber.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="UTSCatalogNumber"
+                                  text="#{row.bindings.CatalogNumber.attributeValue}"
+                                  shortDesc="#{bindings.UnifiedTitleSearchTable.hints.CatalogNumber.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="Titles"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="TTL#{bindings.UTSTitleId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="Title #{bindings.UTSCatalogNumber.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.UTSTitleId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueTitles}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="UTSCatalogRootCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CatalogRoot" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.CatalogRoot.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="UTSCatalogRoot"
+                                value="#{row.bindings.CatalogRoot.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.CatalogRoot.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.CatalogRoot.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.CatalogRoot.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.CatalogRoot.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.CatalogRoot.tooltip}">
+                    <f:validator binding="#{row.bindings.CatalogRoot.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UTSUlrichsSerialIdCol" sortable="true"
+                           noWrap="true" width="100"
+                           sortProperty="UlrichsSerialId" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.UlrichsSerialId.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputText id="cl3"
+                                value="#{row.bindings.UlrichsSerialId.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.UlrichsSerialId.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.UlrichsSerialId.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.UlrichsSerialId.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.UlrichsSerialId.displayWidth}"
+                                readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.UlrichsSerialId.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.UlrichsSerialId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.UnifiedTitleSearchTable.hints.UlrichsSerialId.format}"/>
+                  </af:inputText>
+                  <af:commandLink id="UTSUlrichsSerialId"
+                                  text="#{row.bindings.UlrichsSerialId.attributeValue}"
+                                  shortDesc="#{bindings.UnifiedTitleSearchTable.hints.UlrichsSerialId.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="UlrichsTitle"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.UTSUlrichsId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="Ulrichs #{bindings.UTSUlrichsSerialId.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.UTSUlrichsId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueUlrichsTitle}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="UTSOvrIdCol" sortable="true" noWrap="true"
+                           width="100" sortProperty="OvrId" align="right"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.OvrId.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:inputText id="cl4"
+                                value="#{row.bindings.OvrId.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.OvrId.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.OvrId.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.OvrId.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.OvrId.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.OvrId.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.OvrId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.UnifiedTitleSearchTable.hints.OvrId.format}"/>
+                  </af:inputText>
+                  <af:commandLink id="UTSOvrId"
+                                  text="#{row.bindings.OvrId.attributeValue}"
+                                  shortDesc="#{bindings.UnifiedTitleSearchTable.hints.OvrId.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="OVRs"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.UTSTitleRecordId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="OVR #{bindings.UTSOvrId.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.UTSTitleRecordId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueOVRs}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="UTSTitleCol" sortable="true" filterable="true"
+                           noWrap="true" width="240" sortProperty="Title"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.Title.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="UTSTitle"
+                                value="#{row.bindings.Title.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.Title.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.Title.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.Title.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.Title.displayWidth}"
+                                maximumLength="4000" readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.Title.tooltip}">
+                    <f:validator binding="#{row.bindings.Title.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UTSTitleTypeCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="TitleType" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.TitleType.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:inputText id="UTSTitleType"
+                                value="#{row.bindings.TitleType.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.TitleType.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.TitleType.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.TitleType.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.TitleType.displayWidth}"
+                                maximumLength="48" readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.TitleType.tooltip}">
+                    <f:validator binding="#{row.bindings.TitleType.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UTSClassificationCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="Classification" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.Classification.label}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:inputText id="UTSClassification"
+                                value="#{row.bindings.Classification.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.Classification.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.Classification.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.Classification.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.Classification.displayWidth}"
+                                maximumLength="100" readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.Classification.tooltip}">
+                    <f:validator binding="#{row.bindings.Classification.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UTSClassificationTypeCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="ClassificationType" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.ClassificationType.label}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:inputText id="UTSClassificationType"
+                                value="#{row.bindings.ClassificationType.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.ClassificationType.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.ClassificationType.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.ClassificationType.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.ClassificationType.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.ClassificationType.tooltip}">
+                    <f:validator binding="#{row.bindings.ClassificationType.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UTSAccountNumberCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="AccountNumber" align="right"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.AccountNumber.label}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:inputText id="UTSAccountNumber"
+                                value="#{row.bindings.AccountNumber.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.AccountNumber.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.AccountNumber.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.AccountNumber.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.AccountNumber.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.AccountNumber.tooltip}">
+                    <f:validator binding="#{row.bindings.AccountNumber.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.UnifiedTitleSearchTable.hints.AccountNumber.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UTSAccountNameCol" sortable="true" noWrap="true"
+                           width="180" sortProperty="AccountName"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.AccountName.label}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:inputText id="cl5"
+                                value="#{row.bindings.AccountName.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.AccountName.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.AccountName.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.AccountName.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.AccountName.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.AccountName.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="UTSAccountName"
+                                  text="#{row.bindings.AccountName.attributeValue}"
+                                  shortDesc="#{bindings.UnifiedTitleSearchTable.hints.AccountName.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="ContentOwner"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.UTSAccountId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="#{bindings.UTSAccountName.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.UTSAccountId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueContentOwner}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="UTSAccountSiteCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="AccountSite" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.AccountSite.label}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <af:inputText id="UTSAccountSite"
+                                value="#{row.bindings.AccountSite.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.AccountSite.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.AccountSite.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.AccountSite.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.AccountSite.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.AccountSite.tooltip}">
+                    <f:validator binding="#{row.bindings.AccountSite.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="UTSCurrentCatalogNumberCol" sortable="true"
+                           noWrap="true" width="100"
+                           sortProperty="CurrentCatalogNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.CurrentCatalogNumber.label}"
+                                    id="ol12"/>
+                  </f:facet>
+                  <af:inputText id="cl6"
+                                value="#{row.bindings.CurrentCatalogNumber.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.CurrentCatalogNumber.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.CurrentCatalogNumber.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.CurrentCatalogNumber.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.CurrentCatalogNumber.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.CurrentCatalogNumber.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.CurrentCatalogNumber.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="UTSCurrentCatalogNumber"
+                                  text="#{row.bindings.CurrentCatalogNumber.attributeValue}"
+                                  shortDesc="#{bindings.UnifiedTitleSearchTable.hints.CurrentCatalogNumber.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="Titles"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="TTL#{bindings.UTSCurrentCatalogId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="Title #{bindings.UTSCurrentCatalogNumber.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.UTSCurrentCatalogId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueTitles}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="UTSCatalogPublicationCityCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="CatalogPublicationCity"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.UnifiedTitleSearchTable.hints.CatalogPublicationCity.label}"
+                                    id="ol13"/>
+                  </f:facet>
+                  <af:inputText id="UTSCatalogPublicationCity"
+                                value="#{row.bindings.CatalogPublicationCity.inputValue}"
+                                label="#{bindings.UnifiedTitleSearchTable.hints.CatalogPublicationCity.label}"
+                                required="#{bindings.UnifiedTitleSearchTable.hints.CatalogPublicationCity.mandatory}"
+                                rows="#{bindings.UnifiedTitleSearchTable.hints.CatalogPublicationCity.displayHeight}"
+                                columns="#{bindings.UnifiedTitleSearchTable.hints.CatalogPublicationCity.displayWidth}"
+                                maximumLength="200" readOnly="true"
+                                shortDesc="#{bindings.UnifiedTitleSearchTable.hints.CatalogPublicationCity.tooltip}">
+                    <f:validator binding="#{row.bindings.CatalogPublicationCity.validator}"/>
+                  </af:inputText>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="UTSDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="UTSDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_UNIFIEDTITLESEARC:#{pageFlowScope.UnifiedTitleSearchTable.currentRowAttributeValues.Title}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteUnifiedTitleSearch.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

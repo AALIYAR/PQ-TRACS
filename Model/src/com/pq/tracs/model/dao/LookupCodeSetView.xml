@@ -1,0 +1,337 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="LookupCodeSetView"
+   Version="11.1.1.62.29"
+   OrderBy="code_set"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   ComponentClass="com.pq.tracs.model.dao.TracsView"
+   FetchMode="FETCH_AS_NEEDED"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchSize="25"
+   RangeSize="20">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_objectSuperClassName"
+         Value="com.pq.tracs.model.dao.TracsView"/>
+   </DesignTime>
+   <ViewAccessor
+      Name="ParentCodeSetLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeSetLookup"
+      RowLevelBinds="true"/>
+   <ViewAccessor
+      Name="LookupCodeIdLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeIdLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set_id">
+            <TransientExpression><![CDATA[ParentCodeSetId]]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_ParentLookupCodeId"
+      ListVOName="LookupCodeIdLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="ParentLookupCodeId"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="Id"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_ParentCodeSetId"
+      ListVOName="ParentCodeSetLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="ParentCodeSetId"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="Id"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="CodeSet"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <SQLQuery><![CDATA[SELECT TraxLookupCodeSet.ID, 
+       TraxLookupCodeSet.PARENT_CODE_SET_ID, 
+       TraxLookupCodeSet.PARENT_LOOKUP_CODE_ID, 
+       TraxLookupCodeSet.CODE_SET, 
+       TraxLookupCodeSet.ACTIVE_FLAG,
+       (select code_set from trax_lookup_code_set tlcs
+           where TraxLookupCodeSet.parent_code_set_id = tlcs.id) parent_code_set,
+       (select display_value from trax_lookup_code tlc 
+           where TraxLookupCodeSet.parent_lookup_code_id = tlc.id) parent_code,
+       TraxLookupCodeSet.CREATED_BY, 
+       TraxLookupCodeSet.CREATED_DATE, 
+       TraxLookupCodeSet.LAST_UPDATED_BY, 
+       TraxLookupCodeSet.LAST_UPDATED_DATE
+FROM TRAX_LOOKUP_CODE_SET TraxLookupCodeSet]]></SQLQuery>
+   <EntityUsage
+      Name="TraxLookupCodeSet"
+      Entity="com.pq.tracs.model.bo.LookupCodeSet" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      IsNotNull="true"
+      EntityAttrName="Id"
+      EntityUsage="TraxLookupCodeSet"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ParentCodeSetId"
+      EntityAttrName="ParentCodeSetId"
+      EntityUsage="TraxLookupCodeSet"
+      AliasName="PARENT_CODE_SET_ID"
+      LOVName="LOV_ParentCodeSetId">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.LookupCodeSetView.ParentCodeSetId_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ParentLookupCodeId"
+      EntityAttrName="ParentLookupCodeId"
+      EntityUsage="TraxLookupCodeSet"
+      AliasName="PARENT_LOOKUP_CODE_ID"
+      LOVName="LOV_ParentLookupCodeId">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.LookupCodeSetView.ParentLookupCodeId_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CodeSet"
+      IsNotNull="true"
+      EntityAttrName="CodeSet"
+      EntityUsage="TraxLookupCodeSet"
+      AliasName="CODE_SET" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.LookupCodeSetView.CodeSet_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ActiveFlag"
+      IsNotNull="true"
+      EntityAttrName="ActiveFlag"
+      EntityUsage="TraxLookupCodeSet"
+      AliasName="ACTIVE_FLAG"/>
+   <ViewAttribute
+      Name="ParentCodeSet"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PARENT_CODE_SET"
+      Expression="PARENT_CODE_SET"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.LookupCodeSetView.ParentCodeSet_LABEL"/>
+            <DISPLAYWIDTH
+               Value="20"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ParentCode"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PARENT_CODE"
+      Expression="PARENT_CODE"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.LookupCodeSetView.ParentCode_LABEL"/>
+            <DISPLAYWIDTH
+               Value="20"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="TraxLookupCodeSet"
+      AliasName="CREATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.LookupCodeSetView.CreatedBy_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      IsNotNull="true"
+      EntityAttrName="CreatedDate"
+      EntityUsage="TraxLookupCodeSet"
+      AliasName="CREATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.LookupCodeSetView.CreatedDate_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      IsUpdateable="false"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="TraxLookupCodeSet"
+      AliasName="LAST_UPDATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.LookupCodeSetView.LastUpdatedBy_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      IsUpdateable="false"
+      IsNotNull="true"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="TraxLookupCodeSet"
+      AliasName="LAST_UPDATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.LookupCodeSetView.LastUpdatedDate_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="LookupCodeSetViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.LookupCodeSetView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+            <Property
+               Name="displayName"
+               ResId="displayName"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow91"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="LookupCodeSetViewCriteria_vcrow91_CodeSet"
+            ViewAttribute="CodeSet"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="LookupCodeSetViewCriteria_vcrow91_ActiveFlag"
+            ViewAttribute="ActiveFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="LookupCodeSetViewCriteria_vcrow91_ParentCodeSet"
+            ViewAttribute="ParentCodeSet"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="LookupCodeSetViewCriteria_vcrow91_ParentCode"
+            ViewAttribute="ParentCode"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="LookupCodeSetViewCriteria_vcrow91_CreatedBy"
+            ViewAttribute="CreatedBy"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="LookupCodeSetViewCriteria_vcrow91_CreatedDate"
+            ViewAttribute="CreatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="LookupCodeSetViewCriteria_vcrow91_LastUpdatedBy"
+            ViewAttribute="LastUpdatedBy"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="LookupCodeSetViewCriteria_vcrow91_LastUpdatedDate"
+            ViewAttribute="LastUpdatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ViewLinkAccessor
+      Name="TraxLookUpCodeViewObj1"
+      ViewLink="com.pq.tracs.model.dao.LookupCodeSetLookUpCodeViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="LookupCodeSetView_2"
+      ViewLink="com.pq.tracs.model.vl.LookupCodeSetToLookupCodeSetViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

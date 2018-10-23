@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="WelcomeTaskFlow">
+    <template-reference>
+      <document id="__0">/WEB-INF/jhs-fragment-taskflow-template.xml</document>
+      <id id="__1">jhs-fragment-taskflow-template</id>
+    </template-reference>
+    <default-activity id="__2">StartWelcome</default-activity>
+    <managed-bean id="__3">
+      <managed-bean-name id="__4">jhsTaskFlowManager</managed-bean-name>
+      <managed-bean-class id="__5">oracle.jheadstart.controller.jsf.bean.TaskFlowManager</managed-bean-class>
+      <managed-bean-scope id="__6">pageFlow</managed-bean-scope>
+      <managed-property id="__7">
+        <property-name id="__8">initializeParentContextEntries</property-name>
+        <map-entries id="__9">
+          <map-entry id="__10">
+            <key id="__11">jhsCurrentGroupName</key>
+            <value id="__12">Welcome</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__13">
+      <managed-bean-name id="__14">jhsRollback</managed-bean-name>
+      <managed-bean-class id="__15">oracle.jheadstart.controller.jsf.bean.RollbackBean</managed-bean-class>
+      <managed-bean-scope id="__16">request</managed-bean-scope>
+      <managed-property id="__17">
+        <property-name id="__18">rollbackBinding</property-name>
+        <value id="__19">#{bindings.Rollback}</value>
+      </managed-property>
+      <managed-property id="__20">
+        <property-name id="__21">successOutcome</property-name>
+        <value id="__22">Cancel</value>
+      </managed-property>
+    </managed-bean>
+    <router id="StartWelcome">
+      <case id="__23">
+        <expression id="__24">#{pageFlowScope.isDeepLink!=null and
+                              pageFlowScope.isDeepLink}</expression>
+        <outcome id="__25">deepLinkPage</outcome>
+      </case>
+      <default-outcome id="__26">firstPage</default-outcome>
+    </router>
+    <task-flow-return id="CancelWelcomeReturn">
+      <outcome id="__27">
+        <name id="__28">CancelWelcome</name>
+      </outcome>
+    </task-flow-return>
+    <task-flow-return id="DoneWelcomeReturn">
+      <outcome id="__29">
+        <name id="__30">DoneWelcome</name>
+      </outcome>
+    </task-flow-return>
+    <view id="Welcome">
+      <page id="__31">/pages/Welcome.jsff</page>
+    </view>
+    <control-flow-rule id="__32">
+      <from-activity-id id="__33">*</from-activity-id>
+      <control-flow-case id="__34">
+        <from-outcome id="__35">firstPage</from-outcome>
+        <to-activity-id id="__36">Welcome</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__37">
+        <from-outcome id="__38">deepLinkPage</from-outcome>
+        <to-activity-id id="__39">Welcome</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__40">
+        <from-outcome id="__41">WelcomeBreadcrumb</from-outcome>
+        <to-activity-id id="__42">Welcome</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__43">
+        <from-outcome id="__44">Cancel</from-outcome>
+        <to-activity-id id="__45">StartWelcome</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__46">
+        <from-outcome id="__47">CancelWelcomeReturn</from-outcome>
+        <to-activity-id id="__48">CancelWelcomeReturn</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__49">
+        <from-outcome id="__50">DoneWelcomeReturn</from-outcome>
+        <to-activity-id id="__51">DoneWelcomeReturn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+  <!-- This bean must be defined outside the task-flow-definition element
+       because it needs to be available in the pageFlowScope of the unbounded
+       task-flow not in the pageFlowScope of the bounded task flow itself. -->
+  <managed-bean id="__52">
+    <managed-bean-name id="__53">WelcomeTaskFlowConfig</managed-bean-name>
+    <managed-bean-class id="__54">oracle.jheadstart.controller.jsf.bean.TaskFlowConfigBean</managed-bean-class>
+    <managed-bean-scope id="__55">pageFlow</managed-bean-scope>
+    <managed-property id="__56">
+      <property-name id="__57">params</property-name>
+      <property-class id="__58">java.util.Map</property-class>
+      <map-entries id="__59">
+        <map-entry id="__60">
+          <key id="__61">parentContext</key>
+          <value id="__62">#{pageFlowScope.parentContext}</value>
+        </map-entry>
+      </map-entries>
+    </managed-property>
+    <managed-property id="__63">
+      <property-name id="__64">name</property-name>
+      <value id="__65">Welcome</value>
+    </managed-property>
+    <managed-property id="__66">
+      <property-name id="__67">taskFlowId</property-name>
+      <value id="__68">/WEB-INF/adfc-config-Welcome.xml#WelcomeTaskFlow</value>
+    </managed-property>
+    <managed-property id="__69">
+      <property-name id="__70">tabUniqueIdentifier</property-name>
+      <value id="__71">Welcome</value>
+    </managed-property>
+    <managed-property id="__72">
+      <property-name id="__73">label</property-name>
+      <value id="__74">Welcome</value>
+    </managed-property>
+  </managed-bean>
+</adfc-config>

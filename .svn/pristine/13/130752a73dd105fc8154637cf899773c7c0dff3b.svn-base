@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="NotesTopLc"
+                             partialTriggers=" NotesDeleteDialog Notesfbb NotesNewButton NotesDelB NotesSaveButton0 NotesCancelButton0 NotesSaveButton1 NotesCancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateOVRNOTES ? nls['INSERT_TITLE_OVRNOTES'] :  nls['EDIT_TITLE_OVRNOTE: #{bindings.NotesDispItem.inputValue}'] }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="Notesfbb" layout="horizontal"
+                                       rendered="#{ bindings.OVRNOTESIterator.currentRow!=null  and bindings.OVRNOTESIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateOVRNOTES and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="NotesFirst NotesPrevious NotesNext NotesLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstOVRNOTES.execute}"
+                                             id="NotesFirst"
+                                             partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.OVRNOTESIterator.rangeStart+bindings.OVRNOTESIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.OVRNOTESIterator.rangeStart+bindings.OVRNOTESIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousOVRNOTES.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="NotesPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.OVRNOTESIterator.rangeStart+bindings.OVRNOTESIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.OVRNOTESIterator.rangeStart+bindings.OVRNOTESIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.OVRNOTESIterator.rangeStart+bindings.OVRNOTESIterator.currentRowIndexInRange+1} / #{bindings.OVRNOTESIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextOVRNOTES.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="NotesNext" partialSubmit="true"
+                                             rendered="#{bindings.OVRNOTESIterator.rangeStart+bindings.OVRNOTESIterator.currentRowIndexInRange+1 lt bindings.OVRNOTESIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.OVRNOTESIterator.rangeStart+bindings.OVRNOTESIterator.currentRowIndexInRange+1 lt bindings.OVRNOTESIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastOVRNOTES.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="NotesLast" partialSubmit="true"
+                                             rendered="#{bindings.OVRNOTESIterator.rangeStart+bindings.OVRNOTESIterator.currentRowIndexInRange+1 lt bindings.OVRNOTESIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.OVRNOTESIterator.rangeStart+bindings.OVRNOTESIterator.currentRowIndexInRange+1 lt bindings.OVRNOTESIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateOVRNOTES.execute}"
+                                             action="CreateNotes"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_OVRNOTES']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateOVRNOTES and (true) }"
+                                             id="NotesNewButton"></af:commandToolbarButton>
+                    <af:commandToolbarButton action="DeleteOVRNOTES"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_OVRNOTES']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateOVRNOTES and  bindings.OVRNOTESIterator.currentRow!=null   }"
+                                             immediate="true" id="NotesDelB">
+                      <af:showPopupBehavior popupId="NotesDeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="NotesPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveOVRNOTES.execute}"
+                                      rendered="#{!pageFlowScope.hideSaveButton}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="NotesSaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="NotesCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.OVRNOTESIterator.findMode!='true'}"
+                       id="NotesSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.OVRNOTESIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="NotesNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="NotesFC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="start"
+                                    maxColumns="1" id="NotesFI">
+                  <af:inputText id="NotesPublicationNote"
+                                value="#{bindings.NotesPublicationNote.inputValue}"
+                                label="#{bindings.NotesPublicationNote.hints.label}"
+                                required="false" rows="5" columns="200">
+                    <f:validator binding="#{bindings.NotesPublicationNote.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NotesPublicationCoverageNote"
+                                value="#{bindings.NotesPublicationCoverageNote.inputValue}"
+                                label="#{bindings.NotesPublicationCoverageNote.hints.label}"
+                                required="false" rows="3" columns="200">
+                    <f:validator binding="#{bindings.NotesPublicationCoverageNote.validator}"/>
+                  </af:inputText>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveOVRNOTES.execute}"
+                                            rendered="#{!pageFlowScope.hideSaveButton}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="NotesSaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="NotesCancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="NotesDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="NotesDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_OVRNOTE: #{bindings.NotesDispItem.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteOVRNOTES.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

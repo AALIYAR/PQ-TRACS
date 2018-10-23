@@ -1,0 +1,823 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="PrmOpportunityActivityView"
+  Version="11.1.1.61.92"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  RowClass="com.pq.tracs.model.vo.PrmOpportunityActivityViewRowImpl"
+  FetchMode="FETCH_AS_NEEDED"
+  FetchSize="50"
+  MaxFetchSize="500"
+  PageIterMode="Partial"
+  UseGlueCode="false"
+  ComponentClass="com.pq.tracs.model.dao.TracsView"
+  OrderBy="CREATED_DATE DESC">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewAccessor
+    Name="ActivityLookup"
+    ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+    <ParameterMap>
+      <PIMap Variable="code_set">
+        <TransientExpression><![CDATA['Activity Type']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ActivityPriorityLookup"
+    ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+    <ParameterMap>
+      <PIMap Variable="code_set">
+        <TransientExpression><![CDATA['Activity Priority']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="ActivityStatusLookup"
+    ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+    <ParameterMap>
+      <PIMap Variable="code_set">
+        <TransientExpression><![CDATA['Activity Status']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="OpportunityActivitySubTypeLookup"
+    ViewObjectName="com.pq.tracs.model.lookups.ActivitySubType1Lookup">
+    <ParameterMap>
+      <PIMap Variable="parent_code_value">
+        <TransientExpression><![CDATA[Type]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="UsersLOV"
+    ViewObjectName="com.pq.tracs.model.lookups.UsersLOV"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_Owner"
+    ListVOName="UsersLOV"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_Owner_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Owner"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="JhsUsersId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="DisplayName"/>
+      <Item Value="Id"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="FirstName"/>
+      <Item Value="LastName"/>
+      <Item Value="Username"/>
+      <Item Value="DisplayName"/>
+      <Item Value="EmailAddress"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="UsersLOVCriteria"
+      Hint="showAndExecute"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Type"
+    ListVOName="ActivityLookup"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Type"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="InternalValue"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DisplayValue"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_SubType"
+    ListVOName="OpportunityActivitySubTypeLookup"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="SubType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="InternalValue"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DisplayValue"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Status"
+    ListVOName="ActivityStatusLookup"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Status"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="InternalValue"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DisplayValue"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_Priority"
+    ListVOName="ActivityPriorityLookup"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Priority"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="InternalValue"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DisplayValue"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <SQLQuery>
+    <![CDATA[SELECT TraxActivity.ID, 
+       JhsUsers.DISPLAY_NAME AS OWNER,
+       JhsUsers.DISPLAY_NAME AS OWNER_2,
+       TraxActivity.TYPE, 
+       TraxActivity.SUB_TYPE, 
+       TraxActivity.DESCRIPTION, 
+       TraxActivity.STATUS, 
+       TraxActivity.PRIORITY, 
+      /* (concat(TraxContact.FIRST_NAME, concat(' ', TraxContact.LAST_NAME))) CONTACT_NAME,*/
+        case 
+         when TraxContact.first_name is not null then
+            TraxContact.first_name || ' ' || TraxContact.last_name
+          when TraxContact.first_name is null then
+            TraxContact.last_name
+        end CONTCAT_NAME,
+
+       TraxActivity.DUE_DATE, 
+       TraxActivity.EXPECTED_START_DATE, 
+       TraxActivity.ACTUAL_START_DATE, 
+       TraxActivity.COMPLETION_DATE, 
+       TraxActivity.HOURS_SPENT, 
+       TraxActivity.NOTES, 
+       TraxActivityOpportunity.PRIMARY_FLAG,
+       TraxActivity.CREATED_BY, 
+       TraxActivity.CREATED_DATE, 
+       TraxActivity.LAST_UPDATED_BY, 
+       TraxActivity.LAST_UPDATED_DATE, 
+       TraxActivityOpportunity.ID AS ID1, 
+       TraxActivityOpportunity.PRM_OPPORTUNITY_ID, 
+       TraxActivityOpportunity.ACTIVITY_ID, 
+       TraxActivityOpportunity.ADDED_DATE, 
+       TraxActivityOpportunity.REMOVED_DATE,  
+       TraxActivityUser.ID AS ID2, 
+       TraxActivityUser.ACTIVITY_ID AS ACTIVITY_ID1, 
+       TraxActivityUser.JHS_USERS_ID, 
+       TraxActivityUser.USER_TYPE, 
+       TraxActivityUser.ADD_DATE, 
+       TraxActivityUser.REMOVED_DATE AS REMOVED_DATE1,
+       TraxActivityContentOwner.ID AS ID3,
+       TraxActivityContentOwner.CONTENT_OWNER_ID,
+       TraxActivityContentOwner.PRIMARY_FLAG AS PRIMARY_FLAG1,
+       TraxActivityContentOwner.ADDED_DATE AS ADDED_DATE1,
+       TraxActivity.CONTACT_ID
+FROM TRAX_ACTIVITY TraxActivity
+    INNER JOIN TRAX_ACTIVITY_OPPORTUNITY TraxActivityOpportunity
+        ON (TraxActivity.ID = TraxActivityOpportunity.ACTIVITY_ID)
+    LEFT OUTER JOIN TRAX_ACTIVITY_USER TraxActivityUser
+        INNER JOIN JHS_USERS JhsUsers
+            ON (TraxActivityUser.JHS_USERS_ID = JhsUsers.ID)
+        ON (TraxActivity.ID = TraxActivityUser.ACTIVITY_ID) 
+        AND TraxActivityUser.USER_TYPE = 'Owner'
+    LEFT OUTER JOIN TRAX_ACTIVITY_CONTENT_OWNER TraxActivityContentOwner
+        ON TraxActivity.ID = TraxActivityContentOwner.ACTIVITY_ID
+        AND TraxActivityContentOwner.PRIMARY_FLAG = 'Y'
+    LEFT OUTER JOIN TRAX_CONTACT TraxContact
+        ON TraxActivity.CONTACT_ID = TraxContact.ID]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="Activity"
+    Entity="com.pq.tracs.model.bo.Activity"/>
+  <EntityUsage
+    Name="TraxActivityOpportunity"
+    Entity="com.pq.tracs.model.eo.TraxActivityOpportunity"
+    Association="com.pq.tracs.model.ao.ActivityToActivityOpportunityFkAssoc"
+    AssociationEnd="com.pq.tracs.model.ao.ActivityToActivityOpportunityFkAssoc.TraxActivityOpportunity"
+    SourceUsage="com.pq.tracs.model.vo.PrmOpportunityActivityView.Activity"
+    JoinType="INNER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="com.pq.tracs.model.bo.Activity.Id"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="com.pq.tracs.model.eo.TraxActivityOpportunity.ActivityId"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <EntityUsage
+    Name="TraxActivityUser"
+    Entity="com.pq.tracs.model.eo.TraxActivityUser"
+    Association="com.pq.tracs.model.ao.ActivityToActivityUserFkAssoc"
+    AssociationEnd="com.pq.tracs.model.ao.ActivityToActivityUserFkAssoc.TraxActivityUser"
+    SourceUsage="com.pq.tracs.model.vo.PrmOpportunityActivityView.Activity"
+    JoinType="LEFT OUTER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="com.pq.tracs.model.bo.Activity.Id"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item Value="com.pq.tracs.model.eo.TraxActivityUser.ActivityId"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <EntityUsage
+    Name="TraxActivityContentOwner"
+    Entity="com.pq.tracs.model.eo.TraxActivityContentOwner"
+    Association="com.pq.tracs.model.ao.ActivityToActivityContentOwnerFkAssoc"
+    AssociationEnd="com.pq.tracs.model.ao.ActivityToActivityContentOwnerFkAssoc.TraxActivityContentOwner"
+    SourceUsage="com.pq.tracs.model.vo.PrmOpportunityActivityView.Activity"
+    JoinType="INNER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="com.pq.tracs.model.bo.Activity.Id"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item
+          Value="com.pq.tracs.model.eo.TraxActivityContentOwner.ActivityId"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <ViewAttribute
+    Name="Id"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="Activity"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="Owner"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="101"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="OWNER"
+    Expression="OWNER"
+    SQLType="VARCHAR"
+    LOVName="LOV_Owner">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="101"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="30"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Owner2"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="OWNER_2"
+    Expression="OWNER_2"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView.Owner2_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Type"
+    PrecisionRule="true"
+    EntityAttrName="Type"
+    EntityUsage="Activity"
+    AliasName="TYPE"
+    LOVName="LOV_Type">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SubType"
+    PrecisionRule="true"
+    EntityAttrName="SubType"
+    EntityUsage="Activity"
+    AliasName="SUB_TYPE"
+    LOVName="LOV_SubType">
+    <Dependencies>
+      <Item
+        Value="Type"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView.SubType_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Description"
+    PrecisionRule="true"
+    EntityAttrName="Description"
+    EntityUsage="Activity"
+    AliasName="DESCRIPTION">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Status"
+    PrecisionRule="true"
+    EntityAttrName="Status"
+    EntityUsage="Activity"
+    AliasName="STATUS"
+    LOVName="LOV_Status">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Priority"
+    PrecisionRule="true"
+    EntityAttrName="Priority"
+    EntityUsage="Activity"
+    AliasName="PRIORITY"
+    LOVName="LOV_Priority">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ContactName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="201"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CONTACT_NAME"
+    Expression="CONTACT_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="201"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView.ContactName_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DueDate"
+    PrecisionRule="true"
+    EntityAttrName="DueDate"
+    EntityUsage="Activity"
+    AliasName="DUE_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView.DueDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ExpectedStartDate"
+    PrecisionRule="true"
+    EntityAttrName="ExpectedStartDate"
+    EntityUsage="Activity"
+    AliasName="EXPECTED_START_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView.ExpectedStartDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ActualStartDate"
+    PrecisionRule="true"
+    EntityAttrName="ActualStartDate"
+    EntityUsage="Activity"
+    AliasName="ACTUAL_START_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView.ActualStartDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CompletionDate"
+    PrecisionRule="true"
+    EntityAttrName="CompletionDate"
+    EntityUsage="Activity"
+    AliasName="COMPLETION_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView.CompletionDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="HoursSpent"
+    PrecisionRule="true"
+    EntityAttrName="HoursSpent"
+    EntityUsage="Activity"
+    AliasName="HOURS_SPENT">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView.HoursSpent_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Notes"
+    PrecisionRule="true"
+    EntityAttrName="Notes"
+    EntityUsage="Activity"
+    AliasName="NOTES">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PrimaryFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PrimaryFlag"
+    EntityUsage="TraxActivityOpportunity"
+    AliasName="PRIMARY_FLAG"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="Activity"
+    AliasName="CREATED_BY">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView.CreatedBy_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedDate"
+    IsUpdateable="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedDate"
+    EntityUsage="Activity"
+    AliasName="CREATED_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView.CreatedDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="Activity"
+    AliasName="LAST_UPDATED_BY">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView.LastUpdatedBy_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LastUpdatedDate"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="Activity"
+    AliasName="LAST_UPDATED_DATE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.PrmOpportunityActivityView.LastUpdatedDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Id1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxActivityOpportunity"
+    AliasName="ID1"/>
+  <ViewAttribute
+    Name="PrmOpportunityId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PrmOpportunityId"
+    EntityUsage="TraxActivityOpportunity"
+    AliasName="PRM_OPPORTUNITY_ID"/>
+  <ViewAttribute
+    Name="ActivityId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ActivityId"
+    EntityUsage="TraxActivityOpportunity"
+    AliasName="ACTIVITY_ID"/>
+  <ViewAttribute
+    Name="AddedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="AddedDate"
+    EntityUsage="TraxActivityOpportunity"
+    AliasName="ADDED_DATE"/>
+  <ViewAttribute
+    Name="RemovedDate"
+    PrecisionRule="true"
+    EntityAttrName="RemovedDate"
+    EntityUsage="TraxActivityOpportunity"
+    AliasName="REMOVED_DATE"/>
+  <ViewAttribute
+    Name="Id2"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxActivityUser"
+    AliasName="ID2"/>
+  <ViewAttribute
+    Name="ActivityId1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ActivityId"
+    EntityUsage="TraxActivityUser"
+    AliasName="ACTIVITY_ID1"/>
+  <ViewAttribute
+    Name="JhsUsersId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="JhsUsersId"
+    EntityUsage="TraxActivityUser"
+    AliasName="JHS_USERS_ID"/>
+  <ViewAttribute
+    Name="UserType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UserType"
+    EntityUsage="TraxActivityUser"
+    AliasName="USER_TYPE"/>
+  <ViewAttribute
+    Name="AddDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="AddDate"
+    EntityUsage="TraxActivityUser"
+    AliasName="ADD_DATE"/>
+  <ViewAttribute
+    Name="RemovedDate1"
+    PrecisionRule="true"
+    EntityAttrName="RemovedDate"
+    EntityUsage="TraxActivityUser"
+    AliasName="REMOVED_DATE1"/>
+  <ViewAttribute
+    Name="Id3"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxActivityContentOwner"
+    AliasName="ID3"/>
+  <ViewAttribute
+    Name="ContentOwnerId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ContentOwnerId"
+    EntityUsage="TraxActivityContentOwner"
+    AliasName="CONTENT_OWNER_ID"/>
+  <ViewAttribute
+    Name="PrimaryFlag1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PrimaryFlag"
+    EntityUsage="TraxActivityContentOwner"
+    AliasName="PRIMARY_FLAG1"/>
+  <ViewAttribute
+    Name="AddedDate1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="AddedDate"
+    EntityUsage="TraxActivityContentOwner"
+    AliasName="ADDED_DATE1"/>
+  <ViewAttribute
+    Name="ContactId"
+    PrecisionRule="true"
+    EntityAttrName="ContactId"
+    EntityUsage="Activity"
+    AliasName="CONTACT_ID"/>
+  <ViewCriteria
+    Name="PrmOpportunityActivityViewCriteria"
+    ViewObjectName="com.pq.tracs.model.vo.PrmOpportunityActivityView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow153"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="Owner2"
+        ViewAttribute="Owner2"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="Type"
+        ViewAttribute="Type"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"
+        UpperColumns="0"/>
+      <ViewCriteriaItem
+        Name="Description"
+        ViewAttribute="Description"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="Status"
+        ViewAttribute="Status"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"
+        UpperColumns="0"/>
+      <ViewCriteriaItem
+        Name="Priority"
+        ViewAttribute="Priority"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"
+        UpperColumns="0"/>
+      <ViewCriteriaItem
+        Name="ContactName"
+        ViewAttribute="ContactName"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="DueDate"
+        ViewAttribute="DueDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="ExpectedStartDate"
+        ViewAttribute="ExpectedStartDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="ActualStartDate"
+        ViewAttribute="ActualStartDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="CompletionDate"
+        ViewAttribute="CompletionDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="HoursSpent"
+        ViewAttribute="HoursSpent"
+        Conjunction="AND"
+        Required="Optional"
+        Operator="="/>
+      <ViewCriteriaItem
+        Name="Notes"
+        ViewAttribute="Notes"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="PrimaryFlag"
+        ViewAttribute="PrimaryFlag"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="CreatedBy"
+        ViewAttribute="CreatedBy"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="CreatedDate"
+        ViewAttribute="CreatedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="LastUpdatedBy"
+        ViewAttribute="LastUpdatedBy"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="LastUpdatedDate"
+        ViewAttribute="LastUpdatedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewLinkAccessor
+    Name="PrmOpportunityView"
+    ViewLink="com.pq.tracs.model.vl.OpportunityToOpportunityActivityViewLink"
+    Type="oracle.jbo.Row"
+    Reversed="true"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,102 @@
+## revision_history
+## 25-feb-2011   Steven Davelaar
+## 1.2           Removed immediate="true property, we cannot predict how it should be set, one can always
+##               use the Additional Properties property to generate immediate="true"
+## 25-feb-2011   Steven Davelaar
+## 1.1           Changed reference to popup region container since popups are now generated at bottom page
+## 18-oct-2010   Steven Davelaar
+## 1.0           Initial creation
+
+#macro (CONTENTSOURCE_EXECUTABLE)
+    <iterator Binds="ContentSourceLookup" RangeSize="30"
+              DataControl="TracsServiceDataControl"
+              id="ContentSourceLookupIterator"/>
+#end
+
+#macro (CONTENTSOURCE_BINDING)
+    <list IterBinding="ContentSourceLookupIterator"
+          ListOperMode="navigation"
+          ListIter="ContentSourceLookupIterator"
+          id="ContentSourceLookup" DTSupportsMRU="true">
+      <AttrNames>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </list>
+#end
+
+#macro (AUTOGENRULESET_EXECUTABLE)
+    <iterator Binds="AutoGenRuleSetLookup" RangeSize="30"
+              DataControl="TracsServiceDataControl"
+              id="AutoGenRuleSetLookupIterator"/>
+#end
+
+#macro (AUTOGENRULESET_BINDING)
+    <list IterBinding="AutoGenRuleSetLookupIterator"
+          ListOperMode="navigation"
+          ListIter="AutoGenRuleSetLookupIterator"
+          id="AutoGenRuleSetLookup" DTSupportsMRU="true">
+      <AttrNames>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </list>
+#end
+
+${JHS.pageDefGenerator.addExecutable($JHS.page,"ContentSourceLookupIterator","#CONTENTSOURCE_EXECUTABLE()")}
+${JHS.pageDefGenerator.addBinding($JHS.page,"ContentSourceLookup","#CONTENTSOURCE_BINDING()")}
+
+${JHS.pageDefGenerator.addExecutable($JHS.page,"AutoGenRuleSetLookupIterator","#AUTOGENRULESET_EXECUTABLE()")}
+${JHS.pageDefGenerator.addBinding($JHS.page,"AutoGenRuleSetLookup","#AUTOGENRULESET_BINDING()")}
+
+#set ($popupId = "#NEW_ID('confirmCreatePopup')")
+
+<af:popup id="${popupId}" binding="#{#TABLE_BEAN().confirmCreatePopup}">
+   <af:dialog modal="true" type="okCancel" title="Set Values and Comfirm to create new OVR" dialogListener="#{#TABLE_BEAN().handleCreateOK}">
+      <af:outputText value="Are you sure you want to create OVR?"/>
+
+<af:selectOneChoice value="#{#TABLE_BEAN().newContentSource}"
+                        label="Content Source"
+                        required="false"
+                        shortDesc="#{bindings.ContentSourceLookup.hints.tooltip}"
+                        id="csSelect">
+      <f:selectItems value="#{bindings.ContentSourceLookup.items}"
+                     id="csItems"/>
+    </af:selectOneChoice>
+
+<af:selectOneChoice value="#{#TABLE_BEAN().newAutoGenRuleSet}"
+                        label="AutoGen Rule Set"
+                        required="false"
+                        shortDesc="#{bindings.AutoGenRuleSetLookup.hints.tooltip}"
+                        id="agrsSelect"
+      <f:selectItems value="#{bindings.AutoGenRuleSetLookup.items}"
+                     id="agrsItems"/>
+    </af:selectOneChoice>
+	
+ <af:inputText label="PMID" value="#{#TABLE_BEAN().newPMID}" id="pmid" />
+
+<br/>
+   </af:dialog>
+</af:popup>
+
+
+#if (${JHS.current.item.icon}!='')
+  #set ($elemName = "commandToolbarButton")
+#else
+  #set ($elemName = "commandButton")
+#end    
+  <af:${elemName}  #ITEM_ID_IN_FORM() #BUTTON_TEXT_IN_FORM() #JHS_PROP("icon" $JHS.current.item.icon)
+       #JHS_PROP("action" $JHS.current.item.action) 
+       #JHS_PROP("actionListener" $JHS.current.item.actionListener)
+       #if ($JHS.current.item.actionListener=='' && $JHS.current.item.methodCall!='')
+         actionListener="#{bindings.${JHS.current.item.bindingName}.execute}"
+       #end
+       #ITEM_PARTIAL_TRIGGERS()  
+       ## check for layout style, so we can determine whether item should be shown in
+       ## toolbar table pageComponent or form pageComponent or both
+       #if ($JHS.current.pageComponent.tableLayout || $JHS.current.group.hasTableLayout) #ITEM_RENDERED_IN_TABLE() #else #ITEM_RENDERED_IN_FORM() #end          
+       #ITEM_DISABLED_IN_FORM() #ITEM_HINT() #ITEM_ADDITIONAL_PROPERTIES()
+       #if ($JHS.current.item.hasDependentItems) partialSubmit="true" #end
+       >
+       
+      <af:showPopupBehavior popupId="${popupId}" align="beforeStart" />
+ 
+   </af:${elemName}>   

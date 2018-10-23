@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.61.92" id="TargetedProductLookupSinglePageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <invokeAction id="applyBindParamsTargetedProductLookupSingleInvoke"
+                  Binds="applyBindParamsTargetedProductLookupSingle"
+                  Refresh="always"/>
+    <iterator id="TargetedProductLookupSingleIterator"
+              Binds="PrmTargetedProductLOV"
+              DataControl="TracsServiceDataControl" RangeSize="50"
+              RefreshCondition="#{pageFlowScope.searchTargetedProductLookupSingle.emptyRowSetCreated}"/>
+  </executables>
+  <bindings>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsTargetedProductLookupSingle"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="PrmTargetedProductLOV"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{TargetedProductLookupSingleQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged"
+                 NDValue="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <attributeValues id="TargetedProductLookupSingleId"
+                     IterBinding="TargetedProductLookupSingleIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductLookupSinglePrdId"
+                     IterBinding="TargetedProductLookupSingleIterator">
+      <AttrNames>
+        <Item Value="PrdId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductLookupSingleName"
+                     IterBinding="TargetedProductLookupSingleIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductLookupSingleProductFamily"
+                     IterBinding="TargetedProductLookupSingleIterator">
+      <AttrNames>
+        <Item Value="ProductFamily"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetedProductLookupSingleProductManager"
+                     IterBinding="TargetedProductLookupSingleIterator">
+      <AttrNames>
+        <Item Value="ProductManager"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="TargetedProductLookupSingleTargetableFlag"
+            IterBinding="TargetedProductLookupSingleIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="TargetableFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <tree id="TargetedProductLookupSingleTable"
+          IterBinding="TargetedProductLookupSingleIterator">
+      <nodeDefinition Name="TargetedProductLookupSingle"
+                      DefName="com.pq.tracs.model.vo.PrmTargetedProductView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="PrdId"/>
+          <Item Value="Name"/>
+          <Item Value="ProductFamily"/>
+          <Item Value="ProductManager"/>
+          <Item Value="TargetableFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstTargetedProductLookupSingle"
+            IterBinding="TargetedProductLookupSingleIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousTargetedProductLookupSingle"
+            IterBinding="TargetedProductLookupSingleIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextTargetedProductLookupSingle"
+            IterBinding="TargetedProductLookupSingleIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastTargetedProductLookupSingle"
+            IterBinding="TargetedProductLookupSingleIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchTargetedProductLookupSingle"
+                  IterBinding="TargetedProductLookupSingleIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchTargetedProductLookupSingle.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchTargetedProductLookupSingle.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchTargetedProductLookupSingle.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyTargetedProductLookupSingle"
+            IterBinding="TargetedProductLookupSingleIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrTargetedProductLookupSingle}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

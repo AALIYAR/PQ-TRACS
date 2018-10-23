@@ -1,0 +1,879 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="ConTopLc"
+                             partialTriggers=" ConDeleteDialog ConSaveButton0 ConCancelButton0 asAreaConSearchOptions qsAreaConSearchOptions ConPC:CondelrmTM ConPC:ConTab:Condelrm ConPC:ConTab:Condelrl"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_CONTRACTTAB']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreateContractTab.execute}"
+                                      action="CreateCon"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_CONTRACTTAB']}"
+                                      rendered="#{(true) and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                      id="ConNewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton action="#{SaveContractTab.execute}"
+                                      rendered="#{(jhsUserRoles['ADMIN']) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="ConSaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="ConCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaCon"
+                                 rendered="#{!pageFlowScope.createModes.CreateContractTab and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaConSearchOptions:qsButtonCon qsAreaConSearchOptions:asButtonCon ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaConSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.ContractTabIteratorContractViewCriteriaAdvancedQuery.queryDescriptor}"
+                        model="#{bindings.ContractTabIteratorContractViewCriteriaAdvancedQuery.queryModel}"
+                        queryListener="#{bindings.ContractTabIteratorContractViewCriteriaAdvancedQuery.processQuery}"
+                        queryOperationListener="#{bindings.ContractTabIteratorContractViewCriteriaAdvancedQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchContractTab.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonCon"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchContractTab.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaConSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.ContractTabIteratorContractViewCriteriaAdvancedQuery.queryDescriptor}"
+                             model="#{bindings.ContractTabIteratorContractViewCriteriaAdvancedQuery.queryModel}"
+                             queryListener="#{bindings.ContractTabIteratorContractViewCriteriaAdvancedQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchContractTab.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonCon"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchContractTab.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="ConPC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="ContractTabDetails"></af:commandMenuItem>
+                    <af:group id="Contbb"
+                              rendered="#{ (bindings.ContractTabIterator.viewObject!=null and bindings.ContractTabIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstContractTab.execute}"
+                                          id="ConFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousContractTab.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="ConPrevious" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextContractTab.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="ConNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastContractTab.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="ConLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem id="CondelrmTM"
+                                      textAndAccessKey="#{nls['DELETE_ROW']}"
+                                      icon="/jheadstart/images/deleteRow.png"
+                                      partialSubmit="true" immediate="true"
+                                      rendered="#{jhsUserRoles['ADMIN']}">
+                    <af:showPopupBehavior popupId="::ConDeletePopup"/>
+                  </af:commandMenuItem>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="ConTab"
+                                                       type="excelHTML"
+                                                       filename="ContractTab.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="ConTab"
+                                                       type="excelHTML"
+                                                       filename="ContractTab.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="ConPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.ContractTabIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="ConTab" contentDelivery="immediate"
+                        value="#{bindings.ContractTabTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.ContractTabTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.ContractTabTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.ContractTabTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.ContractTabTable.rangeSize}"
+                        autoHeightRows="#{bindings.ContractTabTable.estimatedRowCount}"
+                        fetchSize="#{bindings.ContractTabTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.ContractTabIteratorContractViewCriteriaAdvancedQuery.processQuery}"
+                        filterModel="#{bindings.ContractTabIteratorContractViewCriteriaAdvancedQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.ContractTabTable.table}"
+                        partialTriggers=":::qsAreaConSearchOptions :::asAreaConSearchOptions :::ConPC ::ConFirst ::ConPrevious ::ConNext ::ConLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_CONTRACTTAB']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="ConTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="ContractTabDetails"></af:commandMenuItem>
+                      </af:menu>
+                      <af:commandMenuItem id="Condelrm"
+                                          textAndAccessKey="#{nls['DELETE_ROW']}"
+                                          icon="/jheadstart/images/deleteRow.png"
+                                          partialSubmit="true" immediate="true"
+                                          rendered="#{jhsUserRoles['ADMIN']}">
+                        <af:showPopupBehavior popupId=":::ConDeletePopup"/>
+                      </af:commandMenuItem>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="ConActionColumn" frozen="true" width="20"
+                           align="center" headerText=" ">
+                  <af:panelGroupLayout layout="horizontal" id="pgl1">
+                    <af:commandImageLink id="Condelrl" partialSubmit="true"
+                                         immediate="true"
+                                         rendered="#{jhsUserRoles['ADMIN']}"
+                                         shortDesc="#{nls['DELETE_ROW']}"
+                                         icon="/jheadstart/images/deleteRow.png">
+                      <af:showPopupBehavior popupId=":::ConDeletePopup"/>
+                    </af:commandImageLink>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column id="ConCNoCol" sortable="true" filterable="true"
+                           noWrap="true" width="120"
+                           sortProperty="ContractNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.ContractNumber.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="cl1"
+                                value="#{row.bindings.ContractNumber.inputValue}"
+                                label="#{bindings.ContractTabTable.hints.ContractNumber.label}"
+                                required="#{bindings.ContractTabTable.hints.ContractNumber.mandatory}"
+                                rows="#{bindings.ContractTabTable.hints.ContractNumber.displayHeight}"
+                                columns="#{bindings.ContractTabTable.hints.ContractNumber.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.ContractNumber.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="cl2"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}"
+                                  action="ContractTabDetails"
+                                  text="#{row.ContractNumber}"></af:commandLink>
+                </af:column>
+                <af:column id="ConCOLCol" sortable="true" noWrap="true"
+                           width="180" sortProperty="ContentOwner"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.ContentOwner.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="cl3"
+                                value="#{row.bindings.ContentOwner.inputValue}"
+                                label="#{bindings.ContractTabTable.hints.ContentOwner.label}"
+                                required="false"
+                                rows="#{bindings.ContractTabTable.hints.ContentOwner.displayHeight}"
+                                columns="#{bindings.ContractTabTable.hints.ContentOwner.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.ContentOwner.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="ConCOL"
+                                  text="#{row.bindings.ContentOwner.attributeValue}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="ContentOwner"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.ConCOId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="#{bindings.ConContentOwnerLink.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.ConCOId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueContentOwner}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="ConSiteCol" sortable="true" filterable="true"
+                           noWrap="true" width="180" sortProperty="Site"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.Site.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="ConSite"
+                                value="#{row.bindings.Site.inputValue}"
+                                label="#{bindings.ContractTabTable.hints.Site.label}"
+                                required="false"
+                                rows="#{bindings.ContractTabTable.hints.Site.displayHeight}"
+                                columns="#{bindings.ContractTabTable.hints.Site.displayWidth}"
+                                readOnly="true">
+                    <f:validator binding="#{row.bindings.Site.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ConStatusCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="Status"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.Status.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ConStatus"
+                                      value="#{row.bindings.Status.inputValue}"
+                                      label="#{bindings.ContractTabTable.hints.Status.label}"
+                                      required="true" readOnly="true"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{ConStatusDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{row.bindings.Status.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ConTypeCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="Type"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.Type.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ConType"
+                                      value="#{row.bindings.Type.inputValue}"
+                                      label="#{bindings.ContractTabTable.hints.Type.label}"
+                                      required="false" readOnly="true">
+                    <f:selectItems value="#{row.bindings.Type.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ConDivisionCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="Division"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.Division.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ConDivision"
+                                      value="#{row.bindings.Division.inputValue}"
+                                      label="#{bindings.ContractTabTable.hints.Division.label}"
+                                      required="#{bindings.ContractTabTable.hints.Division.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{row.bindings.Division.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ConEfDCol" sortable="true" filterable="true"
+                           noWrap="true" width="126"
+                           sortProperty="EffectiveDate" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.EffectiveDate.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.EffectiveDate}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="ConEfD"
+                                value="#{row.bindings.EffectiveDate.inputValue}"
+                                label="#{bindings.ContractTabTable.hints.EffectiveDate.label}"
+                                required="true" readOnly="true"
+                                autoSubmit="true"
+                                valueChangeListener="#{ConEffectiveDateDependsOnItem.updateModelValue}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="ConTermLengthCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="TermLength" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.TermLength.label}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ConTermLength"
+                                      value="#{row.bindings.TermLength.inputValue}"
+                                      label="#{bindings.ContractTabTable.hints.TermLength.label}"
+                                      required="true" readOnly="true"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{ConTermLengthDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{row.bindings.TermLength.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ConExDCol" sortable="true" filterable="true"
+                           noWrap="true" width="126"
+                           sortProperty="ExpirationDate" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.ExpirationDate.label}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.ExpirationDate}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="ConExD"
+                                value="#{row.bindings.ExpirationDate.inputValue}"
+                                label="#{bindings.ContractTabTable.hints.ExpirationDate.label}"
+                                required="true" readOnly="true"
+                                autoSubmit="true"
+                                valueChangeListener="#{ConExpirationDateDependsOnItem.updateModelValue}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="ConAutoAddCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="AutoAdd"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.AutoAdd.label}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ConAutoAdd"
+                                      value="#{row.bindings.AutoAdd.inputValue}"
+                                      label="#{bindings.ContractTabTable.hints.AutoAdd.label}"
+                                      required="#{bindings.ContractTabTable.hints.AutoAdd.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractTabTable.hints.AutoAdd.tooltip}">
+                    <f:selectItems value="#{row.bindings.AutoAdd.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ConAssignmentCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="Assignment" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.Assignment.label}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ConAssignment"
+                                      value="#{row.bindings.Assignment.inputValue}"
+                                      label="#{bindings.ContractTabTable.hints.Assignment.label}"
+                                      required="#{bindings.ContractTabTable.hints.Assignment.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractTabTable.hints.Assignment.tooltip}">
+                    <f:selectItems value="#{row.bindings.Assignment.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ConRoyaltyBearingCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="RoyaltyBearing" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.RoyaltyBearing.label}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ConRoyaltyBearing"
+                                      value="#{row.bindings.RoyaltyBearing.inputValue}"
+                                      label="#{bindings.ContractTabTable.hints.RoyaltyBearing.label}"
+                                      required="#{bindings.ContractTabTable.hints.RoyaltyBearing.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractTabTable.hints.RoyaltyBearing.tooltip}">
+                    <f:selectItems value="#{row.bindings.RoyaltyBearing.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ConGuaranteeCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="Guarantee" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.Guarantee.label}"
+                                    id="ol12"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="ConGuarantee"
+                                            label="#{bindings.ContractTabTable.hints.Guarantee.label}"
+                                            value="#{ConGuaranteecheckboxInTable.value}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.ContractTabTable.hints.Guarantee.tooltip}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="ConFairTreatmentClauseCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="FairTreatmentClause" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.FairTreatmentClause.label}"
+                                    id="ol13"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ConFairTreatmentClause"
+                                      value="#{row.bindings.FairTreatmentClause.inputValue}"
+                                      label="#{bindings.ContractTabTable.hints.FairTreatmentClause.label}"
+                                      required="#{bindings.ContractTabTable.hints.FairTreatmentClause.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractTabTable.hints.FairTreatmentClause.tooltip}">
+                    <f:selectItems value="#{row.bindings.FairTreatmentClause.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ConIssueEditionCoverageCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="IssueEditionCoverage" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.IssueEditionCoverage.label}"
+                                    id="ol14"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ConIssueEditionCoverage"
+                                      value="#{row.bindings.IssueEditionCoverage.inputValue}"
+                                      label="#{bindings.ContractTabTable.hints.IssueEditionCoverage.label}"
+                                      required="#{bindings.ContractTabTable.hints.IssueEditionCoverage.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractTabTable.hints.IssueEditionCoverage.tooltip}">
+                    <f:selectItems value="#{row.bindings.IssueEditionCoverage.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ConCompleteContentSetCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="CompleteContentSet" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.CompleteContentSet.label}"
+                                    id="ol15"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ConCompleteContentSet"
+                                      value="#{row.bindings.CompleteContentSet.inputValue}"
+                                      label="#{bindings.ContractTabTable.hints.CompleteContentSet.label}"
+                                      required="#{bindings.ContractTabTable.hints.CompleteContentSet.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractTabTable.hints.CompleteContentSet.tooltip}">
+                    <f:selectItems value="#{row.bindings.CompleteContentSet.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ConWarrantyAndIndemnificationCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="WarrantyAndIndemnification"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.WarrantyAndIndemnification.label}"
+                                    id="ol16"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ConWarrantyAndIndemnification"
+                                      value="#{row.bindings.WarrantyAndIndemnification.inputValue}"
+                                      label="#{bindings.ContractTabTable.hints.WarrantyAndIndemnification.label}"
+                                      required="#{bindings.ContractTabTable.hints.WarrantyAndIndemnification.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractTabTable.hints.WarrantyAndIndemnification.tooltip}">
+                    <f:selectItems value="#{row.bindings.WarrantyAndIndemnification.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ConGovernanceCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="Governance" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.Governance.label}"
+                                    id="ol17"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ConGovernance"
+                                      value="#{row.bindings.Governance.inputValue}"
+                                      label="#{bindings.ContractTabTable.hints.Governance.label}"
+                                      required="#{bindings.ContractTabTable.hints.Governance.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ContractTabTable.hints.Governance.tooltip}">
+                    <f:selectItems value="#{row.bindings.Governance.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ConCreatedDateSearchCol" sortable="true"
+                           filterable="true" noWrap="false" width="100"
+                           sortProperty="CreatedBySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.CreatedBySearch.label}"
+                                    id="ol18"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedBySearch}"
+                                  id="id2">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="ConCreatedDateSearch"
+                                value="#{row.bindings.CreatedBySearch.inputValue}"
+                                label="#{bindings.ContractTabTable.hints.CreatedBySearch.label}"
+                                required="#{bindings.ContractTabTable.hints.CreatedBySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.ContractTabTable.hints.CreatedBySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="ConLastUpdateDateSearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LastUpdateDateSearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.LastUpdateDateSearch.label}"
+                                    id="ol19"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdateDateSearch}"
+                                  id="id3">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="ConLastUpdateDateSearch"
+                                value="#{row.bindings.LastUpdateDateSearch.inputValue}"
+                                label="#{bindings.ContractTabTable.hints.LastUpdateDateSearch.label}"
+                                required="#{bindings.ContractTabTable.hints.LastUpdateDateSearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.ContractTabTable.hints.LastUpdateDateSearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="ConAFCol" sortable="true" noWrap="true"
+                           width="100" sortProperty="ActiveFlag" align="center"
+                           visible="#{jhsUserRoles['ADMIN']}" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="Active" id="ol20"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="ConAF" label="Active"
+                                            value="#{ConActiveFlagcheckboxInTable.value}"
+                                            readOnly="true"
+                                            visible="#{jhsUserRoles['ADMIN']}"
+                                            disabled="#{!jhsUserRoles['ADMIN']}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="ConProblematicPublisherCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ProblematicPublisher" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.ProblematicPublisher.label}"
+                                    id="ol21"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="ConProblematicPublisher"
+                                            label="#{bindings.ContractTabTable.hints.ProblematicPublisher.label}"
+                                            value="#{ConProblematicPublishercheckboxInTable.value}"
+                                            readOnly="true" disabled="True"
+                                            shortDesc="#{bindings.ContractTabTable.hints.ProblematicPublisher.tooltip}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="ConPublisherChangeContractFlagCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="100"
+                           sortProperty="PublisherChangeContractFlag"
+                           align="center" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContractTabTable.hints.PublisherChangeContractFlag.label}"
+                                    id="ol22"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="ConPublisherChangeContractFlag"
+                                            label="#{bindings.ContractTabTable.hints.PublisherChangeContractFlag.label}"
+                                            value="#{ConPublisherChangeContractFlagcheckboxInTable.value}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.ContractTabTable.hints.PublisherChangeContractFlag.tooltip}"></af:selectBooleanCheckbox>
+                </af:column>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <f:facet name="detailStamp">
+                  <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                  <af:panelGroupLayout id="pgl2"
+                                       rendered="#{bindings.ContractTabIterator.estimatedRowCount>0}"
+                                       layout="scroll">
+                    <f:facet name="separator">
+                      <af:spacer width="10" height="10" id="sp1"/>
+                    </f:facet>
+                    <af:panelFormLayout rows="1" maxColumns="4"
+                                        labelAlignment="start" id="pfl0"></af:panelFormLayout>
+                    <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                    <af:panelGroupLayout valign="top" layout="horizontal"
+                                         id="ConRegionsPGL" inlineStyle="  ">
+                      <f:facet name="separator">
+                        <af:spacer width="10" height="10" id="sp2"/>
+                      </f:facet>
+                      <af:panelGroupLayout inlineStyle=" " layout="vertical"
+                                           id="ConRegionsColumn1Pgl">
+                        <af:panelFormLayout rows="1" maxColumns="1"
+                                            labelAlignment="top"
+                                            id="ConColumn1PanelForm">
+                          <af:inputText id="ConCNt"
+                                        value="#{row.bindings.Note.inputValue}"
+                                        label="Note"
+                                        required="#{bindings.ConCopyOfNote.hints.mandatory}"
+                                        rows="1" columns="30"
+                                        maximumLength="4000" readOnly="true">
+                            <f:validator binding="#{row.bindings.Note.validator}"/>
+                          </af:inputText>
+                          <af:selectOneChoice id="ConForm"
+                                              value="#{row.bindings.Form.inputValue}"
+                                              label="#{bindings.ConForm.hints.label}"
+                                              required="true" readOnly="true">
+                            <f:selectItems value="#{bindings.ConForm.items}"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="ConCSP"
+                                        value="#{row.bindings.CompSubsToProvide.inputValue}"
+                                        label="#{bindings.ConCompSubsToProvide.hints.label}"
+                                        required="#{bindings.ConCompSubsToProvide.hints.mandatory}"
+                                        rows="#{bindings.ContractTabTable.hints.CompSubsToProvide.displayHeight}"
+                                        columns="#{bindings.ContractTabTable.hints.CompSubsToProvide.displayWidth}"
+                                        maximumLength="38" readOnly="true">
+                            <f:validator binding="#{row.bindings.CompSubsToProvide.validator}"/>
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.ContractTabTable.hints.CompSubsToProvide.format}"/>
+                          </af:inputText>
+                        </af:panelFormLayout>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout inlineStyle=" " layout="vertical"
+                                           id="ConRegionsColumn2Pgl">
+                        <af:panelFormLayout rows="1" maxColumns="1"
+                                            labelAlignment="top"
+                                            id="ConColumn2PanelForm">
+                          <af:selectOneChoice id="ConCancellationNoticeTerm"
+                                              value="#{row.bindings.CancellationNoticeTerm.inputValue}"
+                                              label="#{bindings.ConCancellationNoticeTerm.hints.label}"
+                                              required="true" readOnly="true"
+                                              autoSubmit="true"
+                                              valueChangeListener="#{ConCancellationNoticeTermDependsOnItem.updateModelValue}">
+                            <f:selectItems value="#{bindings.ConCancellationNoticeTerm.items}"/>
+                          </af:selectOneChoice>
+                          <af:inputDate id="ConRD"
+                                        value="#{row.bindings.RolloverDate.inputValue}"
+                                        label="#{bindings.ConRolloverDate.hints.label}"
+                                        required="#{bindings.ConRolloverDate.hints.mandatory}"
+                                        readOnly="true" disabled="true">
+                            <af:convertDateTime pattern="#{nls.datepattern}"/>
+                          </af:inputDate>
+                          <af:inputDate id="ConCaD"
+                                        value="#{row.bindings.CancellationDate.inputValue}"
+                                        label="#{bindings.ConCancellationDate.hints.label}"
+                                        required="#{bindings.ConCancellationDate.hints.mandatory}"
+                                        readOnly="true">
+                            <af:convertDateTime pattern="#{nls.datepattern}"/>
+                          </af:inputDate>
+                          <af:selectOneChoice id="ConCaR"
+                                              value="#{row.bindings.CancellationReason.inputValue}"
+                                              label="#{bindings.ConCancellationReason.hints.label}"
+                                              required="#{bindings.ConCancellationReason.hints.mandatory}"
+                                              readOnly="true">
+                            <f:selectItems value="#{bindings.ConCancellationReason.items}"/>
+                          </af:selectOneChoice>
+                          <af:inputDate id="ConCED"
+                                        value="#{row.bindings.CancellationEffectiveDate.inputValue}"
+                                        label="#{bindings.ConCancellationEffectiveDate.hints.label}"
+                                        required="#{bindings.ConCancellationEffectiveDate.hints.mandatory}"
+                                        readOnly="true" autoSubmit="true"
+                                        valueChangeListener="#{ConCancellationEffectiveDateDependsOnItem.updateModelValue}">
+                            <af:convertDateTime pattern="#{nls.datepattern}"/>
+                          </af:inputDate>
+                          <af:selectBooleanCheckbox id="ConAutoRenewsFlag"
+                                                    value="#{ConAutoRenewsFlagcheckboxInTable.value}"
+                                                    label="#{bindings.ConAutoRenewsFlag.hints.label}"
+                                                    readOnly="true"></af:selectBooleanCheckbox>
+                          <af:selectOneChoice id="ConAutoRenewTermMonths"
+                                              value="#{row.bindings.AutoRenewTermMonths.inputValue}"
+                                              label="#{bindings.ConAutoRenewTermMonths.hints.label}"
+                                              required="#{bindings.ConAutoRenewTermMonths.hints.mandatory}"
+                                              readOnly="true" autoSubmit="true"
+                                              valueChangeListener="#{ConAutoRenewTermMonthsDependsOnItem.updateModelValue}">
+                            <f:selectItems value="#{bindings.ConAutoRenewTermMonths.items}"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="ConSig"
+                                        value="#{row.bindings.Signatory.inputValue}"
+                                        label="#{bindings.ConSignatory.hints.label}"
+                                        required="false"
+                                        rows="#{bindings.ContractTabTable.hints.Signatory.displayHeight}"
+                                        columns="#{bindings.ContractTabTable.hints.Signatory.displayWidth}"
+                                        maximumLength="200" readOnly="true">
+                            <f:validator binding="#{row.bindings.Signatory.validator}"/>
+                          </af:inputText>
+                          <af:inputDate id="ConCSD"
+                                        value="#{row.bindings.ContractSignedDate.inputValue}"
+                                        label="#{bindings.ConContractSignedDate.hints.label}"
+                                        required="false" readOnly="true">
+                            <af:convertDateTime pattern="#{nls.datepattern}"/>
+                          </af:inputDate>
+                        </af:panelFormLayout>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout inlineStyle=" " layout="vertical"
+                                           id="ConRegionsColumn3Pgl">
+                        <af:panelFormLayout rows="1" maxColumns="1"
+                                            labelAlignment="top"
+                                            id="ConColumn3PanelForm">
+                          <af:selectOneChoice id="ConExclusivity"
+                                              value="#{row.bindings.Exclusivity.inputValue}"
+                                              label="#{bindings.ConExclusivity.hints.label}"
+                                              required="false" readOnly="true">
+                            <f:selectItems value="#{bindings.ConExclusivity.items}"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="ConContentMasterOwner"
+                                              value="#{row.bindings.ContentMasterOwner.inputValue}"
+                                              label="#{bindings.ConContentMasterOwner.hints.label}"
+                                              required="false" readOnly="true">
+                            <f:selectItems value="#{bindings.ConContentMasterOwner.items}"/>
+                          </af:selectOneChoice>
+                          <af:inputListOfValues id="ConTechnicalName"
+                                                popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.ContractTabTable.hints.TechnicalName.label}"
+                                                searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.ContractTabTable.hints.TechnicalName.label}"
+                                                value="#{row.bindings.TechnicalName.inputValue}"
+                                                label="#{bindings.ConTechnicalName.hints.label}"
+                                                required="#{bindings.ConTechnicalName.hints.mandatory}"
+                                                columns="30" maximumLength="100"
+                                                readOnly="true"
+                                                autoSubmit="true"
+                                                model="#{bindings.ConTechnicalName.listOfValuesModel}">
+                            <f:validator binding="#{row.bindings.TechnicalName.validator}"/>
+                          </af:inputListOfValues>
+                          <af:selectBooleanCheckbox id="ConNF"
+                                                    value="#{ConNoteFlagcheckboxInTable.value}"
+                                                    label="#{bindings.ConNoteFlag.hints.label}"
+                                                    readOnly="true"></af:selectBooleanCheckbox>
+                          <af:inputListOfValues id="ConAgreementName"
+                                                popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.ContractTabTable.hints.AgreementName.label}"
+                                                searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.ContractTabTable.hints.AgreementName.label}"
+                                                value="#{row.bindings.AgreementName.inputValue}"
+                                                label="#{bindings.ConAgreementName.hints.label}"
+                                                required="#{bindings.ConAgreementName.hints.mandatory}"
+                                                columns="#{bindings.ContractTabTable.hints.AgreementName.displayWidth}"
+                                                maximumLength="100"
+                                                readOnly="true"
+                                                autoSubmit="true"
+                                                model="#{bindings.ConAgreementName.listOfValuesModel}">
+                            <f:validator binding="#{row.bindings.AgreementName.validator}"/>
+                          </af:inputListOfValues>
+                          <af:inputListOfValues id="ConQaName"
+                                                popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.ContractTabTable.hints.QaName.label}"
+                                                searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.ContractTabTable.hints.QaName.label}"
+                                                value="#{row.bindings.QaName.inputValue}"
+                                                label="#{bindings.ConQaName.hints.label}"
+                                                required="#{bindings.ConQaName.hints.mandatory}"
+                                                columns="30" maximumLength="100"
+                                                readOnly="true"
+                                                autoSubmit="true"
+                                                model="#{bindings.ConQaName.listOfValuesModel}">
+                            <f:validator binding="#{row.bindings.QaName.validator}"/>
+                          </af:inputListOfValues>
+                        </af:panelFormLayout>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout inlineStyle=" " layout="vertical"
+                                           id="ConRegionsColumn4Pgl">
+                        <af:panelFormLayout rows="1" maxColumns="1"
+                                            labelAlignment="top"
+                                            id="ConColumn4PanelForm">
+                          <af:selectOneChoice id="ConRightsToBeRetained"
+                                              value="#{row.bindings.RightsToBeRetained.inputValue}"
+                                              label="#{bindings.ConRightsToBeRetained.hints.label}"
+                                              required="false" readOnly="true">
+                            <f:selectItems value="#{bindings.ConRightsToBeRetained.items}"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="ConCB"
+                                        value="#{row.bindings.CreatedBy.inputValue}"
+                                        label="#{bindings.ConCreatedBy.hints.label}"
+                                        required="#{bindings.ConCreatedBy.hints.mandatory}"
+                                        rows="#{bindings.ContractTabTable.hints.CreatedBy.displayHeight}"
+                                        columns="#{bindings.ContractTabTable.hints.CreatedBy.displayWidth}"
+                                        readOnly="true" disabled="true">
+                            <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                          </af:inputText>
+                          <af:inputDate id="ConCD"
+                                        value="#{row.bindings.CreatedDate.inputValue}"
+                                        label="#{bindings.ConCreatedDate.hints.label}"
+                                        required="#{bindings.ConCreatedDate.hints.mandatory}"
+                                        readOnly="true" disabled="true">
+                            <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                          </af:inputDate>
+                          <af:inputText id="ConLUB"
+                                        value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                        label="#{bindings.ConLastUpdatedBy.hints.label}"
+                                        required="#{bindings.ConLastUpdatedBy.hints.mandatory}"
+                                        rows="#{bindings.ContractTabTable.hints.LastUpdatedBy.displayHeight}"
+                                        columns="#{bindings.ContractTabTable.hints.LastUpdatedBy.displayWidth}"
+                                        readOnly="true" disabled="true">
+                            <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                          </af:inputText>
+                          <af:inputDate id="ConLUD"
+                                        value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                        label="#{bindings.ConLastUpdatedDate.hints.label}"
+                                        required="#{bindings.ConLastUpdatedDate.hints.mandatory}"
+                                        readOnly="true" disabled="true">
+                            <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                          </af:inputDate>
+                        </af:panelFormLayout>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                    <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                  </af:panelGroupLayout>
+                  <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                </f:facet>
+                 
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="ConDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="ConDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_CONTRACTTA:#{pageFlowScope.ContractTabTable.currentRowAttributeValues.ContractNumber}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteContractTab.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

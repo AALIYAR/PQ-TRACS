@@ -1,0 +1,639 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="PGTopLc"
+                             partialTriggers=" PGCancelButton0 asAreaPGSearchOptions qsAreaPGSearchOptions"
+                             rendered="#{jhsUserRoles['CO, AutoAdd, RM']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{nls['TABLE_TITLE_PROCESSINGGROUPS']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreateProcessingGroups.execute}"
+                                      action="CreatePG"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_PROCESSINGGROUPS']}"
+                                      rendered="#{(true) and (jhsUserRoles['AutoAdd, RM'])}"
+                                      id="PGNewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="PGCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaPG"
+                                 rendered="#{!pageFlowScope.createModes.CreateProcessingGroups and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaPGSearchOptions:qsButtonPG qsAreaPGSearchOptions:asButtonPG ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaPGSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.ProcessingGroupsIteratorProcessingGroupViewCriteriaQuery.queryDescriptor}"
+                        model="#{bindings.ProcessingGroupsIteratorProcessingGroupViewCriteriaQuery.queryModel}"
+                        queryListener="#{bindings.ProcessingGroupsIteratorProcessingGroupViewCriteriaQuery.processQuery}"
+                        queryOperationListener="#{bindings.ProcessingGroupsIteratorProcessingGroupViewCriteriaQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchProcessingGroups.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonPG"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchProcessingGroups.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaPGSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.ProcessingGroupsIteratorProcessingGroupViewCriteriaQuery.queryDescriptor}"
+                             model="#{bindings.ProcessingGroupsIteratorProcessingGroupViewCriteriaQuery.queryModel}"
+                             queryListener="#{bindings.ProcessingGroupsIteratorProcessingGroupViewCriteriaQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchProcessingGroups.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonPG"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchProcessingGroups.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="PGPC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="ProcessingGroupsDetails"></af:commandMenuItem>
+                    <af:group id="PGtbb"
+                              rendered="#{ (bindings.ProcessingGroupsIterator.viewObject!=null and bindings.ProcessingGroupsIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstProcessingGroups.execute}"
+                                          id="PGFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousProcessingGroups.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="PGPrevious" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextProcessingGroups.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="PGNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastProcessingGroups.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="PGLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="PGTab"
+                                                       type="excelHTML"
+                                                       filename="ProcessingGroups.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="PGTab"
+                                                       type="excelHTML"
+                                                       filename="ProcessingGroups.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="PGPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.ProcessingGroupsIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="PGTab" contentDelivery="immediate"
+                        value="#{bindings.ProcessingGroupsTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.ProcessingGroupsTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.ProcessingGroupsTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.ProcessingGroupsTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.ProcessingGroupsTable.rangeSize}"
+                        autoHeightRows="#{bindings.ProcessingGroupsTable.estimatedRowCount}"
+                        fetchSize="#{bindings.ProcessingGroupsTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.ProcessingGroupsIteratorProcessingGroupViewCriteriaQuery.processQuery}"
+                        filterModel="#{bindings.ProcessingGroupsIteratorProcessingGroupViewCriteriaQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.ProcessingGroupsTable.table}"
+                        partialTriggers=":::qsAreaPGSearchOptions :::asAreaPGSearchOptions :::PGPC ::PGFirst ::PGPrevious ::PGNext ::PGLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_PROCESSINGGROUPS']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="PGTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="ProcessingGroupsDetails"></af:commandMenuItem>
+                      </af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="PGOpportunityNoCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ProcessingGroupNo" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupNo.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="PGOpportunityNo"
+                                value="#{row.bindings.ProcessingGroupNo.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupNo.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupNo.mandatory}"
+                                rows="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupNo.displayHeight}"
+                                columns="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupNo.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupNo.tooltip}">
+                    <f:validator binding="#{row.bindings.ProcessingGroupNo.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupNo.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PGAccountNumberCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="AccountNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.AccountNumber.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="PGAccountNumber"
+                                value="#{row.bindings.AccountNumber.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.AccountNumber.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.AccountNumber.mandatory}"
+                                rows="#{bindings.ProcessingGroupsTable.hints.AccountNumber.displayHeight}"
+                                columns="#{bindings.ProcessingGroupsTable.hints.AccountNumber.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.AccountNumber.tooltip}">
+                    <f:validator binding="#{row.bindings.AccountNumber.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ProcessingGroupsTable.hints.AccountNumber.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PGAccountNameLinkCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="AccountName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.AccountName.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="cl1"
+                                value="#{row.bindings.AccountName.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.AccountName.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.AccountName.mandatory}"
+                                rows="#{bindings.ProcessingGroupsTable.hints.AccountName.displayHeight}"
+                                columns="#{bindings.ProcessingGroupsTable.hints.AccountName.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.AccountName.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="PGAccountNameLink"
+                                  text="#{row.bindings.AccountName.attributeValue}"
+                                  shortDesc="#{bindings.ProcessingGroupsTable.hints.AccountName.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="ContentOwner"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.PGContentOwnerId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="CO - #{bindings.PGAccountNameLink.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.PGContentOwnerId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueContentOwner}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="PGAccountSiteCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="AccountSite" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.AccountSite.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputText id="PGAccountSite"
+                                value="#{row.bindings.AccountSite.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.AccountSite.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.AccountSite.mandatory}"
+                                rows="#{bindings.ProcessingGroupsTable.hints.AccountSite.displayHeight}"
+                                columns="#{bindings.ProcessingGroupsTable.hints.AccountSite.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.AccountSite.tooltip}">
+                    <f:validator binding="#{row.bindings.AccountSite.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PGCountryCol" sortable="true" filterable="true"
+                           noWrap="true" width="180" sortProperty="Country"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.Country.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:selectOneChoice id="PGCountry"
+                                      value="#{row.bindings.Country.inputValue}"
+                                      label="#{bindings.ProcessingGroupsTable.hints.Country.label}"
+                                      required="#{bindings.ProcessingGroupsTable.hints.Country.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ProcessingGroupsTable.hints.Country.tooltip}">
+                    <f:selectItems value="#{row.bindings.Country.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="PGKeyAccountLevelCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="KeyAccountLevel" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.KeyAccountLevel.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="PGKeyAccountLevel"
+                                value="#{row.bindings.KeyAccountLevel.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.KeyAccountLevel.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.KeyAccountLevel.mandatory}"
+                                rows="#{bindings.ProcessingGroupsTable.hints.KeyAccountLevel.displayHeight}"
+                                columns="#{bindings.ProcessingGroupsTable.hints.KeyAccountLevel.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.KeyAccountLevel.tooltip}">
+                    <f:validator binding="#{row.bindings.KeyAccountLevel.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PGNameCol" sortable="true" filterable="true"
+                           noWrap="true" width="240"
+                           sortProperty="ProcessingGroupName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupName.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:inputText id="cl2"
+                                value="#{row.bindings.ProcessingGroupName.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupName.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupName.mandatory}"
+                                rows="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupName.displayHeight}"
+                                columns="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupName.displayWidth}"
+                                maximumLength="200" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupName.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.ProcessingGroupName.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="cl3"
+                                  shortDesc="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupName.tooltip}"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}"
+                                  action="ProcessingGroupsDetails"
+                                  text="#{row.ProcessingGroupName}"></af:commandLink>
+                </af:column>
+                <af:column id="PGAllianceManagerCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="AllianceManager" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.AllianceManager.label}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:inputText id="PGAllianceManager"
+                                value="#{row.bindings.AllianceManager.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.AllianceManager.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.AllianceManager.mandatory}"
+                                rows="#{bindings.ProcessingGroupsTable.hints.AllianceManager.displayHeight}"
+                                columns="#{bindings.ProcessingGroupsTable.hints.AllianceManager.displayWidth}"
+                                maximumLength="240" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.AllianceManager.tooltip}">
+                    <f:validator binding="#{row.bindings.AllianceManager.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PGOpportunityTypeCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="ProcessingGroupType" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupType.label}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:selectOneChoice id="PGOpportunityType"
+                                      value="#{row.bindings.ProcessingGroupType.inputValue}"
+                                      label="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupType.label}"
+                                      required="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupType.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ProcessingGroupsTable.hints.ProcessingGroupType.tooltip}">
+                    <f:selectItems value="#{row.bindings.ProcessingGroupType.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="PGCurrentStatusCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="ProcessingStatus" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.ProcessingStatus.label}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:selectOneChoice id="PGCurrentStatus"
+                                      value="#{row.bindings.ProcessingStatus.inputValue}"
+                                      label="#{bindings.ProcessingGroupsTable.hints.ProcessingStatus.label}"
+                                      required="#{bindings.ProcessingGroupsTable.hints.ProcessingStatus.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ProcessingGroupsTable.hints.ProcessingStatus.tooltip}">
+                    <f:selectItems value="#{row.bindings.ProcessingStatus.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="PGCataloguedCountCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CataloguedCount" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.CataloguedCount.label}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:inputText id="PGCataloguedCount"
+                                value="#{row.bindings.CataloguedCount.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.CataloguedCount.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.CataloguedCount.mandatory}"
+                                rows="#{bindings.ProcessingGroupsTable.hints.CataloguedCount.displayHeight}"
+                                columns="#{bindings.ProcessingGroupsTable.hints.CataloguedCount.displayWidth}"
+                                maximumLength="10" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.CataloguedCount.tooltip}">
+                    <f:validator binding="#{row.bindings.CataloguedCount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ProcessingGroupsTable.hints.CataloguedCount.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PGUncataloguedCountCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="UncataloguedCount" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.UncataloguedCount.label}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <af:inputText id="PGUncataloguedCount"
+                                value="#{row.bindings.UncataloguedCount.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.UncataloguedCount.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.UncataloguedCount.mandatory}"
+                                rows="#{bindings.ProcessingGroupsTable.hints.UncataloguedCount.displayHeight}"
+                                columns="#{bindings.ProcessingGroupsTable.hints.UncataloguedCount.displayWidth}"
+                                maximumLength="10" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.UncataloguedCount.tooltip}">
+                    <f:validator binding="#{row.bindings.UncataloguedCount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ProcessingGroupsTable.hints.UncataloguedCount.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PGCurrentPreStatusCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CurrentPreStatus" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.CurrentPreStatus.label}"
+                                    id="ol12"/>
+                  </f:facet>
+                  <af:selectOneChoice id="PGCurrentPreStatus"
+                                      value="#{row.bindings.CurrentPreStatus.inputValue}"
+                                      label="#{bindings.ProcessingGroupsTable.hints.CurrentPreStatus.label}"
+                                      required="#{bindings.ProcessingGroupsTable.hints.CurrentPreStatus.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ProcessingGroupsTable.hints.CurrentPreStatus.tooltip}">
+                    <f:selectItems value="#{row.bindings.CurrentPreStatus.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="PGCurrentCatalogingStatusCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CurrentCatalogingStatus"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.CurrentCatalogingStatus.label}"
+                                    id="ol13"/>
+                  </f:facet>
+                  <af:selectOneChoice id="PGCurrentCatalogingStatus"
+                                      value="#{row.bindings.CurrentCatalogingStatus.inputValue}"
+                                      label="#{bindings.ProcessingGroupsTable.hints.CurrentCatalogingStatus.label}"
+                                      required="#{bindings.ProcessingGroupsTable.hints.CurrentCatalogingStatus.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ProcessingGroupsTable.hints.CurrentCatalogingStatus.tooltip}">
+                    <f:selectItems value="#{row.bindings.CurrentCatalogingStatus.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="PGCurrentAgreementStatusCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CurrentAgreementStatus"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.CurrentAgreementStatus.label}"
+                                    id="ol14"/>
+                  </f:facet>
+                  <af:selectOneChoice id="PGCurrentAgreementStatus"
+                                      value="#{row.bindings.CurrentAgreementStatus.inputValue}"
+                                      label="#{bindings.ProcessingGroupsTable.hints.CurrentAgreementStatus.label}"
+                                      required="#{bindings.ProcessingGroupsTable.hints.CurrentAgreementStatus.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ProcessingGroupsTable.hints.CurrentAgreementStatus.tooltip}">
+                    <f:selectItems value="#{row.bindings.CurrentAgreementStatus.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="PGOpenAccessFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="OpenAccessFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.OpenAccessFlag.label}"
+                                    id="ol15"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="PGOpenAccessFlag"
+                                            label="#{bindings.ProcessingGroupsTable.hints.OpenAccessFlag.label}"
+                                            value="#{PGOpenAccessFlagcheckboxInTable.value}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.ProcessingGroupsTable.hints.OpenAccessFlag.tooltip}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="PGContractNumberCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ContractNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.ContractNumber.label}"
+                                    id="ol16"/>
+                  </f:facet>
+                  <af:inputText id="cl4"
+                                value="#{row.bindings.ContractNumber.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.ContractNumber.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.ContractNumber.mandatory}"
+                                rows="#{bindings.ProcessingGroupsTable.hints.ContractNumber.displayHeight}"
+                                columns="#{bindings.ProcessingGroupsTable.hints.ContractNumber.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.ContractNumber.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.ContractNumber.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="PGContractNumber"
+                                  text="#{row.bindings.ContractNumber.attributeValue}"
+                                  shortDesc="#{bindings.ProcessingGroupsTable.hints.ContractNumber.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="ContractTab"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.PGContractId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="Contract #{bindings.PGContractNumber.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.PGContractId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueContractTab}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="PGCreatedByCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="CreatedBy"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.CreatedBy.label}"
+                                    id="ol17"/>
+                  </f:facet>
+                  <af:inputText id="PGCreatedBy"
+                                value="#{row.bindings.CreatedBy.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.CreatedBy.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.CreatedBy.mandatory}"
+                                rows="#{bindings.ProcessingGroupsTable.hints.CreatedBy.displayHeight}"
+                                columns="#{bindings.ProcessingGroupsTable.hints.CreatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.CreatedBy.tooltip}">
+                    <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PGCreatedBySearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedBySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.CreatedBySearch.label}"
+                                    id="ol18"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedBySearch}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="PGCreatedBySearch"
+                                value="#{row.bindings.CreatedBySearch.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.CreatedBySearch.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.CreatedBySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.CreatedBySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="PGLastUpdatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="LastUpdatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.LastUpdatedBy.label}"
+                                    id="ol19"/>
+                  </f:facet>
+                  <af:inputText id="PGLastUpdatedBy"
+                                value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.LastUpdatedBy.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.LastUpdatedBy.mandatory}"
+                                rows="#{bindings.ProcessingGroupsTable.hints.LastUpdatedBy.displayHeight}"
+                                columns="#{bindings.ProcessingGroupsTable.hints.LastUpdatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.LastUpdatedBy.tooltip}">
+                    <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PGLastUpdatedBySearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LastUpdatedBySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupsTable.hints.LastUpdatedBySearch.label}"
+                                    id="ol20"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdatedBySearch}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="PGLastUpdatedBySearch"
+                                value="#{row.bindings.LastUpdatedBySearch.inputValue}"
+                                label="#{bindings.ProcessingGroupsTable.hints.LastUpdatedBySearch.label}"
+                                required="#{bindings.ProcessingGroupsTable.hints.LastUpdatedBySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupsTable.hints.LastUpdatedBySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <f:facet name="detailStamp">
+                  <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                  <af:panelGroupLayout id="pgl1"
+                                       rendered="#{bindings.ProcessingGroupsIterator.estimatedRowCount>0}"
+                                       layout="scroll">
+                    <f:facet name="separator">
+                      <af:spacer width="10" height="10" id="sp1"/>
+                    </f:facet>
+                    <af:panelFormLayout rows="1" maxColumns="4"
+                                        labelAlignment="start" id="pfl0"></af:panelFormLayout>
+                  </af:panelGroupLayout>
+                  <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                </f:facet>
+                 
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

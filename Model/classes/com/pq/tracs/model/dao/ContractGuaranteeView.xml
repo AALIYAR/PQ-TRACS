@@ -1,0 +1,445 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="ContractGuaranteeView"
+   Version="11.1.1.61.92"
+   SelectList="ContractGuarantee.ID, 
+       ContractGuarantee.CONTRACT_ID, 
+       ContractGuarantee.CURRENCY, 
+       ContractGuarantee.AMOUNT, 
+       ContractGuarantee.EFFECTIVE_START_DATE, 
+       ContractGuarantee.EFFECTIVE_END_DATE, 
+       ContractGuarantee.MEDIA, 
+       ContractGuarantee.DELIVERY_FORMAT, 
+       ContractGuarantee.PRODUCT_CODE, 
+       ContractGuarantee.INVENTORY_DIVISION, 
+       ContractGuarantee.COMMENTS, 
+       ContractGuarantee.CREATED_BY, 
+       ContractGuarantee.CREATED_DATE, 
+       ContractGuarantee.LAST_UPDATED_BY, 
+       ContractGuarantee.LAST_UPDATED_DATE"
+   FromList="TRAX_CONTRACT_GUARANTEE ContractGuarantee"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   RowClass="com.pq.tracs.model.dao.ContractGuaranteeViewRowImpl"
+   ComponentClass="com.pq.tracs.model.dao.ContractGuaranteeViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10"
+   OrderBy="EFFECTIVE_END_DATE DESC, EFFECTIVE_START_DATE DESC">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+      <Attr Name="_objectSuperClassName" Value="com.pq.tracs.model.dao.TracsView" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <ViewAccessor
+      Name="ContractDeliveryFormatLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Contract Delivery Format']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="ContractInventoryDivisionLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Contract Inventory Division']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="ContractMediaCodeLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Contract Media Code']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="ContractProductCodeLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Contract Product Code']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="CurrencyLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Currency']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_Currency"
+      ListVOName="CurrencyLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="Currency"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_Media"
+      ListVOName="ContractMediaCodeLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="Media"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_DeliveryFormat"
+      ListVOName="ContractDeliveryFormatLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="DeliveryFormat"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_ProductCode"
+      ListVOName="ContractProductCodeLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="ProductCode"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_InventoryDivision"
+      ListVOName="ContractInventoryDivisionLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="InventoryDivision"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <EntityUsage
+      Name="ContractGuarantee"
+      Entity="com.pq.tracs.model.bo.ContractGuarantee" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      EntityAttrName="Id"
+      EntityUsage="ContractGuarantee"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContractId"
+      EntityAttrName="ContractId"
+      EntityUsage="ContractGuarantee"
+      AliasName="CONTRACT_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Currency"
+      EntityAttrName="Currency"
+      EntityUsage="ContractGuarantee"
+      AliasName="CURRENCY"
+      LOVName="LOV_Currency">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Amount"
+      IsNotNull="true"
+      EntityAttrName="Amount"
+      EntityUsage="ContractGuarantee"
+      AliasName="AMOUNT" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EffectiveStartDate"
+      EntityAttrName="EffectiveStartDate"
+      EntityUsage="ContractGuarantee"
+      AliasName="EFFECTIVE_START_DATE" />
+   <ViewAttribute
+      Name="EffectiveEndDate"
+      EntityAttrName="EffectiveEndDate"
+      EntityUsage="ContractGuarantee"
+      AliasName="EFFECTIVE_END_DATE" />
+   <ViewAttribute
+      Name="Media"
+      EntityAttrName="Media"
+      EntityUsage="ContractGuarantee"
+      AliasName="MEDIA"
+      LOVName="LOV_Media">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DeliveryFormat"
+      EntityAttrName="DeliveryFormat"
+      EntityUsage="ContractGuarantee"
+      AliasName="DELIVERY_FORMAT"
+      LOVName="LOV_DeliveryFormat">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ProductCode"
+      EntityAttrName="ProductCode"
+      EntityUsage="ContractGuarantee"
+      AliasName="PRODUCT_CODE"
+      LOVName="LOV_ProductCode">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.ContractGuaranteeView.ProductCode_LABEL"/>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="InventoryDivision"
+      EntityAttrName="InventoryDivision"
+      EntityUsage="ContractGuarantee"
+      AliasName="INVENTORY_DIVISION"
+      LOVName="LOV_InventoryDivision">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Comments"
+      EntityAttrName="Comments"
+      EntityUsage="ContractGuarantee"
+      AliasName="COMMENTS" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="ContractGuarantee"
+      AliasName="CREATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.ContractGuaranteeView.CreatedBy_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      EntityAttrName="CreatedDate"
+      EntityUsage="ContractGuarantee"
+      AliasName="CREATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.ContractGuaranteeView.CreatedDate_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="ContractGuarantee"
+      AliasName="LAST_UPDATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.ContractGuaranteeView.LastUpdatedBy_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      IsUpdateable="false"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="ContractGuarantee"
+      AliasName="LAST_UPDATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.ContractGuaranteeView.LastUpdatedDate_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="ContractGuaranteeViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.ContractGuaranteeView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow83"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="Currency"
+            ViewAttribute="Currency"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractGuaranteeViewCriteria_vcrow83_Amount"
+            ViewAttribute="Amount"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="EffectiveStartDate"
+            ViewAttribute="EffectiveStartDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="EffectiveEndDate"
+            ViewAttribute="EffectiveEndDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="Media"
+            ViewAttribute="Media"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="DeliveryFormat"
+            ViewAttribute="DeliveryFormat"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ProductCode"
+            ViewAttribute="ProductCode"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="InventoryDivision"
+            ViewAttribute="InventoryDivision"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractGuaranteeViewCriteria_vcrow83_Comments"
+            ViewAttribute="Comments"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="CreatedBy"
+            ViewAttribute="CreatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="CreatedDate"
+            ViewAttribute="CreatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="LastUpdatedBy"
+            ViewAttribute="LastUpdatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="LastUpdatedDate"
+            ViewAttribute="LastUpdatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ViewLinkAccessor
+      Name="ContractGuaranteeTitleView"
+      ViewLink="com.pq.tracs.model.dao.ContractGuaranteeTitleViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

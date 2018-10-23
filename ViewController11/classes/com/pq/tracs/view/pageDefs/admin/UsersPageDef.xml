@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="UsersPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'ADMIN'}"/>
+  </parameters>
+  <executables>
+    <iterator id="UsersIterator" Binds="ExUsersView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="UsersIteratorExUsersViewCriteriaQuery"
+                  Binds="UsersIterator" Criteria="ExUsersViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="FirstName"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="UserRoleGrantsIterator" Binds="ExUserRoleGrantsView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="UserRoleGrantsIteratorQuery"
+                  Binds="UserRoleGrantsIterator"
+                  Criteria="__ImplicitViewCriteria__"
+                  InitialQueryOverridden="true" DefaultQuickSearchAttrName="Id"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ExRolesLookupIterator" Binds="ExRolesLookupView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <variableIterator id="variables">
+      <variable Name="UserRoleGrantsRowKeyVar" Type="java.lang.String"
+                DefaultValue="#{bindings.UserRoleGrantsIterator.currentRowKeyString}"/>
+    </variableIterator>
+  </executables>
+  <bindings>
+    <attributeValues id="UsersId" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersFirstName" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="FirstName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersLastName" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="LastName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersMiddleName" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="MiddleName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersAlias" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="Alias"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersUsername" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="Username"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersPassword" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="Password"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersDisplayName" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="DisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersLastLoginTime" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="LastLoginTime"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersLastLoginApp" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="LastLoginApp"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersUserType" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="UserType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersEmailAddress" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="EmailAddress"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersWorkPhone" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="WorkPhone"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersHomePhone" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="HomePhone"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersFax" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="Fax"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersJobTitle" IterBinding="UsersIterator">
+      <AttrNames>
+        <Item Value="JobTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="UsersTable" IterBinding="UsersIterator">
+      <nodeDefinition Name="Users"
+                      DefName="com.pq.tracs.model.security.dao.ExUsersView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="FirstName"/>
+          <Item Value="LastName"/>
+          <Item Value="MiddleName"/>
+          <Item Value="Alias"/>
+          <Item Value="Username"/>
+          <Item Value="Password"/>
+          <Item Value="DisplayName"/>
+          <Item Value="LastLoginTime"/>
+          <Item Value="LastLoginApp"/>
+          <Item Value="UserType"/>
+          <Item Value="EmailAddress"/>
+          <Item Value="WorkPhone"/>
+          <Item Value="HomePhone"/>
+          <Item Value="Fax"/>
+          <Item Value="JobTitle"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstUsers" IterBinding="UsersIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousUsers" IterBinding="UsersIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextUsers" IterBinding="UsersIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastUsers" IterBinding="UsersIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyUsers" IterBinding="UsersIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{pageFlowScope.rowKeyStrUsers}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateUsers" IterBinding="UsersIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <attributeValues id="UserRoleGrantsId" IterBinding="UserRoleGrantsIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UserRoleGrantsUsrId"
+                     IterBinding="UserRoleGrantsIterator">
+      <AttrNames>
+        <Item Value="UsrId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="UserRoleGrantsIterator"
+          id="UserRoleGrantsRleId" Uses="LOV_RleId" StaticList="false"/>
+    <attributeValues id="UserRoleGrantsRoleShortName"
+                     IterBinding="UserRoleGrantsIterator">
+      <AttrNames>
+        <Item Value="ShortName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UserRoleGrantsRoleName"
+                     IterBinding="UserRoleGrantsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UserRoleGrantsId1"
+                     IterBinding="UserRoleGrantsIterator">
+      <AttrNames>
+        <Item Value="Id1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UserRoleGrantsUsername"
+                     IterBinding="UserRoleGrantsIterator">
+      <AttrNames>
+        <Item Value="Username"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UserRoleGrantsUserDisplayName"
+                     IterBinding="UserRoleGrantsIterator">
+      <AttrNames>
+        <Item Value="DisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UserRoleGrantsId2"
+                     IterBinding="UserRoleGrantsIterator">
+      <AttrNames>
+        <Item Value="Id2"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="UserRoleGrantsTable" IterBinding="UserRoleGrantsIterator">
+      <nodeDefinition Name="UserRoleGrants"
+                      DefName="com.pq.tracs.model.security.dao.ExUserRoleGrantsView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="UsrId"/>
+          <Item Value="RleId"/>
+          <Item Value="ShortName"/>
+          <Item Value="Name"/>
+          <Item Value="Id1"/>
+          <Item Value="Username"/>
+          <Item Value="DisplayName"/>
+          <Item Value="Id2"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <table id="ExRolesLookup" IterBinding="ExRolesLookupIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+        <Item Value="Name"/>
+      </AttrNames>
+    </table>
+    <methodAction RequiresUpdateModel="false" Action="invokeMethod"
+                  id="processUserRoleGrantsShuttle"
+                  DataControl="TracsAdminServiceDataControl"
+                  InstanceName="TracsAdminServiceDataControl.dataProvider"
+                  MethodName="processIntersectionShuttle"
+                  ReturnName="TracsAdminServiceDataControl.methodResults.TracsAdminServiceDataControl_dataProvider_processIntersectionShuttle_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="parentRow"
+                 NDValue="#{bindings.UsersIterator.currentRow}"
+                 NDType="oracle.jbo.Row"/>
+      <NamedData NDName="childUsage" NDValue="ExUserRoleGrantsView1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="unselectedListUsage" NDValue="ExRolesLookupView1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="oldSelectedKeys"
+                 NDValue="#{viewScope.UserRoleGrantsShuttle.selectedKeys}"
+                 NDType="[Loracle.jbo.Key;"/>
+      <NamedData NDName="newSelectedKeys"
+                 NDValue="#{viewScope.UserRoleGrantsShuttle.newSelectedKeys}"
+                 NDType="[Loracle.jbo.Key;"/>
+      <NamedData NDName="parent2ChildRefAttrs"
+                 NDValue="#{viewScope.UserRoleGrantsShuttle.otherParentChildRefAttrs}"
+                 NDType="java.util.HashMap"/>
+    </methodAction>
+    <attributeValues id="UserRoleGrantsRowKey" IterBinding="variables">
+      <AttrNames>
+        <Item Value="UserRoleGrantsRowKeyVar"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="SetCurrentRowWithKeyUserRoleGrants"
+            IterBinding="UserRoleGrantsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{bindings.UserRoleGrantsRowKey}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateUserRoleGrants" IterBinding="UserRoleGrantsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteUserRoleGrants" IterBinding="UserRoleGrantsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

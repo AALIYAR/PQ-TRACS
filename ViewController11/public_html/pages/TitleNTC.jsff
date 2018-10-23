@@ -1,0 +1,1129 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="TitleNTCTopLc"
+                             partialTriggers=" TitleNTCfbb TitleNTCNewButton TitleNTCSaveButton0 TitleNTCCancelButton0 TitleNTCSaveButton1 TitleNTCCancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateTitleNTC ? nls['INSERT_TITLE_TITLENTC'] :  nls['EDIT_TITLE_TITLENT: #{bindings.TitleNTCSubType.inputValue}'] }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="TitleNTCfbb" layout="horizontal"
+                                       rendered="#{ bindings.TitleNTCIterator.currentRow!=null  and bindings.TitleNTCIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateTitleNTC and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="TitleNTCFirst TitleNTCPrevious TitleNTCNext TitleNTCLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstTitleNTC.execute}"
+                                             id="TitleNTCFirst"
+                                             partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.TitleNTCIterator.rangeStart+bindings.TitleNTCIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.TitleNTCIterator.rangeStart+bindings.TitleNTCIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousTitleNTC.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="TitleNTCPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.TitleNTCIterator.rangeStart+bindings.TitleNTCIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.TitleNTCIterator.rangeStart+bindings.TitleNTCIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.TitleNTCIterator.rangeStart+bindings.TitleNTCIterator.currentRowIndexInRange+1} / #{bindings.TitleNTCIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextTitleNTC.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="TitleNTCNext"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.TitleNTCIterator.rangeStart+bindings.TitleNTCIterator.currentRowIndexInRange+1 lt bindings.TitleNTCIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.TitleNTCIterator.rangeStart+bindings.TitleNTCIterator.currentRowIndexInRange+1 lt bindings.TitleNTCIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastTitleNTC.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="TitleNTCLast"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.TitleNTCIterator.rangeStart+bindings.TitleNTCIterator.currentRowIndexInRange+1 lt bindings.TitleNTCIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.TitleNTCIterator.rangeStart+bindings.TitleNTCIterator.currentRowIndexInRange+1 lt bindings.TitleNTCIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateTitleNTC.execute}"
+                                             action="CreateTitleNTC"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_TITLENTC']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateTitleNTC and (true) }"
+                                             id="TitleNTCNewButton"></af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="TitleNTCPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveTitleNTC.execute}"
+                                      rendered="#{!pageFlowScope.hideSaveButton}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="TitleNTCSaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel"
+                                      id="TitleNTCCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.TitleNTCIterator.findMode!='true'}"
+                       id="TitleNTCSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.TitleNTCIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp"
+                                  id="TitleNTCNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="TitleNTCFC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="3"
+                                    id="TitleNTCFI">
+                  <af:inputText id="TitleNTCNtcNumber"
+                                value="#{bindings.TitleNTCNtcNumber.inputValue}"
+                                label="#{bindings.TitleNTCNtcNumber.hints.label}"
+                                required="#{bindings.TitleNTCNtcNumber.hints.mandatory}"
+                                rows="#{bindings.TitleNTCNtcNumber.hints.displayHeight}"
+                                columns="#{bindings.TitleNTCNtcNumber.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.TitleNTCNtcNumber.hints.tooltip}">
+                    <f:validator binding="#{bindings.TitleNTCNtcNumber.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.TitleNTCNtcNumber.format}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="TitleNTCSubType"
+                                      value="#{bindings.TitleNTCSubType.inputValue}"
+                                      label="#{bindings.TitleNTCSubType.hints.label}"
+                                      required="#{bindings.TitleNTCSubType.hints.mandatory}"
+                                      shortDesc="#{bindings.TitleNTCSubType.hints.tooltip}">
+                    <f:selectItems value="#{bindings.TitleNTCSubType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="TitleNTCNtcPriority"
+                                      value="#{bindings.TitleNTCNtcPriority.inputValue}"
+                                      label="#{bindings.TitleNTCNtcPriority.hints.label}"
+                                      required="#{bindings.TitleNTCNtcPriority.hints.mandatory}"
+                                      shortDesc="#{bindings.TitleNTCNtcPriority.hints.tooltip}">
+                    <f:selectItems value="#{bindings.TitleNTCNtcPriority.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectBooleanCheckbox id="TitleNTCSupportDocumentationIncFlag"
+                                            value="#{bindings.TitleNTCSupportDocumentationIncFlag.inputValue}"
+                                            label="#{bindings.TitleNTCSupportDocumentationIncFlag.hints.label}"
+                                            shortDesc="#{bindings.TitleNTCSupportDocumentationIncFlag.hints.tooltip}"></af:selectBooleanCheckbox>
+                  <af:selectOneChoice id="TitleNTCCurrentManufactureType"
+                                      value="#{bindings.TitleNTCCurrentManufactureType.inputValue}"
+                                      label="#{bindings.TitleNTCCurrentManufactureType.hints.label}"
+                                      required="#{bindings.TitleNTCCurrentManufactureType.hints.mandatory}"
+                                      shortDesc="#{bindings.TitleNTCCurrentManufactureType.hints.tooltip}">
+                    <f:selectItems value="#{bindings.TitleNTCCurrentManufactureType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="TitleNTCNewManufactureType"
+                                      value="#{bindings.TitleNTCNewManufactureType.inputValue}"
+                                      label="#{bindings.TitleNTCNewManufactureType.hints.label}"
+                                      required="#{bindings.TitleNTCNewManufactureType.hints.mandatory}"
+                                      shortDesc="#{bindings.TitleNTCNewManufactureType.hints.tooltip}">
+                    <f:selectItems value="#{bindings.TitleNTCNewManufactureType.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputDate id="TitleNTCLastVolumeIssueDate"
+                                value="#{bindings.TitleNTCLastVolumeIssueDate.inputValue}"
+                                label="#{bindings.TitleNTCLastVolumeIssueDate.hints.label}"
+                                required="#{bindings.TitleNTCLastVolumeIssueDate.hints.mandatory}"
+                                shortDesc="#{bindings.TitleNTCLastVolumeIssueDate.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputDate id="TitleNTCFirstVolumeIssueDate"
+                                value="#{bindings.TitleNTCFirstVolumeIssueDate.inputValue}"
+                                label="#{bindings.TitleNTCFirstVolumeIssueDate.hints.label}"
+                                required="#{bindings.TitleNTCFirstVolumeIssueDate.hints.mandatory}"
+                                shortDesc="#{bindings.TitleNTCFirstVolumeIssueDate.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="TitleNTCNewTitle"
+                                value="#{bindings.TitleNTCNewTitle.inputValue}"
+                                label="#{bindings.TitleNTCNewTitle.hints.label}"
+                                required="#{bindings.TitleNTCNewTitle.hints.mandatory}"
+                                rows="#{bindings.TitleNTCNewTitle.hints.displayHeight}"
+                                columns="#{bindings.TitleNTCNewTitle.hints.displayWidth}"
+                                maximumLength="400"
+                                shortDesc="#{bindings.TitleNTCNewTitle.hints.tooltip}">
+                    <f:validator binding="#{bindings.TitleNTCNewTitle.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="TitleNTCNewIssn"
+                                value="#{bindings.TitleNTCNewIssn.inputValue}"
+                                label="#{bindings.TitleNTCNewIssn.hints.label}"
+                                required="#{bindings.TitleNTCNewIssn.hints.mandatory}"
+                                rows="#{bindings.TitleNTCNewIssn.hints.displayHeight}"
+                                columns="#{bindings.TitleNTCNewIssn.hints.displayWidth}"
+                                maximumLength="50"
+                                shortDesc="#{bindings.TitleNTCNewIssn.hints.tooltip}">
+                    <f:validator binding="#{bindings.TitleNTCNewIssn.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="TitleNTCNewEIssn"
+                                value="#{bindings.TitleNTCNewEIssn.inputValue}"
+                                label="#{bindings.TitleNTCNewEIssn.hints.label}"
+                                required="#{bindings.TitleNTCNewEIssn.hints.mandatory}"
+                                rows="#{bindings.TitleNTCNewEIssn.hints.displayHeight}"
+                                columns="#{bindings.TitleNTCNewEIssn.hints.displayWidth}"
+                                maximumLength="50"
+                                shortDesc="#{bindings.TitleNTCNewEIssn.hints.tooltip}">
+                    <f:validator binding="#{bindings.TitleNTCNewEIssn.validator}"/>
+                  </af:inputText>
+                  <af:panelLabelAndMessage label="#{bindings.TitleNTCDescription.hints.label}"
+                                           shortDesc="#{bindings.TitleNTCDescription.hints.tooltip}"
+                                           showRequired="#{bindings.TitleNTCDescription.hints.mandatory}"
+                                           id="TitleNTCDescriptionLabel">
+                    <af:inputText id="TitleNTCDescription"
+                                  value="#{bindings.TitleNTCDescription.inputValue}"
+                                  required="#{bindings.TitleNTCDescription.hints.mandatory}"
+                                  rows="#{bindings.TitleNTCDescription.hints.displayHeight}"
+                                  columns="#{bindings.TitleNTCDescription.hints.displayWidth}"
+                                  maximumLength="4000" autoSubmit="true"
+                                  simple="true"
+                                  partialTriggers="TitleNTCDescriptionEditorLink TitleNTCDescriptionEditorText">
+                      <f:validator binding="#{bindings.TitleNTCDescription.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl0" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink id="TitleNTCDescriptionEditorLink"
+                                        immediate="true" partialSubmit="true">
+                          <af:showPopupBehavior popupId="TitleNTCDescriptionPopup"/>
+                          <af:image source="/jheadstart/images/editor.gif"
+                                    id="TitleNTCDescriptionIcon"
+                                    clientComponent="true"/>
+                        </af:commandLink>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="#{bindings.TitleNTCNotes.hints.label}"
+                                           shortDesc="#{bindings.TitleNTCNotes.hints.tooltip}"
+                                           showRequired="#{bindings.TitleNTCNotes.hints.mandatory}"
+                                           id="TitleNTCNotesLabel">
+                    <af:inputText id="TitleNTCNotes"
+                                  value="#{bindings.TitleNTCNotes.inputValue}"
+                                  required="#{bindings.TitleNTCNotes.hints.mandatory}"
+                                  rows="#{bindings.TitleNTCNotes.hints.displayHeight}"
+                                  columns="#{bindings.TitleNTCNotes.hints.displayWidth}"
+                                  maximumLength="4000" autoSubmit="true"
+                                  simple="true"
+                                  partialTriggers="TitleNTCNotesEditorLink TitleNTCNotesEditorText">
+                      <f:validator binding="#{bindings.TitleNTCNotes.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl1" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink id="TitleNTCNotesEditorLink"
+                                        immediate="true" partialSubmit="true">
+                          <af:showPopupBehavior popupId="TitleNTCNotesPopup"/>
+                          <af:image source="/jheadstart/images/editor.gif"
+                                    id="TitleNTCNotesIcon"
+                                    clientComponent="true"/>
+                        </af:commandLink>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveTitleNTC.execute}"
+                                            rendered="#{!pageFlowScope.hideSaveButton}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="TitleNTCSaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="TitleNTCCancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+                <af:panelTabbed position="above" childCreation="lazy"
+                                dimensionsFrom="auto" inlineStyle="    "
+                                id="TitleNTCRegionsTabs">
+                  <af:showDetailItem stretchChildren="first"
+                                     textAndAccessKey="Titles"
+                                     rendered="#{true and jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                                     disabled="#{!(true and jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'])}"
+                                     id="TitleNTCRegionsNTCTitleTitlesTab">
+                    <af:panelGroupLayout id="pgl2" layout="scroll">
+                      <af:panelGroupLayout layout="vertical"
+                                           id="NTCTitleTitlesTopLc"
+                                           partialTriggers=" TitleNTCTopLc NTCTitleTitlesDeleteDialog NTCTitleTitlesPC:NTCTitleTitlesArm NTCTitleTitlesPC:NTCTitleTitlesdelrmTM NTCTitleTitlesPC:NTCTitleTitlesArl NTCTitleTitlesPC:NTCTitleTitlesTab:NTCTitleTitlesdelrm NTCTitleTitlesPC:NTCTitleTitlesTab:NTCTitleTitlesdelrl"
+                                           rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                        <f:facet name="separator">
+                          <af:spacer width="10" height="10" id="sp3"/>
+                        </f:facet>
+                        <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                        <af:panelHeader id="ph2"
+                                        text="#{nls['TABLE_TITLE_NTCTITLETITLES']}">
+                          <f:facet name="toolbar">
+                            <af:toolbox id="tbox1">
+                              <af:toolbar id="tbar1">
+                                <af:group id="gr4"></af:group>
+                                <af:group id="gr5"></af:group>
+                              </af:toolbar>
+                            </af:toolbox>
+                          </f:facet>
+                          <f:facet name="context"></f:facet>
+                        </af:panelHeader>
+                        <af:panelGroupLayout layout="vertical" id="pgl3">
+                          <af:panelCollection id="NTCTitleTitlesPC"
+                                              featuresOff=" "
+                                              inlineStyle=" width:892px; ">
+                            <f:facet name="menus">
+                              <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                                       id="menu0">
+                                <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                         id="menu1">
+                                  <af:group id="NTCTitleTitlestbb"
+                                            rendered="#{ bindings.NTCTitleTitlesIterator.currentRow!=null }">
+                                    <af:commandMenuItem actionListener="#{bindings.FirstNTCTitleTitles.execute}"
+                                                        id="NTCTitleTitlesFirst"
+                                                        partialSubmit="true"
+                                                        icon="/afr/shuttleleftall_ena.png"
+                                                        textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                                    <af:commandMenuItem actionListener="#{bindings.PreviousNTCTitleTitles.execute}"
+                                                        icon="/afr/shuttleleft_ena.png"
+                                                        textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                        id="NTCTitleTitlesPrevious"
+                                                        partialSubmit="true"></af:commandMenuItem>
+                                    <af:commandMenuItem actionListener="#{bindings.NextNTCTitleTitles.execute}"
+                                                        icon="/afr/shuttleright_ena.png"
+                                                        textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                        id="NTCTitleTitlesNext"
+                                                        partialSubmit="true"></af:commandMenuItem>
+                                    <af:commandMenuItem actionListener="#{bindings.LastNTCTitleTitles.execute}"
+                                                        icon="/afr/shuttlerightall_ena.png"
+                                                        textAndAccessKey="#{nls['LAST_ROW']}"
+                                                        id="NTCTitleTitlesLast"
+                                                        partialSubmit="true"></af:commandMenuItem>
+                                  </af:group>
+                                </af:menu>
+                                <af:commandMenuItem id="NTCTitleTitlesArm"
+                                                    textAndAccessKey="#{nls['ADD_ROW']}"
+                                                    immediate="false"
+                                                    icon="/jheadstart/images/addRow.png"
+                                                    partialSubmit="true"
+                                                    actionListener="#{pageFlowScope.NTCTitleTitlesTable.addRow}"
+                                                    rendered="#{ bindings.TitleNTCIterator.currentRow!=null  }"></af:commandMenuItem>
+                                <af:commandMenuItem id="NTCTitleTitlesdelrmTM"
+                                                    textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                    icon="/jheadstart/images/deleteRow.png"
+                                                    partialSubmit="true"
+                                                    immediate="true">
+                                  <af:showPopupBehavior popupId="::NTCTitleTitlesDeletePopup"/>
+                                </af:commandMenuItem>
+                              </af:menu>
+                            </f:facet>
+                            <f:facet name="toolbar">
+                              <af:toolbar id="tbar2">
+                                <!-- Also create CreateNTCTitleTitles bean so we can start table group in create mode as well -->
+                                <af:commandImageLink id="NTCTitleTitlesArl"
+                                                     immediate="false"
+                                                     rendered="#{ bindings.TitleNTCIterator.currentRow!=null  }"
+                                                     partialSubmit="true"
+                                                     actionListener="#{pageFlowScope.NTCTitleTitlesTable.addRow}"
+                                                     shortDesc="#{nls['ADD_ROW']}"
+                                                     icon="/jheadstart/images/addRow.png"/>
+                                <af:commandToolbarButton text="Print"
+                                                         id="NTCTitleTitlesPrint"
+                                                         shortDesc="Opens a new tab with printer friendly format.">
+                                  <af:showPrintablePageBehavior/>
+                                </af:commandToolbarButton>
+                              </af:toolbar>
+                            </f:facet>
+                            <f:facet name="statusbar">
+                              <af:toolbar>
+                                <af:outputText value="#{bindings.NTCTitleTitlesIterator.estimatedRowCount} rows found"/>
+                              </af:toolbar>
+                            </f:facet>
+                            <af:table id="NTCTitleTitlesTab"
+                                      contentDelivery="immediate"
+                                      value="#{bindings.NTCTitleTitlesTable.collectionModel}"
+                                      columnStretching="blank"
+                                      rowBandingInterval="0"
+                                      editingMode="editAll"
+                                      columnSelection="multiple"
+                                      contextMenuSelect="true"
+                                      rowSelection="single"
+                                      selectionListener="#{pageFlowScope.NTCTitleTitlesTable.makeCurrent}"
+                                      selectedRowKeys="#{pageFlowScope.NTCTitleTitlesTable.selectedRow}"
+                                      rowDisclosureListener="#{pageFlowScope.NTCTitleTitlesTable.discloseRow}"
+                                      var="row" varStatus="status"
+                                      rows="#{bindings.NTCTitleTitlesTable.rangeSize}"
+                                      autoHeightRows="#{bindings.NTCTitleTitlesTable.estimatedRowCount lt 5 ? 5 : bindings.NTCTitleTitlesTable.estimatedRowCount lt bindings.NTCTitleTitlesTable.rangeSize ? bindings.NTCTitleTitlesTable.estimatedRowCount : 0 }"
+                                      fetchSize="#{bindings.NTCTitleTitlesTable.rangeSize}"
+                                      emptyText="#{nls['NO_ROWS_FOUND']}"
+                                      queryListener="#{bindings.NTCTitleTitlesIteratorQuery.processQuery}"
+                                      filterModel="#{bindings.NTCTitleTitlesIteratorQuery.queryDescriptor}"
+                                      filterVisible="true"
+                                      binding="#{pageFlowScope.NTCTitleTitlesTable.table}"
+                                      partialTriggers=" :::NTCTitleTitlesPC ::NTCTitleTitlesFirst ::NTCTitleTitlesPrevious ::NTCTitleTitlesNext ::NTCTitleTitlesLast"
+                                      width="892px"
+                                      summary="#{nls['TABLE_TITLE_NTCTITLETITLES']}">
+                              <f:facet name="contextMenu">
+                                <af:popup id="NTCTitleTitlesTablePopup"
+                                          childCreation="deferred">
+                                  <af:menu id="menu2">
+                                    <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                             id="menu3"></af:menu>
+                                    <af:commandMenuItem id="NTCTitleTitlesdelrm"
+                                                        textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                        icon="/jheadstart/images/deleteRow.png"
+                                                        partialSubmit="true"
+                                                        immediate="true">
+                                      <af:showPopupBehavior popupId=":::NTCTitleTitlesDeletePopup"/>
+                                    </af:commandMenuItem>
+                                  </af:menu>
+                                </af:popup>
+                              </f:facet>
+                              <af:column id="NTCTitleTitlesActionColumn"
+                                         width="20" align="center"
+                                         headerText=" ">
+                                <af:panelGroupLayout layout="horizontal"
+                                                     id="pgl4">
+                                  <af:commandImageLink id="NTCTitleTitlesdelrl"
+                                                       partialSubmit="true"
+                                                       immediate="true"
+                                                       shortDesc="#{nls['DELETE_ROW']}"
+                                                       icon="/jheadstart/images/deleteRow.png">
+                                    <af:showPopupBehavior popupId=":::NTCTitleTitlesDeletePopup"/>
+                                  </af:commandImageLink>
+                                </af:panelGroupLayout>
+                              </af:column>
+                              <af:column id="NTCTitleTitlesTargetTrackingNoCol"
+                                         sortable="true" filterable="true"
+                                         noWrap="true" width="100"
+                                         sortProperty="TargetTrackingNo"
+                                         align="right" rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="#{bindings.NTCTitleTitlesTable.hints.TargetTrackingNo.label}"
+                                                  showRequired="#{bindings.NTCTitleTitlesTable.hints.TargetTrackingNo.mandatory}"
+                                                  id="ol0"/>
+                                </f:facet>
+                                <af:panelGroupLayout id="NTCTitleTitlesTargetTrackingNoPgl"
+                                                     layout="horizontal">
+                                  <af:inputText id="NTCTitleTitlesTargetTrackingNo"
+                                                label="#{bindings.NTCTitleTitlesTable.hints.TargetTrackingNo.label}"
+                                                columns="#{bindings.NTCTitleTitlesTable.hints.TargetTrackingNo.displayWidth}"
+                                                maximumLength="38"
+                                                shortDesc="#{bindings.NTCTitleTitlesTable.hints.TargetTrackingNo.tooltip}"
+                                                value="#{row.bindings.TargetTrackingNo.inputValue}"
+                                                autoSubmit="true"
+                                                valueChangeListener="#{pageFlowScope.NTCTitleTitlesTargetTrackingNoLovItemInTable.validateWithLov}"
+                                                binding="#{pageFlowScope.NTCTitleTitlesTargetTrackingNoLovItemInTable.lovField}"
+                                                simple="true">
+                                    <f:validator binding="#{row.bindings.TargetTrackingNo.validator}"/>
+                                    <af:convertNumber groupingUsed="false"
+                                                      pattern="#{bindings.NTCTitleTitlesTable.hints.TargetTrackingNo.format}"/>
+                                  </af:inputText>
+                                  <af:commandLink immediate="true"
+                                                  partialSubmit="true" id="cl0"
+                                                  actionListener="#{pageFlowScope.NTCTitleTitlesTargetTrackingNoLovItemInTable.lovIconClicked}">
+                                    <af:image source="/jheadstart/images/lov.png"
+                                              id="NTCTitleTitlesTargetTrackingNoIcon"
+                                              clientComponent="true"
+                                              shortDesc="TargetTrackingNo"/>
+                                  </af:commandLink>
+                                  <af:commandButton text="hidden" id="cb2"
+                                                    rendered="false"
+                                                    action="#{pageFlowScope.NTCTitleTitlesTargetTrackingNoLovItemInTable.validationAction}"
+                                                    partialSubmit="true"
+                                                    immediate="true"
+                                                    binding="#{pageFlowScope.NTCTitleTitlesTargetTrackingNoLovItemInTable.validationButton}"/>
+                                </af:panelGroupLayout>
+                              </af:column>
+                              <af:column id="NTCTitleTitlesCatalogNumberCol"
+                                         sortable="true" filterable="true"
+                                         noWrap="true" width="100"
+                                         sortProperty="CatalogNumber"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="#{bindings.NTCTitleTitlesTable.hints.CatalogNumber.label}"
+                                                  showRequired="#{bindings.NTCTitleTitlesTable.hints.CatalogNumber.mandatory}"
+                                                  id="ol1"/>
+                                </f:facet>
+                                <af:inputText id="NTCTitleTitlesCatalogNumber"
+                                              value="#{row.bindings.CatalogNumber.inputValue}"
+                                              label="#{bindings.NTCTitleTitlesTable.hints.CatalogNumber.label}"
+                                              required="#{bindings.NTCTitleTitlesTable.hints.CatalogNumber.mandatory}"
+                                              rows="#{bindings.NTCTitleTitlesTable.hints.CatalogNumber.displayHeight}"
+                                              columns="#{bindings.NTCTitleTitlesTable.hints.CatalogNumber.displayWidth}"
+                                              maximumLength="20"
+                                              shortDesc="#{bindings.NTCTitleTitlesTable.hints.CatalogNumber.tooltip}">
+                                  <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                                </af:inputText>
+                              </af:column>
+                              <af:column id="NTCTitleTitlesLongTitleCol"
+                                         sortable="true" filterable="true"
+                                         noWrap="true" width="240"
+                                         sortProperty="LongTitle"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="#{bindings.NTCTitleTitlesTable.hints.LongTitle.label}"
+                                                  showRequired="#{bindings.NTCTitleTitlesTable.hints.LongTitle.mandatory}"
+                                                  id="ol2"/>
+                                </f:facet>
+                                <af:inputText id="NTCTitleTitlesLongTitle"
+                                              value="#{row.bindings.LongTitle.inputValue}"
+                                              label="#{bindings.NTCTitleTitlesTable.hints.LongTitle.label}"
+                                              required="#{bindings.NTCTitleTitlesTable.hints.LongTitle.mandatory}"
+                                              rows="#{bindings.NTCTitleTitlesTable.hints.LongTitle.displayHeight}"
+                                              columns="#{bindings.NTCTitleTitlesTable.hints.LongTitle.displayWidth}"
+                                              maximumLength="400"
+                                              shortDesc="#{bindings.NTCTitleTitlesTable.hints.LongTitle.tooltip}">
+                                  <f:validator binding="#{row.bindings.LongTitle.validator}"/>
+                                </af:inputText>
+                              </af:column>
+                              <af:column id="NTCTitleTitlesAccountNumCol"
+                                         sortable="true" filterable="true"
+                                         noWrap="true" width="100"
+                                         sortProperty="AccountNum"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="#{bindings.NTCTitleTitlesTable.hints.AccountNum.label}"
+                                                  id="ol3"/>
+                                </f:facet>
+                                <af:inputText id="NTCTitleTitlesAccountNum"
+                                              value="#{row.bindings.AccountNum.inputValue}"
+                                              label="#{bindings.NTCTitleTitlesTable.hints.AccountNum.label}"
+                                              required="#{bindings.NTCTitleTitlesTable.hints.AccountNum.mandatory}"
+                                              rows="#{bindings.NTCTitleTitlesTable.hints.AccountNum.displayHeight}"
+                                              columns="#{bindings.NTCTitleTitlesTable.hints.AccountNum.displayWidth}"
+                                              maximumLength="38" readOnly="true"
+                                              shortDesc="#{bindings.NTCTitleTitlesTable.hints.AccountNum.tooltip}">
+                                  <f:validator binding="#{row.bindings.AccountNum.validator}"/>
+                                  <af:convertNumber groupingUsed="false"
+                                                    pattern="#{bindings.NTCTitleTitlesTable.hints.AccountNum.format}"/>
+                                </af:inputText>
+                              </af:column>
+                              <af:column id="NTCTitleTitlesAccountNameCol"
+                                         sortable="true" filterable="true"
+                                         noWrap="true" width="180"
+                                         sortProperty="AccountName"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="#{bindings.NTCTitleTitlesTable.hints.AccountName.label}"
+                                                  id="ol4"/>
+                                </f:facet>
+                                <af:inputText id="NTCTitleTitlesAccountName"
+                                              value="#{row.bindings.AccountName.inputValue}"
+                                              label="#{bindings.NTCTitleTitlesTable.hints.AccountName.label}"
+                                              required="#{bindings.NTCTitleTitlesTable.hints.AccountName.mandatory}"
+                                              rows="#{bindings.NTCTitleTitlesTable.hints.AccountName.displayHeight}"
+                                              columns="#{bindings.NTCTitleTitlesTable.hints.AccountName.displayWidth}"
+                                              maximumLength="400"
+                                              readOnly="true"
+                                              shortDesc="#{bindings.NTCTitleTitlesTable.hints.AccountName.tooltip}">
+                                  <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                                </af:inputText>
+                              </af:column>
+                              <af:column id="NTCTitleTitlesAddedDateCol"
+                                         sortable="true" filterable="true"
+                                         noWrap="true" width="100"
+                                         sortProperty="AddedDate"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="#{bindings.NTCTitleTitlesTable.hints.AddedDate.label}"
+                                                  id="ol5"/>
+                                </f:facet>
+                                <f:facet name="filter">
+                                  <af:inputDate value="#{status.filterCriteria.AddedDate}"
+                                                id="id0">
+                                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                                  </af:inputDate>
+                                </f:facet>
+                                <af:inputDate id="NTCTitleTitlesAddedDate"
+                                              value="#{row.bindings.AddedDate.inputValue}"
+                                              label="#{bindings.NTCTitleTitlesTable.hints.AddedDate.label}"
+                                              required="#{bindings.NTCTitleTitlesTable.hints.AddedDate.mandatory}"
+                                              readOnly="true"
+                                              shortDesc="#{bindings.NTCTitleTitlesTable.hints.AddedDate.tooltip}">
+                                  <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                                </af:inputDate>
+                              </af:column>
+                            </af:table>
+                          </af:panelCollection>
+                        </af:panelGroupLayout>
+                        <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                  </af:showDetailItem>
+                  <af:showDetailItem stretchChildren="first"
+                                     textAndAccessKey="Additional Text"
+                                     id="TitleNTCRegionsEmailTextTab">
+                    <af:panelGroupLayout id="pgl5" layout="scroll">
+                      <af:panelFormLayout rows="1" maxColumns="1"
+                                          labelAlignment="top"
+                                          id="TitleNTCEmailTextPanelForm">
+                        <af:panelLabelAndMessage label="#{bindings.TitleNTCEmailText.hints.label}"
+                                                 shortDesc="#{bindings.TitleNTCEmailText.hints.tooltip}"
+                                                 showRequired="#{bindings.TitleNTCEmailText.hints.mandatory}"
+                                                 id="TitleNTCEmailTextLabel">
+                          <af:inputText id="TitleNTCEmailText"
+                                        value="#{bindings.TitleNTCEmailText.inputValue}"
+                                        converter="oracle.genericDomain"
+                                        required="#{bindings.TitleNTCEmailText.hints.mandatory}"
+                                        rows="#{bindings.TitleNTCEmailText.hints.displayHeight}"
+                                        columns="#{bindings.TitleNTCEmailText.hints.displayWidth}"
+                                        autoSubmit="true" simple="true"
+                                        partialTriggers="TitleNTCEmailTextEditorLink TitleNTCEmailTextEditorText">
+                            <f:validator binding="#{bindings.TitleNTCEmailText.validator}"/>
+                          </af:inputText>
+                          <f:facet name="end">
+                            <af:panelGroupLayout id="pgl6" valign="top"
+                                                 layout="horizontal">
+                              <af:commandLink id="TitleNTCEmailTextEditorLink"
+                                              immediate="true"
+                                              partialSubmit="true">
+                                <af:showPopupBehavior popupId="TitleNTCEmailTextPopup"/>
+                                <af:image source="/jheadstart/images/editor.gif"
+                                          id="TitleNTCEmailTextIcon"
+                                          clientComponent="true"/>
+                              </af:commandLink>
+                            </af:panelGroupLayout>
+                          </f:facet>
+                        </af:panelLabelAndMessage>
+                      </af:panelFormLayout>
+                    </af:panelGroupLayout>
+                  </af:showDetailItem>
+                  <af:showDetailItem stretchChildren="first"
+                                     textAndAccessKey="Attachments"
+                                     rendered="#{true and jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                                     disabled="#{!(true and jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'])}"
+                                     id="TitleNTCRegionsNTCTitleAttachmentsTab">
+                    <af:panelGroupLayout id="pgl7" layout="scroll">
+                      <af:panelGroupLayout layout="vertical"
+                                           id="NTCTitleAttachmentsTopLc"
+                                           partialTriggers=" TitleNTCTopLc NTCTitleAttachmentsDeleteDialog qsAreaNTCTitleAttachmentsSearchOptions NTCTitleAttachmentsPC:NTCTitleAttachmentsArm NTCTitleAttachmentsPC:NTCTitleAttachmentsdelrmTM NTCTitleAttachmentsPC:NTCTitleAttachmentsArl NTCTitleAttachmentsPC:NTCTitleAttachmentsTab:NTCTitleAttachmentsdelrm NTCTitleAttachmentsPC:NTCTitleAttachmentsTab:NTCTitleAttachmentsdelrl"
+                                           rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                        <f:facet name="separator">
+                          <af:spacer width="10" height="10" id="sp4"/>
+                        </f:facet>
+                        <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                        <af:panelHeader id="ph3"
+                                        text="#{nls['TABLE_TITLE_NTCTITLEATTACHMENTS']}">
+                          <f:facet name="toolbar">
+                            <af:toolbox id="tbox2">
+                              <af:toolbar id="tbar3">
+                                <af:group id="gr6"></af:group>
+                                <af:group id="gr7"></af:group>
+                              </af:toolbar>
+                            </af:toolbox>
+                          </f:facet>
+                          <f:facet name="context"></f:facet>
+                          <af:panelGroupLayout id="modelSearchAreaNTCTitleAttachments"
+                                               rendered="#{!pageFlowScope.createModes.CreateNTCTitleAttachments and !pageFlowScope.hideSearchArea}"
+                                               partialTriggers="">
+                            <f:attribute name="JhsIgnoreChanges" value="true"/>
+                            <af:quickQuery id="qsAreaNTCTitleAttachmentsSearchOptions"
+                                           label="#{nls['FILTER_BY']}"
+                                           value="#{bindings.NTCTitleAttachmentsIteratorTraxActivityAttachmentViewCriteriaQuery.queryDescriptor}"
+                                           model="#{bindings.NTCTitleAttachmentsIteratorTraxActivityAttachmentViewCriteriaQuery.queryModel}"
+                                           queryListener="#{bindings.NTCTitleAttachmentsIteratorTraxActivityAttachmentViewCriteriaQuery.processQuery}"></af:quickQuery>
+                          </af:panelGroupLayout>
+                        </af:panelHeader>
+                        <af:panelGroupLayout layout="vertical" id="pgl8">
+                          <af:panelCollection id="NTCTitleAttachmentsPC"
+                                              featuresOff=" "
+                                              styleClass="AFStretchWidth">
+                            <f:facet name="menus">
+                              <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                                       id="menu4">
+                                <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                         id="menu5">
+                                  <af:group id="NTCTitleAttachmentstbb"
+                                            rendered="#{ bindings.NTCTitleAttachmentsIterator.currentRow!=null }">
+                                    <af:commandMenuItem actionListener="#{bindings.FirstNTCTitleAttachments.execute}"
+                                                        id="NTCTitleAttachmentsFirst"
+                                                        partialSubmit="true"
+                                                        icon="/afr/shuttleleftall_ena.png"
+                                                        textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                                    <af:commandMenuItem actionListener="#{bindings.PreviousNTCTitleAttachments.execute}"
+                                                        icon="/afr/shuttleleft_ena.png"
+                                                        textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                        id="NTCTitleAttachmentsPrevious"
+                                                        partialSubmit="true"></af:commandMenuItem>
+                                    <af:commandMenuItem actionListener="#{bindings.NextNTCTitleAttachments.execute}"
+                                                        icon="/afr/shuttleright_ena.png"
+                                                        textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                        id="NTCTitleAttachmentsNext"
+                                                        partialSubmit="true"></af:commandMenuItem>
+                                    <af:commandMenuItem actionListener="#{bindings.LastNTCTitleAttachments.execute}"
+                                                        icon="/afr/shuttlerightall_ena.png"
+                                                        textAndAccessKey="#{nls['LAST_ROW']}"
+                                                        id="NTCTitleAttachmentsLast"
+                                                        partialSubmit="true"></af:commandMenuItem>
+                                  </af:group>
+                                </af:menu>
+                                <af:commandMenuItem id="NTCTitleAttachmentsArm"
+                                                    textAndAccessKey="#{nls['ADD_ROW']}"
+                                                    immediate="false"
+                                                    icon="/jheadstart/images/addRow.png"
+                                                    partialSubmit="true"
+                                                    actionListener="#{pageFlowScope.NTCTitleAttachmentsTable.addRow}"
+                                                    rendered="#{ bindings.TitleNTCIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}"></af:commandMenuItem>
+                                <af:commandMenuItem id="NTCTitleAttachmentsdelrmTM"
+                                                    textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                    icon="/jheadstart/images/deleteRow.png"
+                                                    partialSubmit="true"
+                                                    immediate="true"
+                                                    rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn']}">
+                                  <af:showPopupBehavior popupId="::NTCTitleAttachmentsDeletePopup"/>
+                                </af:commandMenuItem>
+                                <af:commandMenuItem partialSubmit="true"
+                                                    textAndAccessKey="#{nls['EXPORT']}"
+                                                    icon="/jheadstart/images/excel.png"
+                                                    immediate="true" id="cmi0">
+                                  <af:exportCollectionActionListener exportedId="NTCTitleAttachmentsTab"
+                                                                     type="excelHTML"
+                                                                     filename="NTCTitleAttachments.xls"/>
+                                </af:commandMenuItem>
+                              </af:menu>
+                            </f:facet>
+                            <f:facet name="toolbar">
+                              <af:toolbar id="tbar4">
+                                <!-- Also create CreateNTCTitleAttachments bean so we can start table group in create mode as well -->
+                                <af:commandImageLink id="NTCTitleAttachmentsArl"
+                                                     immediate="false"
+                                                     rendered="#{ bindings.TitleNTCIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}"
+                                                     partialSubmit="true"
+                                                     actionListener="#{pageFlowScope.NTCTitleAttachmentsTable.addRow}"
+                                                     shortDesc="#{nls['ADD_ROW']}"
+                                                     icon="/jheadstart/images/addRow.png"/>
+                                <af:commandImageLink immediate="true"
+                                                     partialSubmit="true"
+                                                     id="cl1"
+                                                     shortDesc="#{nls['EXPORT']}"
+                                                     icon="/jheadstart/images/excel.png">
+                                  <af:exportCollectionActionListener exportedId="NTCTitleAttachmentsTab"
+                                                                     type="excelHTML"
+                                                                     filename="NTCTitleAttachments.xls"/>
+                                </af:commandImageLink>
+                                <af:commandToolbarButton text="Print"
+                                                         id="NTCTitleAttachmentsPrint"
+                                                         shortDesc="Opens a new tab with printer friendly format.">
+                                  <af:showPrintablePageBehavior/>
+                                </af:commandToolbarButton>
+                              </af:toolbar>
+                            </f:facet>
+                            <f:facet name="statusbar">
+                              <af:toolbar>
+                                <af:outputText value="#{bindings.NTCTitleAttachmentsIterator.estimatedRowCount} rows found"/>
+                              </af:toolbar>
+                            </f:facet>
+                            <af:table id="NTCTitleAttachmentsTab"
+                                      contentDelivery="immediate"
+                                      value="#{bindings.NTCTitleAttachmentsTable.collectionModel}"
+                                      columnStretching="blank"
+                                      rowBandingInterval="0"
+                                      editingMode="editAll"
+                                      columnSelection="multiple"
+                                      contextMenuSelect="true"
+                                      rowSelection="single"
+                                      selectionListener="#{pageFlowScope.NTCTitleAttachmentsTable.makeCurrent}"
+                                      selectedRowKeys="#{pageFlowScope.NTCTitleAttachmentsTable.selectedRow}"
+                                      rowDisclosureListener="#{pageFlowScope.NTCTitleAttachmentsTable.discloseRow}"
+                                      var="row" varStatus="status"
+                                      rows="#{bindings.NTCTitleAttachmentsTable.rangeSize}"
+                                      autoHeightRows="#{bindings.NTCTitleAttachmentsTable.estimatedRowCount lt 5 ? 5 : bindings.NTCTitleAttachmentsTable.estimatedRowCount lt bindings.NTCTitleAttachmentsTable.rangeSize ? bindings.NTCTitleAttachmentsTable.estimatedRowCount : 0 }"
+                                      fetchSize="#{bindings.NTCTitleAttachmentsTable.rangeSize}"
+                                      emptyText="#{nls['NO_ROWS_FOUND']}"
+                                      queryListener="#{bindings.NTCTitleAttachmentsIteratorTraxActivityAttachmentViewCriteriaQuery.processQuery}"
+                                      filterModel="#{bindings.NTCTitleAttachmentsIteratorTraxActivityAttachmentViewCriteriaQuery.queryDescriptor}"
+                                      filterVisible="true"
+                                      binding="#{pageFlowScope.NTCTitleAttachmentsTable.table}"
+                                      partialTriggers=":::qsAreaNTCTitleAttachmentsSearchOptions :::NTCTitleAttachmentsPC ::NTCTitleAttachmentsFirst ::NTCTitleAttachmentsPrevious ::NTCTitleAttachmentsNext ::NTCTitleAttachmentsLast"
+                                      styleClass="AFStretchWidth"
+                                      summary="#{nls['TABLE_TITLE_NTCTITLEATTACHMENTS']}">
+                              <f:facet name="contextMenu">
+                                <af:popup id="NTCTitleAttachmentsTablePopup"
+                                          childCreation="deferred">
+                                  <af:menu id="menu6">
+                                    <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                             id="menu7"></af:menu>
+                                    <af:commandMenuItem id="NTCTitleAttachmentsdelrm"
+                                                        textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                        icon="/jheadstart/images/deleteRow.png"
+                                                        partialSubmit="true"
+                                                        immediate="true"
+                                                        rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn']}">
+                                      <af:showPopupBehavior popupId=":::NTCTitleAttachmentsDeletePopup"/>
+                                    </af:commandMenuItem>
+                                  </af:menu>
+                                </af:popup>
+                              </f:facet>
+                              <af:column id="NTCTitleAttachmentsActionColumn"
+                                         width="20" align="center"
+                                         headerText=" ">
+                                <af:panelGroupLayout layout="horizontal"
+                                                     id="pgl9">
+                                  <af:commandImageLink id="NTCTitleAttachmentsdelrl"
+                                                       partialSubmit="true"
+                                                       immediate="true"
+                                                       rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn']}"
+                                                       shortDesc="#{nls['DELETE_ROW']}"
+                                                       icon="/jheadstart/images/deleteRow.png">
+                                    <af:showPopupBehavior popupId=":::NTCTitleAttachmentsDeletePopup"/>
+                                  </af:commandImageLink>
+                                </af:panelGroupLayout>
+                              </af:column>
+                              <af:column id="NTCTitleAttachmentsAttachmentCol"
+                                         noWrap="true" width="100"
+                                         visible="#{(!(((pageFlowScope.NTCTitleAttachmentsTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn']))) or ((!pageFlowScope.NTCTitleAttachmentsTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn']))))) and (true)}"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="Upload File"
+                                                  showRequired="#{bindings.NTCTitleAttachmentsTable.hints.Attachment.mandatory}"
+                                                  id="ol6"/>
+                                </f:facet>
+                                <af:inputFile id="NTCTitleAttachmentsAttachment"
+                                              label="Upload File"
+                                              columns="#{bindings.NTCTitleAttachmentsTable.hints.Attachment.displayWidth}"
+                                              visible="#{(!(((pageFlowScope.NTCTitleAttachmentsTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn']))) or ((!pageFlowScope.NTCTitleAttachmentsTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn']))))) and (true)}"
+                                              valueChangeListener="#{NTCTitleAttachmentsAttachmentFileHandlerInTable.uploadFile}"
+                                              binding="#{NTCTitleAttachmentsAttachmentFileHandlerInTable.usesUploadIndicator}"
+                                              shortDesc="#{bindings.NTCTitleAttachmentsTable.hints.Attachment.tooltip}"/>
+                              </af:column>
+                              <af:column id="NTCTitleAttachmentsAttachmentDLCol"
+                                         noWrap="true" width="100"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="Download File"
+                                                  showRequired="#{bindings.NTCTitleAttachmentsTable.hints.Attachment.mandatory}"
+                                                  id="ol7"/>
+                                </f:facet>
+                                <af:commandLink id="NTCTitleAttachmentsAttachmentDL"
+                                                rendered="#{NTCTitleAttachmentsAttachmentDLFileHandlerInTable.fileExist}"
+                                                shortDesc="#{bindings.NTCTitleAttachmentsTable.hints.Attachment.tooltip}">
+                                  <af:outputText id="ot6"
+                                                 value="#{NTCTitleAttachmentsAttachmentDLFileHandlerInTable.fileName}"/>
+                                  <af:fileDownloadActionListener contentType="#{NTCTitleAttachmentsAttachmentDLFileHandlerInTable.contentType}"
+                                                                 filename="#{NTCTitleAttachmentsAttachmentDLFileHandlerInTable.fileName}"
+                                                                 method="#{NTCTitleAttachmentsAttachmentDLFileHandlerInTable.downloadFile}"/>
+                                </af:commandLink>
+                              </af:column>
+                              <af:column id="NTCTitleAttachmentsDescriptionCol"
+                                         sortable="true" filterable="true"
+                                         noWrap="true" width="260"
+                                         sortProperty="Description"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="#{bindings.NTCTitleAttachmentsTable.hints.Description.label}"
+                                                  showRequired="#{bindings.NTCTitleAttachmentsTable.hints.Description.mandatory}"
+                                                  id="ol8"/>
+                                </f:facet>
+                                <af:popup id="hoverPopup0">
+                                  <af:noteWindow>
+                                    <af:outputText value="#{row.bindings.Description.inputValue}"/>
+                                  </af:noteWindow>
+                                </af:popup>
+                                <af:panelLabelAndMessage shortDesc="#{bindings.NTCTitleAttachmentsTable.hints.Description.tooltip}">
+                                  <af:inputText id="NTCTitleAttachmentsDescription"
+                                                value="#{row.bindings.Description.inputValue}"
+                                                label="#{bindings.NTCTitleAttachmentsTable.hints.Description.label}"
+                                                required="#{bindings.NTCTitleAttachmentsTable.hints.Description.mandatory}"
+                                                rows="#{bindings.NTCTitleAttachmentsTable.hints.Description.displayHeight}"
+                                                columns="#{bindings.NTCTitleAttachmentsTable.hints.Description.displayWidth}"
+                                                maximumLength="4000"
+                                                readOnly="#{((pageFlowScope.NTCTitleAttachmentsTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn']))) or ((!pageFlowScope.NTCTitleAttachmentsTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])))}"
+                                                autoSubmit="true" simple="true"
+                                                partialTriggers="NTCTitleAttachmentsDescriptionEditorLink NTCTitleAttachmentsDescriptionEditorText">
+                                    <f:validator binding="#{row.bindings.Description.validator}"/>
+                                    <af:showPopupBehavior popupId="hoverPopup0"
+                                                          triggerType="mouseHover"
+                                                          align="endAfter"/>
+                                  </af:inputText>
+                                  <af:commandLink id="NTCTitleAttachmentsDescriptionEditorLink"
+                                                  rendered="#{!(((pageFlowScope.NTCTitleAttachmentsTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn']))) or ((!pageFlowScope.NTCTitleAttachmentsTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn']))))}"
+                                                  immediate="true"
+                                                  partialSubmit="true">
+                                    <af:showPopupBehavior popupId="NTCTitleAttachmentsDescriptionPopup"/>
+                                    <af:image source="/jheadstart/images/editor.gif"
+                                              id="NTCTitleAttachmentsDescriptionIcon"
+                                              clientComponent="true"/>
+                                  </af:commandLink>
+                                </af:panelLabelAndMessage>
+                                <af:popup id="NTCTitleAttachmentsDescriptionPopup"
+                                          contentDelivery="lazyUncached"
+                                          eventContext="launcher"
+                                          childCreation="deferred">
+                                  <af:dialog modal="true" resize="on"
+                                             title="Text Editor" id="dialog4">
+                                    <af:inputText rows="10" columns="100"
+                                                  value="#{row.bindings.Description.inputValue}"
+                                                  simple="true"
+                                                  maximumLength="4000"
+                                                  id="NTCTitleAttachmentsDescriptionEditorText"/>
+                                  </af:dialog>
+                                </af:popup>
+                              </af:column>
+                              <af:column id="NTCTitleAttachmentsFileSizeCol"
+                                         sortable="true" filterable="true"
+                                         noWrap="true" width="100"
+                                         sortProperty="FileSize"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="#{bindings.NTCTitleAttachmentsTable.hints.FileSize.label}"
+                                                  id="ol9"/>
+                                </f:facet>
+                                <af:inputText id="NTCTitleAttachmentsFileSize"
+                                              value="#{row.bindings.FileSize.inputValue}"
+                                              label="#{bindings.NTCTitleAttachmentsTable.hints.FileSize.label}"
+                                              required="#{bindings.NTCTitleAttachmentsTable.hints.FileSize.mandatory}"
+                                              rows="#{bindings.NTCTitleAttachmentsTable.hints.FileSize.displayHeight}"
+                                              columns="#{bindings.NTCTitleAttachmentsTable.hints.FileSize.displayWidth}"
+                                              maximumLength="38" readOnly="true"
+                                              shortDesc="#{bindings.NTCTitleAttachmentsTable.hints.FileSize.tooltip}">
+                                  <f:validator binding="#{row.bindings.FileSize.validator}"/>
+                                  <af:convertNumber groupingUsed="false"
+                                                    pattern="#{bindings.NTCTitleAttachmentsTable.hints.FileSize.format}"/>
+                                </af:inputText>
+                              </af:column>
+                              <af:column id="NTCTitleAttachmentsCreatedByCol"
+                                         sortable="true" filterable="true"
+                                         noWrap="true" width="120"
+                                         sortProperty="CreatedBy"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="#{bindings.NTCTitleAttachmentsTable.hints.CreatedBy.label}"
+                                                  id="ol10"/>
+                                </f:facet>
+                                <af:inputText id="NTCTitleAttachmentsCreatedBy"
+                                              value="#{row.bindings.CreatedBy.inputValue}"
+                                              label="#{bindings.NTCTitleAttachmentsTable.hints.CreatedBy.label}"
+                                              required="#{bindings.NTCTitleAttachmentsTable.hints.CreatedBy.mandatory}"
+                                              rows="#{bindings.NTCTitleAttachmentsTable.hints.CreatedBy.displayHeight}"
+                                              columns="#{bindings.NTCTitleAttachmentsTable.hints.CreatedBy.displayWidth}"
+                                              maximumLength="40" readOnly="true"
+                                              shortDesc="#{bindings.NTCTitleAttachmentsTable.hints.CreatedBy.tooltip}">
+                                  <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                                </af:inputText>
+                              </af:column>
+                              <af:column id="NTCTitleAttachmentsCreatedDateCol"
+                                         sortable="true" filterable="true"
+                                         noWrap="true" width="100"
+                                         sortProperty="CreatedDate"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="#{bindings.NTCTitleAttachmentsTable.hints.CreatedDate.label}"
+                                                  id="ol11"/>
+                                </f:facet>
+                                <f:facet name="filter">
+                                  <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                                id="id1">
+                                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                                  </af:inputDate>
+                                </f:facet>
+                                <af:inputDate id="NTCTitleAttachmentsCreatedDate"
+                                              value="#{row.bindings.CreatedDate.inputValue}"
+                                              label="#{bindings.NTCTitleAttachmentsTable.hints.CreatedDate.label}"
+                                              required="#{bindings.NTCTitleAttachmentsTable.hints.CreatedDate.mandatory}"
+                                              readOnly="true"
+                                              shortDesc="#{bindings.NTCTitleAttachmentsTable.hints.CreatedDate.tooltip}">
+                                  <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                                </af:inputDate>
+                              </af:column>
+                              <af:column id="NTCTitleAttachmentsLastUpdatedByCol"
+                                         sortable="true" filterable="true"
+                                         noWrap="true" width="120"
+                                         sortProperty="LastUpdatedBy"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="#{bindings.NTCTitleAttachmentsTable.hints.LastUpdatedBy.label}"
+                                                  id="ol12"/>
+                                </f:facet>
+                                <af:inputText id="NTCTitleAttachmentsLastUpdatedBy"
+                                              value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                              label="#{bindings.NTCTitleAttachmentsTable.hints.LastUpdatedBy.label}"
+                                              required="#{bindings.NTCTitleAttachmentsTable.hints.LastUpdatedBy.mandatory}"
+                                              rows="#{bindings.NTCTitleAttachmentsTable.hints.LastUpdatedBy.displayHeight}"
+                                              columns="#{bindings.NTCTitleAttachmentsTable.hints.LastUpdatedBy.displayWidth}"
+                                              maximumLength="40" readOnly="true"
+                                              shortDesc="#{bindings.NTCTitleAttachmentsTable.hints.LastUpdatedBy.tooltip}">
+                                  <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                                </af:inputText>
+                              </af:column>
+                              <af:column id="NTCTitleAttachmentsLastUpdatedDateCol"
+                                         sortable="true" filterable="true"
+                                         noWrap="true" width="100"
+                                         sortProperty="LastUpdatedDate"
+                                         rowHeader="false"
+                                         filterFeatures="caseInsensitive">
+                                <f:facet name="header">
+                                  <af:outputLabel value="#{bindings.NTCTitleAttachmentsTable.hints.LastUpdatedDate.label}"
+                                                  id="ol13"/>
+                                </f:facet>
+                                <f:facet name="filter">
+                                  <af:inputDate value="#{status.filterCriteria.LastUpdatedDate}"
+                                                id="id2">
+                                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                                  </af:inputDate>
+                                </f:facet>
+                                <af:inputDate id="NTCTitleAttachmentsLastUpdatedDate"
+                                              value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                              label="#{bindings.NTCTitleAttachmentsTable.hints.LastUpdatedDate.label}"
+                                              required="#{bindings.NTCTitleAttachmentsTable.hints.LastUpdatedDate.mandatory}"
+                                              readOnly="true"
+                                              shortDesc="#{bindings.NTCTitleAttachmentsTable.hints.LastUpdatedDate.tooltip}">
+                                  <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                                </af:inputDate>
+                              </af:column>
+                            </af:table>
+                          </af:panelCollection>
+                        </af:panelGroupLayout>
+                        <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                  </af:showDetailItem>
+                </af:panelTabbed>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="TitleNTCDescriptionPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher" childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog0">
+            <af:inputText rows="10" columns="100"
+                          value="#{bindings.TitleNTCDescription.inputValue}"
+                          simple="true" maximumLength="4000"
+                          id="TitleNTCDescriptionEditorText"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="TitleNTCNotesPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher" childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog1">
+            <af:inputText rows="10" columns="100"
+                          value="#{bindings.TitleNTCNotes.inputValue}"
+                          simple="true" maximumLength="4000"
+                          id="TitleNTCNotesEditorText"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="NTCTitleTitlesDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="NTCTitleTitlesDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_NTCTITLETITLE:#{pageFlowScope.NTCTitleTitlesTable.currentRowAttributeValues.TargetTrackingNo}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteNTCTitleTitles.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="jhsLovPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher"
+                  binding="#{pageFlowScope.jhsLovPopup.component}">
+          <af:dialog modal="true" title="#{pageFlowScope.LovItemBean.lovTitle}"
+                     type="none" id="dialog2" resize="on"
+                     stretchChildren="first"
+                     contentWidth="#{pageFlowScope.LovItemBean.lovWidth}"
+                     contentHeight="#{pageFlowScope.LovItemBean.lovHeight}">
+            <af:region value="#{bindings.LovTaskFlow.regionModel}"
+                       id="region0"/>
+            <f:facet name="buttonBar">
+              <af:group id="g0">
+                <af:commandButton textAndAccessKey="#{nls['OK_BUTTON_LABEL']}"
+                                  id="cb0" partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.handleLovSelection}"/>
+                <af:commandButton textAndAccessKey="#{nls['CANCEL']}" id="cb1"
+                                  partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.cancelLov}"/>
+              </af:group>
+            </f:facet>
+          </af:dialog>
+          <af:clientListener method="popupClosedListener" type="popupClosed"/>
+          <af:serverListener type="serverPopupClosed"
+                             method="#{pageFlowScope.LovItemBean.cancelLov}"/>
+        </af:popup>
+        <af:popup id="TitleNTCEmailTextPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher" childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog3">
+            <af:inputText rows="30" columns="100"
+                          value="#{bindings.TitleNTCEmailText.inputValue}"
+                          converter="oracle.genericDomain" simple="true"
+                          id="TitleNTCEmailTextEditorText"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="NTCTitleAttachmentsDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="NTCTitleAttachmentsDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_NTCTITLEATTACHMENT:#{pageFlowScope.NTCTitleAttachmentsTable.currentRowAttributeValues.AttachmentType}']} "
+                           id="ot3"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteNTCTitleAttachments.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="AttachmentPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare" value="#{'ContractTabPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="AttachmentIterator" Binds="ContractAttachmentView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="AttachmentIteratorContractAttachmentViewCriteriaQuery"
+                  Binds="AttachmentIterator"
+                  Criteria="ContractAttachmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="s12Name" IterBinding="AttachmentIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s12Attachment" IterBinding="AttachmentIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s12AttachmentDL" IterBinding="AttachmentIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s12Description" IterBinding="AttachmentIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s12FileSize" IterBinding="AttachmentIterator">
+      <AttrNames>
+        <Item Value="FileSize"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s12CreatedBy" IterBinding="AttachmentIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s12CreatedDate" IterBinding="AttachmentIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s12LastUpdatedBy" IterBinding="AttachmentIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s12LastUpdatedDate" IterBinding="AttachmentIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="AttachmentTable" IterBinding="AttachmentIterator">
+      <nodeDefinition Name="Attachment"
+                      DefName="com.pq.tracs.model.dao.ContractAttachmentView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Description"/>
+          <Item Value="FileSize"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstAttachment" IterBinding="AttachmentIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousAttachment" IterBinding="AttachmentIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextAttachment" IterBinding="AttachmentIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastAttachment" IterBinding="AttachmentIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyAttachment" IterBinding="AttachmentIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrAttachment}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateAttachment" IterBinding="AttachmentIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteAttachment" IterBinding="AttachmentIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

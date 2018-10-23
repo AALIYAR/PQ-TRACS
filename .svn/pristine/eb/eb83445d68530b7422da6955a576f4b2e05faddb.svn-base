@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="IntegrationMessageROView"
+   Version="11.1.1.59.23"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   ComponentClass="com.pq.tracs.model.dao.TracsView"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+   </DesignTime>
+   <SQLQuery>
+      <![CDATA[SELECT TracsTraxIntegrationMessage.ID,
+       TracsTraxIntegrationMessage.INTEGRATION_QUEUE_ID,
+       TracsTraxIntegrationMessage.MESSAGE
+FROM TRAX_INTEGRATION_MESSAGE TracsTraxIntegrationMessage]]>
+   </SQLQuery>
+   <ViewAttribute
+      Name="Id"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="ID"
+      Expression="ID"
+      SQLType="NUMERIC">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IntegrationQueueId"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="INTEGRATION_QUEUE_ID"
+      Expression="INTEGRATION_QUEUE_ID"
+      SQLType="NUMERIC">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22"/>
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Message"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MESSAGE"
+      Expression="MESSAGE"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.ro.IntegrationMessageROView.Message_LABEL"/>
+            <DISPLAYWIDTH
+               Value="30"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="IntegrationMessageROViewCriteria"
+      ViewObjectName="com.pq.tracs.model.ro.IntegrationMessageROView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow172"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="Message"
+            ViewAttribute="Message"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Id"/>
+   </AttrArray>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,335 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="TraxRightCategoryTemplateView"
+   Version="11.1.1.62.29"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="com.pq.tracs.model.dao.TraxRightCategoryTemplateViewRowImpl"
+   ComponentClass="com.pq.tracs.model.dao.TraxRightCategoryTemplateViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_objectSuperClassName"
+         Value="com.pq.tracs.model.dao.TracsView"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <ViewAccessor
+      Name="CategoryLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.CategoryLookup"
+      RowLevelBinds="true"/>
+   <ViewAccessor
+      Name="CategoryValueLookupDropDown"
+      ViewObjectName="com.pq.tracs.model.lookups.CategoryValueLookup">
+      <ParameterMap>
+         <PIMap Variable="CATEGORY_ID">
+            <TransientExpression><![CDATA[CategoryId]]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="RightsTemplateLookup"
+      ViewObjectName="com.pq.tracs.model.dao.TraxRightTemplateView"
+      RowLevelBinds="true"/>
+   <ListBinding
+      Name="LOV_RightTemplateId"
+      ListVOName="RightsTemplateLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="RightTemplateId"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="Id"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="Name"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_CategoryId"
+      ListVOName="CategoryLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="CategoryId"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="Id"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="Name"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_Value"
+      ListVOName="CategoryValueLookupDropDown"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="Value"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <SQLQuery><![CDATA[SELECT TraxRightCategoryTemplate.ID, 
+       TraxRightCategoryTemplate.RIGHT_TEMPLATE_ID, 
+       TraxRightCategoryTemplate.CATEGORY_ID,
+       TraxRightCategoryTemplate.NAME,  
+       TraxRightCategoryTemplate.VALUE, 
+       TraxRightCategoryTemplate.FULL_OR_PARTIAL, 
+       TraxRightCategoryTemplate.PERMIT_FLAG,
+       TraxRightCategoryTemplate.CREATED_BY, 
+       TraxRightCategoryTemplate.CREATED_DATE, 
+       TraxRightCategoryTemplate.LAST_UPDATED_BY, 
+       TraxRightCategoryTemplate.LAST_UPDATED_DATE,
+       NVL((SELECT tc.FULL_OR_PARTIAL_FLAG FROM trax_category tc WHERE tc.id = TraxRightCategoryTemplate.CATEGORY_ID),'N') FULL_OR_PARTIAL_FLAG
+FROM TRAX_RIGHT_TEMPLATE_CATEGORY TraxRightCategoryTemplate]]></SQLQuery>
+   <EntityUsage
+      Name="TraxRightCategoryTemplate"
+      Entity="com.pq.tracs.model.bo.RightCategoryTemplate" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      EntityAttrName="Id"
+      EntityUsage="TraxRightCategoryTemplate"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RightTemplateId"
+      IsNotNull="true"
+      EntityAttrName="RightTemplateId"
+      EntityUsage="TraxRightCategoryTemplate"
+      AliasName="RIGHT_TEMPLATE_ID"
+      LOVName="LOV_RightTemplateId">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CategoryId"
+      IsNotNull="true"
+      EntityAttrName="CategoryId"
+      EntityUsage="TraxRightCategoryTemplate"
+      AliasName="CATEGORY_ID"
+      LOVName="LOV_CategoryId">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Name"
+      IsNotNull="true"
+      EntityAttrName="Name"
+      EntityUsage="TraxRightCategoryTemplate"
+      AliasName="NAME"/>
+   <ViewAttribute
+      Name="Value"
+      IsNotNull="true"
+      EntityAttrName="Value"
+      EntityUsage="TraxRightCategoryTemplate"
+      AliasName="VALUE"
+      LOVName="LOV_Value">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="FullOrPartial"
+      EntityAttrName="FullOrPartial"
+      EntityUsage="TraxRightCategoryTemplate"
+      AliasName="FULL_OR_PARTIAL">
+      <Properties>
+         <SchemaBasedProperties>
+            <CATEGORY
+               Value="Full / Partial"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PermitFlag"
+      IsNotNull="true"
+      EntityAttrName="PermitFlag"
+      EntityUsage="TraxRightCategoryTemplate"
+      AliasName="PERMIT_FLAG"/>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="TraxRightCategoryTemplate"
+      AliasName="CREATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <CATEGORY
+               Value="Created By"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      EntityAttrName="CreatedDate"
+      EntityUsage="TraxRightCategoryTemplate"
+      AliasName="CREATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <CATEGORY
+               Value="Created Date"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="TraxRightCategoryTemplate"
+      AliasName="LAST_UPDATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <CATEGORY
+               Value="Last Updated By"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      IsUpdateable="false"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="TraxRightCategoryTemplate"
+      AliasName="LAST_UPDATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <CATEGORY
+               Value="Last Updated Date"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="FullOrPartialFlag"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="FULL_OR_PARTIAL_FLAG"
+      Expression="FULL_OR_PARTIAL_FLAG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TraxRightCategoryTemplateView.FullOrPartialFlag_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="TraxRightCategoryTemplateViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.TraxRightCategoryTemplateView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow116"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="CategoryId"
+            ViewAttribute="CategoryId"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxRightCategoryTemplateViewCriteria_vcrow116_Value"
+            ViewAttribute="Value"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxRightCategoryTemplateViewCriteria_vcrow116_FullOrPartial"
+            ViewAttribute="FullOrPartial"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxRightCategoryTemplateViewCriteria_vcrow116_PermitFlag"
+            ViewAttribute="PermitFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxRightCategoryTemplateViewCriteria_vcrow116_CreatedBy"
+            ViewAttribute="CreatedBy"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxRightCategoryTemplateViewCriteria_vcrow116_CreatedDate"
+            ViewAttribute="CreatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxRightCategoryTemplateViewCriteria_vcrow116_LastUpdatedBy"
+            ViewAttribute="LastUpdatedBy"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxRightCategoryTemplateViewCriteria_vcrow116_LastUpdatedDate"
+            ViewAttribute="LastUpdatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

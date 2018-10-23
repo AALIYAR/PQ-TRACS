@@ -1,0 +1,591 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="s32TopLc"
+                             partialTriggers=" s32DeleteDialog s32fbb s32DelB s32SaveButton0 s32CancelButton0 s32SaveButton1 s32CancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="Right">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="s32fbb" layout="horizontal"
+                                       rendered="#{ bindings.OvrRightsIterator.currentRow!=null  and bindings.OvrRightsIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateOvrRights and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="s32First s32Previous s32Next s32Last">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstOvrRights.execute}"
+                                             id="s32First" partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.OvrRightsIterator.rangeStart+bindings.OvrRightsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.OvrRightsIterator.rangeStart+bindings.OvrRightsIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousOvrRights.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="s32Previous"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.OvrRightsIterator.rangeStart+bindings.OvrRightsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.OvrRightsIterator.rangeStart+bindings.OvrRightsIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.OvrRightsIterator.rangeStart+bindings.OvrRightsIterator.currentRowIndexInRange+1} / #{bindings.OvrRightsIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextOvrRights.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="s32Next" partialSubmit="true"
+                                             rendered="#{bindings.OvrRightsIterator.rangeStart+bindings.OvrRightsIterator.currentRowIndexInRange+1 lt bindings.OvrRightsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.OvrRightsIterator.rangeStart+bindings.OvrRightsIterator.currentRowIndexInRange+1 lt bindings.OvrRightsIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastOvrRights.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="s32Last" partialSubmit="true"
+                                             rendered="#{bindings.OvrRightsIterator.rangeStart+bindings.OvrRightsIterator.currentRowIndexInRange+1 lt bindings.OvrRightsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.OvrRightsIterator.rangeStart+bindings.OvrRightsIterator.currentRowIndexInRange+1 lt bindings.OvrRightsIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton action="DeleteOvrRights"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_OVRRIGHTS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateOvrRights and  bindings.OvrRightsIterator.currentRow!=null   and (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}"
+                                             immediate="true" id="s32DelB">
+                      <af:showPopupBehavior popupId="s32DeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1">
+                    <af:popup id="confirmDeletePopup0"
+                              binding="#{pageFlowScope.OvrRightsTable.confirmDeletePopup}">
+                      <af:dialog modal="true" type="okCancel"
+                                 title="Confirm Delete"
+                                 dialogListener="#{pageFlowScope.OvrRightsTable.handleOK}">
+                        <af:outputText value="Are you sure you want to delete the selected rows?"/>
+                      </af:dialog>
+                    </af:popup>
+                    <af:commandButton id="s32MultiDeleteButton"
+                                      textAndAccessKey="Delete Selected"
+                                      rendered="false">
+                      <af:showPopupBehavior popupId="confirmDeletePopup0"
+                                            align="beforeStart"/>
+                    </af:commandButton>
+                  </af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="s32Print"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveOvrRights.execute}"
+                                      rendered="#{((((jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="s32SaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="s32CancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.OvrRightsIterator.findMode!='true'}"
+                       id="s32Sw" defaultFacet="hasRows"
+                       facetName="#{( bindings.OvrRightsIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="s32NoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="s32FC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="4"
+                                    id="s32FI">
+                  <af:selectOneChoice id="s32TemplateName"
+                                      value="#{bindings.s32TemplateName.inputValue}"
+                                      label="#{bindings.s32TemplateName.hints.label}"
+                                      required="#{bindings.s32TemplateName.hints.mandatory}"
+                                      readOnly="true" autoSubmit="true">
+                    <f:selectItems value="#{bindings.s32TemplateName.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="s32RuleNumber"
+                                value="#{bindings.s32RuleNumber.inputValue}"
+                                label="#{bindings.s32RuleNumber.hints.label}"
+                                required="false"
+                                rows="#{bindings.s32RuleNumber.hints.displayHeight}"
+                                columns="#{bindings.s32RuleNumber.hints.displayWidth}"
+                                maximumLength="20" readOnly="true">
+                    <f:validator binding="#{bindings.s32RuleNumber.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s32PublicationStartDate"
+                                value="#{bindings.s32PublicationStartDate.inputValue}"
+                                label="#{bindings.s32PublicationStartDate.hints.label}"
+                                required="false"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputDate id="s32PublicationEndDate"
+                                value="#{bindings.s32PublicationEndDate.inputValue}"
+                                label="#{bindings.s32PublicationEndDate.hints.label}"
+                                required="false"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="s32EmbargoDays"
+                                value="#{bindings.s32EmbargoDays.inputValue}"
+                                label="#{bindings.s32EmbargoDays.hints.label}"
+                                required="#{bindings.s32EmbargoDays.hints.mandatory}"
+                                rows="#{bindings.s32EmbargoDays.hints.displayHeight}"
+                                columns="#{bindings.s32EmbargoDays.hints.displayWidth}"
+                                maximumLength="10"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}">
+                    <f:validator binding="#{bindings.s32EmbargoDays.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s32EmbargoDays.format}"/>
+                  </af:inputText>
+                  <af:inputText id="s32ReverseEmbargoDays"
+                                value="#{bindings.s32ReverseEmbargoDays.inputValue}"
+                                label="#{bindings.s32ReverseEmbargoDays.hints.label}"
+                                required="#{bindings.s32ReverseEmbargoDays.hints.mandatory}"
+                                rows="#{bindings.s32ReverseEmbargoDays.hints.displayHeight}"
+                                columns="#{bindings.s32ReverseEmbargoDays.hints.displayWidth}"
+                                maximumLength="10"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}">
+                    <f:validator binding="#{bindings.s32ReverseEmbargoDays.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s32ReverseEmbargoDays.format}"/>
+                  </af:inputText>
+                  <af:inputText id="s32Methods"
+                                value="#{bindings.s32Methods.inputValue}"
+                                label="#{bindings.s32Methods.hints.label}"
+                                required="false" readOnly="true">
+                    <f:validator binding="#{bindings.s32Methods.validator}"/>
+                  </af:inputText>
+                  <af:selectBooleanCheckbox id="s32CompleteFlag"
+                                            value="#{bindings.s32CompleteFlag.inputValue}"
+                                            label="#{bindings.s32CompleteFlag.hints.label}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                  <af:selectOneChoice id="s32GenerationMethod"
+                                      value="#{bindings.s32GenerationMethod.inputValue}"
+                                      label="#{bindings.s32GenerationMethod.hints.label}"
+                                      required="#{bindings.s32GenerationMethod.hints.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.s32GenerationMethod.hints.tooltip}">
+                    <f:selectItems value="#{bindings.s32GenerationMethod.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="s32CreatedBy"
+                                value="#{bindings.s32CreatedBy.inputValue}"
+                                label="#{bindings.s32CreatedBy.hints.label}"
+                                required="#{bindings.s32CreatedBy.hints.mandatory}"
+                                rows="#{bindings.s32CreatedBy.hints.displayHeight}"
+                                columns="#{bindings.s32CreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s32CreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s32CreatedDate"
+                                value="#{bindings.s32CreatedDate.inputValue}"
+                                label="#{bindings.s32CreatedDate.hints.label}"
+                                required="#{bindings.s32CreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="s32LastUpdatedBy"
+                                value="#{bindings.s32LastUpdatedBy.inputValue}"
+                                label="#{bindings.s32LastUpdatedBy.hints.label}"
+                                required="#{bindings.s32LastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.s32LastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.s32LastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s32LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s32LastUpdatedDate"
+                                value="#{bindings.s32LastUpdatedDate.inputValue}"
+                                label="#{bindings.s32LastUpdatedDate.hints.label}"
+                                required="#{bindings.s32LastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveOvrRights.execute}"
+                                            rendered="#{((((jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="s32SaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="s32CancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_RIGHTSTITLERECORDRIGHTCATEGORY']}"
+                               partialTriggers=" s32TopLc s320DeleteDialog qsAreas320SearchOptions s320PC:s320Arm s320PC:s320delrmTM s320PC:s320Arl s320PC:s320Tab:s320delrm s320PC:s320Tab:s320delrl"
+                               id="s320TopLcSdi"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                               disabled="#{!jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+              <af:panelGroupLayout layout="vertical" id="s320TopLc"
+                                   partialTriggers=" s32TopLc s320DeleteDialog qsAreas320SearchOptions s320PC:s320Arm s320PC:s320delrmTM s320PC:s320Arl s320PC:s320Tab:s320delrm s320PC:s320Tab:s320delrl"
+                                   rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0">
+                  <af:panelGroupLayout id="modelSearchAreas320"
+                                       rendered="#{!pageFlowScope.createModes.CreateRightsTitleRecordRightCategory and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreas320SearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.RightsTitleRecordRightCategoryIteratorTraxTitleRecRightCategoryViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.RightsTitleRecordRightCategoryIteratorTraxTitleRecRightCategoryViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.RightsTitleRecordRightCategoryIteratorTraxTitleRecRightCategoryViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl0">
+                  <af:panelCollection id="s320PC" featuresOff=" "
+                                      inlineStyle=" width:956px; ">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="s320tbb"
+                                    rendered="#{ bindings.RightsTitleRecordRightCategoryIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstRightsTitleRecordRightCategory.execute}"
+                                                id="s320First"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousRightsTitleRecordRightCategory.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="s320Previous"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextRightsTitleRecordRightCategory.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="s320Next"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastRightsTitleRecordRightCategory.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="s320Last"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="s320Arm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.RightsTitleRecordRightCategoryTable.addRow}"
+                                            rendered="#{ bindings.OvrRightsIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="s320delrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']}">
+                          <af:showPopupBehavior popupId="::s320DeletePopup"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <!-- Also create CreateRightsTitleRecordRightCategory bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="s320Arl" immediate="false"
+                                             rendered="#{ bindings.OvrRightsIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.RightsTitleRecordRightCategoryTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandToolbarButton text="Print" id="s320Print"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.RightsTitleRecordRightCategoryIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="s320Tab" contentDelivery="immediate"
+                              value="#{bindings.RightsTitleRecordRightCategoryTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.RightsTitleRecordRightCategoryTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.RightsTitleRecordRightCategoryTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.RightsTitleRecordRightCategoryTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.RightsTitleRecordRightCategoryTable.rangeSize}"
+                              autoHeightRows="#{bindings.RightsTitleRecordRightCategoryTable.estimatedRowCount lt 5 ? 5 : bindings.RightsTitleRecordRightCategoryTable.estimatedRowCount lt bindings.RightsTitleRecordRightCategoryTable.rangeSize ? bindings.RightsTitleRecordRightCategoryTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.RightsTitleRecordRightCategoryTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.RightsTitleRecordRightCategoryIteratorTraxTitleRecRightCategoryViewCriteriaQuery.processQuery}"
+                              binding="#{pageFlowScope.RightsTitleRecordRightCategoryTable.table}"
+                              partialTriggers=":::qsAreas320SearchOptions :::s320PC ::s320First ::s320Previous ::s320Next ::s320Last"
+                              width="956px"
+                              summary="#{nls['TABLE_TITLE_RIGHTSTITLERECORDRIGHTCATEGORY']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="s320TablePopup" childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="s320delrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']}">
+                              <af:showPopupBehavior popupId=":::s320DeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="s320ActionColumn" width="20" align="center"
+                                 headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl1">
+                          <af:commandImageLink id="s320delrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::s320DeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="s320CategoryCol" sortable="true"
+                                 noWrap="true" width="120"
+                                 sortProperty="CategoryId" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightsTitleRecordRightCategoryTable.hints.CategoryId.label}"
+                                          showRequired="true" id="ol0"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s320Category"
+                                            value="#{row.bindings.CategoryId.inputValue}"
+                                            label="#{bindings.RightsTitleRecordRightCategoryTable.hints.CategoryId.label}"
+                                            required="true"
+                                            readOnly="#{((pageFlowScope.RightsTitleRecordRightCategoryTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.RightsTitleRecordRightCategoryTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}"
+                                            autoSubmit="true"
+                                            valueChangeListener="#{s320CategoryDependsOnItem.updateModelValue}">
+                          <f:selectItems value="#{row.bindings.CategoryId.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s320ValueCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="Value"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightsTitleRecordRightCategoryTable.hints.Value.label}"
+                                          showRequired="true" id="ol1"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s320Value"
+                                            value="#{row.bindings.Value.inputValue}"
+                                            label="#{bindings.RightsTitleRecordRightCategoryTable.hints.Value.label}"
+                                            required="true"
+                                            readOnly="#{((pageFlowScope.RightsTitleRecordRightCategoryTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.RightsTitleRecordRightCategoryTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}">
+                          <f:selectItems value="#{row.bindings.Value.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s320PermitFlagCol" sortable="true"
+                                 noWrap="true" width="100"
+                                 sortProperty="PermitFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightsTitleRecordRightCategoryTable.hints.PermitFlag.label}"
+                                          showRequired="#{bindings.RightsTitleRecordRightCategoryTable.hints.PermitFlag.mandatory}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="s320PermitFlag"
+                                                  label="#{bindings.RightsTitleRecordRightCategoryTable.hints.PermitFlag.label}"
+                                                  value="#{s320PermitFlagcheckboxInTable.value}"
+                                                  readOnly="#{((pageFlowScope.RightsTitleRecordRightCategoryTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.RightsTitleRecordRightCategoryTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="s320CreatedByCol" sortable="true"
+                                 noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightsTitleRecordRightCategoryTable.hints.CreatedBy.label}"
+                                          id="ol3"/>
+                        </f:facet>
+                        <af:inputText id="s320CreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.RightsTitleRecordRightCategoryTable.hints.CreatedBy.label}"
+                                      required="#{bindings.RightsTitleRecordRightCategoryTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.RightsTitleRecordRightCategoryTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.RightsTitleRecordRightCategoryTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      disabled="true">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s320CreatedDateCol" sortable="true"
+                                 noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightsTitleRecordRightCategoryTable.hints.CreatedDate.label}"
+                                          id="ol4"/>
+                        </f:facet>
+                        <af:inputDate id="s320CreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.RightsTitleRecordRightCategoryTable.hints.CreatedDate.label}"
+                                      required="#{bindings.RightsTitleRecordRightCategoryTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true" disabled="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="s320LastUpdatedByCol" sortable="true"
+                                 noWrap="true" width="120"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightsTitleRecordRightCategoryTable.hints.LastUpdatedBy.label}"
+                                          id="ol5"/>
+                        </f:facet>
+                        <af:inputText id="s320LastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.RightsTitleRecordRightCategoryTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.RightsTitleRecordRightCategoryTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.RightsTitleRecordRightCategoryTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.RightsTitleRecordRightCategoryTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      disabled="true">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s320LastUpdatedDateCol" sortable="true"
+                                 noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightsTitleRecordRightCategoryTable.hints.LastUpdatedDate.label}"
+                                          id="ol6"/>
+                        </f:facet>
+                        <af:inputDate id="s320LastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.RightsTitleRecordRightCategoryTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.RightsTitleRecordRightCategoryTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true" disabled="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="s320GenerationMethodCol" sortable="true"
+                                 noWrap="true" width="100"
+                                 sortProperty="GenerationMethod"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightsTitleRecordRightCategoryTable.hints.GenerationMethod.label}"
+                                          id="ol7"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s320GenerationMethod"
+                                            value="#{row.bindings.GenerationMethod.inputValue}"
+                                            label="#{bindings.RightsTitleRecordRightCategoryTable.hints.GenerationMethod.label}"
+                                            required="#{bindings.RightsTitleRecordRightCategoryTable.hints.GenerationMethod.mandatory}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.RightsTitleRecordRightCategoryTable.hints.GenerationMethod.tooltip}"
+                                            unselectedLabel="">
+                          <af:forEach var="row2"
+                                      items="#{bindings.GenerationMethodLookup.rangeSet}">
+                            <af:selectItem id="si0"
+                                           label="#{row2.InternalValue}"
+                                           value="#{row2.DisplayValue}"/>
+                          </af:forEach>
+                        </af:selectOneChoice>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="s32DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s32DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_OVRRIGHT: #{bindings.s32RuleNumber.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteOvrRights.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s320DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s320DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_RIGHTSTITLERECORDRIGHTCATEGOR:#{pageFlowScope.RightsTitleRecordRightCategoryTable.currentRowAttributeValues.CategoryId}']} "
+                           id="ot1"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteRightsTitleRecordRightCategory.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

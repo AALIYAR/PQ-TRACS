@@ -1,0 +1,461 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="LookupSetMappingsTopLc"
+                             partialTriggers=" LookupSetMappingsfbb LookupSetMappingsNewButton LookupSetMappingsSaveButton0 LookupSetMappingsCancelButton0"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateLookupSetMappings ? nls['INSERT_TITLE_LOOKUPSETMAPPINGS'] : nls['VIEW_TITLE_LOOKUPSETMAPPING: #{bindings.LookupSetMappingsSourceCodeSetId.inputValue}']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="LookupSetMappingsfbb"
+                                       layout="horizontal"
+                                       rendered="#{ bindings.LookupSetMappingsIterator.currentRow!=null  and bindings.LookupSetMappingsIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateLookupSetMappings and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="LookupSetMappingsFirst LookupSetMappingsPrevious LookupSetMappingsNext LookupSetMappingsLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstLookupSetMappings.execute}"
+                                             id="LookupSetMappingsFirst"
+                                             partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.LookupSetMappingsIterator.rangeStart+bindings.LookupSetMappingsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.LookupSetMappingsIterator.rangeStart+bindings.LookupSetMappingsIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousLookupSetMappings.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="LookupSetMappingsPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.LookupSetMappingsIterator.rangeStart+bindings.LookupSetMappingsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.LookupSetMappingsIterator.rangeStart+bindings.LookupSetMappingsIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.LookupSetMappingsIterator.rangeStart+bindings.LookupSetMappingsIterator.currentRowIndexInRange+1} / #{bindings.LookupSetMappingsIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextLookupSetMappings.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="LookupSetMappingsNext"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.LookupSetMappingsIterator.rangeStart+bindings.LookupSetMappingsIterator.currentRowIndexInRange+1 lt bindings.LookupSetMappingsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.LookupSetMappingsIterator.rangeStart+bindings.LookupSetMappingsIterator.currentRowIndexInRange+1 lt bindings.LookupSetMappingsIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastLookupSetMappings.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="LookupSetMappingsLast"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.LookupSetMappingsIterator.rangeStart+bindings.LookupSetMappingsIterator.currentRowIndexInRange+1 lt bindings.LookupSetMappingsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.LookupSetMappingsIterator.rangeStart+bindings.LookupSetMappingsIterator.currentRowIndexInRange+1 lt bindings.LookupSetMappingsIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateLookupSetMappings.execute}"
+                                             action="CreateLookupSetMappings"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_LOOKUPSETMAPPINGS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateLookupSetMappings and (true) }"
+                                             id="LookupSetMappingsNewButton"></af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print"
+                                             id="LookupSetMappingsPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveLookupSetMappings.execute}"
+                                      rendered="#{!pageFlowScope.hideSaveButton}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="LookupSetMappingsSaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel"
+                                      id="LookupSetMappingsCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.LookupSetMappingsIterator.findMode!='true'}"
+                       id="LookupSetMappingsSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.LookupSetMappingsIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp"
+                                  id="LookupSetMappingsNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="LookupSetMappingsFC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="4"
+                                    id="LookupSetMappingsFI">
+                  <af:selectOneChoice id="LookupSetMappingsSourceCodeSetId"
+                                      value="#{bindings.LookupSetMappingsSourceCodeSetId.inputValue}"
+                                      label="#{bindings.LookupSetMappingsSourceCodeSetId.hints.label}"
+                                      required="#{bindings.LookupSetMappingsSourceCodeSetId.hints.mandatory}"
+                                      readOnly="#{!(pageFlowScope.createModes.CreateLookupSetMappings)}">
+                    <f:selectItems value="#{bindings.LookupSetMappingsSourceCodeSetId.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="LookupSetMappingsDestinationCodeSetId"
+                                      value="#{bindings.LookupSetMappingsDestinationCodeSetId.inputValue}"
+                                      label="#{bindings.LookupSetMappingsDestinationCodeSetId.hints.label}"
+                                      required="#{bindings.LookupSetMappingsDestinationCodeSetId.hints.mandatory}"
+                                      readOnly="#{!(pageFlowScope.createModes.CreateLookupSetMappings)}">
+                    <f:selectItems value="#{bindings.LookupSetMappingsDestinationCodeSetId.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="LookupSetMappingsDescription"
+                                value="#{bindings.LookupSetMappingsDescription.inputValue}"
+                                label="#{bindings.LookupSetMappingsDescription.hints.label}"
+                                required="#{bindings.LookupSetMappingsDescription.hints.mandatory}"
+                                rows="#{bindings.LookupSetMappingsDescription.hints.displayHeight}"
+                                columns="#{bindings.LookupSetMappingsDescription.hints.displayWidth}"
+                                maximumLength="1000"
+                                readOnly="#{!(pageFlowScope.createModes.CreateLookupSetMappings)}">
+                    <f:validator binding="#{bindings.LookupSetMappingsDescription.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="LookupSetMappingsCreatedBy"
+                                value="#{bindings.LookupSetMappingsCreatedBy.inputValue}"
+                                label="#{bindings.LookupSetMappingsCreatedBy.hints.label}"
+                                required="#{bindings.LookupSetMappingsCreatedBy.hints.mandatory}"
+                                rows="#{bindings.LookupSetMappingsCreatedBy.hints.displayHeight}"
+                                columns="#{bindings.LookupSetMappingsCreatedBy.hints.displayWidth}"
+                                maximumLength="20" readOnly="true">
+                    <f:validator binding="#{bindings.LookupSetMappingsCreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="LookupSetMappingsCreatedDate"
+                                value="#{bindings.LookupSetMappingsCreatedDate.inputValue}"
+                                label="#{bindings.LookupSetMappingsCreatedDate.hints.label}"
+                                required="#{bindings.LookupSetMappingsCreatedDate.hints.mandatory}"
+                                readOnly="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="LookupSetMappingsLastUpdatedBy"
+                                value="#{bindings.LookupSetMappingsLastUpdatedBy.inputValue}"
+                                label="#{bindings.LookupSetMappingsLastUpdatedBy.hints.label}"
+                                required="#{bindings.LookupSetMappingsLastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.LookupSetMappingsLastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.LookupSetMappingsLastUpdatedBy.hints.displayWidth}"
+                                maximumLength="20" readOnly="true">
+                    <f:validator binding="#{bindings.LookupSetMappingsLastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="LookupSetMappingsLastUpdatedDate"
+                                value="#{bindings.LookupSetMappingsLastUpdatedDate.inputValue}"
+                                label="#{bindings.LookupSetMappingsLastUpdatedDate.hints.label}"
+                                required="#{bindings.LookupSetMappingsLastUpdatedDate.hints.mandatory}"
+                                readOnly="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_LOOKUPCODEMAPPING']}"
+                               partialTriggers=" LookupSetMappingsTopLc LookupCodeMappingDeleteDialog qsAreaLookupCodeMappingSearchOptions LookupCodeMappingPC:LookupCodeMappingArm LookupCodeMappingPC:LookupCodeMappingdelrmTM LookupCodeMappingPC:LookupCodeMappingArl LookupCodeMappingPC:LookupCodeMappingTab:LookupCodeMappingdelrm LookupCodeMappingPC:LookupCodeMappingTab:LookupCodeMappingdelrl"
+                               id="LookupCodeMappingTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN']}"
+                               disabled="#{!jhsUserRoles['ADMIN']}">
+              <af:panelGroupLayout layout="vertical" id="LookupCodeMappingTopLc"
+                                   partialTriggers=" LookupSetMappingsTopLc LookupCodeMappingDeleteDialog qsAreaLookupCodeMappingSearchOptions LookupCodeMappingPC:LookupCodeMappingArm LookupCodeMappingPC:LookupCodeMappingdelrmTM LookupCodeMappingPC:LookupCodeMappingArl LookupCodeMappingPC:LookupCodeMappingTab:LookupCodeMappingdelrm LookupCodeMappingPC:LookupCodeMappingTab:LookupCodeMappingdelrl"
+                                   rendered="#{jhsUserRoles['ADMIN']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0">
+                  <af:panelGroupLayout id="modelSearchAreaLookupCodeMapping"
+                                       rendered="#{!pageFlowScope.createModes.CreateLookupCodeMapping and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreaLookupCodeMappingSearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.LookupCodeMappingIteratorLookupCodeMappingViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.LookupCodeMappingIteratorLookupCodeMappingViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.LookupCodeMappingIteratorLookupCodeMappingViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl0">
+                  <af:panelCollection id="LookupCodeMappingPC" featuresOff=" "
+                                      inlineStyle=" width:968px; ">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="LookupCodeMappingtbb"
+                                    rendered="#{ bindings.LookupCodeMappingIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstLookupCodeMapping.execute}"
+                                                id="LookupCodeMappingFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousLookupCodeMapping.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="LookupCodeMappingPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextLookupCodeMapping.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="LookupCodeMappingNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastLookupCodeMapping.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="LookupCodeMappingLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="LookupCodeMappingArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.LookupCodeMappingTable.addRow}"
+                                            rendered="#{ bindings.LookupSetMappingsIterator.currentRow!=null  }"></af:commandMenuItem>
+                        <af:commandMenuItem id="LookupCodeMappingdelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true">
+                          <af:showPopupBehavior popupId="::LookupCodeMappingDeletePopup"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <!-- Also create CreateLookupCodeMapping bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="LookupCodeMappingArl"
+                                             immediate="false"
+                                             rendered="#{ bindings.LookupSetMappingsIterator.currentRow!=null  }"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.LookupCodeMappingTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandToolbarButton text="Print"
+                                                 id="LookupCodeMappingPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.LookupCodeMappingIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="LookupCodeMappingTab"
+                              contentDelivery="immediate"
+                              value="#{bindings.LookupCodeMappingTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.LookupCodeMappingTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.LookupCodeMappingTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.LookupCodeMappingTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.LookupCodeMappingTable.rangeSize}"
+                              autoHeightRows="#{bindings.LookupCodeMappingTable.estimatedRowCount lt 5 ? 5 : bindings.LookupCodeMappingTable.estimatedRowCount lt bindings.LookupCodeMappingTable.rangeSize ? bindings.LookupCodeMappingTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.LookupCodeMappingTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.LookupCodeMappingIteratorLookupCodeMappingViewCriteriaQuery.processQuery}"
+                              binding="#{pageFlowScope.LookupCodeMappingTable.table}"
+                              partialTriggers=":::qsAreaLookupCodeMappingSearchOptions :::LookupCodeMappingPC ::LookupCodeMappingFirst ::LookupCodeMappingPrevious ::LookupCodeMappingNext ::LookupCodeMappingLast"
+                              width="968px"
+                              summary="#{nls['TABLE_TITLE_LOOKUPCODEMAPPING']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="LookupCodeMappingTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="LookupCodeMappingdelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true">
+                              <af:showPopupBehavior popupId=":::LookupCodeMappingDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="LookupCodeMappingActionColumn" width="20"
+                                 align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl1">
+                          <af:commandImageLink id="LookupCodeMappingdelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::LookupCodeMappingDeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="LookupCodeMappingSourceLookupCodeIdCol"
+                                 sortable="true" noWrap="true" width="228"
+                                 sortProperty="SourceLookupCodeId" align="right"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.LookupCodeMappingTable.hints.SourceLookupCodeId.label}"
+                                          showRequired="#{bindings.LookupCodeMappingTable.hints.SourceLookupCodeId.mandatory}"
+                                          id="ol0"/>
+                        </f:facet>
+                        <af:selectOneChoice id="LookupCodeMappingSourceLookupCodeId"
+                                            value="#{row.bindings.SourceLookupCodeId.inputValue}"
+                                            label="#{bindings.LookupCodeMappingTable.hints.SourceLookupCodeId.label}"
+                                            required="#{bindings.LookupCodeMappingTable.hints.SourceLookupCodeId.mandatory}">
+                          <f:selectItems value="#{row.bindings.SourceLookupCodeId.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="LookupCodeMappingDestinationLookupCodeIdCol"
+                                 sortable="true" noWrap="true" width="228"
+                                 sortProperty="DestinationLookupCodeId"
+                                 align="right" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.LookupCodeMappingTable.hints.DestinationLookupCodeId.label}"
+                                          showRequired="#{bindings.LookupCodeMappingTable.hints.DestinationLookupCodeId.mandatory}"
+                                          id="ol1"/>
+                        </f:facet>
+                        <af:selectOneChoice id="LookupCodeMappingDestinationLookupCodeId"
+                                            value="#{row.bindings.DestinationLookupCodeId.inputValue}"
+                                            label="#{bindings.LookupCodeMappingTable.hints.DestinationLookupCodeId.label}"
+                                            required="#{bindings.LookupCodeMappingTable.hints.DestinationLookupCodeId.mandatory}">
+                          <f:selectItems value="#{row.bindings.DestinationLookupCodeId.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="LookupCodeMappingCreatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.LookupCodeMappingTable.hints.CreatedBy.label}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:inputText id="LookupCodeMappingCreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.LookupCodeMappingTable.hints.CreatedBy.label}"
+                                      required="#{bindings.LookupCodeMappingTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.LookupCodeMappingTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.LookupCodeMappingTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="LookupCodeMappingCreatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.LookupCodeMappingTable.hints.CreatedDate.label}"
+                                          id="ol3"/>
+                        </f:facet>
+                        <af:inputDate id="LookupCodeMappingCreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.LookupCodeMappingTable.hints.CreatedDate.label}"
+                                      required="#{bindings.LookupCodeMappingTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="LookupCodeMappingLastUpdatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.LookupCodeMappingTable.hints.LastUpdatedBy.label}"
+                                          id="ol4"/>
+                        </f:facet>
+                        <af:inputText id="LookupCodeMappingLastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.LookupCodeMappingTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.LookupCodeMappingTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.LookupCodeMappingTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.LookupCodeMappingTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="LookupCodeMappingLastUpdatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.LookupCodeMappingTable.hints.LastUpdatedDate.label}"
+                                          id="ol5"/>
+                        </f:facet>
+                        <af:inputDate id="LookupCodeMappingLastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.LookupCodeMappingTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.LookupCodeMappingTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="LookupCodeMappingDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="LookupCodeMappingDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_LOOKUPCODEMAPPIN:#{pageFlowScope.LookupCodeMappingTable.currentRowAttributeValues.SourceLookupCodeId}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteLookupCodeMapping.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

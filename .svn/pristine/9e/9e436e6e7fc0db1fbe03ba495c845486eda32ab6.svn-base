@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23"
+                id="DeliveryRightTemplateMultiLOVPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <invokeAction id="applyBindParamsDeliveryRightTemplateMultiLOVInvoke"
+                  Binds="applyBindParamsDeliveryRightTemplateMultiLOV"
+                  Refresh="always"/>
+    <iterator id="DeliveryRightTemplateMultiLOVIterator"
+              Binds="DeliveryRightTemplateROView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <invokeAction id="ExecuteQueryDeliveryRightTemplateMultiLOVInvoke"
+                  Binds="ExecuteQueryDeliveryRightTemplateMultiLOV"
+                  Refresh="renderModel" RefreshCondition="#{true}"/>
+  </executables>
+  <bindings>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsDeliveryRightTemplateMultiLOV"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="DeliveryRightTemplateROView1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{DeliveryRightTemplateMultiLOVQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQueryDeliveryRightTemplateMultiLOV"
+            IterBinding="DeliveryRightTemplateMultiLOVIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="DeliveryRightTemplateMultiLOVId"
+                     IterBinding="DeliveryRightTemplateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightTemplateMultiLOVName"
+                     IterBinding="DeliveryRightTemplateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightTemplateMultiLOVTranslationFlag"
+                     IterBinding="DeliveryRightTemplateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="TranslationFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightTemplateMultiLOVActiveFlag"
+                     IterBinding="DeliveryRightTemplateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightTemplateMultiLOVRightType"
+                     IterBinding="DeliveryRightTemplateMultiLOVIterator">
+      <AttrNames>
+        <Item Value="RightType"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="DeliveryRightTemplateMultiLOVTable"
+          IterBinding="DeliveryRightTemplateMultiLOVIterator">
+      <nodeDefinition Name="DeliveryRightTemplateMultiLOV"
+                      DefName="com.pq.tracs.model.lookups.DeliveryRightTemplateROView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="Name"/>
+          <Item Value="TranslationFlag"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="RightType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstDeliveryRightTemplateMultiLOV"
+            IterBinding="DeliveryRightTemplateMultiLOVIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousDeliveryRightTemplateMultiLOV"
+            IterBinding="DeliveryRightTemplateMultiLOVIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextDeliveryRightTemplateMultiLOV"
+            IterBinding="DeliveryRightTemplateMultiLOVIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastDeliveryRightTemplateMultiLOV"
+            IterBinding="DeliveryRightTemplateMultiLOVIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchDeliveryRightTemplateMultiLOV"
+                  IterBinding="DeliveryRightTemplateMultiLOVIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchDeliveryRightTemplateMultiLOV.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchDeliveryRightTemplateMultiLOV.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchDeliveryRightTemplateMultiLOV.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyDeliveryRightTemplateMultiLOV"
+            IterBinding="DeliveryRightTemplateMultiLOVIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrDeliveryRightTemplateMultiLOV}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

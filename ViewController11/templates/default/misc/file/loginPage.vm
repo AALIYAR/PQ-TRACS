@@ -1,0 +1,80 @@
+## revision_history
+## 19-nov-2011   Steven Davelaar
+## 2.4           Added call to JHS_PHASE_LISTENER
+## 04-feb-2011   Steven Davelaar
+## 2.3           replaced hardcoded JSP version number with JSP_VERSION macro
+##               Change encoding to pageEncoding
+## 01-nov-2010   Steven Davelaar
+## 2.2           Added call to keyboard server listener
+## 10-jul-2010   Steven Davelaar
+## 2.1           Do not use JhsDynamicTabsPageTemplate when set at application level
+## 23-jun-2009   Paco van der Linden
+## 2.0           Restructured layout according to (stretching) best-practices.
+## 17-jun-2007   Steven Davelaar
+## 1.0           Initial creation
+<?xml version='1.0' #PAGE_ENCODING_PROP()?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" #JSP_VERSION()
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html">
+   <jsp:output omit-xml-declaration="true" doctype-root-element="HTML"
+              doctype-system="http://www.w3.org/TR/html4/loose.dtd"
+              doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
+
+  <jsp:directive.page contentType="text/html;charset=${JHS.pageEncoding}"/>
+  <f:view #JHS_PHASE_LISTENER()>
+    <af:document title="#APPLICATION_TITLE()" id="#NEW_ID("doc")">
+      <f:facet name="metaContainer">
+        <trh:script source="/jheadstart/jhs11.js" id="#NEW_ID("script")"></trh:script>
+      </f:facet>
+      <af:form id="dataForm" defaultCommand="pt:login">
+
+${JHS.engine.resetNamingContainerContext()}
+
+        ## do not use dynamic tabs template for this page
+        <af:pageTemplate id="pt" #if (${JHS.application.useJhsDynamicTabsPageTemplate}) viewId="/common/pageTemplates/JhsPageTemplate.jspx" #else viewId="${JHS.application.pageTemplate}" #end>
+          <f:attribute name="showMessagesInline" value="${JHS.application.showMessagesInline}"/>
+          <f:attribute name="showMenu1" value="false"/>
+          <f:attribute name="showMenu2" value="false"/>
+          <f:facet name="pageContent">
+            <af:panelHeader id="ph" text="${JHS.nls('Please Login','LOGIN_PAGE_TITLE')}">
+              <af:outputText id="ot" value="" rendered="#{LoginBean.authenticationFailed}"/>
+              <af:panelFormLayout id="pfl" labelAlignment="start">
+                <f:facet name="footer">
+                  <af:commandButton id="login"  action="#{LoginBean.authenticateUser}"
+                                    text="${JHS.nls('Login','LOGIN_BUTTON_LABEL')}"/>
+                </f:facet>
+                  <af:inputText label="${JHS.nls('Username','LOGIN_USERNAME_LABEL')}" id="username"
+                                value="#{LoginBean.username}" required="true"/>
+                  <af:inputText label="${JHS.nls('Password','LOGIN_PASSWORD_LABEL')}" id="password"
+                                value="#{LoginBean.password}" secret="true"
+                                required="true"/>
+              </af:panelFormLayout>
+              <af:panelFormLayout>
+                <af:outputText value="Use the following users to test the various role privileges:"
+                               styleClass="AFInstructionText"/>
+                <trh:script text="
+        function copyUsernameSKING() {
+            document.forms[0].elements['pt:username'].value='SKING';document.forms[0].elements['pt:password'].value='welcome1'; return false;
+          }
+          function copyUsernameAHUNOLD() {
+            document.forms[0].elements['pt:username'].value='AHUNOLD';document.forms[0].elements['pt:password'].value='welcome1'; return false;
+          }            "></trh:script>
+                <af:panelList>
+                  <af:goLink text="Steven King (Administrator)">
+                    <af:clientListener method="copyUsernameSKING" type="click"/>
+                  </af:goLink>
+                  <af:goLink text="Alexander Hunold (User)">
+                    <af:clientListener method="copyUsernameAHUNOLD" type="click"/>
+                  </af:goLink>
+                </af:panelList>
+              </af:panelFormLayout>
+            </af:panelHeader>
+          </f:facet>
+        </af:pageTemplate>
+      </af:form>
+      #KEYBOARD_SERVER_LISTENER()
+    </af:document>
+  </f:view>
+</jsp:root>

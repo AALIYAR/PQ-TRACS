@@ -1,0 +1,946 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="BlockingRulePageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'ADMIN, BR, BRUSER'}"/>
+  </parameters>
+  <executables>
+    <iterator id="BlockingRuleIterator" Binds="TraxBlockingRuleHdrView1"
+              DataControl="TracsServiceDataControl" RangeSize="5"/>
+    <searchRegion id="BlockingRuleIteratorTraxBlockingRuleHdrViewCriteriaQuery"
+                  Binds="BlockingRuleIterator"
+                  Criteria="TraxBlockingRuleHdrViewCriteria"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="BlockingRuleName"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <invokeAction id="applyBindParamsBlockingRuleMarketInvoke"
+                  Binds="applyBindParamsBlockingRuleMarket" Refresh="always"/>
+    <iterator id="BlockingRuleMarketIterator" Binds="TraxBlockingRuleMktView"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <invokeAction id="ExecuteQueryBlockingRuleMarketInvoke"
+                  Binds="ExecuteQueryBlockingRuleMarket" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="applyBindParamsCategoryValueLookupInvoke"
+                  Binds="applyBindParamsCategoryValueLookup" Refresh="always"/>
+    <iterator id="CategoryValueLookupIterator" Binds="CategoryValueLookup1"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+    <invokeAction id="applyBindParamsSubMarketInvoke"
+                  Binds="applyBindParamsSubMarket" Refresh="always"/>
+    <iterator id="SubMarketIterator" Binds="TraxBlockingRuleDtlView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <invokeAction id="ExecuteQuerySubMarketInvoke" Binds="ExecuteQuerySubMarket"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="applyBindParamsSubCategoryValueLookupInvoke"
+                  Binds="applyBindParamsSubCategoryValueLookup"
+                  Refresh="always"/>
+    <iterator id="SubCategoryValueLookupIterator"
+              Binds="SubCategoryValueLookup1"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+    <invokeAction id="applyBindParamsBlockingRuleCountryInvoke"
+                  Binds="applyBindParamsBlockingRuleCountry" Refresh="always"/>
+    <iterator id="BlockingRuleCountryIterator"
+              Binds="TraxBlockingRuleCountryView"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <invokeAction id="ExecuteQueryBlockingRuleCountryInvoke"
+                  Binds="ExecuteQueryBlockingRuleCountry" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="applyBindParamsCategoryValueCountryLookupInvoke"
+                  Binds="applyBindParamsCategoryValueCountryLookup"
+                  Refresh="always"/>
+    <iterator id="CategoryValueCountryLookupIterator"
+              Binds="CategoryValueLookup2" DataControl="TracsServiceDataControl"
+              RangeSize="-1"/>
+    <invokeAction id="applyBindParamsBlockingRuleFormatTypeInvoke"
+                  Binds="applyBindParamsBlockingRuleFormatType"
+                  Refresh="always"/>
+    <iterator id="BlockingRuleFormatTypeIterator" Binds="TraxBlockingRuleFTView"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <invokeAction id="ExecuteQueryBlockingRuleFormatTypeInvoke"
+                  Binds="ExecuteQueryBlockingRuleFormatType"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="applyBindParamsBlockingRuleFormatLookupInvoke"
+                  Binds="applyBindParamsBlockingRuleFormatLookup"
+                  Refresh="always"/>
+    <iterator id="BlockingRuleFormatLookupIterator"
+              Binds="BlockingRuleFormatLookup"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+    <iterator id="BlockingRuleOvrIterator" Binds="TraxBlockingRuleOvrView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <taskFlow id="LovTaskFlow"
+              taskFlowId="#{pageFlowScope.jhsLovTaskFlowManager.currentTaskFlowId}"
+              activation="deferred"
+              parametersMap="#{pageFlowScope.jhsLovTaskFlowManager.currentParamMap}"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings>
+    <attributeValues id="BlockingRuleId" IterBinding="BlockingRuleIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleBlockingRuleName"
+                     IterBinding="BlockingRuleIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleBlockingRuleNum"
+                     IterBinding="BlockingRuleIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleBlockingRuleDescription"
+                     IterBinding="BlockingRuleIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleDescription"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleBlockingRuleStatus"
+                     IterBinding="BlockingRuleIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleCreatedBy"
+                     IterBinding="BlockingRuleIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleCreatedDate"
+                     IterBinding="BlockingRuleIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleCreatedbySearch"
+                     IterBinding="BlockingRuleIterator">
+      <AttrNames>
+        <Item Value="CreatedbySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleLastUpdatedBy"
+                     IterBinding="BlockingRuleIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleLastUpdatedDate"
+                     IterBinding="BlockingRuleIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleLastUpdatedbySearch"
+                     IterBinding="BlockingRuleIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedbySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="BlockingRuleTable" IterBinding="BlockingRuleIterator">
+      <nodeDefinition Name="BlockingRule"
+                      DefName="com.pq.tracs.model.vo.TraxBlockingRuleHdrView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="BlockingRuleName"/>
+          <Item Value="BlockingRuleNumber"/>
+          <Item Value="BlockingRuleDescription"/>
+          <Item Value="BlockingRuleStatus"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="CreatedbySearch"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="LastUpdatedbySearch"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstBlockingRule" IterBinding="BlockingRuleIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousBlockingRule" IterBinding="BlockingRuleIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextBlockingRule" IterBinding="BlockingRuleIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastBlockingRule" IterBinding="BlockingRuleIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyBlockingRule"
+            IterBinding="BlockingRuleIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrBlockingRule}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateBlockingRule" IterBinding="BlockingRuleIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsBlockingRuleMarket"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="TraxBlockingRuleMktView"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{BlockingRuleMarketQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQueryBlockingRuleMarket"
+            IterBinding="BlockingRuleMarketIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues id="BlockingRuleMarketId"
+                     IterBinding="BlockingRuleMarketIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleMarketBlockingRuleHdrId"
+                     IterBinding="BlockingRuleMarketIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleHdrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleMarketRelatedLineId"
+                     IterBinding="BlockingRuleMarketIterator">
+      <AttrNames>
+        <Item Value="RelatedLineId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleMarketBlockingRuleType"
+                     IterBinding="BlockingRuleMarketIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleMarketMarketId"
+                     IterBinding="BlockingRuleMarketIterator">
+      <AttrNames>
+        <Item Value="LovId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsCategoryValueLookup"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="CategoryValueLookup1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{CategoryValueLookupQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+    </methodAction>
+    <table id="CategoryValueLookup" IterBinding="CategoryValueLookupIterator">
+      <AttrNames>
+        <Item Value="InternalValue"/>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </table>
+    <attributeValues id="BlockingRuleMarketBlockingRuleValue"
+                     IterBinding="BlockingRuleMarketIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleValue"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="BlockingRuleMarketBlockedFlag"
+            IterBinding="BlockingRuleMarketIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="BlockedFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="BlockingRuleMarketContainChilds"
+            IterBinding="BlockingRuleMarketIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ContainChilds"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="BlockingRuleMarketCreatedBy"
+                     IterBinding="BlockingRuleMarketIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleMarketCreatedDate"
+                     IterBinding="BlockingRuleMarketIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleMarketLastUpdatedBy"
+                     IterBinding="BlockingRuleMarketIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleMarketLastUpdatedDate"
+                     IterBinding="BlockingRuleMarketIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="BlockingRuleMarketTable" IterBinding="BlockingRuleMarketIterator">
+      <nodeDefinition Name="BlockingRuleMarket"
+                      DefName="com.pq.tracs.model.vo.TraxBlockingRuleDtlView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="BlockingRuleHdrId"/>
+          <Item Value="RelatedLineId"/>
+          <Item Value="BlockingRuleType"/>
+          <Item Value="LovId"/>
+          <Item Value="BlockingRuleValue"/>
+          <Item Value="BlockedFlag"/>
+          <Item Value="ContainChilds"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="TraxBlockingRuleDtlView_2"/>
+        </Accessors>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstBlockingRuleMarket"
+            IterBinding="BlockingRuleMarketIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousBlockingRuleMarket"
+            IterBinding="BlockingRuleMarketIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextBlockingRuleMarket" IterBinding="BlockingRuleMarketIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastBlockingRuleMarket" IterBinding="BlockingRuleMarketIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyBlockingRuleMarket"
+            IterBinding="BlockingRuleMarketIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrBlockingRuleMarket}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateBlockingRuleMarket"
+            IterBinding="BlockingRuleMarketIterator" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="DeleteBlockingRuleMarket"
+            IterBinding="BlockingRuleMarketIterator" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsSubMarket"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="TraxBlockingRuleDtlView2"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args" NDValue="#{SubMarketQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQuerySubMarket" IterBinding="SubMarketIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="SubMarketId" IterBinding="SubMarketIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="SubMarketBlockingRuleHdrId"
+                     IterBinding="SubMarketIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleHdrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="SubMarketRelatedLineId"
+                     IterBinding="SubMarketIterator">
+      <AttrNames>
+        <Item Value="RelatedLineId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="SubMarketBlockingRuleType"
+                     IterBinding="SubMarketIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="SubMarketSubMarketId" IterBinding="SubMarketIterator">
+      <AttrNames>
+        <Item Value="LovId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsSubCategoryValueLookup"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="SubCategoryValueLookup1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{SubCategoryValueLookupQueryBindParamsRowSpecific.namedParams}"
+                 NDType="java.util.HashMap"/>
+    </methodAction>
+    <table id="SubCategoryValueLookup"
+           IterBinding="SubCategoryValueLookupIterator">
+      <AttrNames>
+        <Item Value="InternalValue"/>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </table>
+    <attributeValues id="SubMarketBlockingRuleValue"
+                     IterBinding="SubMarketIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleValue"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="SubMarketBlockedFlag" IterBinding="SubMarketIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="BlockedFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="SubMarketCreatedBy" IterBinding="SubMarketIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="SubMarketCreatedDate" IterBinding="SubMarketIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="SubMarketLastUpdatedBy"
+                     IterBinding="SubMarketIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="SubMarketLastUpdatedDate"
+                     IterBinding="SubMarketIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="SubMarketExcludeInclude"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="excludeAll"
+                  ReturnName="TracsServiceDataControl.methodResults.excludeAll_TracsServiceDataControl_dataProvider_excludeAll_result"
+                  IsViewObjectMethod="false"/>
+    <tree id="SubMarketTable" IterBinding="SubMarketIterator">
+      <nodeDefinition Name="SubMarket"
+                      DefName="com.pq.tracs.model.vo.TraxBlockingRuleDtlView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="BlockingRuleHdrId"/>
+          <Item Value="RelatedLineId"/>
+          <Item Value="BlockingRuleType"/>
+          <Item Value="LovId"/>
+          <Item Value="BlockingRuleValue"/>
+          <Item Value="BlockedFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="TraxBlockingRuleDtlView_2"/>
+        </Accessors>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstSubMarket" IterBinding="SubMarketIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousSubMarket" IterBinding="SubMarketIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextSubMarket" IterBinding="SubMarketIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastSubMarket" IterBinding="SubMarketIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeySubMarket" IterBinding="SubMarketIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrSubMarket}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateSubMarket" IterBinding="SubMarketIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteSubMarket" IterBinding="SubMarketIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsBlockingRuleCountry"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="TraxBlockingRuleCountryView"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{BlockingRuleCountryQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQueryBlockingRuleCountry"
+            IterBinding="BlockingRuleCountryIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues id="BlockingRuleCountryId"
+                     IterBinding="BlockingRuleCountryIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleCountryBlockingRuleHdrId"
+                     IterBinding="BlockingRuleCountryIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleHdrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleCountryRelatedLineId"
+                     IterBinding="BlockingRuleCountryIterator">
+      <AttrNames>
+        <Item Value="RelatedLineId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleCountryBlockingRuleType"
+                     IterBinding="BlockingRuleCountryIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleCountryCountryId"
+                     IterBinding="BlockingRuleCountryIterator">
+      <AttrNames>
+        <Item Value="LovId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsCategoryValueCountryLookup"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="CategoryValueLookup2"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{CategoryValueCountryLookupQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+    </methodAction>
+    <table id="CategoryValueCountryLookup"
+           IterBinding="CategoryValueCountryLookupIterator">
+      <AttrNames>
+        <Item Value="InternalValue"/>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </table>
+    <attributeValues id="BlockingRuleCountryBlockingRuleValue"
+                     IterBinding="BlockingRuleCountryIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleValue"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="BlockingRuleCountryBlockedFlag"
+            IterBinding="BlockingRuleCountryIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="BlockedFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="BlockingRuleCountryCreatedBy"
+                     IterBinding="BlockingRuleCountryIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleCountryCreatedDate"
+                     IterBinding="BlockingRuleCountryIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleCountryLastUpdatedBy"
+                     IterBinding="BlockingRuleCountryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleCountryLastUpdatedDate"
+                     IterBinding="BlockingRuleCountryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="BlockingRuleCountryTable"
+          IterBinding="BlockingRuleCountryIterator">
+      <nodeDefinition Name="BlockingRuleCountry"
+                      DefName="com.pq.tracs.model.vo.TraxBlockingRuleDtlView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="BlockingRuleHdrId"/>
+          <Item Value="RelatedLineId"/>
+          <Item Value="BlockingRuleType"/>
+          <Item Value="LovId"/>
+          <Item Value="BlockingRuleValue"/>
+          <Item Value="BlockedFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="TraxBlockingRuleDtlView_2"/>
+        </Accessors>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstBlockingRuleCountry"
+            IterBinding="BlockingRuleCountryIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousBlockingRuleCountry"
+            IterBinding="BlockingRuleCountryIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextBlockingRuleCountry"
+            IterBinding="BlockingRuleCountryIterator" RequiresUpdateModel="true"
+            Action="next"/>
+    <action id="LastBlockingRuleCountry"
+            IterBinding="BlockingRuleCountryIterator" RequiresUpdateModel="true"
+            Action="last"/>
+    <action id="SetCurrentRowWithKeyBlockingRuleCountry"
+            IterBinding="BlockingRuleCountryIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrBlockingRuleCountry}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateBlockingRuleCountry"
+            IterBinding="BlockingRuleCountryIterator" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="DeleteBlockingRuleCountry"
+            IterBinding="BlockingRuleCountryIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsBlockingRuleFormatType"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="TraxBlockingRuleFTView"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{BlockingRuleFormatTypeQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQueryBlockingRuleFormatType"
+            IterBinding="BlockingRuleFormatTypeIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="BlockingRuleFormatTypeId"
+                     IterBinding="BlockingRuleFormatTypeIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleFormatTypeBlockingRuleHdrId"
+                     IterBinding="BlockingRuleFormatTypeIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleHdrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleFormatTypeRelatedLineId"
+                     IterBinding="BlockingRuleFormatTypeIterator">
+      <AttrNames>
+        <Item Value="RelatedLineId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleFormatTypeBlockingRuleType"
+                     IterBinding="BlockingRuleFormatTypeIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleType"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsBlockingRuleFormatLookup"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="BlockingRuleFormatLookup"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{BlockingRuleFormatLookupQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+    </methodAction>
+    <table id="BlockingRuleFormatLookup"
+           IterBinding="BlockingRuleFormatLookupIterator">
+      <AttrNames>
+        <Item Value="InternalValue"/>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </table>
+    <attributeValues id="BlockingRuleFormatTypeBlockingRuleValue"
+                     IterBinding="BlockingRuleFormatTypeIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleValue"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="BlockingRuleFormatTypeBlockedFlag"
+            IterBinding="BlockingRuleFormatTypeIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="BlockedFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="BlockingRuleFormatTypeCreatedBy"
+                     IterBinding="BlockingRuleFormatTypeIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleFormatTypeCreatedDate"
+                     IterBinding="BlockingRuleFormatTypeIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleFormatTypeLastUpdatedBy"
+                     IterBinding="BlockingRuleFormatTypeIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleFormatTypeLastUpdatedDate"
+                     IterBinding="BlockingRuleFormatTypeIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="BlockingRuleFormatTypeTable"
+          IterBinding="BlockingRuleFormatTypeIterator">
+      <nodeDefinition Name="BlockingRuleFormatType"
+                      DefName="com.pq.tracs.model.vo.TraxBlockingRuleDtlView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="BlockingRuleHdrId"/>
+          <Item Value="RelatedLineId"/>
+          <Item Value="BlockingRuleType"/>
+          <Item Value="BlockingRuleValue"/>
+          <Item Value="BlockedFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="TraxBlockingRuleDtlView_2"/>
+        </Accessors>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstBlockingRuleFormatType"
+            IterBinding="BlockingRuleFormatTypeIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousBlockingRuleFormatType"
+            IterBinding="BlockingRuleFormatTypeIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextBlockingRuleFormatType"
+            IterBinding="BlockingRuleFormatTypeIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastBlockingRuleFormatType"
+            IterBinding="BlockingRuleFormatTypeIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyBlockingRuleFormatType"
+            IterBinding="BlockingRuleFormatTypeIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrBlockingRuleFormatType}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateBlockingRuleFormatType"
+            IterBinding="BlockingRuleFormatTypeIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteBlockingRuleFormatType"
+            IterBinding="BlockingRuleFormatTypeIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="BlockingRuleOvrId"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrBlockingRuleHdrId"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleHdrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrTitleRecordId"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="TitleRecordId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrOvrId"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrTitleId"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrPmid"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="Pmid"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrCblId"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="CblId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrContentSource"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="ContentSource"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrPmTitle"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="PmTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrCreatedBy"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrCreatedDate"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrLastUpdatedDate"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrLastUpdatedBy"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrSubTitle"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="SubTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrSortTitle"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="SortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="BlockingRuleOvrEdition"
+                     IterBinding="BlockingRuleOvrIterator">
+      <AttrNames>
+        <Item Value="Edition"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="BlockingRuleOvrActiveFlag" IterBinding="BlockingRuleOvrIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <tree id="BlockingRuleOvrTable" IterBinding="BlockingRuleOvrIterator">
+      <nodeDefinition Name="BlockingRuleOvr"
+                      DefName="com.pq.tracs.model.vo.TraxBlockingRuleOvrView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="BlockingRuleHdrId"/>
+          <Item Value="TitleRecordId"/>
+          <Item Value="OvrId"/>
+          <Item Value="TitleId"/>
+          <Item Value="Pmid"/>
+          <Item Value="CblId"/>
+          <Item Value="ContentSource"/>
+          <Item Value="PmTitle"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="SubTitle"/>
+          <Item Value="SortTitle"/>
+          <Item Value="Edition"/>
+          <Item Value="ActiveFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstBlockingRuleOvr" IterBinding="BlockingRuleOvrIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousBlockingRuleOvr" IterBinding="BlockingRuleOvrIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextBlockingRuleOvr" IterBinding="BlockingRuleOvrIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastBlockingRuleOvr" IterBinding="BlockingRuleOvrIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyBlockingRuleOvr"
+            IterBinding="BlockingRuleOvrIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrBlockingRuleOvr}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateBlockingRuleOvr" IterBinding="BlockingRuleOvrIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteBlockingRuleOvr" IterBinding="BlockingRuleOvrIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

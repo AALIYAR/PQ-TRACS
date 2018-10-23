@@ -1,0 +1,325 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="s00TopLc"
+                             partialTriggers=" s00DeleteDialog s00fbb s00NewButton s00DelB s00SaveButton0 s00CancelButton0 s00SaveButton1 s00CancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateAddress ? nls['INSERT_TITLE_ADDRESS'] :  (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'] ? nls['EDIT_TITLE_ADDRES: #{bindings.s00AddressLine1.inputValue}'] : nls['VIEW_TITLE_ADDRES: #{bindings.s00AddressLine1.inputValue}'])  }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="s00fbb" layout="horizontal"
+                                       rendered="#{ bindings.AddressIterator.currentRow!=null  and bindings.AddressIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateAddress and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="s00First s00Previous s00Next s00Last">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstAddress.execute}"
+                                             id="s00First" partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.AddressIterator.rangeStart+bindings.AddressIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.AddressIterator.rangeStart+bindings.AddressIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousAddress.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="s00Previous"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.AddressIterator.rangeStart+bindings.AddressIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.AddressIterator.rangeStart+bindings.AddressIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.AddressIterator.rangeStart+bindings.AddressIterator.currentRowIndexInRange+1} / #{bindings.AddressIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextAddress.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="s00Next" partialSubmit="true"
+                                             rendered="#{bindings.AddressIterator.rangeStart+bindings.AddressIterator.currentRowIndexInRange+1 lt bindings.AddressIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.AddressIterator.rangeStart+bindings.AddressIterator.currentRowIndexInRange+1 lt bindings.AddressIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastAddress.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="s00Last" partialSubmit="true"
+                                             rendered="#{bindings.AddressIterator.rangeStart+bindings.AddressIterator.currentRowIndexInRange+1 lt bindings.AddressIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.AddressIterator.rangeStart+bindings.AddressIterator.currentRowIndexInRange+1 lt bindings.AddressIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateAddress.execute}"
+                                             action="Creates00"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_ADDRESS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateAddress and (true) and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             id="s00NewButton"></af:commandToolbarButton>
+                    <af:commandToolbarButton action="DeleteAddress"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_ADDRESS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateAddress and  bindings.AddressIterator.currentRow!=null   and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             immediate="true" id="s00DelB">
+                      <af:showPopupBehavior popupId="s00DeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="s00Print"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveAddress.execute}"
+                                      rendered="#{((jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="s00SaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="s00CancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.AddressIterator.findMode!='true'}"
+                       id="s00Sw" defaultFacet="hasRows"
+                       facetName="#{( bindings.AddressIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="s00NoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="s00FC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="4"
+                                    id="s00FI">
+                  <af:inputText id="s00SoD"
+                                value="#{bindings.s00SiteOrDepartment.inputValue}"
+                                label="#{bindings.s00SiteOrDepartment.hints.label}"
+                                required="#{bindings.s00SiteOrDepartment.hints.mandatory}"
+                                rows="#{bindings.s00SiteOrDepartment.hints.displayHeight}"
+                                columns="#{bindings.s00SiteOrDepartment.hints.displayWidth}"
+                                maximumLength="400"
+                                readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s00SiteOrDepartment.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s00AL1"
+                                value="#{bindings.s00AddressLine1.inputValue}"
+                                label="#{bindings.s00AddressLine1.hints.label}"
+                                required="true"
+                                rows="#{bindings.s00AddressLine1.hints.displayHeight}"
+                                columns="#{bindings.s00AddressLine1.hints.displayWidth}"
+                                maximumLength="200"
+                                readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s00AddressLine1.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s00AL2"
+                                value="#{bindings.s00AddressLine2.inputValue}"
+                                label="#{bindings.s00AddressLine2.hints.label}"
+                                required="#{bindings.s00AddressLine2.hints.mandatory}"
+                                rows="#{bindings.s00AddressLine2.hints.displayHeight}"
+                                columns="#{bindings.s00AddressLine2.hints.displayWidth}"
+                                maximumLength="400"
+                                readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s00AddressLine2.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s00Cy"
+                                value="#{bindings.s00City.inputValue}"
+                                label="#{bindings.s00City.hints.label}"
+                                required="true"
+                                rows="#{bindings.s00City.hints.displayHeight}"
+                                columns="#{bindings.s00City.hints.displayWidth}"
+                                maximumLength="200"
+                                readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s00City.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s00SoP"
+                                value="#{bindings.s00StateOrProvince.inputValue}"
+                                label="#{bindings.s00StateOrProvince.hints.label}"
+                                required="false"
+                                rows="#{bindings.s00StateOrProvince.hints.displayHeight}"
+                                columns="#{bindings.s00StateOrProvince.hints.displayWidth}"
+                                maximumLength="100"
+                                readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s00StateOrProvince.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s00ZoP"
+                                value="#{bindings.s00ZipOrPostalCode.inputValue}"
+                                label="#{bindings.s00ZipOrPostalCode.hints.label}"
+                                required="#{bindings.s00ZipOrPostalCode.hints.mandatory}"
+                                rows="#{bindings.s00ZipOrPostalCode.hints.displayHeight}"
+                                columns="#{bindings.s00ZipOrPostalCode.hints.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s00ZipOrPostalCode.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="s00Co"
+                                      value="#{bindings.s00Country.inputValue}"
+                                      label="#{bindings.s00Country.hints.label}"
+                                      required="true"
+                                      readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:selectItems value="#{bindings.s00Country.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="s00Cn"
+                                value="#{bindings.s00County.inputValue}"
+                                label="#{bindings.s00County.hints.label}"
+                                required="#{bindings.s00County.hints.mandatory}"
+                                rows="#{bindings.s00County.hints.displayHeight}"
+                                columns="#{bindings.s00County.hints.displayWidth}"
+                                maximumLength="100"
+                                readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s00County.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s00SPN"
+                                value="#{bindings.s00SitePhoneNumber.inputValue}"
+                                label="#{bindings.s00SitePhoneNumber.hints.label}"
+                                required="#{bindings.s00SitePhoneNumber.hints.mandatory}"
+                                rows="#{bindings.s00SitePhoneNumber.hints.displayHeight}"
+                                columns="#{bindings.s00SitePhoneNumber.hints.displayWidth}"
+                                readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s00SitePhoneNumber.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s00ESD"
+                                value="#{bindings.s00EffectiveStartDate.inputValue}"
+                                label="#{bindings.s00EffectiveStartDate.hints.label}"
+                                required="#{bindings.s00EffectiveStartDate.hints.mandatory}"
+                                readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:selectBooleanCheckbox id="s00PF"
+                                            value="#{bindings.s00PrimaryFlag.inputValue}"
+                                            label="#{bindings.s00PrimaryFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="s00BTF"
+                                            value="#{bindings.s00BillToFlag.inputValue}"
+                                            label="#{bindings.s00BillToFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="s00STF"
+                                            value="#{bindings.s00ShipToFlag.inputValue}"
+                                            label="#{bindings.s00ShipToFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"></af:selectBooleanCheckbox>
+                  <af:inputText id="s00AC"
+                                value="#{bindings.s00AddressComments.inputValue}"
+                                label="#{bindings.s00AddressComments.hints.label}"
+                                required="#{bindings.s00AddressComments.hints.mandatory}"
+                                rows="3"
+                                columns="#{bindings.s00AddressComments.hints.displayWidth}"
+                                maximumLength="4000"
+                                readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s00AddressComments.validator}"/>
+                  </af:inputText>
+                  <af:selectBooleanCheckbox id="s00AF"
+                                            value="#{bindings.s00ActiveFlag.inputValue}"
+                                            label="#{bindings.s00ActiveFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateAddress) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                            disabled="#{!jhsUserRoles['ADMIN']}"></af:selectBooleanCheckbox>
+                  <af:inputText id="s00CB"
+                                value="#{bindings.s00CreatedBy.inputValue}"
+                                label="#{bindings.s00CreatedBy.hints.label}"
+                                required="false"
+                                columns="#{bindings.s00CreatedBy.hints.displayWidth}"
+                                readOnly="true" disabled="true">
+                    <f:validator binding="#{bindings.s00CreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s00CD"
+                                value="#{bindings.s00CreatedDate.inputValue}"
+                                label="#{bindings.s00CreatedDate.hints.label}"
+                                required="#{bindings.s00CreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="s00LUB"
+                                value="#{bindings.s00LastUpdatedBy.inputValue}"
+                                label="#{bindings.s00LastUpdatedBy.hints.label}"
+                                required="#{bindings.s00LastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.s00LastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.s00LastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s00LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s00LUD"
+                                value="#{bindings.s00LastUpdatedDate.inputValue}"
+                                label="#{bindings.s00LastUpdatedDate.hints.label}"
+                                required="#{bindings.s00LastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveAddress.execute}"
+                                            rendered="#{((jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="s00SaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="s00CancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="s00DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s00DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_ADDRES: #{bindings.s00AddressLine1.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteAddress.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

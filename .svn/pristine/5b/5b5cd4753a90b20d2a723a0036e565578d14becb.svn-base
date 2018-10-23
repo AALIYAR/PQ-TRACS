@@ -1,0 +1,1878 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="NewTitlesPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <invokeAction id="applyBindParamsNewTitlesInvoke"
+                  Binds="applyBindParamsNewTitles" Refresh="always"/>
+    <iterator id="NewTitlesIterator" Binds="NewTargetedTitleView"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="NewTitlesIteratorTitleViewCriteriaAdvQuery"
+                  Binds="NewTitlesIterator" Criteria="TitleViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="LongTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <variableIterator id="variables">
+      <variable Name="NTtTitleSpacerVar" Type="Number"/>
+      <variable Name="sc8EditLinkVar" Type="String"/>
+    </variableIterator>
+    <iterator id="NewTitleOpportunitiesIterator" Binds="TitleOpportunityView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="NewTitleOpportunitiesIteratorTitleOpportunityViewCriteriaQuery"
+                  Binds="NewTitleOpportunitiesIterator"
+                  Criteria="TitleOpportunityViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryNewTitleOpportunitiesInvoke"
+                  Binds="ExecuteQueryNewTitleOpportunities"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="NewTitleClassificationsIterator" Binds="ClassificationView3"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="NewTitleClassificationsIteratorClassificationViewCriteriaQuery"
+                  Binds="NewTitleClassificationsIterator"
+                  Criteria="ClassificationViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="ClassificationNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="NewTitleSubjectsIterator" Binds="TitleSubjectView3"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="NewTitleSubjectsIteratorTitleSubjectViewCriteriaQuery"
+                  Binds="NewTitleSubjectsIterator"
+                  Criteria="TitleSubjectViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="SubjectType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="NewTitleAttachmentsIterator" Binds="TraxTitleAttachmentView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="NewTitleAttachmentsIteratorTraxTitleAttachmentViewCriteriaQuery"
+                  Binds="NewTitleAttachmentsIterator"
+                  Criteria="TraxTitleAttachmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttachmentType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="NewTitleVaryingFormsIterator" Binds="VaryingFormView3"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="NewTitleVaryingFormsIteratorVaryingFormViewCriteriaQuery"
+                  Binds="NewTitleVaryingFormsIterator"
+                  Criteria="VaryingFormViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="VaryingForm1"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="NewTitleTargetsIterator" Binds="PrmTitleTargetedProductView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="NewTitleTargetsIteratorPrmTitleTargetedProductViewCriteriaQuery"
+                  Binds="NewTitleTargetsIterator"
+                  Criteria="PrmTitleTargetedProductViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="ProductName"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="NewTitleContentOwnersIterator" Binds="TitleContentOwnerView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="NewTitleContentOwnersIteratorTitleContentOwnerViewCriteriaQuery"
+                  Binds="NewTitleContentOwnersIterator"
+                  Criteria="TitleContentOwnerViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="NewTitleIndexesIterator" Binds="TraxTitleIndexInclusionView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="NewTitleIndexesIteratorTraxTitleIndexInclusionViewCriteriaQuery"
+                  Binds="NewTitleIndexesIterator"
+                  Criteria="TraxTitleIndexInclusionViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="IndexName"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="NewTitleActivitiesIterator" Binds="NewTitleActivityView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="NewTitleActivitiesIteratorTraxTitleActivityViewCriteriaQuery"
+                  Binds="NewTitleActivitiesIterator"
+                  Criteria="TraxTitleActivityViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Type"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="NewTitleChangeHistoryIterator" Binds="TraxJuTitleView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <invokeAction id="ExecuteQueryNewTitleChangeHistoryInvoke"
+                  Binds="ExecuteQueryNewTitleChangeHistory"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <taskFlow id="LovTaskFlow"
+              taskFlowId="#{pageFlowScope.jhsLovTaskFlowManager.currentTaskFlowId}"
+              activation="deferred"
+              parametersMap="#{pageFlowScope.jhsLovTaskFlowManager.currentParamMap}"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsNewTitles"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="NewTargetedTitleView"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args" NDValue="#{NewTitlesQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged"
+                 NDValue="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <attributeValues id="NTtId" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtContentOwnerId" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtUlrichsId" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="UlrichsId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtTargetTrackingNo" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtLongTitle" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtCopyOfLongTitle" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtShortTitle" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="ShortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtTitleDescription" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="TitleDescription"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="NewTitlesIterator"
+                  id="NTtContentOwner" Uses="LOV_ContentOwner"/>
+    <attributeValues id="NTtContentOwnerLink" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="ContentOwner"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtSite" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="Site"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtContentOwnerCount" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtCatalogNumberLink" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtUlrichsSerialIdSearch"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="UlrichsSerialId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtUlrichsSerialId" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="UlrichsSerialId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtAuthor" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="Author"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtPublicationStartYear"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="PublicationStartYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtPublicationEndYear" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="PublicationEndYear"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="NewTitlesIterator" id="NTtFilmAvailability"
+          Uses="LOV_FilmAvailability" StaticList="false"/>
+    <list IterBinding="NewTitlesIterator" id="NTtBibliographicStatus"
+          Uses="LOV_BibliographicStatus" StaticList="false"/>
+    <attributeValues id="NTtSecondaryCatalogNumber"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="SecondaryCatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtOriginalPublishingCo"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="OriginalPublishingCo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtCopyOfOriginalPublishingCo"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="OriginalPublishingCo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtOriginalPlaceOfPublication"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="OriginalPlaceOfPublication"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtOriginalDatesOfPublication"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="OriginalDatesOfPublication"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="NewTitlesIterator" id="NTtPlaceOfPublicationCode"
+          Uses="LOV_PlaceOfPublicationCode" StaticList="false"/>
+    <list IterBinding="NewTitlesIterator" id="NTtExercisingRights"
+          Uses="LOV_ExercisingRights" StaticList="false"/>
+    <list IterBinding="NewTitlesIterator" id="NTtReasonNotExercisingRights"
+          Uses="LOV_ReasonNotExercisingRights" StaticList="false"/>
+    <attributeValues id="NTtNonFilingIndicator" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="NonFilingIndicator"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtEditionStatement" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="EditionStatement"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtAlphaRecordDates" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="AlphaRecordDates"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtPubYearVolumeFormatted"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="PubYearVolumeFormatted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtPubYearVolumeUnformatted"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="PubYearVolumeUnformatted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtCatalogingSourceUrl"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="CatalogingSourceUrl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtTitleSpacer" IterBinding="variables">
+      <AttrNames>
+        <Item Value="NTtTitleSpacerVar"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="NewTitlesIterator" id="NTtSerialSubType"
+          Uses="LOV_SerialSubType" StaticList="false"/>
+    <list IterBinding="NewTitlesIterator" id="NTtPublicationFrequency"
+          Uses="LOV_PublicationFrequency" StaticList="false"/>
+    <attributeValues id="NTtCatalogPublicationCity"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="CatalogPublicationCity"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="NewTitlesIterator" id="NTtCatalogIndicator"
+          Uses="LOV_CatalogIndicator" StaticList="false"/>
+    <list IterBinding="NewTitlesIterator" id="NTtCheckInRequirements"
+          Uses="LOV_CheckInRequirements" StaticList="false"/>
+    <list IterBinding="NewTitlesIterator" id="NTtRouting" Uses="LOV_Routing"
+          StaticList="false"/>
+    <attributeValues id="NTtSpecialCopyright" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="SpecialCopyright"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtCompSubAccountNumber"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="CompSubAccountNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtPaidSubAccountNumber"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="PaidSubAccountNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="NewTitlesIterator" id="NTtPrimaryPmClass"
+          Uses="LOV_PrimaryPmClass" StaticList="false"/>
+    <list IterBinding="NewTitlesIterator" id="NTtSecondaryPmClass"
+          Uses="LOV_SecondaryPmClass" StaticList="false"/>
+    <list IterBinding="NewTitlesIterator" id="NTtProductLine"
+          Uses="LOV_ProductLine" StaticList="false"/>
+    <attributeValues id="NTtLanguageNote" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="LanguageNote"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtPrimaryClassification"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="PrimaryClassification"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtPrimaryClassificationType"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="PrimaryClassificationType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtPrimarySubject" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="PrimarySubject"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtPrimaryLanguage" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="PrimaryLanguage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtPrimarySeries" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="PrimarySeries"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtPrimaryAbstractLanguage"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="PrimaryAbstractLanguage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtNewspaperEditionFilmed"
+                     IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="NewspaperEditionFilmed"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="NewTitlesIterator" id="NTtContentType"
+          Uses="LOV_ContentType" StaticList="false"/>
+    <list IterBinding="NewTitlesIterator" id="NTtSubContentType"
+          Uses="LOV_SubContentType" StaticList="false"/>
+    <attributeValues id="NTtEnumeration" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="Enumeration"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtNumberOfUnits" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="NumberOfUnits"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="NTtPeerReviewFlag" IterBinding="NewTitlesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PeerReviewFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="NewTitlesIterator" id="NTtOpenAccess"
+          Uses="LOV_OpenAccess" StaticList="false"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="NTtCatalogTitle" DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="createCatalogNumberForTarget"
+                  ReturnName="TracsServiceDataControl.methodResults.createCatalogNumberForTarget_TracsServiceDataControl_dataProvider_createCatalogNumberForTarget_result"
+                  IsViewObjectMethod="false"/>
+    <button id="NTtActiveFlag" IterBinding="NewTitlesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="NTtEditableFlag" IterBinding="NewTitlesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="EditableFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="NTtCreatedBy" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtCreatedDate" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtLastUpdatedBy" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTtLastUpdatedDate" IterBinding="NewTitlesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NewTitlesTable" IterBinding="NewTitlesIterator">
+      <nodeDefinition Name="NewTitles"
+                      DefName="com.pq.tracs.model.dao.TitleView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="UlrichsId"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="LongTitle"/>
+          <Item Value="LongTitle"/>
+          <Item Value="LongTitle"/>
+          <Item Value="LongTitle"/>
+          <Item Value="ShortTitle"/>
+          <Item Value="TitleDescription"/>
+          <Item Value="ContentOwner"/>
+          <Item Value="ContentOwner"/>
+          <Item Value="ContentOwner"/>
+          <Item Value="ContentOwner"/>
+          <Item Value="Site"/>
+          <Item Value="ContentOwnerCount"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="UlrichsSerialId"/>
+          <Item Value="UlrichsSerialId"/>
+          <Item Value="UlrichsSerialId"/>
+          <Item Value="UlrichsSerialId"/>
+          <Item Value="Author"/>
+          <Item Value="PublicationStartYear"/>
+          <Item Value="PublicationEndYear"/>
+          <Item Value="FilmAvailability"/>
+          <Item Value="BibliographicStatus"/>
+          <Item Value="SecondaryCatalogNumber"/>
+          <Item Value="OriginalPublishingCo"/>
+          <Item Value="OriginalPublishingCo"/>
+          <Item Value="OriginalPublishingCo"/>
+          <Item Value="OriginalPublishingCo"/>
+          <Item Value="OriginalPlaceOfPublication"/>
+          <Item Value="OriginalDatesOfPublication"/>
+          <Item Value="PlaceOfPublicationCode"/>
+          <Item Value="ExercisingRights"/>
+          <Item Value="ReasonNotExercisingRights"/>
+          <Item Value="NonFilingIndicator"/>
+          <Item Value="EditionStatement"/>
+          <Item Value="AlphaRecordDates"/>
+          <Item Value="PubYearVolumeFormatted"/>
+          <Item Value="PubYearVolumeUnformatted"/>
+          <Item Value="CatalogingSourceUrl"/>
+          <Item Value="SerialSubType"/>
+          <Item Value="PublicationFrequency"/>
+          <Item Value="CatalogPublicationCity"/>
+          <Item Value="CatalogIndicator"/>
+          <Item Value="CheckInRequirements"/>
+          <Item Value="Routing"/>
+          <Item Value="SpecialCopyright"/>
+          <Item Value="CompSubAccountNumber"/>
+          <Item Value="PaidSubAccountNumber"/>
+          <Item Value="PrimaryPmClass"/>
+          <Item Value="SecondaryPmClass"/>
+          <Item Value="ProductLine"/>
+          <Item Value="LanguageNote"/>
+          <Item Value="PrimaryClassification"/>
+          <Item Value="PrimaryClassificationType"/>
+          <Item Value="PrimarySubject"/>
+          <Item Value="PrimaryLanguage"/>
+          <Item Value="PrimarySeries"/>
+          <Item Value="PrimaryAbstractLanguage"/>
+          <Item Value="NewspaperEditionFilmed"/>
+          <Item Value="ContentType"/>
+          <Item Value="SubContentType"/>
+          <Item Value="Enumeration"/>
+          <Item Value="NumberOfUnits"/>
+          <Item Value="PeerReviewFlag"/>
+          <Item Value="OpenAccess"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="EditableFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNewTitles" IterBinding="NewTitlesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousNewTitles" IterBinding="NewTitlesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextNewTitles" IterBinding="NewTitlesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastNewTitles" IterBinding="NewTitlesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyNewTitles" IterBinding="NewTitlesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNewTitles}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateNewTitles" IterBinding="NewTitlesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteNewTitles" IterBinding="NewTitlesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryNewTitleOpportunities"
+            IterBinding="NewTitleOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="sc0Id" IterBinding="NewTitleOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc0ContentOwnerId"
+                     IterBinding="NewTitleOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc0OpportunityNo"
+                     IterBinding="NewTitleOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc0Name" IterBinding="NewTitleOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc0NameLink"
+                     IterBinding="NewTitleOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc0CurrentStatus"
+                     IterBinding="NewTitleOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CurrentStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc0OpportunityType"
+                     IterBinding="NewTitleOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc0AccountName"
+                     IterBinding="NewTitleOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc0AccountSite"
+                     IterBinding="NewTitleOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountSite"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc0AccountNum"
+                     IterBinding="NewTitleOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc0Priority"
+                     IterBinding="NewTitleOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Priority"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc0AgreementReceivedDate"
+                     IterBinding="NewTitleOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AgreementReceivedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NewTitleOpportunitiesTable"
+          IterBinding="NewTitleOpportunitiesIterator">
+      <nodeDefinition Name="NewTitleOpportunities"
+                      DefName="com.pq.tracs.model.ro.TitleOpportunityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="Name"/>
+          <Item Value="Name"/>
+          <Item Value="Name"/>
+          <Item Value="Name"/>
+          <Item Value="CurrentStatus"/>
+          <Item Value="OpportunityType"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountSite"/>
+          <Item Value="AccountNum"/>
+          <Item Value="Priority"/>
+          <Item Value="AgreementReceivedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNewTitleOpportunities"
+            IterBinding="NewTitleOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousNewTitleOpportunities"
+            IterBinding="NewTitleOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextNewTitleOpportunities"
+            IterBinding="NewTitleOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastNewTitleOpportunities"
+            IterBinding="NewTitleOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyNewTitleOpportunities"
+            IterBinding="NewTitleOpportunitiesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNewTitleOpportunities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <list IterBinding="NewTitleClassificationsIterator"
+          id="sc1ClassificationType" Uses="LOV_ClassificationType"
+          StaticList="false"/>
+    <attributeValues id="sc1ClassificationNumber"
+                     IterBinding="NewTitleClassificationsIterator">
+      <AttrNames>
+        <Item Value="ClassificationNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="sc1PrimaryFlag" IterBinding="NewTitleClassificationsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="sc1CreatedBy"
+                     IterBinding="NewTitleClassificationsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc1CreatedDate"
+                     IterBinding="NewTitleClassificationsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc1LastUpdatedBy"
+                     IterBinding="NewTitleClassificationsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc1LastUpdatedDate"
+                     IterBinding="NewTitleClassificationsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc1PrimaryClassification"
+                     IterBinding="NewTitleClassificationsIterator">
+      <AttrNames>
+        <Item Value="PrimaryClassification"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NewTitleClassificationsTable"
+          IterBinding="NewTitleClassificationsIterator">
+      <nodeDefinition Name="NewTitleClassifications"
+                      DefName="com.pq.tracs.model.dao.ClassificationView">
+        <AttrNames>
+          <Item Value="ClassificationType"/>
+          <Item Value="ClassificationNumber"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="PrimaryClassification"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNewTitleClassifications"
+            IterBinding="NewTitleClassificationsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousNewTitleClassifications"
+            IterBinding="NewTitleClassificationsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextNewTitleClassifications"
+            IterBinding="NewTitleClassificationsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastNewTitleClassifications"
+            IterBinding="NewTitleClassificationsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyNewTitleClassifications"
+            IterBinding="NewTitleClassificationsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNewTitleClassifications}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateNewTitleClassifications"
+            IterBinding="NewTitleClassificationsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteNewTitleClassifications"
+            IterBinding="NewTitleClassificationsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="NewTitleSubjectsIterator" id="sc2SubjectType"
+          Uses="LOV_SubjectType" StaticList="false"/>
+    <attributeValues id="sc2SubjectCode" IterBinding="NewTitleSubjectsIterator">
+      <AttrNames>
+        <Item Value="Subject"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="NewTitleSubjectsIterator" id="sc2Subject"
+          Uses="LOV_Subject" StaticList="false"/>
+    <button id="sc2PrimaryFlag" IterBinding="NewTitleSubjectsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="sc2CreatedBy" IterBinding="NewTitleSubjectsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc2CreatedDate" IterBinding="NewTitleSubjectsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc2LastUpdatedBy"
+                     IterBinding="NewTitleSubjectsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc2LastUpdatedDate"
+                     IterBinding="NewTitleSubjectsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NewTitleSubjectsTable" IterBinding="NewTitleSubjectsIterator">
+      <nodeDefinition Name="NewTitleSubjects"
+                      DefName="com.pq.tracs.model.dao.TitleSubjectView">
+        <AttrNames>
+          <Item Value="SubjectType"/>
+          <Item Value="Subject"/>
+          <Item Value="Subject"/>
+          <Item Value="Subject"/>
+          <Item Value="Subject"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNewTitleSubjects" IterBinding="NewTitleSubjectsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousNewTitleSubjects" IterBinding="NewTitleSubjectsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextNewTitleSubjects" IterBinding="NewTitleSubjectsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastNewTitleSubjects" IterBinding="NewTitleSubjectsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyNewTitleSubjects"
+            IterBinding="NewTitleSubjectsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNewTitleSubjects}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateNewTitleSubjects" IterBinding="NewTitleSubjectsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteNewTitleSubjects" IterBinding="NewTitleSubjectsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="sc9Name" IterBinding="NewTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc9AttachmentType"
+                     IterBinding="NewTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="AttachmentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc9Attachment"
+                     IterBinding="NewTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc9AttachmentDL"
+                     IterBinding="NewTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc9Description"
+                     IterBinding="NewTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc9FileSize" IterBinding="NewTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="FileSize"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc9CreatedBy"
+                     IterBinding="NewTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc9CreatedDate"
+                     IterBinding="NewTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc9LastUpdatedBy"
+                     IterBinding="NewTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc9LastUpdatedDate"
+                     IterBinding="NewTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NewTitleAttachmentsTable"
+          IterBinding="NewTitleAttachmentsIterator">
+      <nodeDefinition Name="NewTitleAttachments"
+                      DefName="com.pq.tracs.model.vo.TraxTitleAttachmentView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="AttachmentType"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Description"/>
+          <Item Value="FileSize"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNewTitleAttachments"
+            IterBinding="NewTitleAttachmentsIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousNewTitleAttachments"
+            IterBinding="NewTitleAttachmentsIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextNewTitleAttachments"
+            IterBinding="NewTitleAttachmentsIterator" RequiresUpdateModel="true"
+            Action="next"/>
+    <action id="LastNewTitleAttachments"
+            IterBinding="NewTitleAttachmentsIterator" RequiresUpdateModel="true"
+            Action="last"/>
+    <action id="SetCurrentRowWithKeyNewTitleAttachments"
+            IterBinding="NewTitleAttachmentsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNewTitleAttachments}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateNewTitleAttachments"
+            IterBinding="NewTitleAttachmentsIterator" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="DeleteNewTitleAttachments"
+            IterBinding="NewTitleAttachmentsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="NewTitleVaryingFormsIterator"
+          id="sc3TypeOfTitle" Uses="LOV_TypeOfTitle" StaticList="false"/>
+    <attributeValues id="sc3VaryingForm"
+                     IterBinding="NewTitleVaryingFormsIterator">
+      <AttrNames>
+        <Item Value="VaryingForm1"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="sc3PrimaryFlag" IterBinding="NewTitleVaryingFormsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="sc3PrintFlag" IterBinding="NewTitleVaryingFormsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrintFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="sc3CreatedBy"
+                     IterBinding="NewTitleVaryingFormsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc3CreatedDate"
+                     IterBinding="NewTitleVaryingFormsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc3LastUpdatedBy"
+                     IterBinding="NewTitleVaryingFormsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc3LastUpdatedDate"
+                     IterBinding="NewTitleVaryingFormsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NewTitleVaryingFormsTable"
+          IterBinding="NewTitleVaryingFormsIterator">
+      <nodeDefinition Name="NewTitleVaryingForms"
+                      DefName="com.pq.tracs.model.dao.VaryingFormView">
+        <AttrNames>
+          <Item Value="TypeOfTitle"/>
+          <Item Value="VaryingForm1"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="PrintFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNewTitleVaryingForms"
+            IterBinding="NewTitleVaryingFormsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousNewTitleVaryingForms"
+            IterBinding="NewTitleVaryingFormsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextNewTitleVaryingForms"
+            IterBinding="NewTitleVaryingFormsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastNewTitleVaryingForms"
+            IterBinding="NewTitleVaryingFormsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyNewTitleVaryingForms"
+            IterBinding="NewTitleVaryingFormsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNewTitleVaryingForms}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateNewTitleVaryingForms"
+            IterBinding="NewTitleVaryingFormsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteNewTitleVaryingForms"
+            IterBinding="NewTitleVaryingFormsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="sc4PrmTargetedProductId"
+                     IterBinding="NewTitleTargetsIterator">
+      <AttrNames>
+        <Item Value="PrmTargetedProductId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc4PrdId" IterBinding="NewTitleTargetsIterator">
+      <AttrNames>
+        <Item Value="PrdId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc4ProductName" IterBinding="NewTitleTargetsIterator">
+      <AttrNames>
+        <Item Value="ProductName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc4ProductFamily"
+                     IterBinding="NewTitleTargetsIterator">
+      <AttrNames>
+        <Item Value="ProductFamily"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc4ProductManager"
+                     IterBinding="NewTitleTargetsIterator">
+      <AttrNames>
+        <Item Value="ProductManager"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="NewTitleTargetsIterator" id="sc4TargetPriority"
+          Uses="LOV_TargetPriority" StaticList="false"/>
+    <button id="sc4AiTargetingFlag" IterBinding="NewTitleTargetsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="AiTargetingFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="sc4AddedDate" IterBinding="NewTitleTargetsIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc4RemovedDate" IterBinding="NewTitleTargetsIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc4CreatedBy" IterBinding="NewTitleTargetsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc4CreatedDate" IterBinding="NewTitleTargetsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc4LastUpdatedBy"
+                     IterBinding="NewTitleTargetsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc4LastUpdatedDate"
+                     IterBinding="NewTitleTargetsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NewTitleTargetsTable" IterBinding="NewTitleTargetsIterator">
+      <nodeDefinition Name="NewTitleTargets"
+                      DefName="com.pq.tracs.model.ro.PrmTitleTargetedProductView">
+        <AttrNames>
+          <Item Value="PrmTargetedProductId"/>
+          <Item Value="PrdId"/>
+          <Item Value="ProductName"/>
+          <Item Value="ProductFamily"/>
+          <Item Value="ProductManager"/>
+          <Item Value="TargetPriority"/>
+          <Item Value="AiTargetingFlag"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNewTitleTargets" IterBinding="NewTitleTargetsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousNewTitleTargets" IterBinding="NewTitleTargetsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextNewTitleTargets" IterBinding="NewTitleTargetsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastNewTitleTargets" IterBinding="NewTitleTargetsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyNewTitleTargets"
+            IterBinding="NewTitleTargetsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNewTitleTargets}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="sc5ContentOwnerId"
+                     IterBinding="NewTitleContentOwnersIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc5Name" IterBinding="NewTitleContentOwnersIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="NewTitleContentOwnersIterator"
+          id="sc5OwnerType" Uses="LOV_OwnerType" StaticList="false"/>
+    <attributeValues id="sc5Site" IterBinding="NewTitleContentOwnersIterator">
+      <AttrNames>
+        <Item Value="Site"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="sc5ActiveFlag" IterBinding="NewTitleContentOwnersIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="sc5PrimaryFlag" IterBinding="NewTitleContentOwnersIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="sc5CreatedBy"
+                     IterBinding="NewTitleContentOwnersIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc5CreatedDate"
+                     IterBinding="NewTitleContentOwnersIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc5LastUpdatedBy"
+                     IterBinding="NewTitleContentOwnersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc5LastUpdatedDate"
+                     IterBinding="NewTitleContentOwnersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NewTitleContentOwnersTable"
+          IterBinding="NewTitleContentOwnersIterator">
+      <nodeDefinition Name="NewTitleContentOwners"
+                      DefName="com.pq.tracs.model.dao.TitleContentOwnerView">
+        <AttrNames>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="Name"/>
+          <Item Value="OwnerType"/>
+          <Item Value="Site"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNewTitleContentOwners"
+            IterBinding="NewTitleContentOwnersIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousNewTitleContentOwners"
+            IterBinding="NewTitleContentOwnersIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextNewTitleContentOwners"
+            IterBinding="NewTitleContentOwnersIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastNewTitleContentOwners"
+            IterBinding="NewTitleContentOwnersIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyNewTitleContentOwners"
+            IterBinding="NewTitleContentOwnersIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNewTitleContentOwners}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateNewTitleContentOwners"
+            IterBinding="NewTitleContentOwnersIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteNewTitleContentOwners"
+            IterBinding="NewTitleContentOwnersIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="NewTitleIndexesIterator" id="ntiIndexName"
+          Uses="LOV_IndexName" StaticList="false"/>
+    <attributeValues id="ntiIndexNote" IterBinding="NewTitleIndexesIterator">
+      <AttrNames>
+        <Item Value="IndexNote"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ntiCreatedBy" IterBinding="NewTitleIndexesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ntiCreatedDate" IterBinding="NewTitleIndexesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ntiLastUpdatedBy"
+                     IterBinding="NewTitleIndexesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ntiLastUpdatedDate"
+                     IterBinding="NewTitleIndexesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NewTitleIndexesTable" IterBinding="NewTitleIndexesIterator">
+      <nodeDefinition Name="NewTitleIndexes"
+                      DefName="com.pq.tracs.model.vo.TraxTitleIndexInclusionView">
+        <AttrNames>
+          <Item Value="IndexName"/>
+          <Item Value="IndexNote"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNewTitleIndexes" IterBinding="NewTitleIndexesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousNewTitleIndexes" IterBinding="NewTitleIndexesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextNewTitleIndexes" IterBinding="NewTitleIndexesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastNewTitleIndexes" IterBinding="NewTitleIndexesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyNewTitleIndexes"
+            IterBinding="NewTitleIndexesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNewTitleIndexes}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateNewTitleIndexes" IterBinding="NewTitleIndexesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteNewTitleIndexes" IterBinding="NewTitleIndexesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="sc8Id" IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8JhsUsersId"
+                     IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="JhsUsersId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="NewTitleActivitiesIterator"
+          id="sc8Type" Uses="LOV_Type" StaticList="false"/>
+    <list IterBinding="NewTitleActivitiesIterator"
+          id="sc8SubType" Uses="LOV_SubType" StaticList="false"/>
+    <attributeValues id="sc8EditLink" IterBinding="variables">
+      <AttrNames>
+        <Item Value="sc8EditLinkVar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8Description"
+                     IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="NewTitleActivitiesIterator"
+                  id="sc8Owner" Uses="LOV_Owner"/>
+    <list IterBinding="NewTitleActivitiesIterator"
+          id="sc8Status" Uses="LOV_Status" StaticList="false"/>
+    <list IterBinding="NewTitleActivitiesIterator"
+          id="sc8Priority" Uses="LOV_Priority" StaticList="false"/>
+    <attributeValues id="sc8DueDate" IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="DueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8ExpectedStartDate"
+                     IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="ExpectedStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8ActualStartDate"
+                     IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="ActualStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8CompletionDate"
+                     IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="CompletionDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8HoursSpent"
+                     IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="HoursSpent"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8Notes" IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="sc8PrimaryFlag" IterBinding="NewTitleActivitiesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="sc8CreatedBy" IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8CreatedDate"
+                     IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8LastUpdatedBy"
+                     IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8LastUpdatedDate"
+                     IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8AddedDate" IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8RemovedDate"
+                     IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8UserType" IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="UserType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sc8AddDate" IterBinding="NewTitleActivitiesIterator">
+      <AttrNames>
+        <Item Value="AddDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NewTitleActivitiesTable" IterBinding="NewTitleActivitiesIterator">
+      <nodeDefinition Name="NewTitleActivities"
+                      DefName="com.pq.tracs.model.vo.TraxTitleActivityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="JhsUsersId"/>
+          <Item Value="Type"/>
+          <Item Value="SubType"/>
+          <Item Value="Description"/>
+          <Item Value="Owner"/>
+          <Item Value="Status"/>
+          <Item Value="Priority"/>
+          <Item Value="DueDate"/>
+          <Item Value="ExpectedStartDate"/>
+          <Item Value="ActualStartDate"/>
+          <Item Value="CompletionDate"/>
+          <Item Value="HoursSpent"/>
+          <Item Value="Notes"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="UserType"/>
+          <Item Value="AddDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNewTitleActivities"
+            IterBinding="NewTitleActivitiesIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousNewTitleActivities"
+            IterBinding="NewTitleActivitiesIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextNewTitleActivities" IterBinding="NewTitleActivitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastNewTitleActivities" IterBinding="NewTitleActivitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyNewTitleActivities"
+            IterBinding="NewTitleActivitiesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNewTitleActivities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateNewTitleActivities"
+            IterBinding="NewTitleActivitiesIterator" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="DeleteNewTitleActivities"
+            IterBinding="NewTitleActivitiesIterator" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <action id="ExecuteQueryNewTitleChangeHistory"
+            IterBinding="NewTitleChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="NewTitleChangeHistoryId"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryCurrentCatalogId"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CurrentCatalogId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryContentOwnerId"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryJournaledUser"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="JournaledUser"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryJournaledDate"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="JournaledDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryTargetTrackingNo"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryLongTitle"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryShortTitle"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ShortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryTitleDescription"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="TitleDescription"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryCatalogNumber"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryAuthor"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Author"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryPublicationStartYear"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PublicationStartYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryPublicationEndYear"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PublicationEndYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryFilmAvailability"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="FilmAvailability"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryBibliographicStatus"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="BibliographicStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistorySecondaryCatalogNumber"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="SecondaryCatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryOriginalPublishingCo"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="OriginalPublishingCo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryOriginalPlaceOfPublication"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="OriginalPlaceOfPublication"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryOriginalDatesOfPublication"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="OriginalDatesOfPublication"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryPlaceOfPublicationCode"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PlaceOfPublicationCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryExercisingRights"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ExercisingRights"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryNonFilingIndicator"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="NonFilingIndicator"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryEditionStatement"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="EditionStatement"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryAlphaRecordDates"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="AlphaRecordDates"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryPubYearVolumeFormatted"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PubYearVolumeFormatted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryPubYearVolumeUnformatted"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PubYearVolumeUnformatted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryCatalogingSourceUrl"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CatalogingSourceUrl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistorySerialSubType"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="SerialSubType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryPublicationFrequency"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PublicationFrequency"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryCatalogPublicationCity"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CatalogPublicationCity"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryCatalogIndicator"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CatalogIndicator"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryCheckInRequirements"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CheckInRequirements"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryRouting"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Routing"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistorySpecialCopyright"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="SpecialCopyright"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryCompSubAccountNumber"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CompSubAccountNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryPaidSubAccountNumber"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PaidSubAccountNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryPrimaryPmClass"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PrimaryPmClass"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistorySecondaryPmClass"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="SecondaryPmClass"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryProductLine"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ProductLine"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryLanguageNote"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="LanguageNote"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryNewspaperEditionFilmed"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="NewspaperEditionFilmed"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryContentType"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ContentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistorySubContentType"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="SubContentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryEnumeration"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Enumeration"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryNumberOfUnits"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="NumberOfUnits"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryPeerReviewFlag"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PeerReviewFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryOpenAccess"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="OpenAccess"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryActiveFlag"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryEditableFlag"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="EditableFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryCreatedBy"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryCreatedDate"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryLastUpdatedBy"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NewTitleChangeHistoryLastUpdatedDate"
+                     IterBinding="NewTitleChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NewTitleChangeHistoryTable"
+          IterBinding="NewTitleChangeHistoryIterator">
+      <nodeDefinition Name="NewTitleChangeHistory"
+                      DefName="com.pq.tracs.model.vo.TraxJuTitleView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="CurrentCatalogId"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="JournaledUser"/>
+          <Item Value="JournaledDate"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="LongTitle"/>
+          <Item Value="ShortTitle"/>
+          <Item Value="TitleDescription"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="Author"/>
+          <Item Value="PublicationStartYear"/>
+          <Item Value="PublicationEndYear"/>
+          <Item Value="FilmAvailability"/>
+          <Item Value="BibliographicStatus"/>
+          <Item Value="SecondaryCatalogNumber"/>
+          <Item Value="OriginalPublishingCo"/>
+          <Item Value="OriginalPlaceOfPublication"/>
+          <Item Value="OriginalDatesOfPublication"/>
+          <Item Value="PlaceOfPublicationCode"/>
+          <Item Value="ExercisingRights"/>
+          <Item Value="NonFilingIndicator"/>
+          <Item Value="EditionStatement"/>
+          <Item Value="AlphaRecordDates"/>
+          <Item Value="PubYearVolumeFormatted"/>
+          <Item Value="PubYearVolumeUnformatted"/>
+          <Item Value="CatalogingSourceUrl"/>
+          <Item Value="SerialSubType"/>
+          <Item Value="PublicationFrequency"/>
+          <Item Value="CatalogPublicationCity"/>
+          <Item Value="CatalogIndicator"/>
+          <Item Value="CheckInRequirements"/>
+          <Item Value="Routing"/>
+          <Item Value="SpecialCopyright"/>
+          <Item Value="CompSubAccountNumber"/>
+          <Item Value="PaidSubAccountNumber"/>
+          <Item Value="PrimaryPmClass"/>
+          <Item Value="SecondaryPmClass"/>
+          <Item Value="ProductLine"/>
+          <Item Value="LanguageNote"/>
+          <Item Value="NewspaperEditionFilmed"/>
+          <Item Value="ContentType"/>
+          <Item Value="SubContentType"/>
+          <Item Value="Enumeration"/>
+          <Item Value="NumberOfUnits"/>
+          <Item Value="PeerReviewFlag"/>
+          <Item Value="OpenAccess"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="EditableFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNewTitleChangeHistory"
+            IterBinding="NewTitleChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousNewTitleChangeHistory"
+            IterBinding="NewTitleChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextNewTitleChangeHistory"
+            IterBinding="NewTitleChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastNewTitleChangeHistory"
+            IterBinding="NewTitleChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyNewTitleChangeHistory"
+            IterBinding="NewTitleChangeHistoryIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNewTitleChangeHistory}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

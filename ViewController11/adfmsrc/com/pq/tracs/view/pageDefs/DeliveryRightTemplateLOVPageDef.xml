@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.61.92" id="DeliveryRightTemplateLOVPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <invokeAction id="applyBindParamsDeliveryRightTemplateLOVInvoke"
+                  Binds="applyBindParamsDeliveryRightTemplateLOV"
+                  Refresh="always"/>
+    <iterator id="DeliveryRightTemplateLOVIterator"
+              Binds="DeliveryRightTemplateROView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <invokeAction id="ExecuteQueryDeliveryRightTemplateLOVInvoke"
+                  Binds="ExecuteQueryDeliveryRightTemplateLOV"
+                  Refresh="renderModel" RefreshCondition="#{true}"/>
+  </executables>
+  <bindings>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsDeliveryRightTemplateLOV"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="DeliveryRightTemplateROView1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{DeliveryRightTemplateLOVQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQueryDeliveryRightTemplateLOV"
+            IterBinding="DeliveryRightTemplateLOVIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="DeliveryRightTemplateLOVId"
+                     IterBinding="DeliveryRightTemplateLOVIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightTemplateLOVName"
+                     IterBinding="DeliveryRightTemplateLOVIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightTemplateLOVTranslationFlag"
+                     IterBinding="DeliveryRightTemplateLOVIterator">
+      <AttrNames>
+        <Item Value="TranslationFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightTemplateLOVActiveFlag"
+                     IterBinding="DeliveryRightTemplateLOVIterator">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="DeliveryRightTemplateLOVRightType"
+                     IterBinding="DeliveryRightTemplateLOVIterator">
+      <AttrNames>
+        <Item Value="RightType"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="DeliveryRightTemplateLOVTable"
+          IterBinding="DeliveryRightTemplateLOVIterator">
+      <nodeDefinition Name="DeliveryRightTemplateLOV"
+                      DefName="com.pq.tracs.model.lookups.DeliveryRightTemplateROView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="Name"/>
+          <Item Value="TranslationFlag"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="RightType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstDeliveryRightTemplateLOV"
+            IterBinding="DeliveryRightTemplateLOVIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousDeliveryRightTemplateLOV"
+            IterBinding="DeliveryRightTemplateLOVIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextDeliveryRightTemplateLOV"
+            IterBinding="DeliveryRightTemplateLOVIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastDeliveryRightTemplateLOV"
+            IterBinding="DeliveryRightTemplateLOVIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchDeliveryRightTemplateLOV"
+                  IterBinding="DeliveryRightTemplateLOVIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchDeliveryRightTemplateLOV.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchDeliveryRightTemplateLOV.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchDeliveryRightTemplateLOV.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyDeliveryRightTemplateLOV"
+            IterBinding="DeliveryRightTemplateLOVIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrDeliveryRightTemplateLOV}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

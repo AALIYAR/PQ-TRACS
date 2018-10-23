@@ -1,0 +1,600 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="CategoryTopLc"
+                             partialTriggers=" Categoryfbb CategoryNewButton CategorySaveButton0 CategoryCancelButton0"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateCategory ? nls['INSERT_TITLE_CATEGORY'] :  (jhsUserRoles['Category.update'] ? nls['EDIT_TITLE_CATEGOR: #{bindings.CategoryName.inputValue}'] : nls['VIEW_TITLE_CATEGOR: #{bindings.CategoryName.inputValue}'])  }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="Categoryfbb" layout="horizontal"
+                                       rendered="#{ bindings.CategoryIterator.currentRow!=null  and bindings.CategoryIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateCategory and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="CategoryFirst CategoryPrevious CategoryNext CategoryLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstCategory.execute}"
+                                             id="CategoryFirst"
+                                             partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.CategoryIterator.rangeStart+bindings.CategoryIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.CategoryIterator.rangeStart+bindings.CategoryIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousCategory.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="CategoryPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.CategoryIterator.rangeStart+bindings.CategoryIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.CategoryIterator.rangeStart+bindings.CategoryIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.CategoryIterator.rangeStart+bindings.CategoryIterator.currentRowIndexInRange+1} / #{bindings.CategoryIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextCategory.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="CategoryNext"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.CategoryIterator.rangeStart+bindings.CategoryIterator.currentRowIndexInRange+1 lt bindings.CategoryIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.CategoryIterator.rangeStart+bindings.CategoryIterator.currentRowIndexInRange+1 lt bindings.CategoryIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastCategory.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="CategoryLast"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.CategoryIterator.rangeStart+bindings.CategoryIterator.currentRowIndexInRange+1 lt bindings.CategoryIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.CategoryIterator.rangeStart+bindings.CategoryIterator.currentRowIndexInRange+1 lt bindings.CategoryIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateCategory.execute}"
+                                             action="CreateCategory"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_CATEGORY']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateCategory and (true) and (jhsUserRoles['Category.create'])}"
+                                             id="CategoryNewButton"></af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="CategoryPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveCategory.execute}"
+                                      rendered="#{(((((jhsUserRoles['Category.create']) or (jhsUserRoles['Category.update'])) or (jhsUserRoles['CategoryValues.create'])) or (jhsUserRoles['CategoryValues.update'])) or (jhsUserRoles['CategoryValues.delete'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="CategorySaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel"
+                                      id="CategoryCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.CategoryIterator.findMode!='true'}"
+                       id="CategorySw" defaultFacet="hasRows"
+                       facetName="#{( bindings.CategoryIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp"
+                                  id="CategoryNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="CategoryFC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="3"
+                                    id="CategoryFI">
+                  <af:inputText id="CategoryName"
+                                value="#{bindings.CategoryName.inputValue}"
+                                label="#{bindings.CategoryName.hints.label}"
+                                required="true"
+                                rows="#{bindings.CategoryName.hints.displayHeight}"
+                                columns="#{bindings.CategoryName.hints.displayWidth}"
+                                maximumLength="40"
+                                readOnly="#{((pageFlowScope.createModes.CreateCategory) and (!(jhsUserRoles['Category.create']))) or ((!pageFlowScope.createModes.CreateCategory) and (!(jhsUserRoles['Category.update'])))}">
+                    <f:validator binding="#{bindings.CategoryName.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="CategoryType"
+                                      value="#{bindings.CategoryType.inputValue}"
+                                      label="#{bindings.CategoryType.hints.label}"
+                                      required="true"
+                                      readOnly="#{((pageFlowScope.createModes.CreateCategory) and (!(jhsUserRoles['Category.create']))) or ((!pageFlowScope.createModes.CreateCategory) and (!(jhsUserRoles['Category.update'])))}"
+                                      unselectedLabel="">
+                    <af:selectItem id="si0" value="Lookup" label="Lookup"/>
+                  </af:selectOneChoice>
+                  <af:selectBooleanCheckbox id="CategorySingularFlag"
+                                            value="#{bindings.CategorySingularFlag.inputValue}"
+                                            label="#{bindings.CategorySingularFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateCategory) and (!(jhsUserRoles['Category.create']))) or ((!pageFlowScope.createModes.CreateCategory) and (!(jhsUserRoles['Category.update'])))}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="CategoryActiveFlag"
+                                            value="#{bindings.CategoryActiveFlag.inputValue}"
+                                            label="#{bindings.CategoryActiveFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateCategory) and (!(jhsUserRoles['Category.create']))) or ((!pageFlowScope.createModes.CreateCategory) and (!(jhsUserRoles['Category.update'])))}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="CategoryFullOrPartialFlag"
+                                            value="#{bindings.CategoryFullOrPartialFlag.inputValue}"
+                                            label="#{bindings.CategoryFullOrPartialFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateCategory) and (!(jhsUserRoles['Category.create']))) or ((!pageFlowScope.createModes.CreateCategory) and (!(jhsUserRoles['Category.update'])))}"></af:selectBooleanCheckbox>
+                  <af:inputText id="CategoryCreatedBy"
+                                value="#{bindings.CategoryCreatedBy.inputValue}"
+                                label="#{bindings.CategoryCreatedBy.hints.label}"
+                                required="#{bindings.CategoryCreatedBy.hints.mandatory}"
+                                rows="#{bindings.CategoryCreatedBy.hints.displayHeight}"
+                                columns="#{bindings.CategoryCreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.CategoryCreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="CategoryCreatedDate"
+                                value="#{bindings.CategoryCreatedDate.inputValue}"
+                                label="#{bindings.CategoryCreatedDate.hints.label}"
+                                required="#{bindings.CategoryCreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="CategoryLastUpdatedBy"
+                                value="#{bindings.CategoryLastUpdatedBy.inputValue}"
+                                label="#{bindings.CategoryLastUpdatedBy.hints.label}"
+                                required="#{bindings.CategoryLastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.CategoryLastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.CategoryLastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.CategoryLastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="CategoryLastUpdatedDate"
+                                value="#{bindings.CategoryLastUpdatedDate.inputValue}"
+                                label="#{bindings.CategoryLastUpdatedDate.hints.label}"
+                                required="#{bindings.CategoryLastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_CATEGORYVALUES']}"
+                               partialTriggers=" CategoryTopLc CategoryValuesDeleteDialog CategoryValuesPC:CategoryValuesArm CategoryValuesPC:CategoryValuesdelrmTM CategoryValuesPC:CategoryValuesArl CategoryValuesPC:CategoryValuesTab:CategoryValuesdelrm CategoryValuesPC:CategoryValuesTab:CategoryValuesdelrl"
+                               id="CategoryValuesTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN']}"
+                               disabled="#{!jhsUserRoles['ADMIN']}">
+              <af:panelGroupLayout layout="vertical" id="CategoryValuesTopLc"
+                                   partialTriggers=" CategoryTopLc CategoryValuesDeleteDialog CategoryValuesPC:CategoryValuesArm CategoryValuesPC:CategoryValuesdelrmTM CategoryValuesPC:CategoryValuesArl CategoryValuesPC:CategoryValuesTab:CategoryValuesdelrm CategoryValuesPC:CategoryValuesTab:CategoryValuesdelrl"
+                                   rendered="#{jhsUserRoles['ADMIN']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0">
+                  <af:subform id="CategoryValuesSbf"
+                              rendered="#{!pageFlowScope.createModes.CreateCategoryValues and !pageFlowScope.hideSearchArea}"
+                              defaultCommand="CategoryValuesQuickSearchButton">
+                    <af:panelGroupLayout id="searchAreaCategoryValues"
+                                         partialTriggers="">
+                      <f:attribute name="JhsIgnoreChanges" value="true"/>
+                      <af:panelGroupLayout id="qsAreaCategoryValues"
+                                           rendered="#{pageFlowScope.searchCategoryValues.quickSearchMode}"
+                                           layout="horizontal">
+                        <af:selectOneChoice id="qsSelectCategoryValues"
+                                            label="#{nls['FILTER_BY']}"
+                                            value="#{pageFlowScope.searchCategoryValues.searchItem}"
+                                            autoSubmit="true" immediate="true"
+                                            valueChangeListener="#{pageFlowScope.searchCategoryValues.searchItemChanged}">
+                          <af:selectItem label="#{bindings.CategoryValuesTable.hints.Value.label}"
+                                         value="CategoryValuesValue" id="si1"/>
+                          <af:selectItem label="#{bindings.CategoryValuesTable.hints.OrderBy1.label}"
+                                         value="CategoryValuesOrderBy"
+                                         id="si2"/>
+                          <af:selectItem label="#{bindings.CategoryValuesTable.hints.Description.label}"
+                                         value="CategoryValuesDescription"
+                                         id="si3"/>
+                          <af:selectItem label="#{bindings.CategoryValuesTable.hints.ActiveFlag.label}"
+                                         value="CategoryValuesActiveFlag"
+                                         id="si4"/>
+                          <af:selectItem label="#{bindings.CategoryValuesTable.hints.CreatedBy.label}"
+                                         value="CategoryValuesCreatedBy"
+                                         id="si5"/>
+                          <af:selectItem label="#{bindings.CategoryValuesTable.hints.CreatedDate.label}"
+                                         value="CategoryValuesCreatedDate"
+                                         id="si6"/>
+                          <af:selectItem label="#{bindings.CategoryValuesTable.hints.LastUpdatedBy.label}"
+                                         value="CategoryValuesLastUpdatedBy"
+                                         id="si7"/>
+                          <af:selectItem label="#{bindings.CategoryValuesTable.hints.LastUpdatedDate.label}"
+                                         value="CategoryValuesLastUpdatedDate"
+                                         id="si8"/>
+                        </af:selectOneChoice>
+                        <af:spacer width="4" id="qsAreaCategoryValuesSpacer1"/>
+                        <af:panelGroupLayout partialTriggers="qsSelectCategoryValues"
+                                             id="qsAreaCategoryValuespanelGroupLayout">
+                          <af:switcher facetName="#{pageFlowScope.searchCategoryValues.searchItem}"
+                                       id="qsAreaCategoryValuesSwitcher">
+                            <f:facet name="CategoryValuesValue">
+                              <af:inputText id="QuickSearchCategoryValuesValue"
+                                            value="#{pageFlowScope.searchCategoryValues.searchText}"
+                                            label="#{bindings.CategoryValuesTable.hints.Value.label}"
+                                            simple="true"
+                                            columns="#{bindings.CategoryValuesTable.hints.Value.displayWidth}"
+                                            maximumLength="4000"></af:inputText>
+                            </f:facet>
+                            <f:facet name="CategoryValuesOrderBy">
+                              <af:inputText id="QuickSearchCategoryValuesOrderBy"
+                                            value="#{pageFlowScope.searchCategoryValues.searchText}"
+                                            label="#{bindings.CategoryValuesTable.hints.OrderBy1.label}"
+                                            simple="true"
+                                            columns="#{bindings.CategoryValuesTable.hints.OrderBy1.displayWidth}"
+                                            maximumLength="4000">
+                                <af:convertNumber groupingUsed="false"
+                                                  pattern="#{bindings.CategoryValuesTable.hints.OrderBy1.format}"/>
+                              </af:inputText>
+                            </f:facet>
+                            <f:facet name="CategoryValuesDescription">
+                              <af:inputText id="QuickSearchCategoryValuesDescription"
+                                            value="#{pageFlowScope.searchCategoryValues.searchText}"
+                                            label="#{bindings.CategoryValuesTable.hints.Description.label}"
+                                            simple="true"
+                                            columns="#{bindings.CategoryValuesTable.hints.Description.displayWidth}"
+                                            maximumLength="4000"></af:inputText>
+                            </f:facet>
+                            <f:facet name="CategoryValuesActiveFlag">
+                              <af:selectOneChoice id="QuickSearchCategoryValuesActiveFlag"
+                                                  value="#{pageFlowScope.searchCategoryValues.searchText}"
+                                                  label="#{bindings.CategoryValuesTable.hints.ActiveFlag.label}"
+                                                  unselectedLabel=""
+                                                  simple="true">
+                                <af:selectItem id="si9" value="Y" label="Yes"/>
+                                <af:selectItem id="si10" value="N" label="No"/>
+                              </af:selectOneChoice>
+                            </f:facet>
+                            <f:facet name="CategoryValuesCreatedBy">
+                              <af:inputText id="QuickSearchCategoryValuesCreatedBy"
+                                            value="#{pageFlowScope.searchCategoryValues.searchText}"
+                                            label="#{bindings.CategoryValuesTable.hints.CreatedBy.label}"
+                                            simple="true"
+                                            columns="#{bindings.CategoryValuesTable.hints.CreatedBy.displayWidth}"
+                                            maximumLength="4000"></af:inputText>
+                            </f:facet>
+                            <f:facet name="CategoryValuesCreatedDate">
+                              <af:inputDate id="QuickSearchCategoryValuesCreatedDate"
+                                            value="#{pageFlowScope.searchCategoryValues.searchText}"
+                                            label="#{bindings.CategoryValuesTable.hints.CreatedDate.label}"
+                                            simple="true">
+                                <af:convertDateTime pattern="#{nls.datepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <f:facet name="CategoryValuesLastUpdatedBy">
+                              <af:inputText id="QuickSearchCategoryValuesLastUpdatedBy"
+                                            value="#{pageFlowScope.searchCategoryValues.searchText}"
+                                            label="#{bindings.CategoryValuesTable.hints.LastUpdatedBy.label}"
+                                            simple="true"
+                                            columns="#{bindings.CategoryValuesTable.hints.LastUpdatedBy.displayWidth}"
+                                            maximumLength="4000"></af:inputText>
+                            </f:facet>
+                            <f:facet name="CategoryValuesLastUpdatedDate">
+                              <af:inputDate id="QuickSearchCategoryValuesLastUpdatedDate"
+                                            value="#{pageFlowScope.searchCategoryValues.searchText}"
+                                            label="#{bindings.CategoryValuesTable.hints.LastUpdatedDate.label}"
+                                            simple="true">
+                                <af:convertDateTime pattern="#{nls.datepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                          </af:switcher>
+                        </af:panelGroupLayout>
+                        <af:spacer width="4" id="qsAreaCategoryValuesSpacer2"/>
+                        <af:commandImageLink action="#{pageFlowScope.searchCategoryValues.quickSearch}"
+                                             shortDesc="#{nls['FILTER_BY']}"
+                                             icon="/jheadstart/images/go_ena.png"
+                                             id="CategoryValuesQuickSearchButton"/>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                  </af:subform>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl0">
+                  <af:panelCollection id="CategoryValuesPC" featuresOff=" "
+                                      inlineStyle=" width:828px; ">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="CategoryValuestbb"
+                                    rendered="#{ bindings.CategoryValuesIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstCategoryValues.execute}"
+                                                id="CategoryValuesFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousCategoryValues.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="CategoryValuesPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextCategoryValues.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="CategoryValuesNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastCategoryValues.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="CategoryValuesLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="CategoryValuesArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.CategoryValuesTable.addRow}"
+                                            rendered="#{ bindings.CategoryIterator.currentRow!=null  and (jhsUserRoles['CategoryValues.create'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="CategoryValuesdelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['CategoryValues.delete']}">
+                          <af:showPopupBehavior popupId="::CategoryValuesDeletePopup"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <!-- Also create CreateCategoryValues bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="CategoryValuesArl"
+                                             immediate="false"
+                                             rendered="#{ bindings.CategoryIterator.currentRow!=null  and (jhsUserRoles['CategoryValues.create'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.CategoryValuesTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandToolbarButton text="Print"
+                                                 id="CategoryValuesPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.CategoryValuesIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="CategoryValuesTab" contentDelivery="immediate"
+                              value="#{bindings.CategoryValuesTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.CategoryValuesTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.CategoryValuesTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.CategoryValuesTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.CategoryValuesTable.rangeSize}"
+                              autoHeightRows="#{bindings.CategoryValuesTable.estimatedRowCount lt 5 ? 5 : bindings.CategoryValuesTable.estimatedRowCount lt bindings.CategoryValuesTable.rangeSize ? bindings.CategoryValuesTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.CategoryValuesTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              binding="#{pageFlowScope.CategoryValuesTable.table}"
+                              partialTriggers=" :::CategoryValuesPC ::CategoryValuesFirst ::CategoryValuesPrevious ::CategoryValuesNext ::CategoryValuesLast"
+                              width="828px"
+                              summary="#{nls['TABLE_TITLE_CATEGORYVALUES']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="CategoryValuesTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="CategoryValuesdelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['CategoryValues.delete']}">
+                              <af:showPopupBehavior popupId=":::CategoryValuesDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="CategoryValuesActionColumn" width="20"
+                                 align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl1">
+                          <af:commandImageLink id="CategoryValuesdelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['CategoryValues.delete']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::CategoryValuesDeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="CategoryValuesValueCol" sortable="true"
+                                 noWrap="true" width="180" sortProperty="Value"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.CategoryValuesTable.hints.Value.label}"
+                                          showRequired="true" id="ol0"/>
+                        </f:facet>
+                        <af:inputText id="CategoryValuesValue"
+                                      value="#{row.bindings.Value.inputValue}"
+                                      label="#{bindings.CategoryValuesTable.hints.Value.label}"
+                                      required="true" rows="1"
+                                      columns="#{bindings.CategoryValuesTable.hints.Value.displayWidth}"
+                                      maximumLength="200"
+                                      readOnly="#{((pageFlowScope.CategoryValuesTable.newRow) and (!(jhsUserRoles['CategoryValues.create']))) or ((!pageFlowScope.CategoryValuesTable.newRow) and (!(jhsUserRoles['CategoryValues.update'])))}">
+                          <f:validator binding="#{row.bindings.Value.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="CategoryValuesOrderByCol" sortable="true"
+                                 noWrap="true" width="100"
+                                 sortProperty="OrderBy1" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.CategoryValuesTable.hints.OrderBy1.label}"
+                                          showRequired="false" id="ol1"/>
+                        </f:facet>
+                        <af:inputText id="CategoryValuesOrderBy"
+                                      value="#{row.bindings.OrderBy1.inputValue}"
+                                      label="#{bindings.CategoryValuesTable.hints.OrderBy1.label}"
+                                      required="false"
+                                      columns="#{bindings.CategoryValuesTable.hints.OrderBy1.displayWidth}"
+                                      maximumLength="5"
+                                      readOnly="#{((pageFlowScope.CategoryValuesTable.newRow) and (!(jhsUserRoles['CategoryValues.create']))) or ((!pageFlowScope.CategoryValuesTable.newRow) and (!(jhsUserRoles['CategoryValues.update'])))}">
+                          <f:validator binding="#{row.bindings.OrderBy1.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.CategoryValuesTable.hints.OrderBy1.format}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="CategoryValuesDescriptionCol"
+                                 sortable="true" noWrap="true" width="360"
+                                 sortProperty="Description" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.CategoryValuesTable.hints.Description.label}"
+                                          showRequired="#{bindings.CategoryValuesTable.hints.Description.mandatory}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:inputText id="CategoryValuesDescription"
+                                      value="#{row.bindings.Description.inputValue}"
+                                      label="#{bindings.CategoryValuesTable.hints.Description.label}"
+                                      required="#{bindings.CategoryValuesTable.hints.Description.mandatory}"
+                                      rows="1"
+                                      columns="#{bindings.CategoryValuesTable.hints.Description.displayWidth}"
+                                      maximumLength="1000"
+                                      readOnly="#{((pageFlowScope.CategoryValuesTable.newRow) and (!(jhsUserRoles['CategoryValues.create']))) or ((!pageFlowScope.CategoryValuesTable.newRow) and (!(jhsUserRoles['CategoryValues.update'])))}">
+                          <f:validator binding="#{row.bindings.Description.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="CategoryValuesActiveFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="ActiveFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.CategoryValuesTable.hints.ActiveFlag.label}"
+                                          showRequired="true" id="ol3"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="CategoryValuesActiveFlag"
+                                                  label="#{bindings.CategoryValuesTable.hints.ActiveFlag.label}"
+                                                  value="#{CategoryValuesActiveFlagcheckboxInTable.value}"
+                                                  readOnly="#{((pageFlowScope.CategoryValuesTable.newRow) and (!(jhsUserRoles['CategoryValues.create']))) or ((!pageFlowScope.CategoryValuesTable.newRow) and (!(jhsUserRoles['CategoryValues.update'])))}"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                      <f:facet name="detailStamp">
+                        <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                        <af:panelGroupLayout id="pgl2"
+                                             rendered="#{bindings.CategoryValuesIterator.estimatedRowCount>0}"
+                                             layout="scroll">
+                          <f:facet name="separator">
+                            <af:spacer width="10" height="10" id="sp4"/>
+                          </f:facet>
+                          <af:panelFormLayout rows="1" maxColumns="1"
+                                              labelAlignment="start" id="pfl0">
+                            <af:inputText id="CategoryValuesCreatedBy"
+                                          value="#{row.bindings.CreatedBy.inputValue}"
+                                          label="#{bindings.CategoryValuesCreatedBy.hints.label}"
+                                          required="#{bindings.CategoryValuesCreatedBy.hints.mandatory}"
+                                          rows="#{bindings.CategoryValuesTable.hints.CreatedBy.displayHeight}"
+                                          columns="#{bindings.CategoryValuesTable.hints.CreatedBy.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          disabled="true">
+                              <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                            </af:inputText>
+                            <af:inputDate id="CategoryValuesCreatedDate"
+                                          value="#{row.bindings.CreatedDate.inputValue}"
+                                          label="#{bindings.CategoryValuesCreatedDate.hints.label}"
+                                          required="#{bindings.CategoryValuesCreatedDate.hints.mandatory}"
+                                          readOnly="true" disabled="true">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                            <af:inputText id="CategoryValuesLastUpdatedBy"
+                                          value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                          label="#{bindings.CategoryValuesLastUpdatedBy.hints.label}"
+                                          required="#{bindings.CategoryValuesLastUpdatedBy.hints.mandatory}"
+                                          rows="#{bindings.CategoryValuesTable.hints.LastUpdatedBy.displayHeight}"
+                                          columns="#{bindings.CategoryValuesTable.hints.LastUpdatedBy.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          disabled="true">
+                              <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                            </af:inputText>
+                            <af:inputDate id="CategoryValuesLastUpdatedDate"
+                                          value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                          label="#{bindings.CategoryValuesLastUpdatedDate.hints.label}"
+                                          required="#{bindings.CategoryValuesLastUpdatedDate.hints.mandatory}"
+                                          readOnly="true" disabled="true">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                          </af:panelFormLayout>
+                        </af:panelGroupLayout>
+                        <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                      </f:facet>
+                       
+                      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="CategoryValuesDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="CategoryValuesDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_CATEGORYVALUE:#{pageFlowScope.CategoryValuesTable.currentRowAttributeValues.Value}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteCategoryValues.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="ContentOwnerAdminLOVPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <iterator id="ContentOwnerAdminLOVIterator" Binds="ContentOwnerLOVAdm"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"
+              RefreshCondition="#{pageFlowScope.searchContentOwnerAdminLOV.emptyRowSetCreated}"/>
+  </executables>
+  <bindings>
+    <attributeValues id="ContentOwnerAdminLOVId"
+                     IterBinding="ContentOwnerAdminLOVIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContentOwnerAdminLOVName"
+                     IterBinding="ContentOwnerAdminLOVIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContentOwnerAdminLOVSite"
+                     IterBinding="ContentOwnerAdminLOVIterator">
+      <AttrNames>
+        <Item Value="Site"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContentOwnerAdminLOVCity"
+                     IterBinding="ContentOwnerAdminLOVIterator">
+      <AttrNames>
+        <Item Value="City"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContentOwnerAdminLOVState"
+                     IterBinding="ContentOwnerAdminLOVIterator">
+      <AttrNames>
+        <Item Value="State"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContentOwnerAdminLOVCountry"
+                     IterBinding="ContentOwnerAdminLOVIterator">
+      <AttrNames>
+        <Item Value="Country"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerAdminLOVTable"
+          IterBinding="ContentOwnerAdminLOVIterator">
+      <nodeDefinition Name="ContentOwnerAdminLOV"
+                      DefName="com.pq.tracs.model.lookups.ContentOwnerLOV">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="Name"/>
+          <Item Value="Site"/>
+          <Item Value="City"/>
+          <Item Value="State"/>
+          <Item Value="Country"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerAdminLOV"
+            IterBinding="ContentOwnerAdminLOVIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwnerAdminLOV"
+            IterBinding="ContentOwnerAdminLOVIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwnerAdminLOV"
+            IterBinding="ContentOwnerAdminLOVIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerAdminLOV"
+            IterBinding="ContentOwnerAdminLOVIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchContentOwnerAdminLOV"
+                  IterBinding="ContentOwnerAdminLOVIterator"
+                  DataControl="TracsAdminServiceDataControl"
+                  InstanceName="TracsAdminServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsAdminServiceDataControl.methodResults.TracsAdminServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchContentOwnerAdminLOV.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchContentOwnerAdminLOV.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchContentOwnerAdminLOV.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyContentOwnerAdminLOV"
+            IterBinding="ContentOwnerAdminLOVIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerAdminLOV}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

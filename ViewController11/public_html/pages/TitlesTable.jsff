@@ -1,0 +1,989 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="TtlTopLc"
+                             partialTriggers=" TtlCancelButton0 asAreaTtlSearchOptions qsAreaTtlSearchOptions"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_TITLES']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreateTitles.execute}"
+                                      action="CreateTtl"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_TITLES']}"
+                                      rendered="#{(true) and (jhsUserRoles['RM, ADMIN, AllButAdmn'])}"
+                                      id="TtlNewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="TtlCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaTtl"
+                                 rendered="#{!pageFlowScope.createModes.CreateTitles and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaTtlSearchOptions:qsButtonTtl qsAreaTtlSearchOptions:asButtonTtl ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaTtlSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.TitlesIteratorTitleViewCriteriaAdvQuery.queryDescriptor}"
+                        model="#{bindings.TitlesIteratorTitleViewCriteriaAdvQuery.queryModel}"
+                        queryListener="#{bindings.TitlesIteratorTitleViewCriteriaAdvQuery.processQuery}"
+                        queryOperationListener="#{bindings.TitlesIteratorTitleViewCriteriaAdvQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchTitles.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonTtl"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchTitles.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaTtlSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.TitlesIteratorTitleViewCriteriaAdvQuery.queryDescriptor}"
+                             model="#{bindings.TitlesIteratorTitleViewCriteriaAdvQuery.queryModel}"
+                             queryListener="#{bindings.TitlesIteratorTitleViewCriteriaAdvQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchTitles.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonTtl"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchTitles.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="TtlPC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="TitlesDetails"></af:commandMenuItem>
+                    <af:group id="Ttltbb"
+                              rendered="#{ (bindings.TitlesIterator.viewObject!=null and bindings.TitlesIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstTitles.execute}"
+                                          id="TtlFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousTitles.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="TtlPrevious" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextTitles.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="TtlNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastTitles.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="TtlLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="TtlTab"
+                                                       type="excelHTML"
+                                                       filename="Titles.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="TtlTab"
+                                                       type="excelHTML"
+                                                       filename="Titles.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="TtlPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                  <af:popup id="noSelectionPopup"
+                            binding="#{pageFlowScope.TitlesTable.noSelectionPopup}">
+                    <af:dialog modal="true" type="cancel"
+                               title="Select Titles First">
+                      <af:outputText value="You must select at least one row."/>
+                    </af:dialog>
+                  </af:popup>
+                  <af:popup id="addNotePopup"
+                            binding="#{pageFlowScope.TitlesTable.addNotePopup}">
+                    <af:dialog modal="true" type="okCancel" title="Enter Note"
+                               dialogListener="#{pageFlowScope.TitlesTable.handleAddNoteOK}">
+                      <af:selectOneChoice value="#{pageFlowScope.TitlesTable.newNoteType}"
+                                          label="Title Note" required="false"
+                                          shortDesc="#{bindings.TitleNoteTypeLookup.hints.tooltip}"
+                                          id="noteTypeSelect">
+                        <f:selectItems value="#{bindings.TitleNoteTypeLookup.items}"
+                                       id="noteTypeItems"/>
+                      </af:selectOneChoice>
+                      <af:inputText id="noteToAdd" label="Note"
+                                    converter="oracle.genericDomain" rows="10"
+                                    columns="80"
+                                    value="#{pageFlowScope.TitlesTable.newNote}"/>
+                      <af:outputText value="This note will be applied to the following catalog number(s): #{pageFlowScope.TitlesTable.catalogList}"/>
+                    </af:dialog>
+                  </af:popup>
+                  <af:commandButton id="TtlAddNotes" textAndAccessKey="Add Note"
+                                    actionListener="#{pageFlowScope.TitlesTable.addNotes}"></af:commandButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.TitlesIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="TtlTab" contentDelivery="immediate"
+                        value="#{bindings.TitlesTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true"
+                        selectionListener="#{bindings.TitlesTable.collectionModel.makeCurrent}"
+                        rowSelection="multiple"
+                        rowDisclosureListener="#{pageFlowScope.TitlesTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.TitlesTable.rangeSize}"
+                        autoHeightRows="#{bindings.TitlesTable.estimatedRowCount}"
+                        fetchSize="#{bindings.TitlesTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.TitlesIteratorTitleViewCriteriaAdvQuery.processQuery}"
+                        filterModel="#{bindings.TitlesIteratorTitleViewCriteriaAdvQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.TitlesTable.table}"
+                        partialTriggers=":::qsAreaTtlSearchOptions :::asAreaTtlSearchOptions :::TtlPC ::TtlFirst ::TtlPrevious ::TtlNext ::TtlLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_TITLES']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="TtlTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="TitlesDetails"></af:commandMenuItem>
+                      </af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="TtlTargetTrackingNoCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="TargetTrackingNo" align="right"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.TargetTrackingNo.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="TtlTargetTrackingNo"
+                                value="#{row.bindings.TargetTrackingNo.inputValue}"
+                                label="#{bindings.TitlesTable.hints.TargetTrackingNo.label}"
+                                required="#{bindings.TitlesTable.hints.TargetTrackingNo.mandatory}"
+                                columns="#{bindings.TitlesTable.hints.TargetTrackingNo.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.TitlesTable.hints.TargetTrackingNo.tooltip}">
+                    <f:validator binding="#{row.bindings.TargetTrackingNo.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.TitlesTable.hints.TargetTrackingNo.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="TtlCopyOfLongTitleCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="LongTitle" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.LongTitle.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="TtlCopyOfLongTitle"
+                                value="#{row.bindings.LongTitle.inputValue}"
+                                label="#{bindings.TitlesTable.hints.LongTitle.label}"
+                                required="true"
+                                columns="#{bindings.TitlesTable.hints.LongTitle.displayWidth}"
+                                maximumLength="4000" readOnly="true">
+                    <f:validator binding="#{row.bindings.LongTitle.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="TtlCatalogNumberCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="CatalogNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.CatalogNumber.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="cl1"
+                                value="#{row.bindings.CatalogNumber.inputValue}"
+                                label="#{bindings.TitlesTable.hints.CatalogNumber.label}"
+                                required="#{bindings.TitlesTable.hints.CatalogNumber.mandatory}"
+                                columns="#{bindings.TitlesTable.hints.CatalogNumber.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="#{!jhsUserRoles['ADMIN']}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="cl2"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}"
+                                  action="TitlesDetails"
+                                  text="#{row.CatalogNumber}"></af:commandLink>
+                </af:column>
+                <af:column id="TtlShortTitleCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="ShortTitle" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.ShortTitle.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputText id="TtlShortTitle"
+                                value="#{row.bindings.ShortTitle.inputValue}"
+                                label="#{bindings.TitlesTable.hints.ShortTitle.label}"
+                                required="false"
+                                columns="#{bindings.TitlesTable.hints.ShortTitle.displayWidth}"
+                                maximumLength="30" readOnly="true">
+                    <f:validator binding="#{row.bindings.ShortTitle.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="TtlContentOwnerLinkCol" sortable="true"
+                           noWrap="true" width="180" sortProperty="ContentOwner"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.ContentOwner.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:inputText id="cl3"
+                                value="#{row.bindings.ContentOwner.inputValue}"
+                                label="#{bindings.TitlesTable.hints.ContentOwner.label}"
+                                required="true"
+                                columns="#{bindings.TitlesTable.hints.ContentOwner.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.ContentOwner.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="TtlContentOwnerLink"
+                                  text="#{row.bindings.ContentOwner.attributeValue}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="ContentOwner"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.TtlContentOwnerId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="CO - #{bindings.TtlContentOwnerLink.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.TtlContentOwnerId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueContentOwner}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="TtlSiteCol" sortable="true" filterable="true"
+                           noWrap="true" width="180" sortProperty="Site"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.Site.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="TtlSite"
+                                value="#{row.bindings.Site.inputValue}"
+                                label="#{bindings.TitlesTable.hints.Site.label}"
+                                required="false"
+                                columns="#{bindings.TitlesTable.hints.Site.displayWidth}"
+                                readOnly="true">
+                    <f:validator binding="#{row.bindings.Site.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="TtlContentOwnerCountCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ContentOwnerCount" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.ContentOwnerCount.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:inputText id="TtlContentOwnerCount"
+                                value="#{row.bindings.ContentOwnerCount.inputValue}"
+                                label="#{bindings.TitlesTable.hints.ContentOwnerCount.label}"
+                                required="false"
+                                columns="#{bindings.TitlesTable.hints.ContentOwnerCount.displayWidth}"
+                                maximumLength="4" readOnly="true">
+                    <f:validator binding="#{row.bindings.ContentOwnerCount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.TitlesTable.hints.ContentOwnerCount.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="TtlCatalogRootCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="CatalogRoot" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.CatalogRoot.label}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:inputText id="TtlCatalogRoot"
+                                value="#{row.bindings.CatalogRoot.inputValue}"
+                                label="#{bindings.TitlesTable.hints.CatalogRoot.label}"
+                                required="false"
+                                columns="#{bindings.TitlesTable.hints.CatalogRoot.displayWidth}"
+                                maximumLength="20" readOnly="true">
+                    <f:validator binding="#{row.bindings.CatalogRoot.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="TtlUlrichsSerialIdCol" sortable="true"
+                           noWrap="true" width="100"
+                           sortProperty="UlrichsSerialId" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.UlrichsSerialId.label}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:inputText id="cl4"
+                                value="#{row.bindings.UlrichsSerialId.inputValue}"
+                                label="#{bindings.TitlesTable.hints.UlrichsSerialId.label}"
+                                required="#{bindings.TitlesTable.hints.UlrichsSerialId.mandatory}"
+                                columns="#{bindings.TitlesTable.hints.UlrichsSerialId.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.TitlesTable.hints.UlrichsSerialId.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.UlrichsSerialId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.TitlesTable.hints.UlrichsSerialId.format}"/>
+                  </af:inputText>
+                  <af:commandLink id="TtlUlrichsSerialId"
+                                  text="#{row.bindings.UlrichsSerialId.attributeValue}"
+                                  shortDesc="#{bindings.TitlesTable.hints.UlrichsSerialId.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="UlrichsTitle"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.TtlUlrichsId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="Ulrichs Serial #{bindings.TtlUlrichsSerialId.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.TtlUlrichsId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueUlrichsTitle}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="TtlPublicationStartYearCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="PublicationStartYear" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.PublicationStartYear.label}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:inputText id="TtlPublicationStartYear"
+                                value="#{row.bindings.PublicationStartYear.inputValue}"
+                                label="#{bindings.TitlesTable.hints.PublicationStartYear.label}"
+                                required="#{bindings.TitlesTable.hints.PublicationStartYear.mandatory}"
+                                columns="#{bindings.TitlesTable.hints.PublicationStartYear.displayWidth}"
+                                maximumLength="4" readOnly="true">
+                    <f:validator binding="#{row.bindings.PublicationStartYear.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="TtlPublicationEndYearCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="PublicationEndYear" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.PublicationEndYear.label}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:inputText id="TtlPublicationEndYear"
+                                value="#{row.bindings.PublicationEndYear.inputValue}"
+                                label="#{bindings.TitlesTable.hints.PublicationEndYear.label}"
+                                required="#{bindings.TitlesTable.hints.PublicationEndYear.mandatory}"
+                                columns="#{bindings.TitlesTable.hints.PublicationEndYear.displayWidth}"
+                                maximumLength="4" readOnly="true">
+                    <f:validator binding="#{row.bindings.PublicationEndYear.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="TtlFilmAvailabilityCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="FilmAvailability" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.FilmAvailability.label}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <af:selectOneChoice id="TtlFilmAvailability"
+                                      value="#{row.bindings.FilmAvailability.inputValue}"
+                                      label="#{bindings.TitlesTable.hints.FilmAvailability.label}"
+                                      required="false" readOnly="true">
+                    <f:selectItems value="#{row.bindings.FilmAvailability.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="TtlReasonNotExercisingRightsCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="ReasonNotExercisingRights"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.ReasonNotExercisingRights.label}"
+                                    id="ol12"/>
+                  </f:facet>
+                  <af:selectOneChoice id="TtlReasonNotExercisingRights"
+                                      value="#{row.bindings.ReasonNotExercisingRights.inputValue}"
+                                      label="#{bindings.TitlesTable.hints.ReasonNotExercisingRights.label}"
+                                      required="#{bindings.TitlesTable.hints.ReasonNotExercisingRights.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.TitlesTable.hints.ReasonNotExercisingRights.tooltip}">
+                    <f:selectItems value="#{row.bindings.ReasonNotExercisingRights.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="TtlNewspaperEditionFilmedCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="NewspaperEditionFilmed"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.NewspaperEditionFilmed.label}"
+                                    id="ol13"/>
+                  </f:facet>
+                  <af:inputText id="TtlNewspaperEditionFilmed"
+                                value="#{row.bindings.NewspaperEditionFilmed.inputValue}"
+                                label="#{bindings.TitlesTable.hints.NewspaperEditionFilmed.label}"
+                                required="#{bindings.TitlesTable.hints.NewspaperEditionFilmed.mandatory}"
+                                columns="#{bindings.TitlesTable.hints.NewspaperEditionFilmed.displayWidth}"
+                                maximumLength="400" readOnly="true">
+                    <f:validator binding="#{row.bindings.NewspaperEditionFilmed.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="TtlActiveFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ActiveFlag" align="center"
+                           visible="#{jhsUserRoles['ADMIN']}" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.ActiveFlag.label}"
+                                    id="ol14"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="TtlActiveFlag"
+                                            label="#{bindings.TitlesTable.hints.ActiveFlag.label}"
+                                            value="#{TtlActiveFlagcheckboxInTable.value}"
+                                            readOnly="true"
+                                            visible="#{jhsUserRoles['ADMIN']}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="TtlEditableFlagCol" sortable="true" noWrap="true"
+                           width="100" sortProperty="EditableFlag"
+                           align="center" visible="#{jhsUserRoles['ADMIN,RM']}"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.EditableFlag.label}"
+                                    id="ol15"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="TtlEditableFlag"
+                                            label="#{bindings.TitlesTable.hints.EditableFlag.label}"
+                                            value="#{TtlEditableFlagcheckboxInTable.value}"
+                                            readOnly="true"
+                                            visible="#{jhsUserRoles['ADMIN,RM']}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="TtlPrimarySourceFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="PrimarySourceFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.PrimarySourceFlag.label}"
+                                    id="ol16"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="TtlPrimarySourceFlag"
+                                            label="#{bindings.TitlesTable.hints.PrimarySourceFlag.label}"
+                                            value="#{TtlPrimarySourceFlagcheckboxInTable.value}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.TitlesTable.hints.PrimarySourceFlag.tooltip}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="TtlCurrentCatalogTitleCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CurrentCatalogTitle" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.CurrentCatalogTitle.label}"
+                                    id="ol17"/>
+                  </f:facet>
+                  <af:inputListOfValues id="TtlCurrentCatalogTitle"
+                                        value="#{row.bindings.CurrentCatalogTitle.inputValue}"
+                                        label="#{bindings.TitlesTable.hints.CurrentCatalogTitle.label}"
+                                        popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.TitlesTable.hints.CurrentCatalogTitle.label}"
+                                        searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.TitlesTable.hints.CurrentCatalogTitle.label}"
+                                        required="#{bindings.TitlesTable.hints.CurrentCatalogTitle.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.CurrentCatalogTitle.displayWidth}"
+                                        maximumLength="40" readOnly="true"
+                                        shortDesc="#{bindings.TitlesTable.hints.CurrentCatalogTitle.tooltip}"
+                                        model="#{row.bindings.CurrentCatalogTitle.listOfValuesModel}">
+                    <f:validator binding="#{row.bindings.CurrentCatalogTitle.validator}"/>
+                  </af:inputListOfValues>
+                </af:column>
+                <af:column id="TtlCreatedDateSearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedSearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.CreatedSearch.label}"
+                                    id="ol18"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedSearch}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="TtlCreatedDateSearch"
+                                value="#{row.bindings.CreatedSearch.inputValue}"
+                                label="#{bindings.TitlesTable.hints.CreatedSearch.label}"
+                                required="#{bindings.TitlesTable.hints.CreatedSearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.TitlesTable.hints.CreatedSearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="TtlLastUpdatedDateSearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LastUpdatedSearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.TitlesTable.hints.LastUpdatedSearch.label}"
+                                    id="ol19"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdatedSearch}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="TtlLastUpdatedDateSearch"
+                                value="#{row.bindings.LastUpdatedSearch.inputValue}"
+                                label="#{bindings.TitlesTable.hints.LastUpdatedSearch.label}"
+                                required="#{bindings.TitlesTable.hints.LastUpdatedSearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.TitlesTable.hints.LastUpdatedSearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <f:facet name="detailStamp">
+                  <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                  <af:panelGroupLayout id="pgl1"
+                                       rendered="#{bindings.TitlesIterator.estimatedRowCount>0}"
+                                       layout="scroll">
+                    <f:facet name="separator">
+                      <af:spacer width="10" height="10" id="sp1"/>
+                    </f:facet>
+                    <af:panelFormLayout rows="1" maxColumns="4"
+                                        labelAlignment="start" id="pfl0"></af:panelFormLayout>
+                    <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                    <af:panelGroupLayout valign="top" layout="horizontal"
+                                         id="TtlRegionsPGL" inlineStyle="  ">
+                      <f:facet name="separator">
+                        <af:spacer width="10" height="10" id="sp2"/>
+                      </f:facet>
+                      <af:panelGroupLayout inlineStyle=" " layout="vertical"
+                                           id="TtlRegionsColumn1Pgl">
+                        <af:panelFormLayout rows="1" maxColumns="1"
+                                            labelAlignment="top"
+                                            id="TtlColumn1PanelForm">
+                          <af:inputText id="TtlCopyOfTitleDescription"
+                                        value="#{row.bindings.TitleDescription.inputValue}"
+                                        label="#{bindings.TtlCopyOfTitleDescription.hints.label}"
+                                        required="#{bindings.TtlCopyOfTitleDescription.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.TitleDescription.displayWidth}"
+                                        maximumLength="4000" readOnly="true">
+                            <f:validator binding="#{row.bindings.TitleDescription.validator}"/>
+                          </af:inputText>
+                          <af:inputText id="TtlCatalogSuffix"
+                                        value="#{row.bindings.CatalogSuffix.inputValue}"
+                                        label="#{bindings.TtlCatalogSuffix.hints.label}"
+                                        required="#{bindings.TtlCatalogSuffix.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.CatalogSuffix.displayWidth}"
+                                        maximumLength="20" readOnly="true"
+                                        disabled="#{!jhsUserRoles['ADMIN']}">
+                            <f:validator binding="#{row.bindings.CatalogSuffix.validator}"/>
+                          </af:inputText>
+                          <af:inputText id="TtlCopyOfAuthor"
+                                        value="#{row.bindings.Author.inputValue}"
+                                        label="#{bindings.TtlCopyOfAuthor.hints.label}"
+                                        required="#{bindings.TtlCopyOfAuthor.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.Author.displayWidth}"
+                                        maximumLength="600" readOnly="true">
+                            <f:validator binding="#{row.bindings.Author.validator}"/>
+                          </af:inputText>
+                          <af:selectOneChoice id="TtlBibliographicStatus"
+                                              value="#{row.bindings.BibliographicStatus.inputValue}"
+                                              label="#{bindings.TtlBibliographicStatus.hints.label}"
+                                              required="#{bindings.TtlBibliographicStatus.hints.mandatory}"
+                                              readOnly="true">
+                            <f:selectItems value="#{bindings.TtlBibliographicStatus.items}"/>
+                          </af:selectOneChoice>
+                        </af:panelFormLayout>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout inlineStyle=" " layout="vertical"
+                                           id="TtlRegionsColumn2Pgl">
+                        <af:panelFormLayout rows="1" maxColumns="1"
+                                            labelAlignment="top"
+                                            fieldWidth="100"
+                                            id="TtlColumn2PanelForm">
+                          <af:inputText id="TtlOriginalPlaceOfPublication"
+                                        value="#{row.bindings.OriginalPlaceOfPublication.inputValue}"
+                                        label="#{bindings.TtlOriginalPlaceOfPublication.hints.label}"
+                                        required="#{bindings.TtlOriginalPlaceOfPublication.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.OriginalPlaceOfPublication.displayWidth}"
+                                        maximumLength="200" readOnly="true">
+                            <f:validator binding="#{row.bindings.OriginalPlaceOfPublication.validator}"/>
+                          </af:inputText>
+                          <af:inputText id="TtlOriginalDatesOfPublication"
+                                        value="#{row.bindings.OriginalDatesOfPublication.inputValue}"
+                                        label="#{bindings.TtlOriginalDatesOfPublication.hints.label}"
+                                        required="#{bindings.TtlOriginalDatesOfPublication.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.OriginalDatesOfPublication.displayWidth}"
+                                        maximumLength="60" readOnly="true">
+                            <f:validator binding="#{row.bindings.OriginalDatesOfPublication.validator}"/>
+                          </af:inputText>
+                          <af:selectOneChoice id="TtlPlaceOfPublicationCode"
+                                              value="#{row.bindings.PlaceOfPublicationCode.inputValue}"
+                                              label="#{bindings.TtlPlaceOfPublicationCode.hints.label}"
+                                              required="#{bindings.TtlPlaceOfPublicationCode.hints.mandatory}"
+                                              readOnly="true">
+                            <f:selectItems value="#{bindings.TtlPlaceOfPublicationCode.items}"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="TtlExercisingRights"
+                                              value="#{row.bindings.ExercisingRights.inputValue}"
+                                              label="#{bindings.TtlExercisingRights.hints.label}"
+                                              required="#{bindings.TtlExercisingRights.hints.mandatory}"
+                                              readOnly="true">
+                            <f:selectItems value="#{bindings.TtlExercisingRights.items}"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="TtlNonFilingIndicator"
+                                        value="#{row.bindings.NonFilingIndicator.inputValue}"
+                                        label="#{bindings.TtlNonFilingIndicator.hints.label}"
+                                        required="#{bindings.TtlNonFilingIndicator.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.NonFilingIndicator.displayWidth}"
+                                        maximumLength="10" readOnly="true">
+                            <f:validator binding="#{row.bindings.NonFilingIndicator.validator}"/>
+                          </af:inputText>
+                          <af:inputText id="TtlEditionStatement"
+                                        value="#{row.bindings.EditionStatement.inputValue}"
+                                        label="#{bindings.TtlEditionStatement.hints.label}"
+                                        required="#{bindings.TtlEditionStatement.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.EditionStatement.displayWidth}"
+                                        maximumLength="200" readOnly="true">
+                            <f:validator binding="#{row.bindings.EditionStatement.validator}"/>
+                          </af:inputText>
+                          <af:inputText id="TtlAlphaRecordDates"
+                                        value="#{row.bindings.AlphaRecordDates.inputValue}"
+                                        label="#{bindings.TtlAlphaRecordDates.hints.label}"
+                                        required="#{bindings.TtlAlphaRecordDates.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.AlphaRecordDates.displayWidth}"
+                                        maximumLength="100" readOnly="true">
+                            <f:validator binding="#{row.bindings.AlphaRecordDates.validator}"/>
+                          </af:inputText>
+                          <af:selectOneChoice id="TtlSerialSubType"
+                                              value="#{row.bindings.SerialSubType.inputValue}"
+                                              label="#{bindings.TtlSerialSubType.hints.label}"
+                                              required="#{bindings.TtlSerialSubType.hints.mandatory}"
+                                              readOnly="true">
+                            <f:selectItems value="#{bindings.TtlSerialSubType.items}"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="TtlPublicationFrequency"
+                                              value="#{row.bindings.PublicationFrequency.inputValue}"
+                                              label="#{bindings.TtlPublicationFrequency.hints.label}"
+                                              required="#{bindings.TtlPublicationFrequency.hints.mandatory}"
+                                              readOnly="true">
+                            <f:selectItems value="#{bindings.TtlPublicationFrequency.items}"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="TtlCatalogPublicationCity"
+                                        value="#{row.bindings.CatalogPublicationCity.inputValue}"
+                                        label="#{bindings.TtlCatalogPublicationCity.hints.label}"
+                                        required="#{bindings.TtlCatalogPublicationCity.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.CatalogPublicationCity.displayWidth}"
+                                        maximumLength="200" readOnly="true">
+                            <f:validator binding="#{row.bindings.CatalogPublicationCity.validator}"/>
+                          </af:inputText>
+                          <af:selectOneChoice id="TtlCatalogIndicator"
+                                              value="#{row.bindings.CatalogIndicator.inputValue}"
+                                              label="#{bindings.TtlCatalogIndicator.hints.label}"
+                                              required="#{bindings.TtlCatalogIndicator.hints.mandatory}"
+                                              readOnly="true">
+                            <f:selectItems value="#{bindings.TtlCatalogIndicator.items}"/>
+                          </af:selectOneChoice>
+                        </af:panelFormLayout>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout inlineStyle=" " layout="vertical"
+                                           id="TtlRegionsColumn3Pgl">
+                        <af:panelFormLayout rows="1" maxColumns="1"
+                                            labelAlignment="top"
+                                            fieldWidth="100"
+                                            id="TtlColumn3PanelForm">
+                          <af:selectOneChoice id="TtlCheckInRequirements"
+                                              value="#{row.bindings.CheckInRequirements.inputValue}"
+                                              label="#{bindings.TtlCheckInRequirements.hints.label}"
+                                              required="#{bindings.TtlCheckInRequirements.hints.mandatory}"
+                                              readOnly="true">
+                            <f:selectItems value="#{bindings.TtlCheckInRequirements.items}"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="TtlRouting"
+                                              value="#{row.bindings.Routing.inputValue}"
+                                              label="#{bindings.TtlRouting.hints.label}"
+                                              required="#{bindings.TtlRouting.hints.mandatory}"
+                                              readOnly="true">
+                            <f:selectItems value="#{bindings.TtlRouting.items}"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="TtlSpecialCopyright"
+                                        value="#{row.bindings.SpecialCopyright.inputValue}"
+                                        label="#{bindings.TtlSpecialCopyright.hints.label}"
+                                        required="#{bindings.TtlSpecialCopyright.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.SpecialCopyright.displayWidth}"
+                                        maximumLength="200" readOnly="true">
+                            <f:validator binding="#{row.bindings.SpecialCopyright.validator}"/>
+                          </af:inputText>
+                          <af:inputText id="TtlCompSubAccountNumber"
+                                        value="#{row.bindings.CompSubAccountNumber.inputValue}"
+                                        label="#{bindings.TtlCompSubAccountNumber.hints.label}"
+                                        required="#{bindings.TtlCompSubAccountNumber.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.CompSubAccountNumber.displayWidth}"
+                                        maximumLength="20" readOnly="true">
+                            <f:validator binding="#{row.bindings.CompSubAccountNumber.validator}"/>
+                          </af:inputText>
+                          <af:inputText id="TtlPaidSubAccountNumber"
+                                        value="#{row.bindings.PaidSubAccountNumber.inputValue}"
+                                        label="#{bindings.TtlPaidSubAccountNumber.hints.label}"
+                                        required="#{bindings.TtlPaidSubAccountNumber.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.PaidSubAccountNumber.displayWidth}"
+                                        maximumLength="40" readOnly="true">
+                            <f:validator binding="#{row.bindings.PaidSubAccountNumber.validator}"/>
+                          </af:inputText>
+                          <af:selectOneChoice id="TtlPrimaryPmClass"
+                                              value="#{row.bindings.PrimaryPmClass.inputValue}"
+                                              label="#{bindings.TtlPrimaryPmClass.hints.label}"
+                                              required="#{bindings.TtlPrimaryPmClass.hints.mandatory}"
+                                              readOnly="true">
+                            <f:selectItems value="#{bindings.TtlPrimaryPmClass.items}"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="TtlSecondaryPmClass"
+                                              value="#{row.bindings.SecondaryPmClass.inputValue}"
+                                              label="#{bindings.TtlSecondaryPmClass.hints.label}"
+                                              required="#{bindings.TtlSecondaryPmClass.hints.mandatory}"
+                                              readOnly="true">
+                            <f:selectItems value="#{bindings.TtlSecondaryPmClass.items}"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="TtlProductLine"
+                                              value="#{row.bindings.ProductLine.inputValue}"
+                                              label="#{bindings.TtlProductLine.hints.label}"
+                                              required="#{bindings.TtlProductLine.hints.mandatory}"
+                                              readOnly="true">
+                            <f:selectItems value="#{bindings.TtlProductLine.items}"/>
+                          </af:selectOneChoice>
+                          <af:panelLabelAndMessage label="#{bindings.TtlCopyOfLanguageNote.hints.label}"
+                                                   showRequired="#{bindings.TtlCopyOfLanguageNote.hints.mandatory}"
+                                                   id="TtlCopyOfLanguageNoteLabel">
+                            <af:inputText id="TtlCopyOfLanguageNote"
+                                          value="#{row.bindings.LanguageNote.inputValue}"
+                                          required="#{bindings.TtlCopyOfLanguageNote.hints.mandatory}"
+                                          rows="2"
+                                          columns="#{bindings.TitlesTable.hints.LanguageNote.displayWidth}"
+                                          maximumLength="4000" readOnly="true"
+                                          autoSubmit="true" simple="true"
+                                          partialTriggers="TtlCopyOfLanguageNoteEditorLink TtlCopyOfLanguageNoteEditorText">
+                              <f:validator binding="#{row.bindings.LanguageNote.validator}"/>
+                            </af:inputText>
+                            <f:facet name="end">
+                              <af:panelGroupLayout id="pgl2" valign="top"
+                                                   layout="horizontal">
+                                <af:commandLink id="TtlCopyOfLanguageNoteEditorLink"
+                                                rendered="#{!(((pageFlowScope.createModes.CreateTitles) and (!(jhsUserRoles['RM, ADMIN, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateTitles) and (!(jhsUserRoles['RM, ADMIN, AllButAdmn']))))}"
+                                                immediate="true"
+                                                partialSubmit="true">
+                                  <af:showPopupBehavior popupId=":::TtlCopyOfLanguageNotePopup"/>
+                                  <af:image source="/jheadstart/images/editor.gif"
+                                            id="TtlCopyOfLanguageNoteIcon"
+                                            clientComponent="true"/>
+                                </af:commandLink>
+                              </af:panelGroupLayout>
+                            </f:facet>
+                          </af:panelLabelAndMessage>
+                          <af:inputText id="TtlPrimaryClassification"
+                                        value="#{row.bindings.PrimaryClassification.inputValue}"
+                                        label="#{bindings.TtlPrimaryClassification.hints.label}"
+                                        required="#{bindings.TtlPrimaryClassification.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.PrimaryClassification.displayWidth}"
+                                        maximumLength="100" readOnly="true">
+                            <f:validator binding="#{row.bindings.PrimaryClassification.validator}"/>
+                          </af:inputText>
+                          <af:selectOneChoice id="TtlPrimaryClassificationType"
+                                              value="#{row.bindings.PrimaryClassificationType.inputValue}"
+                                              label="#{bindings.TtlPrimaryClassificationType.hints.label}"
+                                              required="false" readOnly="true">
+                            <f:selectItems value="#{bindings.TtlPrimaryClassificationType.items}"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="TtlPrimarySubject"
+                                        value="#{row.bindings.PrimarySubject.inputValue}"
+                                        label="#{bindings.TtlPrimarySubject.hints.label}"
+                                        required="false"
+                                        columns="#{bindings.TitlesTable.hints.PrimarySubject.displayWidth}"
+                                        readOnly="true">
+                            <f:validator binding="#{row.bindings.PrimarySubject.validator}"/>
+                          </af:inputText>
+                          <af:inputText id="TtlPrimaryLanguage"
+                                        value="#{row.bindings.PrimaryLanguage.inputValue}"
+                                        label="#{bindings.TtlPrimaryLanguage.hints.label}"
+                                        required="#{bindings.TtlPrimaryLanguage.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.PrimaryLanguage.displayWidth}"
+                                        maximumLength="40" readOnly="true">
+                            <f:validator binding="#{row.bindings.PrimaryLanguage.validator}"/>
+                          </af:inputText>
+                          <af:inputText id="TtlPrimarySeries"
+                                        value="#{row.bindings.PrimarySeries.inputValue}"
+                                        label="#{bindings.TtlPrimarySeries.hints.label}"
+                                        required="false"
+                                        columns="#{bindings.TitlesTable.hints.PrimarySeries.displayWidth}"
+                                        readOnly="true">
+                            <f:validator binding="#{row.bindings.PrimarySeries.validator}"/>
+                          </af:inputText>
+                          <af:inputText id="TtlPrimaryAbstractLanguage"
+                                        value="#{row.bindings.PrimaryAbstractLanguage.inputValue}"
+                                        label="#{bindings.TtlPrimaryAbstractLanguage.hints.label}"
+                                        required="false"
+                                        columns="#{bindings.TitlesTable.hints.PrimaryAbstractLanguage.displayWidth}"
+                                        readOnly="true">
+                            <f:validator binding="#{row.bindings.PrimaryAbstractLanguage.validator}"/>
+                          </af:inputText>
+                        </af:panelFormLayout>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout inlineStyle=" " layout="vertical"
+                                           id="TtlRegionsColumn4Pgl">
+                        <af:panelFormLayout rows="1" maxColumns="1"
+                                            labelAlignment="top"
+                                            fieldWidth="100"
+                                            id="TtlColumn4PanelForm">
+                          <af:selectOneChoice id="TtlContentType"
+                                              value="#{row.bindings.ContentType.inputValue}"
+                                              label="#{bindings.TtlContentType.hints.label}"
+                                              required="false" readOnly="true"
+                                              autoSubmit="true"
+                                              valueChangeListener="#{TtlContentTypeDependsOnItem.updateModelValue}">
+                            <f:selectItems value="#{bindings.TtlContentType.items}"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="TtlSubContentType"
+                                              value="#{row.bindings.SubContentType.inputValue}"
+                                              label="#{bindings.TtlSubContentType.hints.label}"
+                                              required="false" readOnly="true">
+                            <f:selectItems value="#{bindings.TtlSubContentType.items}"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="TtlEnumeration"
+                                        value="#{row.bindings.Enumeration.inputValue}"
+                                        label="#{bindings.TtlEnumeration.hints.label}"
+                                        required="false"
+                                        columns="#{bindings.TitlesTable.hints.Enumeration.displayWidth}"
+                                        readOnly="true">
+                            <f:validator binding="#{row.bindings.Enumeration.validator}"/>
+                          </af:inputText>
+                          <af:inputText id="TtlNumberOfUnits"
+                                        value="#{row.bindings.NumberOfUnits.inputValue}"
+                                        label="#{bindings.TtlNumberOfUnits.hints.label}"
+                                        required="false"
+                                        columns="#{bindings.TitlesTable.hints.NumberOfUnits.displayWidth}"
+                                        maximumLength="100" readOnly="true">
+                            <f:validator binding="#{row.bindings.NumberOfUnits.validator}"/>
+                          </af:inputText>
+                          <af:selectBooleanCheckbox id="TtlPeerReviewFlag"
+                                                    value="#{TtlPeerReviewFlagcheckboxInTable.value}"
+                                                    label="#{bindings.TtlPeerReviewFlag.hints.label}"
+                                                    readOnly="true"></af:selectBooleanCheckbox>
+                          <af:selectOneChoice id="TtlOpenAccess"
+                                              value="#{row.bindings.OpenAccess.inputValue}"
+                                              label="#{bindings.TtlOpenAccess.hints.label}"
+                                              required="false" readOnly="true">
+                            <f:selectItems value="#{bindings.TtlOpenAccess.items}"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="TtlCreatedBy"
+                                        value="#{row.bindings.CreatedBy.inputValue}"
+                                        label="#{bindings.TtlCreatedBy.hints.label}"
+                                        required="#{bindings.TtlCreatedBy.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.CreatedBy.displayWidth}"
+                                        maximumLength="40" readOnly="true"
+                                        disabled="true">
+                            <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                          </af:inputText>
+                          <af:inputDate id="TtlCreatedDate"
+                                        value="#{row.bindings.CreatedDate.inputValue}"
+                                        label="#{bindings.TtlCreatedDate.hints.label}"
+                                        required="#{bindings.TtlCreatedDate.hints.mandatory}"
+                                        readOnly="true" disabled="true">
+                            <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                          </af:inputDate>
+                          <af:inputText id="TtlLastUpdatedBy"
+                                        value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                        label="#{bindings.TtlLastUpdatedBy.hints.label}"
+                                        required="#{bindings.TtlLastUpdatedBy.hints.mandatory}"
+                                        columns="#{bindings.TitlesTable.hints.LastUpdatedBy.displayWidth}"
+                                        maximumLength="40" readOnly="true"
+                                        disabled="true">
+                            <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                          </af:inputText>
+                          <af:inputDate id="TtlLastUpdatedDate"
+                                        value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                        label="#{bindings.TtlLastUpdatedDate.hints.label}"
+                                        required="#{bindings.TtlLastUpdatedDate.hints.mandatory}"
+                                        readOnly="true" disabled="true">
+                            <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                          </af:inputDate>
+                        </af:panelFormLayout>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                    <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                  </af:panelGroupLayout>
+                  <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                </f:facet>
+                 
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="TtlCopyOfLanguageNotePopup" contentDelivery="lazyUncached"
+                  eventContext="launcher" childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog0">
+            <af:inputText rows="10" columns="100"
+                          value="#{row.bindings.LanguageNote.inputValue}"
+                          simple="true" maximumLength="4000"
+                          id="TtlCopyOfLanguageNoteEditorText"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

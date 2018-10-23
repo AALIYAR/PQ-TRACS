@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="PublisherUrlPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="PublisherUrlIterator" Binds="PublisherUrlView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"
+              RefreshCondition="#{pageFlowScope.searchPublisherUrl.emptyRowSetCreated}"/>
+  </executables>
+  <bindings>
+    <attributeValues id="PublisherUrlDisplayValue"
+                     IterBinding="PublisherUrlIterator">
+      <AttrNames>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherUrlInternalValue"
+                     IterBinding="PublisherUrlIterator">
+      <AttrNames>
+        <Item Value="InternalValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherUrlOrderBy1"
+                     IterBinding="PublisherUrlIterator">
+      <AttrNames>
+        <Item Value="OrderBy1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherUrlDescription"
+                     IterBinding="PublisherUrlIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherUrlCreatedBy"
+                     IterBinding="PublisherUrlIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherUrlCreatedDate"
+                     IterBinding="PublisherUrlIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherUrlCreatedbySearch"
+                     IterBinding="PublisherUrlIterator">
+      <AttrNames>
+        <Item Value="CreatedbySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherUrlLastUpdatedBy"
+                     IterBinding="PublisherUrlIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherUrlLastUpdatedDate"
+                     IterBinding="PublisherUrlIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherUrlLastUpdatedbySearch"
+                     IterBinding="PublisherUrlIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedbySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherUrlLookupCodeSetId"
+                     IterBinding="PublisherUrlIterator">
+      <AttrNames>
+        <Item Value="LookupCodeSetId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherUrlCodeSet"
+                     IterBinding="PublisherUrlIterator">
+      <AttrNames>
+        <Item Value="CodeSet"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="PublisherUrlTable" IterBinding="PublisherUrlIterator">
+      <nodeDefinition Name="PublisherUrl"
+                      DefName="com.pq.tracs.model.lookups.PublisherUrlView">
+        <AttrNames>
+          <Item Value="DisplayValue"/>
+          <Item Value="InternalValue"/>
+          <Item Value="OrderBy1"/>
+          <Item Value="Description"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="CreatedbySearch"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="LastUpdatedbySearch"/>
+          <Item Value="LookupCodeSetId"/>
+          <Item Value="CodeSet"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstPublisherUrl" IterBinding="PublisherUrlIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousPublisherUrl" IterBinding="PublisherUrlIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextPublisherUrl" IterBinding="PublisherUrlIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastPublisherUrl" IterBinding="PublisherUrlIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchPublisherUrl"
+                  IterBinding="PublisherUrlIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchPublisherUrl.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchPublisherUrl.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchPublisherUrl.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyPublisherUrl"
+            IterBinding="PublisherUrlIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrPublisherUrl}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreatePublisherUrl" IterBinding="PublisherUrlIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeletePublisherUrl" IterBinding="PublisherUrlIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

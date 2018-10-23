@@ -1,0 +1,605 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="ContractTemplateRightsTopLc"
+                             partialTriggers=" ContractTemplateRightsDeleteDialog ContractTemplateRightsfbb ContractTemplateRightsNewButton ContractTemplateRightsDelB ContractTemplateRightsSaveButton0 ContractTemplateRightsCancelButton0"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateContractTemplateRights ? nls['INSERT_TITLE_CONTRACTTEMPLATERIGHTS'] :  nls['EDIT_TITLE_CONTRACTTEMPLATERIGHT: #{bindings.ContractTemplateRightsPermissionType.inputValue}'] }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="ContractTemplateRightsfbb"
+                                       layout="horizontal"
+                                       rendered="#{ bindings.ContractTemplateRightsIterator.currentRow!=null  and bindings.ContractTemplateRightsIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateContractTemplateRights and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="ContractTemplateRightsFirst ContractTemplateRightsPrevious ContractTemplateRightsNext ContractTemplateRightsLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstContractTemplateRights.execute}"
+                                             id="ContractTemplateRightsFirst"
+                                             partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.ContractTemplateRightsIterator.rangeStart+bindings.ContractTemplateRightsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.ContractTemplateRightsIterator.rangeStart+bindings.ContractTemplateRightsIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousContractTemplateRights.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="ContractTemplateRightsPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.ContractTemplateRightsIterator.rangeStart+bindings.ContractTemplateRightsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.ContractTemplateRightsIterator.rangeStart+bindings.ContractTemplateRightsIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.ContractTemplateRightsIterator.rangeStart+bindings.ContractTemplateRightsIterator.currentRowIndexInRange+1} / #{bindings.ContractTemplateRightsIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextContractTemplateRights.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="ContractTemplateRightsNext"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.ContractTemplateRightsIterator.rangeStart+bindings.ContractTemplateRightsIterator.currentRowIndexInRange+1 lt bindings.ContractTemplateRightsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.ContractTemplateRightsIterator.rangeStart+bindings.ContractTemplateRightsIterator.currentRowIndexInRange+1 lt bindings.ContractTemplateRightsIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastContractTemplateRights.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="ContractTemplateRightsLast"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.ContractTemplateRightsIterator.rangeStart+bindings.ContractTemplateRightsIterator.currentRowIndexInRange+1 lt bindings.ContractTemplateRightsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.ContractTemplateRightsIterator.rangeStart+bindings.ContractTemplateRightsIterator.currentRowIndexInRange+1 lt bindings.ContractTemplateRightsIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateContractTemplateRights.execute}"
+                                             action="CreateContractTemplateRights"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_CONTRACTTEMPLATERIGHTS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateContractTemplateRights and (true) }"
+                                             id="ContractTemplateRightsNewButton"></af:commandToolbarButton>
+                    <af:commandToolbarButton action="DeleteContractTemplateRights"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_CONTRACTTEMPLATERIGHTS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateContractTemplateRights and  bindings.ContractTemplateRightsIterator.currentRow!=null   }"
+                                             immediate="true"
+                                             id="ContractTemplateRightsDelB">
+                      <af:showPopupBehavior popupId="ContractTemplateRightsDeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print"
+                                             id="ContractTemplateRightsPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveContractTemplateRights.execute}"
+                                      rendered="#{!pageFlowScope.hideSaveButton}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="ContractTemplateRightsSaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel"
+                                      id="ContractTemplateRightsCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.ContractTemplateRightsIterator.findMode!='true'}"
+                       id="ContractTemplateRightsSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.ContractTemplateRightsIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp"
+                                  id="ContractTemplateRightsNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="ContractTemplateRightsFC"
+                                   layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="4"
+                                    id="ContractTemplateRightsFI">
+                  <af:panelLabelAndMessage label="#{bindings.ContractTemplateRightsTemplateName.hints.label}"
+                                           showRequired="#{bindings.ContractTemplateRightsTemplateName.hints.mandatory}"
+                                           id="ContractTemplateRightsTemplateNamePlam">
+                    <af:inputText id="ContractTemplateRightsTemplateName"
+                                  showRequired="#{bindings.ContractTemplateRightsTemplateName.hints.mandatory}"
+                                  columns="#{bindings.ContractTemplateRightsTemplateName.hints.displayWidth}"
+                                  maximumLength="2000"
+                                  value="#{bindings.ContractTemplateRightsTemplateName.inputValue}"
+                                  autoSubmit="true"
+                                  valueChangeListener="#{pageFlowScope.ContractTemplateRightsTemplateNameLovItem.validateWithLov}"
+                                  binding="#{pageFlowScope.ContractTemplateRightsTemplateNameLovItem.lovField}"
+                                  simple="true">
+                      <f:validator binding="#{bindings.ContractTemplateRightsTemplateName.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl0" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink immediate="true" partialSubmit="true"
+                                        id="cl0"
+                                        actionListener="#{pageFlowScope.ContractTemplateRightsTemplateNameLovItem.lovIconClicked}">
+                          <af:image source="/jheadstart/images/lov.png"
+                                    id="ContractTemplateRightsTemplateNameIcon"
+                                    clientComponent="true"/>
+                        </af:commandLink>
+                        <af:commandButton text="hidden" id="cb2"
+                                          rendered="false"
+                                          action="#{pageFlowScope.ContractTemplateRightsTemplateNameLovItem.validationAction}"
+                                          partialSubmit="true" immediate="true"
+                                          binding="#{pageFlowScope.ContractTemplateRightsTemplateNameLovItem.validationButton}"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:selectOneChoice id="ContractTemplateRightsPermissionType"
+                                      value="#{bindings.ContractTemplateRightsPermissionType.inputValue}"
+                                      label="#{bindings.ContractTemplateRightsPermissionType.hints.label}"
+                                      required="#{bindings.ContractTemplateRightsPermissionType.hints.mandatory}"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{ContractTemplateRightsPermissionTypeDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{bindings.ContractTemplateRightsPermissionType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="ContractTemplateRightsPermissionSubType"
+                                      value="#{bindings.ContractTemplateRightsPermissionSubType.inputValue}"
+                                      label="#{bindings.ContractTemplateRightsPermissionSubType.hints.label}"
+                                      required="#{bindings.ContractTemplateRightsPermissionSubType.hints.mandatory}">
+                    <f:selectItems value="#{bindings.ContractTemplateRightsPermissionSubType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="ContractTemplateRightsStatus"
+                                      value="#{bindings.ContractTemplateRightsStatus.inputValue}"
+                                      label="#{bindings.ContractTemplateRightsStatus.hints.label}"
+                                      required="#{bindings.ContractTemplateRightsStatus.hints.mandatory}">
+                    <f:selectItems value="#{bindings.ContractTemplateRightsStatus.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="ContractTemplateRightsRightOrRestrictionType"
+                                      value="#{bindings.ContractTemplateRightsRightOrRestrictionType.inputValue}"
+                                      label="#{bindings.ContractTemplateRightsRightOrRestrictionType.hints.label}"
+                                      required="#{bindings.ContractTemplateRightsRightOrRestrictionType.hints.mandatory}">
+                    <f:selectItems value="#{bindings.ContractTemplateRightsRightOrRestrictionType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectBooleanCheckbox id="ContractTemplateRightsSalesRestrictionFlag"
+                                            value="#{bindings.ContractTemplateRightsSalesRestrictionFlag.inputValue}"
+                                            label="#{bindings.ContractTemplateRightsSalesRestrictionFlag.hints.label}"></af:selectBooleanCheckbox>
+                  <af:selectOneChoice id="ContractTemplateRightsIncludesOrExcludes"
+                                      value="#{bindings.ContractTemplateRightsIncludesOrExcludes.inputValue}"
+                                      label="#{bindings.ContractTemplateRightsIncludesOrExcludes.hints.label}"
+                                      required="#{bindings.ContractTemplateRightsIncludesOrExcludes.hints.mandatory}">
+                    <f:selectItems value="#{bindings.ContractTemplateRightsIncludesOrExcludes.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectBooleanCheckbox id="ContractTemplateRightsTranslationFlag"
+                                            value="#{bindings.ContractTemplateRightsTranslationFlag.inputValue}"
+                                            label="#{bindings.ContractTemplateRightsTranslationFlag.hints.label}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="ContractTemplateRightsResellerFyiRequiredFlag"
+                                            value="#{bindings.ContractTemplateRightsResellerFyiRequiredFlag.inputValue}"
+                                            label="#{bindings.ContractTemplateRightsResellerFyiRequiredFlag.hints.label}"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="ContractTemplateRightsWrittenApprovalRequiredFlag"
+                                            value="#{bindings.ContractTemplateRightsWrittenApprovalRequiredFlag.inputValue}"
+                                            label="#{bindings.ContractTemplateRightsWrittenApprovalRequiredFlag.hints.label}"></af:selectBooleanCheckbox>
+                  <af:inputText id="ContractTemplateRightsCreatedBy"
+                                value="#{bindings.ContractTemplateRightsCreatedBy.inputValue}"
+                                label="#{bindings.ContractTemplateRightsCreatedBy.hints.label}"
+                                required="#{bindings.ContractTemplateRightsCreatedBy.hints.mandatory}"
+                                rows="#{bindings.ContractTemplateRightsCreatedBy.hints.displayHeight}"
+                                columns="#{bindings.ContractTemplateRightsCreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.ContractTemplateRightsCreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="ContractTemplateRightsCreatedDate"
+                                value="#{bindings.ContractTemplateRightsCreatedDate.inputValue}"
+                                label="#{bindings.ContractTemplateRightsCreatedDate.hints.label}"
+                                required="#{bindings.ContractTemplateRightsCreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="ContractTemplateRightsLastUpdatedBy"
+                                value="#{bindings.ContractTemplateRightsLastUpdatedBy.inputValue}"
+                                label="#{bindings.ContractTemplateRightsLastUpdatedBy.hints.label}"
+                                required="#{bindings.ContractTemplateRightsLastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.ContractTemplateRightsLastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.ContractTemplateRightsLastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.ContractTemplateRightsLastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="ContractTemplateRightsLastUpdatedDate"
+                                value="#{bindings.ContractTemplateRightsLastUpdatedDate.inputValue}"
+                                label="#{bindings.ContractTemplateRightsLastUpdatedDate.hints.label}"
+                                required="#{bindings.ContractTemplateRightsLastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_CONTRACTTMPLRIGHTCATS']}"
+                               partialTriggers=" ContractTemplateRightsTopLc ContractTmplRightCatsDeleteDialog qsAreaContractTmplRightCatsSearchOptions ContractTmplRightCatsPC:ContractTmplRightCatsArm ContractTmplRightCatsPC:ContractTmplRightCatsdelrmTM ContractTmplRightCatsPC:ContractTmplRightCatsArl ContractTmplRightCatsPC:ContractTmplRightCatsTab:ContractTmplRightCatsdelrm ContractTmplRightCatsPC:ContractTmplRightCatsTab:ContractTmplRightCatsdelrl"
+                               id="ContractTmplRightCatsTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN']}"
+                               disabled="#{!jhsUserRoles['ADMIN']}">
+              <af:panelGroupLayout layout="vertical"
+                                   id="ContractTmplRightCatsTopLc"
+                                   partialTriggers=" ContractTemplateRightsTopLc ContractTmplRightCatsDeleteDialog qsAreaContractTmplRightCatsSearchOptions ContractTmplRightCatsPC:ContractTmplRightCatsArm ContractTmplRightCatsPC:ContractTmplRightCatsdelrmTM ContractTmplRightCatsPC:ContractTmplRightCatsArl ContractTmplRightCatsPC:ContractTmplRightCatsTab:ContractTmplRightCatsdelrm ContractTmplRightCatsPC:ContractTmplRightCatsTab:ContractTmplRightCatsdelrl"
+                                   rendered="#{jhsUserRoles['ADMIN']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g1">
+                  <af:panelGroupLayout id="modelSearchAreaContractTmplRightCats"
+                                       rendered="#{!pageFlowScope.createModes.CreateContractTmplRightCats and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreaContractTmplRightCatsSearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.ContractTmplRightCatsIteratorQuery.queryDescriptor}"
+                                   model="#{bindings.ContractTmplRightCatsIteratorQuery.queryModel}"
+                                   queryListener="#{bindings.ContractTmplRightCatsIteratorQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl1">
+                  <af:panelCollection id="ContractTmplRightCatsPC"
+                                      featuresOff=" "
+                                      inlineStyle=" width:1124px; ">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="ContractTmplRightCatstbb"
+                                    rendered="#{ bindings.ContractTmplRightCatsIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstContractTmplRightCats.execute}"
+                                                id="ContractTmplRightCatsFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousContractTmplRightCats.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="ContractTmplRightCatsPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextContractTmplRightCats.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="ContractTmplRightCatsNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastContractTmplRightCats.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="ContractTmplRightCatsLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="ContractTmplRightCatsArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.ContractTmplRightCatsTable.addRow}"
+                                            rendered="#{ bindings.ContractTemplateRightsIterator.currentRow!=null  }"></af:commandMenuItem>
+                        <af:commandMenuItem id="ContractTmplRightCatsdelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true">
+                          <af:showPopupBehavior popupId="::ContractTmplRightCatsDeletePopup"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <!-- Also create CreateContractTmplRightCats bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="ContractTmplRightCatsArl"
+                                             immediate="false"
+                                             rendered="#{ bindings.ContractTemplateRightsIterator.currentRow!=null  }"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.ContractTmplRightCatsTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandToolbarButton text="Print"
+                                                 id="ContractTmplRightCatsPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.ContractTmplRightCatsIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="ContractTmplRightCatsTab"
+                              contentDelivery="immediate"
+                              value="#{bindings.ContractTmplRightCatsTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.ContractTmplRightCatsTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.ContractTmplRightCatsTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.ContractTmplRightCatsTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.ContractTmplRightCatsTable.rangeSize}"
+                              autoHeightRows="#{bindings.ContractTmplRightCatsTable.estimatedRowCount lt 5 ? 5 : bindings.ContractTmplRightCatsTable.estimatedRowCount lt bindings.ContractTmplRightCatsTable.rangeSize ? bindings.ContractTmplRightCatsTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.ContractTmplRightCatsTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.ContractTmplRightCatsIteratorQuery.processQuery}"
+                              binding="#{pageFlowScope.ContractTmplRightCatsTable.table}"
+                              partialTriggers=":::qsAreaContractTmplRightCatsSearchOptions :::ContractTmplRightCatsPC ::ContractTmplRightCatsFirst ::ContractTmplRightCatsPrevious ::ContractTmplRightCatsNext ::ContractTmplRightCatsLast"
+                              width="1124px"
+                              summary="#{nls['TABLE_TITLE_CONTRACTTMPLRIGHTCATS']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="ContractTmplRightCatsTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="ContractTmplRightCatsdelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true">
+                              <af:showPopupBehavior popupId=":::ContractTmplRightCatsDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="ContractTmplRightCatsActionColumn"
+                                 width="20" align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl2">
+                          <af:commandImageLink id="ContractTmplRightCatsdelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::ContractTmplRightCatsDeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="ContractTmplRightCatsCategoryIdCol"
+                                 sortable="true" noWrap="true" width="228"
+                                 sortProperty="CategoryId" align="right"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractTmplRightCatsTable.hints.CategoryId.label}"
+                                          showRequired="#{bindings.ContractTmplRightCatsTable.hints.CategoryId.mandatory}"
+                                          id="ol0"/>
+                        </f:facet>
+                        <af:selectOneChoice id="ContractTmplRightCatsCategoryId"
+                                            value="#{row.bindings.CategoryId.inputValue}"
+                                            label="#{bindings.ContractTmplRightCatsTable.hints.CategoryId.label}"
+                                            required="#{bindings.ContractTmplRightCatsTable.hints.CategoryId.mandatory}"
+                                            autoSubmit="true"
+                                            valueChangeListener="#{ContractTmplRightCatsCategoryIdDependsOnItem.updateModelValue}">
+                          <f:selectItems value="#{row.bindings.CategoryId.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="ContractTmplRightCatsValueCol"
+                                 sortable="true" noWrap="true" width="180"
+                                 sortProperty="Value" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractTmplRightCatsTable.hints.Value.label}"
+                                          showRequired="#{bindings.ContractTmplRightCatsTable.hints.Value.mandatory}"
+                                          id="ol1"/>
+                        </f:facet>
+                        <af:selectOneChoice id="ContractTmplRightCatsValue"
+                                            value="#{row.bindings.Value.inputValue}"
+                                            label="#{bindings.ContractTmplRightCatsTable.hints.Value.label}"
+                                            required="#{bindings.ContractTmplRightCatsTable.hints.Value.mandatory}">
+                          <f:selectItems value="#{row.bindings.Value.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="ContractTmplRightCatsFullOrPartialCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="FullOrPartial" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractTmplRightCatsTable.hints.FullOrPartial.label}"
+                                          showRequired="#{bindings.ContractTmplRightCatsTable.hints.FullOrPartial.mandatory}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:selectOneChoice id="ContractTmplRightCatsFullOrPartial"
+                                            value="#{row.bindings.FullOrPartial.inputValue}"
+                                            label="#{bindings.ContractTmplRightCatsTable.hints.FullOrPartial.label}"
+                                            required="#{bindings.ContractTmplRightCatsTable.hints.FullOrPartial.mandatory}"
+                                            disabled="#{row.FullOrPartialFlag!='Y'}"
+                                            unselectedLabel="">
+                          <af:selectItem id="si0" value="Full" label="Full"/>
+                          <af:selectItem id="si1" value="Partial"
+                                         label="Partial"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="ContractTmplRightCatsPermitFlagCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="PermitFlag" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractTmplRightCatsTable.hints.PermitFlag.label}"
+                                          showRequired="#{bindings.ContractTmplRightCatsTable.hints.PermitFlag.mandatory}"
+                                          id="ol3"/>
+                        </f:facet>
+                        <af:inputText id="ContractTmplRightCatsPermitFlag"
+                                      value="#{row.bindings.PermitFlag.inputValue}"
+                                      label="#{bindings.ContractTmplRightCatsTable.hints.PermitFlag.label}"
+                                      required="#{bindings.ContractTmplRightCatsTable.hints.PermitFlag.mandatory}"
+                                      rows="#{bindings.ContractTmplRightCatsTable.hints.PermitFlag.displayHeight}"
+                                      columns="#{bindings.ContractTmplRightCatsTable.hints.PermitFlag.displayWidth}"
+                                      maximumLength="1">
+                          <f:validator binding="#{row.bindings.PermitFlag.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractTmplRightCatsCreatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractTmplRightCatsTable.hints.CreatedBy.label}"
+                                          id="ol4"/>
+                        </f:facet>
+                        <af:inputText id="ContractTmplRightCatsCreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.ContractTmplRightCatsTable.hints.CreatedBy.label}"
+                                      required="#{bindings.ContractTmplRightCatsTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.ContractTmplRightCatsTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.ContractTmplRightCatsTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      disabled="true">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractTmplRightCatsCreatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractTmplRightCatsTable.hints.CreatedDate.label}"
+                                          id="ol5"/>
+                        </f:facet>
+                        <af:inputDate id="ContractTmplRightCatsCreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.ContractTmplRightCatsTable.hints.CreatedDate.label}"
+                                      required="#{bindings.ContractTmplRightCatsTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true" disabled="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="ContractTmplRightCatsLastUpdatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractTmplRightCatsTable.hints.LastUpdatedBy.label}"
+                                          id="ol6"/>
+                        </f:facet>
+                        <af:inputText id="ContractTmplRightCatsLastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.ContractTmplRightCatsTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.ContractTmplRightCatsTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.ContractTmplRightCatsTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.ContractTmplRightCatsTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      disabled="true">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="ContractTmplRightCatsLastUpdatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractTmplRightCatsTable.hints.LastUpdatedDate.label}"
+                                          id="ol7"/>
+                        </f:facet>
+                        <af:inputDate id="ContractTmplRightCatsLastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.ContractTmplRightCatsTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.ContractTmplRightCatsTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true" disabled="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="ContractTemplateRightsDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="ContractTemplateRightsDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_CONTRACTTEMPLATERIGHT: #{bindings.ContractTemplateRightsPermissionType.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteContractTemplateRights.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="jhsLovPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher"
+                  binding="#{pageFlowScope.jhsLovPopup.component}">
+          <af:dialog modal="true" title="#{pageFlowScope.LovItemBean.lovTitle}"
+                     type="none" id="dialog0" resize="on"
+                     stretchChildren="first"
+                     contentWidth="#{pageFlowScope.LovItemBean.lovWidth}"
+                     contentHeight="#{pageFlowScope.LovItemBean.lovHeight}">
+            <af:region value="#{bindings.LovTaskFlow.regionModel}"
+                       id="region0"/>
+            <f:facet name="buttonBar">
+              <af:group id="g0">
+                <af:commandButton textAndAccessKey="#{nls['OK_BUTTON_LABEL']}"
+                                  id="cb0" partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.handleLovSelection}"/>
+                <af:commandButton textAndAccessKey="#{nls['CANCEL']}" id="cb1"
+                                  partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.cancelLov}"/>
+              </af:group>
+            </f:facet>
+          </af:dialog>
+          <af:clientListener method="popupClosedListener" type="popupClosed"/>
+          <af:serverListener type="serverPopupClosed"
+                             method="#{pageFlowScope.LovItemBean.cancelLov}"/>
+        </af:popup>
+        <af:popup id="ContractTmplRightCatsDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="ContractTmplRightCatsDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_CONTRACTTMPLRIGHTCAT:#{pageFlowScope.ContractTmplRightCatsTable.currentRowAttributeValues.CategoryId}']} "
+                           id="ot1"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteContractTmplRightCats.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

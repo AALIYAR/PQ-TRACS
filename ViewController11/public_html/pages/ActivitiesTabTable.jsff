@@ -1,0 +1,584 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="ActTopLc"
+                             partialTriggers=" ActSaveButton0 ActCancelButton0 asAreaActSearchOptions qsAreaActSearchOptions"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_ACTIVITIESTAB']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreateActivitiesTab.execute}"
+                                      action="CreateAct"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_ACTIVITIESTAB']}"
+                                      rendered="#{(true) and (jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}"
+                                      id="ActNewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton action="#{SaveActivitiesTab.execute}"
+                                      rendered="#{(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn']) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="ActSaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="ActCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaAct"
+                                 rendered="#{!pageFlowScope.createModes.CreateActivitiesTab and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaActSearchOptions:qsButtonAct qsAreaActSearchOptions:asButtonAct ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaActSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.ActivitiesTabIteratorActivityViewCriteriaAdvQuery.queryDescriptor}"
+                        model="#{bindings.ActivitiesTabIteratorActivityViewCriteriaAdvQuery.queryModel}"
+                        queryListener="#{bindings.ActivitiesTabIteratorActivityViewCriteriaAdvQuery.processQuery}"
+                        queryOperationListener="#{bindings.ActivitiesTabIteratorActivityViewCriteriaAdvQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchActivitiesTab.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonAct"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchActivitiesTab.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaActSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.ActivitiesTabIteratorActivityViewCriteriaAdvQuery.queryDescriptor}"
+                             model="#{bindings.ActivitiesTabIteratorActivityViewCriteriaAdvQuery.queryModel}"
+                             queryListener="#{bindings.ActivitiesTabIteratorActivityViewCriteriaAdvQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchActivitiesTab.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonAct"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchActivitiesTab.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="ActPC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="ActivitiesTabDetails"></af:commandMenuItem>
+                    <af:group id="Acttbb"
+                              rendered="#{ (bindings.ActivitiesTabIterator.viewObject!=null and bindings.ActivitiesTabIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstActivitiesTab.execute}"
+                                          id="ActFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousActivitiesTab.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="ActPrevious" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextActivitiesTab.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="ActNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastActivitiesTab.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="ActLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="ActTab"
+                                                       type="excelHTML"
+                                                       filename="ActivitiesTab.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="ActTab"
+                                                       type="excelHTML"
+                                                       filename="ActivitiesTab.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="ActPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.ActivitiesTabIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="ActTab" contentDelivery="immediate"
+                        value="#{bindings.ActivitiesTabTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.ActivitiesTabTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.ActivitiesTabTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.ActivitiesTabTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.ActivitiesTabTable.rangeSize}"
+                        autoHeightRows="#{bindings.ActivitiesTabTable.estimatedRowCount}"
+                        fetchSize="#{bindings.ActivitiesTabTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.ActivitiesTabIteratorActivityViewCriteriaAdvQuery.processQuery}"
+                        filterModel="#{bindings.ActivitiesTabIteratorActivityViewCriteriaAdvQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.ActivitiesTabTable.table}"
+                        partialTriggers=":::qsAreaActSearchOptions :::asAreaActSearchOptions :::ActPC ::ActFirst ::ActPrevious ::ActNext ::ActLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_ACTIVITIESTAB']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="ActTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="ActivitiesTabDetails"></af:commandMenuItem>
+                      </af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="ActAccountNameLinkCol" sortable="true"
+                           noWrap="true" width="240" sortProperty="AccountName"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ActivitiesTabTable.hints.AccountName.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="cl1"
+                                value="#{row.bindings.AccountName.inputValue}"
+                                label="#{bindings.ActivitiesTabTable.hints.AccountName.label}"
+                                required="#{bindings.ActivitiesTabTable.hints.AccountName.mandatory}"
+                                rows="#{bindings.ActivitiesTabTable.hints.AccountName.displayHeight}"
+                                columns="#{bindings.ActivitiesTabTable.hints.AccountName.displayWidth}"
+                                maximumLength="255" readOnly="true"
+                                shortDesc="#{bindings.ActivitiesTabTable.hints.AccountName.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="ActAccountNameLink"
+                                  text="#{row.bindings.AccountName.attributeValue}"
+                                  shortDesc="#{bindings.ActivitiesTabTable.hints.AccountName.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="ContentOwner"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.ActAccountId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="#{bindings.ActAccountName.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.ActAccountId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueContentOwner}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="ActAccountSiteCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="AccountSite" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ActivitiesTabTable.hints.AccountSite.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="ActAccountSite"
+                                value="#{row.bindings.AccountSite.inputValue}"
+                                label="#{bindings.ActivitiesTabTable.hints.AccountSite.label}"
+                                required="#{bindings.ActivitiesTabTable.hints.AccountSite.mandatory}"
+                                rows="#{bindings.ActivitiesTabTable.hints.AccountSite.displayHeight}"
+                                columns="#{bindings.ActivitiesTabTable.hints.AccountSite.displayWidth}"
+                                maximumLength="255" readOnly="true"
+                                shortDesc="#{bindings.ActivitiesTabTable.hints.AccountSite.tooltip}">
+                    <f:validator binding="#{row.bindings.AccountSite.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ActContractNumberLinkCol" sortable="true"
+                           noWrap="true" width="120"
+                           sortProperty="ContractNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ActivitiesTabTable.hints.ContractNumber.label}"
+                                    showRequired="#{bindings.ActivitiesTabTable.hints.ContractNumber.mandatory}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="cl2"
+                                value="#{row.bindings.ContractNumber.inputValue}"
+                                label="#{bindings.ActivitiesTabTable.hints.ContractNumber.label}"
+                                required="#{bindings.ActivitiesTabTable.hints.ContractNumber.mandatory}"
+                                rows="#{bindings.ActivitiesTabTable.hints.ContractNumber.displayHeight}"
+                                columns="#{bindings.ActivitiesTabTable.hints.ContractNumber.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.ContractNumber.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="ActContractNumberLink"
+                                  text="#{row.bindings.ContractNumber.attributeValue}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="ContractTab"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.ActContractId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="Contract - #{bindings.ActContractNumber.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.ActContractId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueContractTab}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="ActCatalogNumberLinkCol" sortable="true"
+                           noWrap="true" width="120"
+                           sortProperty="CatalogNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ActivitiesTabTable.hints.CatalogNumber.label}"
+                                    showRequired="#{bindings.ActivitiesTabTable.hints.CatalogNumber.mandatory}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputText id="cl3"
+                                value="#{row.bindings.CatalogNumber.inputValue}"
+                                label="#{bindings.ActivitiesTabTable.hints.CatalogNumber.label}"
+                                required="#{bindings.ActivitiesTabTable.hints.CatalogNumber.mandatory}"
+                                rows="#{bindings.ActivitiesTabTable.hints.CatalogNumber.displayHeight}"
+                                columns="#{bindings.ActivitiesTabTable.hints.CatalogNumber.displayWidth}"
+                                maximumLength="40"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="ActCatalogNumberLink"
+                                  text="#{row.bindings.CatalogNumber.attributeValue}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="Titles"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="TTL#{bindings.ActTitleId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="Title - #{bindings.ActCatalogNumber.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.ActTitleId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueTitles}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="ActTypeCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="Type"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ActivitiesTabTable.hints.Type.label}"
+                                    showRequired="#{bindings.ActivitiesTabTable.hints.Type.mandatory}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:inputText id="cl4" value="#{row.bindings.Type.inputValue}"
+                                label="#{bindings.ActivitiesTabTable.hints.Type.label}"
+                                required="#{bindings.ActivitiesTabTable.hints.Type.mandatory}"
+                                rows="#{bindings.ActivitiesTabTable.hints.Type.displayHeight}"
+                                columns="#{bindings.ActivitiesTabTable.hints.Type.displayWidth}"
+                                maximumLength="40"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}"
+                                autoSubmit="true"
+                                valueChangeListener="#{ActTypeDependsOnItem.updateModelValue}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.Type.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="cl5"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}"
+                                  action="ActivitiesTabDetails"
+                                  text="#{row.Type}"></af:commandLink>
+                </af:column>
+                <af:column id="ActSubTypeTableCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="SubType" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ActivitiesTabTable.hints.SubType.label}"
+                                    showRequired="#{bindings.ActivitiesTabTable.hints.SubType.mandatory}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ActSubTypeTable"
+                                      value="#{row.bindings.SubType.inputValue}"
+                                      label="#{bindings.ActivitiesTabTable.hints.SubType.label}"
+                                      required="#{bindings.ActivitiesTabTable.hints.SubType.mandatory}"
+                                      readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}">
+                    <f:selectItems value="#{row.bindings.SubType.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ActDisplayNameCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="DisplayName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ActivitiesTabTable.hints.DisplayName.label}"
+                                    showRequired="true" id="ol6"/>
+                  </f:facet>
+                  <af:inputText id="ActDisplayName"
+                                value="#{row.bindings.DisplayName.inputValue}"
+                                label="#{bindings.ActivitiesTabTable.hints.DisplayName.label}"
+                                required="true"
+                                rows="#{bindings.ActivitiesTabTable.hints.DisplayName.displayHeight}"
+                                columns="#{bindings.ActivitiesTabTable.hints.DisplayName.displayWidth}"
+                                maximumLength="240"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}">
+                    <f:validator binding="#{row.bindings.DisplayName.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ActStatusCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="Status"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ActivitiesTabTable.hints.Status.label}"
+                                    showRequired="#{bindings.ActivitiesTabTable.hints.Status.mandatory}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ActStatus"
+                                      value="#{row.bindings.Status.inputValue}"
+                                      label="#{bindings.ActivitiesTabTable.hints.Status.label}"
+                                      required="#{bindings.ActivitiesTabTable.hints.Status.mandatory}"
+                                      readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}">
+                    <f:selectItems value="#{row.bindings.Status.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ActPriorityCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="Priority"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ActivitiesTabTable.hints.Priority.label}"
+                                    showRequired="#{bindings.ActivitiesTabTable.hints.Priority.mandatory}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ActPriority"
+                                      value="#{row.bindings.Priority.inputValue}"
+                                      label="#{bindings.ActivitiesTabTable.hints.Priority.label}"
+                                      required="#{bindings.ActivitiesTabTable.hints.Priority.mandatory}"
+                                      readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}">
+                    <f:selectItems value="#{row.bindings.Priority.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ActDescriptionCol" sortable="true"
+                           filterable="true" noWrap="true" width="260"
+                           sortProperty="Description" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ActivitiesTabTable.hints.Description.label}"
+                                    showRequired="#{bindings.ActivitiesTabTable.hints.Description.mandatory}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:popup id="hoverPopup0">
+                    <af:noteWindow>
+                      <af:outputText value="#{row.bindings.Description.inputValue}"/>
+                    </af:noteWindow>
+                  </af:popup>
+                  <af:panelLabelAndMessage>
+                    <af:inputText id="ActDescription"
+                                  value="#{row.bindings.Description.inputValue}"
+                                  label="#{bindings.ActivitiesTabTable.hints.Description.label}"
+                                  required="#{bindings.ActivitiesTabTable.hints.Description.mandatory}"
+                                  rows="1"
+                                  columns="#{bindings.ActivitiesTabTable.hints.Description.displayWidth}"
+                                  maximumLength="4000"
+                                  readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}"
+                                  autoSubmit="true" simple="true"
+                                  partialTriggers="ActDescriptionEditorLink ActDescriptionEditorText">
+                      <f:validator binding="#{row.bindings.Description.validator}"/>
+                      <af:showPopupBehavior popupId="hoverPopup0"
+                                            triggerType="mouseHover"
+                                            align="endAfter"/>
+                    </af:inputText>
+                    <af:commandLink id="ActDescriptionEditorLink"
+                                    rendered="#{!(!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn']))}"
+                                    immediate="true" partialSubmit="true">
+                      <af:showPopupBehavior popupId="ActDescriptionPopup"/>
+                      <af:image source="/jheadstart/images/editor.gif"
+                                id="ActDescriptionIcon" clientComponent="true"/>
+                    </af:commandLink>
+                  </af:panelLabelAndMessage>
+                  <af:popup id="ActDescriptionPopup"
+                            contentDelivery="lazyUncached"
+                            eventContext="launcher" childCreation="deferred">
+                    <af:dialog modal="true" resize="on" title="Text Editor"
+                               id="dialog0">
+                      <af:inputText rows="10" columns="100"
+                                    value="#{row.bindings.Description.inputValue}"
+                                    simple="true" maximumLength="4000"
+                                    id="ActDescriptionEditorText"/>
+                    </af:dialog>
+                  </af:popup>
+                </af:column>
+                <af:column id="ActCreatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CreatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ActivitiesTabTable.hints.CreatedBy.label}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:inputText id="ActCreatedBy"
+                                value="#{row.bindings.CreatedBy.inputValue}"
+                                label="#{bindings.ActivitiesTabTable.hints.CreatedBy.label}"
+                                required="#{bindings.ActivitiesTabTable.hints.CreatedBy.mandatory}"
+                                rows="#{bindings.ActivitiesTabTable.hints.CreatedBy.displayHeight}"
+                                columns="#{bindings.ActivitiesTabTable.hints.CreatedBy.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ActCreatedDateCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedDate" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ActivitiesTabTable.hints.CreatedDate.label}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="ActCreatedDate"
+                                value="#{row.bindings.CreatedDate.inputValue}"
+                                label="#{bindings.ActivitiesTabTable.hints.CreatedDate.label}"
+                                required="#{bindings.ActivitiesTabTable.hints.CreatedDate.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <f:facet name="detailStamp">
+                  <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                  <af:panelGroupLayout id="pgl1"
+                                       rendered="#{bindings.ActivitiesTabIterator.estimatedRowCount>0}"
+                                       layout="scroll">
+                    <f:facet name="separator">
+                      <af:spacer width="10" height="10" id="sp1"/>
+                    </f:facet>
+                    <af:panelFormLayout rows="1" maxColumns="4"
+                                        labelAlignment="start" id="pfl0">
+                      <af:inputText id="ActShortTitle"
+                                    value="#{row.bindings.ShortTitle.inputValue}"
+                                    label="#{bindings.ActShortTitle.hints.label}"
+                                    required="#{bindings.ActShortTitle.hints.mandatory}"
+                                    rows="#{bindings.ActivitiesTabTable.hints.ShortTitle.displayHeight}"
+                                    columns="#{bindings.ActivitiesTabTable.hints.ShortTitle.displayWidth}"
+                                    maximumLength="30"
+                                    readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}">
+                        <f:validator binding="#{row.bindings.ShortTitle.validator}"/>
+                      </af:inputText>
+                      <af:inputDate id="ActExpectedStartDate"
+                                    value="#{row.bindings.ExpectedStartDate.inputValue}"
+                                    label="#{bindings.ActExpectedStartDate.hints.label}"
+                                    required="#{bindings.ActExpectedStartDate.hints.mandatory}"
+                                    readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}">
+                        <af:convertDateTime pattern="#{nls.datepattern}"/>
+                      </af:inputDate>
+                      <af:inputDate id="ActActualStartDate"
+                                    value="#{row.bindings.ActualStartDate.inputValue}"
+                                    label="#{bindings.ActActualStartDate.hints.label}"
+                                    required="#{bindings.ActActualStartDate.hints.mandatory}"
+                                    readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}">
+                        <af:convertDateTime pattern="#{nls.datepattern}"/>
+                      </af:inputDate>
+                      <af:inputDate id="ActDueDate"
+                                    value="#{row.bindings.DueDate.inputValue}"
+                                    label="#{bindings.ActDueDate.hints.label}"
+                                    required="#{bindings.ActDueDate.hints.mandatory}"
+                                    readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}">
+                        <af:convertDateTime pattern="#{nls.datepattern}"/>
+                      </af:inputDate>
+                      <af:inputDate id="ActCompletionDate"
+                                    value="#{row.bindings.CompletionDate.inputValue}"
+                                    label="#{bindings.ActCompletionDate.hints.label}"
+                                    required="#{bindings.ActCompletionDate.hints.mandatory}"
+                                    readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}">
+                        <af:convertDateTime pattern="#{nls.datepattern}"/>
+                      </af:inputDate>
+                      <af:inputText id="ActHoursSpent"
+                                    value="#{row.bindings.HoursSpent.inputValue}"
+                                    label="#{bindings.ActHoursSpent.hints.label}"
+                                    required="#{bindings.ActHoursSpent.hints.mandatory}"
+                                    rows="#{bindings.ActivitiesTabTable.hints.HoursSpent.displayHeight}"
+                                    columns="#{bindings.ActivitiesTabTable.hints.HoursSpent.displayWidth}"
+                                    maximumLength="8"
+                                    readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, ActOnly, AllButAdmn'])}">
+                        <f:validator binding="#{row.bindings.HoursSpent.validator}"/>
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.ActivitiesTabTable.hints.HoursSpent.format}"/>
+                      </af:inputText>
+                      <af:inputText id="ActLastUpdatedBy"
+                                    value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                    label="#{bindings.ActLastUpdatedBy.hints.label}"
+                                    required="#{bindings.ActLastUpdatedBy.hints.mandatory}"
+                                    rows="#{bindings.ActivitiesTabTable.hints.LastUpdatedBy.displayHeight}"
+                                    columns="#{bindings.ActivitiesTabTable.hints.LastUpdatedBy.displayWidth}"
+                                    maximumLength="40" readOnly="true"
+                                    disabled="true">
+                        <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                      </af:inputText>
+                      <af:inputDate id="ActLastUpdatedDate"
+                                    value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                    label="#{bindings.ActLastUpdatedDate.hints.label}"
+                                    required="#{bindings.ActLastUpdatedDate.hints.mandatory}"
+                                    readOnly="true" disabled="true">
+                        <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                      </af:inputDate>
+                    </af:panelFormLayout>
+                  </af:panelGroupLayout>
+                  <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                </f:facet>
+                 
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

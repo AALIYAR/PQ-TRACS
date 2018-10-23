@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="CategoryPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'ADMIN'}"/>
+  </parameters>
+  <executables>
+    <iterator id="CategoryIterator" Binds="TraxCategoryView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="CategoryIteratorCategoryViewCriteriaQuery"
+                  Binds="CategoryIterator" Criteria="CategoryViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="CategoryValuesIterator" Binds="TraxCategoryValueView2"
+              DataControl="TracsAdminServiceDataControl" RangeSize="10"/>
+  </executables>
+  <bindings>
+    <attributeValues id="CategoryName" IterBinding="CategoryIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CategoryType" IterBinding="CategoryIterator">
+      <AttrNames>
+        <Item Value="Type"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="CategorySingularFlag" IterBinding="CategoryIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="SingularFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="CategoryActiveFlag" IterBinding="CategoryIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="CategoryFullOrPartialFlag" IterBinding="CategoryIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="FullOrPartialFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="CategoryCreatedBy" IterBinding="CategoryIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CategoryCreatedDate" IterBinding="CategoryIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CategoryLastUpdatedBy" IterBinding="CategoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CategoryLastUpdatedDate"
+                     IterBinding="CategoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="CategoryTable" IterBinding="CategoryIterator">
+      <nodeDefinition Name="Category"
+                      DefName="com.pq.tracs.model.dao.CategoryView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="Type"/>
+          <Item Value="SingularFlag"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="FullOrPartialFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstCategory" IterBinding="CategoryIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousCategory" IterBinding="CategoryIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextCategory" IterBinding="CategoryIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastCategory" IterBinding="CategoryIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchCategory" IterBinding="CategoryIterator"
+                  DataControl="TracsAdminServiceDataControl"
+                  InstanceName="TracsAdminServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsAdminServiceDataControl.methodResults.TracsAdminServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchCategory.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchCategory.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchCategory.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyCategory" IterBinding="CategoryIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{pageFlowScope.rowKeyStrCategory}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateCategory" IterBinding="CategoryIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteCategory" IterBinding="CategoryIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="CategoryValuesValue"
+                     IterBinding="CategoryValuesIterator">
+      <AttrNames>
+        <Item Value="Value"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CategoryValuesOrderBy"
+                     IterBinding="CategoryValuesIterator">
+      <AttrNames>
+        <Item Value="OrderBy1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CategoryValuesDescription"
+                     IterBinding="CategoryValuesIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="CategoryValuesActiveFlag" IterBinding="CategoryValuesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="CategoryValuesCreatedBy"
+                     IterBinding="CategoryValuesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CategoryValuesCreatedDate"
+                     IterBinding="CategoryValuesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CategoryValuesLastUpdatedBy"
+                     IterBinding="CategoryValuesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CategoryValuesLastUpdatedDate"
+                     IterBinding="CategoryValuesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="CategoryValuesTable" IterBinding="CategoryValuesIterator">
+      <nodeDefinition Name="CategoryValues"
+                      DefName="com.pq.tracs.model.dao.CategoryValueView">
+        <AttrNames>
+          <Item Value="Value"/>
+          <Item Value="OrderBy1"/>
+          <Item Value="Description"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstCategoryValues" IterBinding="CategoryValuesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousCategoryValues" IterBinding="CategoryValuesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextCategoryValues" IterBinding="CategoryValuesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastCategoryValues" IterBinding="CategoryValuesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchCategoryValues"
+                  IterBinding="CategoryValuesIterator"
+                  DataControl="TracsAdminServiceDataControl"
+                  InstanceName="TracsAdminServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsAdminServiceDataControl.methodResults.TracsAdminServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchCategoryValues.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchCategoryValues.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchCategoryValues.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyCategoryValues"
+            IterBinding="CategoryValuesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrCategoryValues}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateCategoryValues" IterBinding="CategoryValuesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteCategoryValues" IterBinding="CategoryValuesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

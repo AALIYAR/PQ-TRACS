@@ -1,0 +1,287 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="CatalogTopLc"
+                             partialTriggers=" Catalogfbb CatalogNewButton CatalogSaveButton0 CatalogCancelButton0"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateCatalog ? nls['INSERT_TITLE_CATALOG'] :  (jhsUserRoles['Catalog.update'] ? nls['EDIT_TITLE_CATALO: #{bindings.CatalogDescription.inputValue}'] : nls['VIEW_TITLE_CATALO: #{bindings.CatalogDescription.inputValue}'])  }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="Catalogfbb" layout="horizontal"
+                                       rendered="#{ bindings.CatalogIterator.currentRow!=null  and bindings.CatalogIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateCatalog and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="CatalogFirst CatalogPrevious CatalogNext CatalogLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstCatalog.execute}"
+                                             id="CatalogFirst"
+                                             partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.CatalogIterator.rangeStart+bindings.CatalogIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.CatalogIterator.rangeStart+bindings.CatalogIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousCatalog.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="CatalogPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.CatalogIterator.rangeStart+bindings.CatalogIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.CatalogIterator.rangeStart+bindings.CatalogIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.CatalogIterator.rangeStart+bindings.CatalogIterator.currentRowIndexInRange+1} / #{bindings.CatalogIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextCatalog.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="CatalogNext"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.CatalogIterator.rangeStart+bindings.CatalogIterator.currentRowIndexInRange+1 lt bindings.CatalogIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.CatalogIterator.rangeStart+bindings.CatalogIterator.currentRowIndexInRange+1 lt bindings.CatalogIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastCatalog.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="CatalogLast"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.CatalogIterator.rangeStart+bindings.CatalogIterator.currentRowIndexInRange+1 lt bindings.CatalogIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.CatalogIterator.rangeStart+bindings.CatalogIterator.currentRowIndexInRange+1 lt bindings.CatalogIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateCatalog.execute}"
+                                             action="CreateCatalog"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_CATALOG']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateCatalog and (true) and (jhsUserRoles['Catalog.create'])}"
+                                             id="CatalogNewButton"></af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="CatalogPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveCatalog.execute}"
+                                      rendered="#{((jhsUserRoles['Catalog.create']) or (jhsUserRoles['Catalog.update'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="CatalogSaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="CatalogCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.CatalogIterator.findMode!='true'}"
+                       id="CatalogSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.CatalogIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp"
+                                  id="CatalogNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="CatalogFC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="3"
+                                    id="CatalogFI">
+                  <af:inputText id="CatalogDescription"
+                                value="#{bindings.CatalogDescription.inputValue}"
+                                label="#{bindings.CatalogDescription.hints.label}"
+                                required="#{bindings.CatalogDescription.hints.mandatory}"
+                                rows="2"
+                                columns="#{bindings.CatalogDescription.hints.displayWidth}"
+                                maximumLength="400"
+                                readOnly="#{((pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.create']))) or ((!pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.update'])))}">
+                    <f:validator binding="#{bindings.CatalogDescription.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="CatalogCatalogRootMinimum"
+                                value="#{bindings.CatalogCatalogRootMinimum.inputValue}"
+                                label="#{bindings.CatalogCatalogRootMinimum.hints.label}"
+                                required="false"
+                                rows="#{bindings.CatalogCatalogRootMinimum.hints.displayHeight}"
+                                columns="#{bindings.CatalogCatalogRootMinimum.hints.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{((pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.create']))) or ((!pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.update'])))}">
+                    <f:validator binding="#{bindings.CatalogCatalogRootMinimum.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="CatalogCatalogRootMaximum"
+                                value="#{bindings.CatalogCatalogRootMaximum.inputValue}"
+                                label="#{bindings.CatalogCatalogRootMaximum.hints.label}"
+                                required="false"
+                                rows="#{bindings.CatalogCatalogRootMaximum.hints.displayHeight}"
+                                columns="#{bindings.CatalogCatalogRootMaximum.hints.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{((pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.create']))) or ((!pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.update'])))}">
+                    <f:validator binding="#{bindings.CatalogCatalogRootMaximum.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="CatalogCatalogRootNextval"
+                                value="#{bindings.CatalogCatalogRootNextval.inputValue}"
+                                label="#{bindings.CatalogCatalogRootNextval.hints.label}"
+                                required="false"
+                                rows="#{bindings.CatalogCatalogRootNextval.hints.displayHeight}"
+                                columns="#{bindings.CatalogCatalogRootNextval.hints.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{((pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.create']))) or ((!pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.update'])))}">
+                    <f:validator binding="#{bindings.CatalogCatalogRootNextval.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="CatalogCatalogSuffixStart"
+                                value="#{bindings.CatalogCatalogSuffixStart.inputValue}"
+                                label="#{bindings.CatalogCatalogSuffixStart.hints.label}"
+                                required="true"
+                                rows="#{bindings.CatalogCatalogSuffixStart.hints.displayHeight}"
+                                columns="#{bindings.CatalogCatalogSuffixStart.hints.displayWidth}"
+                                maximumLength="10"
+                                readOnly="#{((pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.create']))) or ((!pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.update'])))}">
+                    <f:validator binding="#{bindings.CatalogCatalogSuffixStart.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="CatalogProductLine"
+                                      value="#{bindings.CatalogProductLine.inputValue}"
+                                      label="#{bindings.CatalogProductLine.hints.label}"
+                                      required="#{bindings.CatalogProductLine.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.create']))) or ((!pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.update'])))}">
+                    <f:selectItems value="#{bindings.CatalogProductLine.items}"/>
+                  </af:selectOneChoice>
+                  <af:panelLabelAndMessage label="#{bindings.CatalogContentOwner.hints.label}"
+                                           showRequired="#{bindings.CatalogContentOwner.hints.mandatory}"
+                                           id="CatalogContentOwnerPlam">
+                    <af:inputText id="CatalogContentOwner"
+                                  showRequired="#{bindings.CatalogContentOwner.hints.mandatory}"
+                                  columns="#{bindings.CatalogContentOwner.hints.displayWidth}"
+                                  maximumLength="400"
+                                  readOnly="#{((pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.create']))) or ((!pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.update'])))}"
+                                  value="#{bindings.CatalogContentOwner.inputValue}"
+                                  autoSubmit="true"
+                                  valueChangeListener="#{pageFlowScope.CatalogContentOwnerLovItem.validateWithLov}"
+                                  binding="#{pageFlowScope.CatalogContentOwnerLovItem.lovField}"
+                                  simple="true">
+                      <f:validator binding="#{bindings.CatalogContentOwner.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl0" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink immediate="true" partialSubmit="true"
+                                        rendered="#{!(((pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.create']))) or ((!pageFlowScope.createModes.CreateCatalog) and (!(jhsUserRoles['Catalog.update']))))}"
+                                        id="cl0"
+                                        actionListener="#{pageFlowScope.CatalogContentOwnerLovItem.lovIconClicked}">
+                          <af:image source="/jheadstart/images/lov.png"
+                                    id="CatalogContentOwnerIcon"
+                                    clientComponent="true"/>
+                        </af:commandLink>
+                        <af:commandButton text="hidden" id="cb2"
+                                          rendered="false"
+                                          action="#{pageFlowScope.CatalogContentOwnerLovItem.validationAction}"
+                                          partialSubmit="true" immediate="true"
+                                          binding="#{pageFlowScope.CatalogContentOwnerLovItem.validationButton}"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:inputText id="CatalogCreatedBy"
+                                value="#{bindings.CatalogCreatedBy.inputValue}"
+                                label="#{bindings.CatalogCreatedBy.hints.label}"
+                                required="#{bindings.CatalogCreatedBy.hints.mandatory}"
+                                rows="#{bindings.CatalogCreatedBy.hints.displayHeight}"
+                                columns="#{bindings.CatalogCreatedBy.hints.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.CatalogCreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="CatalogCreatedDate"
+                                value="#{bindings.CatalogCreatedDate.inputValue}"
+                                label="#{bindings.CatalogCreatedDate.hints.label}"
+                                required="#{bindings.CatalogCreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="CatalogLastUpdatedBy"
+                                value="#{bindings.CatalogLastUpdatedBy.inputValue}"
+                                label="#{bindings.CatalogLastUpdatedBy.hints.label}"
+                                required="#{bindings.CatalogLastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.CatalogLastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.CatalogLastUpdatedBy.hints.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.CatalogLastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="CatalogLastUpdatedDate"
+                                value="#{bindings.CatalogLastUpdatedDate.inputValue}"
+                                label="#{bindings.CatalogLastUpdatedDate.hints.label}"
+                                required="#{bindings.CatalogLastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="jhsLovPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher"
+                  binding="#{pageFlowScope.jhsLovPopup.component}">
+          <af:dialog modal="true" title="#{pageFlowScope.LovItemBean.lovTitle}"
+                     type="none" id="dialog0" resize="on"
+                     stretchChildren="first"
+                     contentWidth="#{pageFlowScope.LovItemBean.lovWidth}"
+                     contentHeight="#{pageFlowScope.LovItemBean.lovHeight}">
+            <af:region value="#{bindings.LovTaskFlow.regionModel}"
+                       id="region0"/>
+            <f:facet name="buttonBar">
+              <af:group id="g0">
+                <af:commandButton textAndAccessKey="#{nls['OK_BUTTON_LABEL']}"
+                                  id="cb0" partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.handleLovSelection}"/>
+                <af:commandButton textAndAccessKey="#{nls['CANCEL']}" id="cb1"
+                                  partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.cancelLov}"/>
+              </af:group>
+            </f:facet>
+          </af:dialog>
+          <af:clientListener method="popupClosedListener" type="popupClosed"/>
+          <af:serverListener type="serverPopupClosed"
+                             method="#{pageFlowScope.LovItemBean.cancelLov}"/>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

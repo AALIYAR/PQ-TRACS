@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.62.29" id="TargetTitlesLOVPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <iterator id="TargetTitlesLOVIterator" Binds="TitleLOV1"
+              DataControl="TracsServiceDataControl" RangeSize="50"
+              RefreshCondition="#{pageFlowScope.searchTargetTitlesLOV.emptyRowSetCreated}"/>
+    <invokeAction id="ExecuteQueryTargetTitlesLOVInvoke"
+                  Binds="ExecuteQueryTargetTitlesLOV" Refresh="renderModel"
+                  RefreshCondition="#{jhsPageChanged}"/>
+  </executables>
+  <bindings>
+    <action id="ExecuteQueryTargetTitlesLOV"
+            IterBinding="TargetTitlesLOVIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues id="TargetTitlesLOVId"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetTitlesLOVContentOwnerId"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetTitlesLOVTargetTrackingNo"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetTitlesLOVCatalogNumber"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetTitlesLOVLongTitle"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetTitlesLOVContentOwner"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="ContentOwner"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetTitlesLOVShortTitle"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="ShortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetTitlesLOVPublicationStartYear"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="PublicationStartYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetTitlesLOVPublicationEndYear"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="PublicationEndYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetTitlesLOVFilmAvailability"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="FilmAvailability"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetTitlesLOVCatalogRoot"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="CatalogRoot"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetTitlesLOVSite"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="Site"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TargetTitlesLOVContentOwnerNo"
+                     IterBinding="TargetTitlesLOVIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerNo"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="TargetTitlesLOVTable" IterBinding="TargetTitlesLOVIterator">
+      <nodeDefinition Name="TargetTitlesLOV"
+                      DefName="com.pq.tracs.model.lookups.TitleLOV">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="ContentOwner"/>
+          <Item Value="ShortTitle"/>
+          <Item Value="PublicationStartYear"/>
+          <Item Value="PublicationEndYear"/>
+          <Item Value="FilmAvailability"/>
+          <Item Value="CatalogRoot"/>
+          <Item Value="Site"/>
+          <Item Value="ContentOwnerNo"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstTargetTitlesLOV" IterBinding="TargetTitlesLOVIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousTargetTitlesLOV" IterBinding="TargetTitlesLOVIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextTargetTitlesLOV" IterBinding="TargetTitlesLOVIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastTargetTitlesLOV" IterBinding="TargetTitlesLOVIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchTargetTitlesLOV"
+                  IterBinding="TargetTitlesLOVIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchTargetTitlesLOV.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchTargetTitlesLOV.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchTargetTitlesLOV.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyTargetTitlesLOV"
+            IterBinding="TargetTitlesLOVIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrTargetTitlesLOV}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

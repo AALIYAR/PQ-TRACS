@@ -1,0 +1,2032 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.62.29" id="ProcessingGroupsPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'CO, AutoAdd, RM'}"/>
+  </parameters>
+  <executables>
+    <iterator id="ProcessingGroupsIterator" Binds="ProcessingGroupView"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="ProcessingGroupsIteratorProcessingGroupViewCriteriaQuery"
+                  Binds="ProcessingGroupsIterator"
+                  Criteria="ProcessingGroupViewCriteria"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="ProcessingGroupNo"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ProcessingGroupTargetsIterator"
+              Binds="PrmOpportunityTargetView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ProcessingGroupTargetsIteratorPrmOpportunityTargetViewCriteriaQuery"
+                  Binds="ProcessingGroupTargetsIterator"
+                  Criteria="PrmOpportunityTargetViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="LongTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ProcessingGroupAttachmentsIterator"
+              Binds="PrmOpportunityAttachmentView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ProcessingGroupAttachmentsIteratorPrmOpportunityAttachmentViewCriteriaQuery"
+                  Binds="ProcessingGroupAttachmentsIterator"
+                  Criteria="PrmOpportunityAttachmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttachmentType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ProcessingGroupActivitiesIterator"
+              Binds="PrmOpportunityActivityView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ProcessingGroupActivitiesIteratorPrmOpportunityActivityViewCriteriaQuery"
+                  Binds="ProcessingGroupActivitiesIterator"
+                  Criteria="PrmOpportunityActivityViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Type"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <variableIterator id="variables">
+      <variable Name="sd2EditLinkVar" Type="String"/>
+    </variableIterator>
+    <iterator id="ProcessingGroupProcessStatusIterator"
+              Binds="PrmOpportunityProcessStatusView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ProcessingGroupProcessStatusIteratorPrmOpportunityProcessStatusViewCriteriaQuery"
+                  Binds="ProcessingGroupProcessStatusIterator"
+                  Criteria="PrmOpportunityProcessStatusViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="StatusType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryProcessingGroupProcessStatusInvoke"
+                  Binds="ExecuteQueryProcessingGroupProcessStatus"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="ProcessingGroupStatusIterator"
+              Binds="PrmProcessingGroupStatusView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ProcessingGroupStatusIteratorPrmProcessingGroupStatusViewCriteriaQuery"
+                  Binds="ProcessingGroupStatusIterator"
+                  Criteria="PrmProcessingGroupStatusViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="StatusCode"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ProcessingGroupCOContractIterator"
+              Binds="COActiveContractView" DataControl="TracsServiceDataControl"
+              RangeSize="10"/>
+    <searchRegion id="ProcessingGroupCOContractIteratorContractViewCriteriaAdvancedQuery"
+                  Binds="ProcessingGroupCOContractIterator"
+                  Criteria="ContractViewCriteriaAdvanced"
+                  InitialQueryOverridden="true" DefaultQuickSearchAttrName="Id"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryProcessingGroupCOContractInvoke"
+                  Binds="ExecuteQueryProcessingGroupCOContract"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="ProcessingGroupContractIterator"
+              Binds="PrmOpportunityContractView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ProcessingGroupContractIteratorPrmOpportunityContractViewCriteriaQuery"
+                  Binds="ProcessingGroupContractIterator"
+                  Criteria="PrmOpportunityContractViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="ContractNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryProcessingGroupContractInvoke"
+                  Binds="ExecuteQueryProcessingGroupContract"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="ProcessingGroupPreResultIterator" Binds="TraxPreResultView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ProcessingGroupPreResultIteratorTraxPreResultViewCriteriaQuery"
+                  Binds="ProcessingGroupPreResultIterator"
+                  Criteria="TraxPreResultViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="OutcomeNo"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryProcessingGroupPreResultInvoke"
+                  Binds="ExecuteQueryProcessingGroupPreResult"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="PGPreResultTargetIterator" Binds="TraxPreResultTargetView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="PGPreResultTargetIteratorTraxPreResultTargetViewCriteriaQuery"
+                  Binds="PGPreResultTargetIterator"
+                  Criteria="TraxPreResultTargetViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="TargetTrackingNo"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryPGPreResultTargetInvoke"
+                  Binds="ExecuteQueryPGPreResultTarget" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="ProcessingGroupChangeHistoryIterator"
+              Binds="PrmJuOpportunityView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <invokeAction id="ExecuteQueryProcessingGroupChangeHistoryInvoke"
+                  Binds="ExecuteQueryProcessingGroupChangeHistory"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="ProcessingGroupTargetAssignmentIterator"
+              Binds="PrmOpportunityTargetAssignmentView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ProcessingGroupTargetAssignmentIteratorPrmOpportunityTargetAssignmentViewCriteriaQuery"
+                  Binds="ProcessingGroupTargetAssignmentIterator"
+                  Criteria="PrmOpportunityTargetAssignmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="LongTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryProcessingGroupTargetAssignmentInvoke"
+                  Binds="ExecuteQueryProcessingGroupTargetAssignment"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <taskFlow id="LovTaskFlow"
+              taskFlowId="#{pageFlowScope.jhsLovTaskFlowManager.currentTaskFlowId}"
+              activation="deferred"
+              parametersMap="#{pageFlowScope.jhsLovTaskFlowManager.currentParamMap}"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings>
+    <attributeValues id="PGId" IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGContentOwnerId"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGOpportunityNo"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="ProcessingGroupNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGAccountNumber"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="AccountNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="ProcessingGroupsIterator"
+                  id="PGAccountNameLOV" Uses="LOV_AccountName2"/>
+    <attributeValues id="PGAccountNameLink"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGAccountSite" IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="AccountSite"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProcessingGroupsIterator" id="PGCountry"
+          Uses="LOV_Country" StaticList="false"/>
+    <attributeValues id="PGKeyAccountLevel"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="KeyAccountLevel"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGName" IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="ProcessingGroupName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGAllianceManager"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="AllianceManager"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGDescription" IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProcessingGroupsIterator" id="PGOpportunityType"
+          Uses="LOV_ProcessingGroupType" StaticList="false"/>
+    <list IterBinding="ProcessingGroupsIterator" id="PGCurrentStatus"
+          Uses="LOV_ProcessingStatus" StaticList="false"/>
+    <attributeValues id="PGCataloguedCount"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="CataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGUncataloguedCount"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="UncataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProcessingGroupsIterator" id="PGCurrentPreStatus"
+          Uses="LOV_CurrentPreStatus" StaticList="false"/>
+    <list IterBinding="ProcessingGroupsIterator"
+          id="PGCurrentCatalogingStatus" Uses="LOV_CurrentCatalogingStatus"
+          StaticList="false"/>
+    <list IterBinding="ProcessingGroupsIterator" id="PGCurrentAgreementStatus"
+          Uses="LOV_CurrentAgreementStatus" StaticList="false"/>
+    <attributeValues id="PGSummary" IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="Summary"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="PGAutoAddTargetsFlag" IterBinding="ProcessingGroupsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="AutoAddTargetsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="PGOpenAccessFlag" IterBinding="ProcessingGroupsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="OpenAccessFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="PGContractId" IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGContractNumber"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGTechnicalContactId"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="TechnicalContactId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGTechnicalContact"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="TechnicalContact"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGCreatedBy" IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGCreatedDate" IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGCreatedBySearch"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="CreatedBySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGLastUpdatedBy"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGLastUpdatedDate"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGLastUpdatedBySearch"
+                     IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PGDocType" IterBinding="ProcessingGroupsIterator">
+      <AttrNames>
+        <Item Value="DocType"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupsTable" IterBinding="ProcessingGroupsIterator">
+      <nodeDefinition Name="ProcessingGroups"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="ProcessingGroupNo"/>
+          <Item Value="AccountNumber"/>
+          <Item Value="AccountName2"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountSite"/>
+          <Item Value="Country"/>
+          <Item Value="KeyAccountLevel"/>
+          <Item Value="ProcessingGroupName"/>
+          <Item Value="AllianceManager"/>
+          <Item Value="Description"/>
+          <Item Value="ProcessingGroupType"/>
+          <Item Value="ProcessingStatus"/>
+          <Item Value="CataloguedCount"/>
+          <Item Value="UncataloguedCount"/>
+          <Item Value="CurrentPreStatus"/>
+          <Item Value="CurrentCatalogingStatus"/>
+          <Item Value="CurrentAgreementStatus"/>
+          <Item Value="Summary"/>
+          <Item Value="AutoAddTargetsFlag"/>
+          <Item Value="OpenAccessFlag"/>
+          <Item Value="ContractId"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="TechnicalContactId"/>
+          <Item Value="TechnicalContact"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="CreatedBySearch"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="LastUpdatedBySearch"/>
+          <Item Value="DocType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroups" IterBinding="ProcessingGroupsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroups" IterBinding="ProcessingGroupsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroups" IterBinding="ProcessingGroupsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroups" IterBinding="ProcessingGroupsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroups"
+            IterBinding="ProcessingGroupsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroups}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateProcessingGroups" IterBinding="ProcessingGroupsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteProcessingGroups" IterBinding="ProcessingGroupsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="sd0TitleId"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0TargetTrackingNo"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0PrmTargetedProductId"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="PrmTargetedProductId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0TargetTrackingNoLink"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0CatalogNumberLink"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0CatalogNumber"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0LongTitle"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProcessingGroupTargetsIterator"
+          id="sd0PrimaryPmClass" Uses="LOV_PrimaryPmClass" StaticList="false"/>
+    <list IterBinding="ProcessingGroupTargetsIterator"
+          id="sd0TargetStatus" Uses="LOV_TargetStatus" StaticList="false"/>
+    <attributeValues id="sd0PrdId" IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="PrdId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0ProductName"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="ProductName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProcessingGroupTargetsIterator"
+          id="sd0TargetPriority" Uses="LOV_TargetPriority" StaticList="false"/>
+    <list IterBinding="ProcessingGroupTargetsIterator"
+          id="sd0TargetType" Uses="LOV_TargetType" StaticList="false"/>
+    <button id="sd0AiTargetingFlag" IterBinding="ProcessingGroupTargetsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="AiTargetingFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="sd0AddedDate"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0RemovedDate"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0CreatedBy"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0CreatedDate"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0LastUpdatedBy"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0LastUpdatedDate"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0AddedDate1"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="AddedDate1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd0RemovedDate1"
+                     IterBinding="ProcessingGroupTargetsIterator">
+      <AttrNames>
+        <Item Value="RemovedDate1"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupTargetsTable"
+          IterBinding="ProcessingGroupTargetsIterator">
+      <nodeDefinition Name="ProcessingGroupTargets"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityTargetView">
+        <AttrNames>
+          <Item Value="TitleId"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="PrmTargetedProductId"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="PrimaryPmClass"/>
+          <Item Value="TargetStatus"/>
+          <Item Value="PrdId"/>
+          <Item Value="ProductName"/>
+          <Item Value="TargetPriority"/>
+          <Item Value="TargetType"/>
+          <Item Value="AiTargetingFlag"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="AddedDate1"/>
+          <Item Value="RemovedDate1"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroupTargets"
+            IterBinding="ProcessingGroupTargetsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroupTargets"
+            IterBinding="ProcessingGroupTargetsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroupTargets"
+            IterBinding="ProcessingGroupTargetsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroupTargets"
+            IterBinding="ProcessingGroupTargetsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroupTargets"
+            IterBinding="ProcessingGroupTargetsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroupTargets}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateProcessingGroupTargets"
+            IterBinding="ProcessingGroupTargetsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteProcessingGroupTargets"
+            IterBinding="ProcessingGroupTargetsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="sd1Name"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1AttachmentType"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="AttachmentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1Attachment"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1AttachmentDL"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1Description"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1FileSize"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="FileSize"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1CreatedBy"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1CreatedDate"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1LastUpdatedBy"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1LastUpdatedDate"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupAttachmentsTable"
+          IterBinding="ProcessingGroupAttachmentsIterator">
+      <nodeDefinition Name="ProcessingGroupAttachments"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityAttachmentView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="AttachmentType"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Description"/>
+          <Item Value="FileSize"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroupAttachments}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="sd2Id" IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2JhsUsersId"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="JhsUsersId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2ContactId"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="ContactId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2EditLink" IterBinding="variables">
+      <AttrNames>
+        <Item Value="sd2EditLinkVar"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false"
+                  IterBinding="ProcessingGroupActivitiesIterator"
+                  id="sd2Owner" Uses="LOV_Owner"/>
+    <list IterBinding="ProcessingGroupActivitiesIterator"
+          id="sd2Type" Uses="LOV_Type" StaticList="false"/>
+    <list IterBinding="ProcessingGroupActivitiesIterator"
+          id="sd2SubType" Uses="LOV_SubType" StaticList="false"/>
+    <attributeValues id="sd2Description"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProcessingGroupActivitiesIterator"
+          id="sd2Status" Uses="LOV_Status" StaticList="false"/>
+    <list IterBinding="ProcessingGroupActivitiesIterator"
+          id="sd2Priority" Uses="LOV_Priority" StaticList="false"/>
+    <attributeValues id="sd2ContactName"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="ContactName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2DueDate"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="DueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2ExpectedStartDate"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="ExpectedStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2ActualStartDate"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="ActualStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2CompletionDate"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="CompletionDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2HoursSpent"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="HoursSpent"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2Notes"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="sd2PrimaryFlag" IterBinding="ProcessingGroupActivitiesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="sd2CreatedBy"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2CreatedDate"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2LastUpdatedBy"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2LastUpdatedDate"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2AddedDate"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2UserType"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="UserType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd2AddDate"
+                     IterBinding="ProcessingGroupActivitiesIterator">
+      <AttrNames>
+        <Item Value="AddDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupActivitiesTable"
+          IterBinding="ProcessingGroupActivitiesIterator">
+      <nodeDefinition Name="ProcessingGroupActivities"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityActivityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="JhsUsersId"/>
+          <Item Value="ContactId"/>
+          <Item Value="Owner"/>
+          <Item Value="Type"/>
+          <Item Value="SubType"/>
+          <Item Value="Description"/>
+          <Item Value="Status"/>
+          <Item Value="Priority"/>
+          <Item Value="ContactName"/>
+          <Item Value="DueDate"/>
+          <Item Value="ExpectedStartDate"/>
+          <Item Value="ActualStartDate"/>
+          <Item Value="CompletionDate"/>
+          <Item Value="HoursSpent"/>
+          <Item Value="Notes"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="AddedDate"/>
+          <Item Value="UserType"/>
+          <Item Value="AddDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroupActivities"
+            IterBinding="ProcessingGroupActivitiesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroupActivities"
+            IterBinding="ProcessingGroupActivitiesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroupActivities"
+            IterBinding="ProcessingGroupActivitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroupActivities"
+            IterBinding="ProcessingGroupActivitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroupActivities"
+            IterBinding="ProcessingGroupActivitiesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroupActivities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateProcessingGroupActivities"
+            IterBinding="ProcessingGroupActivitiesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="ExecuteQueryProcessingGroupProcessStatus"
+            IterBinding="ProcessingGroupProcessStatusIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <list IterBinding="ProcessingGroupProcessStatusIterator"
+          id="sd3StatusType" Uses="LOV_StatusType" StaticList="false"/>
+    <list IterBinding="ProcessingGroupProcessStatusIterator"
+          id="sd3StatusCode" Uses="LOV_StatusCode" StaticList="false"/>
+    <attributeValues id="sd3StatusDate"
+                     IterBinding="ProcessingGroupProcessStatusIterator">
+      <AttrNames>
+        <Item Value="StatusDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd3StatusNote"
+                     IterBinding="ProcessingGroupProcessStatusIterator">
+      <AttrNames>
+        <Item Value="StatusNote"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd3CreatedBy"
+                     IterBinding="ProcessingGroupProcessStatusIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd3CreatedDate"
+                     IterBinding="ProcessingGroupProcessStatusIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd3LastUpdatedBy"
+                     IterBinding="ProcessingGroupProcessStatusIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd3LastUpdatedDate"
+                     IterBinding="ProcessingGroupProcessStatusIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupProcessStatusTable"
+          IterBinding="ProcessingGroupProcessStatusIterator">
+      <nodeDefinition Name="ProcessingGroupProcessStatus"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityProcessStatusView">
+        <AttrNames>
+          <Item Value="StatusType"/>
+          <Item Value="StatusCode"/>
+          <Item Value="StatusDate"/>
+          <Item Value="StatusNote"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroupProcessStatus"
+            IterBinding="ProcessingGroupProcessStatusIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroupProcessStatus"
+            IterBinding="ProcessingGroupProcessStatusIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroupProcessStatus"
+            IterBinding="ProcessingGroupProcessStatusIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroupProcessStatus"
+            IterBinding="ProcessingGroupProcessStatusIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroupProcessStatus"
+            IterBinding="ProcessingGroupProcessStatusIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroupProcessStatus}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="DeleteProcessingGroupProcessStatus"
+            IterBinding="ProcessingGroupProcessStatusIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="ProcessingGroupStatusId"
+                     IterBinding="ProcessingGroupStatusIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ProcessingGroupStatusPrmOpportunityId"
+                     IterBinding="ProcessingGroupStatusIterator">
+      <AttrNames>
+        <Item Value="PrmOpportunityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ProcessingGroupStatusStatusCode"
+                     IterBinding="ProcessingGroupStatusIterator">
+      <AttrNames>
+        <Item Value="StatusCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ProcessingGroupStatusStatusDate"
+                     IterBinding="ProcessingGroupStatusIterator">
+      <AttrNames>
+        <Item Value="StatusDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ProcessingGroupStatusStatusNote"
+                     IterBinding="ProcessingGroupStatusIterator">
+      <AttrNames>
+        <Item Value="StatusNote"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ProcessingGroupStatusCreatedBy"
+                     IterBinding="ProcessingGroupStatusIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ProcessingGroupStatusCreatedDate"
+                     IterBinding="ProcessingGroupStatusIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ProcessingGroupStatusLastUpdatedBy"
+                     IterBinding="ProcessingGroupStatusIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ProcessingGroupStatusLastUpdatedDate"
+                     IterBinding="ProcessingGroupStatusIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupStatusTable"
+          IterBinding="ProcessingGroupStatusIterator">
+      <nodeDefinition Name="ProcessingGroupStatus"
+                      DefName="com.pq.tracs.model.vo.PrmProcessingGroupStatusView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="PrmOpportunityId"/>
+          <Item Value="StatusCode"/>
+          <Item Value="StatusDate"/>
+          <Item Value="StatusNote"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroupStatus"
+            IterBinding="ProcessingGroupStatusIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroupStatus"
+            IterBinding="ProcessingGroupStatusIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroupStatus"
+            IterBinding="ProcessingGroupStatusIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroupStatus"
+            IterBinding="ProcessingGroupStatusIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroupStatus"
+            IterBinding="ProcessingGroupStatusIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroupStatus}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateProcessingGroupStatus"
+            IterBinding="ProcessingGroupStatusIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteProcessingGroupStatus"
+            IterBinding="ProcessingGroupStatusIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryProcessingGroupCOContract"
+            IterBinding="ProcessingGroupCOContractIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="sd5Id" IterBinding="ProcessingGroupCOContractIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="sd5AttTitles" DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="addTitlesToContract"
+                  ReturnName="TracsServiceDataControl.methodResults.addTitlesToContract_TracsServiceDataControl_dataProvider_addTitlesToContract_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="pContractId" NDValue="#{row.Id}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="pOppId" NDValue="#{bindings.PGId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+    </methodAction>
+    <attributeValues id="sd5ContractNumber"
+                     IterBinding="ProcessingGroupCOContractIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProcessingGroupCOContractIterator"
+          id="sd5AutoAdd" Uses="LOV_AutoAdd" StaticList="false"/>
+    <attributeValues id="sd5ContentOwner2"
+                     IterBinding="ProcessingGroupCOContractIterator">
+      <AttrNames>
+        <Item Value="ContentOwner2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd5Site"
+                     IterBinding="ProcessingGroupCOContractIterator">
+      <AttrNames>
+        <Item Value="Site"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProcessingGroupCOContractIterator"
+          id="sd5Form" Uses="LOV_Form" StaticList="false"/>
+    <list IterBinding="ProcessingGroupCOContractIterator"
+          id="sd5Type" Uses="LOV_Type" StaticList="false"/>
+    <list IterBinding="ProcessingGroupCOContractIterator"
+          id="sd5Status" Uses="LOV_Status" StaticList="false"/>
+    <attributeValues id="sd5EffectiveDate"
+                     IterBinding="ProcessingGroupCOContractIterator">
+      <AttrNames>
+        <Item Value="EffectiveDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd5ExpirationDate"
+                     IterBinding="ProcessingGroupCOContractIterator">
+      <AttrNames>
+        <Item Value="ExpirationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd5CreatedBy"
+                     IterBinding="ProcessingGroupCOContractIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd5CreatedDate"
+                     IterBinding="ProcessingGroupCOContractIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd5LastUpdatedBy"
+                     IterBinding="ProcessingGroupCOContractIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd5LastUpdatedDate"
+                     IterBinding="ProcessingGroupCOContractIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupCOContractTable"
+          IterBinding="ProcessingGroupCOContractIterator">
+      <nodeDefinition Name="ProcessingGroupCOContract"
+                      DefName="com.pq.tracs.model.dao.ContractView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="AutoAdd"/>
+          <Item Value="ContentOwner2"/>
+          <Item Value="Site"/>
+          <Item Value="Form"/>
+          <Item Value="Type"/>
+          <Item Value="Status"/>
+          <Item Value="EffectiveDate"/>
+          <Item Value="ExpirationDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroupCOContract"
+            IterBinding="ProcessingGroupCOContractIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroupCOContract"
+            IterBinding="ProcessingGroupCOContractIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroupCOContract"
+            IterBinding="ProcessingGroupCOContractIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroupCOContract"
+            IterBinding="ProcessingGroupCOContractIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroupCOContract"
+            IterBinding="ProcessingGroupCOContractIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroupCOContract}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="sd4PrmOpportunityId"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="PrmOpportunityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4ContractId"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4ContentOwnerId"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="sd4AttTitles" DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="addTitlesToContract"
+                  ReturnName="TracsServiceDataControl.methodResults.addTitlesToContract_TracsServiceDataControl_dataProvider_addTitlesToContract_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="pContractId" NDValue="#{row.ContractId}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="pOppId" NDValue="#{row.PrmOpportunityId}"
+                 NDType="oracle.jbo.domain.Number"/>
+    </methodAction>
+    <attributeValues id="sd4ContractNumber"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false"
+                  IterBinding="ProcessingGroupContractIterator"
+                  id="sd4ContractNumber2" Uses="LOV_ContractNumber2"/>
+    <attributeValues id="sd4AutoAdd"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="AutoAdd"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4AccountNo"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="AccountNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4AccountName"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4Form" IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="Form"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4Type" IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="Type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4Status"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="Status"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4EffectiveDate"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="EffectiveDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4ExpirationDate"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="ExpirationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4CreatedBy"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4CreatedDate"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4LastUpdatedBy"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd4LastUpdatedDate"
+                     IterBinding="ProcessingGroupContractIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupContractTable"
+          IterBinding="ProcessingGroupContractIterator">
+      <nodeDefinition Name="ProcessingGroupContract"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityContractView">
+        <AttrNames>
+          <Item Value="PrmOpportunityId"/>
+          <Item Value="ContractId"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber2"/>
+          <Item Value="AutoAdd"/>
+          <Item Value="AccountNo"/>
+          <Item Value="AccountName"/>
+          <Item Value="Form"/>
+          <Item Value="Type"/>
+          <Item Value="Status"/>
+          <Item Value="EffectiveDate"/>
+          <Item Value="ExpirationDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroupContract}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteProcessingGroupContract"
+            IterBinding="ProcessingGroupContractIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryProcessingGroupPreResult"
+            IterBinding="ProcessingGroupPreResultIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="sd7OutcomeNo"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="OutcomeNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7PreBatchId"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="PreBatchId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7ChildId"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="ChildId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7PqPlatform"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="PqPlatform"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7PqMfgFlow"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="PqMfgFlow"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7PqReceipt"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="PqReceipt"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7IlluminaPlatform"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="IlluminaPlatform"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7IlluminaMfgFlow"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="IlluminaMfgFlow"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7IlluminaReceipt"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="IlluminaReceipt"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7PrefImageStorage"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="PrefImageStorage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7MfgProcess"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="MfgProcess"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7RampType"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="RampType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7OutcomeNotes"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="OutcomeNotes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7DatePreCompleted"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="DatePreCompleted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7PrePerformedBy"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="PrePerformedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7PreTiming"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="PreTiming"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7PqTargeted"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="PqTargeted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7IlluminaTargeted"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="IlluminaTargeted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7Abstract11"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="Abstract11"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7Indexing"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="Indexing"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7UnstructuredText"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="UnstructuredText"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7Fulltext"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="Fulltext"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7TextAndGraphics"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="TextAndGraphics"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7ArticleImage"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="ArticleImage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7FullPageImage"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="FullPageImage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7CitationReference"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="CitationReference"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7MultimediaVideo"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="MultimediaVideo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7MultimediaTextBased"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="MultimediaTextBased"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7IllustrataObjects"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="IllustrataObjects"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7PreRequestDate"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="PreRequestDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7PreRequestedBy"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="PreRequestedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7CreatedBy"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7CreatedDate"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7LastUpdatedBy"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd7LastUpdatedDate"
+                     IterBinding="ProcessingGroupPreResultIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupPreResultTable"
+          IterBinding="ProcessingGroupPreResultIterator">
+      <nodeDefinition Name="ProcessingGroupPreResult"
+                      DefName="com.pq.tracs.model.vo.TraxPreResultView">
+        <AttrNames>
+          <Item Value="OutcomeNo"/>
+          <Item Value="PreBatchId"/>
+          <Item Value="ChildId"/>
+          <Item Value="PqPlatform"/>
+          <Item Value="PqMfgFlow"/>
+          <Item Value="PqReceipt"/>
+          <Item Value="IlluminaPlatform"/>
+          <Item Value="IlluminaMfgFlow"/>
+          <Item Value="IlluminaReceipt"/>
+          <Item Value="PrefImageStorage"/>
+          <Item Value="MfgProcess"/>
+          <Item Value="RampType"/>
+          <Item Value="OutcomeNotes"/>
+          <Item Value="DatePreCompleted"/>
+          <Item Value="PrePerformedBy"/>
+          <Item Value="PreTiming"/>
+          <Item Value="PqTargeted"/>
+          <Item Value="IlluminaTargeted"/>
+          <Item Value="Abstract11"/>
+          <Item Value="Indexing"/>
+          <Item Value="UnstructuredText"/>
+          <Item Value="Fulltext"/>
+          <Item Value="TextAndGraphics"/>
+          <Item Value="ArticleImage"/>
+          <Item Value="FullPageImage"/>
+          <Item Value="CitationReference"/>
+          <Item Value="MultimediaVideo"/>
+          <Item Value="MultimediaTextBased"/>
+          <Item Value="IllustrataObjects"/>
+          <Item Value="PreRequestDate"/>
+          <Item Value="PreRequestedBy"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroupPreResult"
+            IterBinding="ProcessingGroupPreResultIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroupPreResult"
+            IterBinding="ProcessingGroupPreResultIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroupPreResult"
+            IterBinding="ProcessingGroupPreResultIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroupPreResult"
+            IterBinding="ProcessingGroupPreResultIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroupPreResult"
+            IterBinding="ProcessingGroupPreResultIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroupPreResult}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryPGPreResultTarget"
+            IterBinding="PGPreResultTargetIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues id="pprtTargetTrackingNo"
+                     IterBinding="PGPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="pprtCatalogNumber"
+                     IterBinding="PGPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="pprtLongTitle" IterBinding="PGPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="pprtCreatedBy" IterBinding="PGPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="pprtCreatedDate"
+                     IterBinding="PGPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="pprtLastUpdatedBy"
+                     IterBinding="PGPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="pprtLastUpdatedDate"
+                     IterBinding="PGPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="PGPreResultTargetTable" IterBinding="PGPreResultTargetIterator">
+      <nodeDefinition Name="PGPreResultTarget"
+                      DefName="com.pq.tracs.model.vo.TraxPreResultTargetView">
+        <AttrNames>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstPGPreResultTarget" IterBinding="PGPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousPGPreResultTarget"
+            IterBinding="PGPreResultTargetIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextPGPreResultTarget" IterBinding="PGPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastPGPreResultTarget" IterBinding="PGPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyPGPreResultTarget"
+            IterBinding="PGPreResultTargetIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrPGPreResultTarget}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryProcessingGroupChangeHistory"
+            IterBinding="ProcessingGroupChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="sd6Id"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6ContentOwnerId"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6PrmOpportunityId"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PrmOpportunityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6JournaledUser"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="JournaledUser"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6JournaledDate"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="JournaledDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6OpportunityNo"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6Name"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6Description"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6OpportunityType"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="OpportunityType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6CurrentStatus"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CurrentStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6ReasonLost"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ReasonLost"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6CurrentPreStatus"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CurrentPreStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6CurrentCatalogingStatus"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CurrentCatalogingStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6CurrentAgreementStatus"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CurrentAgreementStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6ProbabilityPct"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ProbabilityPct"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6Priority"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Priority"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6ExpectedPipelines"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ExpectedPipelines"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6EstimatedCloseQuarter"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="EstimatedCloseQuarter"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6AgreementReceivedDate"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="AgreementReceivedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6ExclusivitySoughtObtained"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ExclusivitySoughtObtained"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6DocumentSigned"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="DocumentSigned"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6SummonDeepIndexingFlag"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="SummonDeepIndexingFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6Summary"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Summary"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6CreatedBy"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6CreatedDate"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6LastUpdatedBy"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd6LastUpdatedDate"
+                     IterBinding="ProcessingGroupChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupChangeHistoryTable"
+          IterBinding="ProcessingGroupChangeHistoryIterator">
+      <nodeDefinition Name="ProcessingGroupChangeHistory"
+                      DefName="com.pq.tracs.model.vo.PrmJuOpportunityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="PrmOpportunityId"/>
+          <Item Value="JournaledUser"/>
+          <Item Value="JournaledDate"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="Name"/>
+          <Item Value="Description"/>
+          <Item Value="OpportunityType"/>
+          <Item Value="CurrentStatus"/>
+          <Item Value="ReasonLost"/>
+          <Item Value="CurrentPreStatus"/>
+          <Item Value="CurrentCatalogingStatus"/>
+          <Item Value="CurrentAgreementStatus"/>
+          <Item Value="ProbabilityPct"/>
+          <Item Value="Priority"/>
+          <Item Value="ExpectedPipelines"/>
+          <Item Value="EstimatedCloseQuarter"/>
+          <Item Value="AgreementReceivedDate"/>
+          <Item Value="ExclusivitySoughtObtained"/>
+          <Item Value="DocumentSigned"/>
+          <Item Value="SummonDeepIndexingFlag"/>
+          <Item Value="Summary"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroupChangeHistory"
+            IterBinding="ProcessingGroupChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroupChangeHistory"
+            IterBinding="ProcessingGroupChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroupChangeHistory"
+            IterBinding="ProcessingGroupChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroupChangeHistory"
+            IterBinding="ProcessingGroupChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroupChangeHistory"
+            IterBinding="ProcessingGroupChangeHistoryIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroupChangeHistory}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryProcessingGroupTargetAssignment"
+            IterBinding="ProcessingGroupTargetAssignmentIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="sd8PrmTargetedProductTitleId"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="PrmTargetedProductTitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8TitleId"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false"
+                  IterBinding="ProcessingGroupTargetAssignmentIterator"
+                  id="sd8TargetTrackingNo" Uses="LOV_TargetTrackingNo"/>
+    <attributeValues id="sd8CatalogNumber"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8LongTitle"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ProcessingGroupTargetAssignmentIterator"
+          id="sd8TargetStatus" Uses="LOV_TargetStatus" StaticList="false"/>
+    <attributeValues id="sd8PrdId"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="PrdId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8ProductName"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="ProductName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8AccountId"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="AccountId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8AccountNo"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="AccountNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8AccountName"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8GroupName"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="GroupName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8AddedDate"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8RemovedDate"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8CreatedBy"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8CreatedDate"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8LastUpdatedBy"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd8LastUpdatedDate"
+                     IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupTargetAssignmentTable"
+          IterBinding="ProcessingGroupTargetAssignmentIterator">
+      <nodeDefinition Name="ProcessingGroupTargetAssignment"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityTargetAssignmentView">
+        <AttrNames>
+          <Item Value="PrmTargetedProductTitleId"/>
+          <Item Value="TitleId"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="TargetStatus"/>
+          <Item Value="PrdId"/>
+          <Item Value="ProductName"/>
+          <Item Value="AccountId"/>
+          <Item Value="AccountNo"/>
+          <Item Value="AccountName"/>
+          <Item Value="GroupName"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroupTargetAssignment"
+            IterBinding="ProcessingGroupTargetAssignmentIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroupTargetAssignment"
+            IterBinding="ProcessingGroupTargetAssignmentIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroupTargetAssignment"
+            IterBinding="ProcessingGroupTargetAssignmentIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroupTargetAssignment"
+            IterBinding="ProcessingGroupTargetAssignmentIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroupTargetAssignment"
+            IterBinding="ProcessingGroupTargetAssignmentIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroupTargetAssignment}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateProcessingGroupTargetAssignment"
+            IterBinding="ProcessingGroupTargetAssignmentIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteProcessingGroupTargetAssignment"
+            IterBinding="ProcessingGroupTargetAssignmentIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

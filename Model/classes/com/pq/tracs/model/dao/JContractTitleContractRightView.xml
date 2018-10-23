@@ -1,0 +1,787 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="JContractTitleContractRightView"
+   Version="11.1.1.61.92"
+   OrderBy="RULE_NUMBER"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="com.pq.tracs.model.dao.JContractTitleContractRightViewRowImpl"
+   ComponentClass="com.pq.tracs.model.dao.JContractTitleContractRightViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchSize="15"
+   RangeSize="10">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|Prog|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_objectSuperClassName"
+         Value="com.pq.tracs.model.dao.TracsView"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <ViewAccessor
+      Name="RightIncludesOrExcludesLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Right Includes or Excludes']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="RightOrRestrictionTypeLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Right or Restriction Type']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="RightPermissionTypeLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Right Permission Type']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="RightStatusLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Right Status']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_PermissionType"
+      ListVOName="RightPermissionTypeLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="PermissionType"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_RightOrRestrictionType"
+      ListVOName="RightOrRestrictionTypeLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="RightOrRestrictionType"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_IncludesOrExcludes"
+      ListVOName="RightIncludesOrExcludesLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="IncludesOrExcludes"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_Status"
+      ListVOName="RightStatusLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="Status"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <SQLQuery><![CDATA[SELECT JTraxTitleContractRight.ID, 
+       JTraxTitleContractRight.TITLE_ID, 
+       JTraxTitleContractRight.CONTRACT_RIGHT_ID, 
+       ContractRight.RULE_NUMBER, 
+       ContractRight.PERMISSION_TYPE, 
+       ContractRight.RIGHT_OR_RESTRICTION_TYPE,
+       ContractRight.INCLUDES_OR_EXCLUDES,  
+       ContractRight.SALES_RESTRICTION_FLAG,
+       ContractRight.COMPLEX_FLAG, 
+       ContractRight.TRANSLATION_FLAG,
+       ContractRight.RESELLER_FYI_REQUIRED_FLAG, 
+       ContractRight.WRITTEN_APPROVAL_REQUIRED_FLAG, 
+       ContractRight.STATUS,
+       ContractRight.EFFECTIVE_START_DATE, 
+       ContractRight.EFFECTIVE_END_DATE, 
+       ContractRight.PUBLICATION_START_DATE, 
+       ContractRight.PUBLICATION_END_DATE, 
+       ContractRight.EMBARGO_DAYS, 
+       ContractRight.REVERSE_EMBARGO_DAYS, 
+       ContractRight.COMPLEX_RULE_DESCRIPTION, 
+       JTraxTitleContractRight.CREATED_BY, 
+       JTraxTitleContractRight.CREATED_DATE, 
+       JTraxTitleContractRight.LAST_UPDATED_BY, 
+       JTraxTitleContractRight.LAST_UPDATED_DATE,
+ ContractRight.CONTRACT_ID,  
+       ContractRight.RIGHT_TEMPLATE_ID, 
+       ContractRight.RIGHT_TYPE,(select name from TRAX_RIGHT_TEMPLATE a where a.id=ContractRight.RIGHT_TEMPLATE_ID) TEMPLATE_NAME
+FROM TRAX_TITLE_CONTRACT_RIGHT JTraxTitleContractRight, TRAX_CONTRACT_RIGHT ContractRight
+WHERE JTraxTitleContractRight.CONTRACT_RIGHT_ID = ContractRight.ID]]></SQLQuery>
+   <EntityUsage
+      Name="JTraxTitleContractRight"
+      Entity="com.pq.tracs.model.bo.JTraxTitleContractRight" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      EntityAttrName="Id"
+      EntityUsage="JTraxTitleContractRight"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TitleId"
+      EntityAttrName="TitleId"
+      EntityUsage="JTraxTitleContractRight"
+      AliasName="TITLE_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContractRightId"
+      EntityAttrName="ContractRightId"
+      EntityUsage="JTraxTitleContractRight"
+      AliasName="CONTRACT_RIGHT_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RuleNumber"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="RULE_NUMBER"
+      Expression="RULE_NUMBER"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.RuleNumber_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PermissionType"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PERMISSION_TYPE"
+      Expression="PERMISSION_TYPE"
+      SQLType="VARCHAR"
+      LOVName="LOV_PermissionType">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.PermissionType_LABEL"/>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RightOrRestrictionType"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="RIGHT_OR_RESTRICTION_TYPE"
+      Expression="RIGHT_OR_RESTRICTION_TYPE"
+      SQLType="VARCHAR"
+      LOVName="LOV_RightOrRestrictionType">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.RightOrRestrictionType_LABEL"/>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IncludesOrExcludes"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="INCLUDES_OR_EXCLUDES"
+      Expression="INCLUDES_OR_EXCLUDES"
+      SQLType="VARCHAR"
+      LOVName="LOV_IncludesOrExcludes">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.IncludesOrExcludes_LABEL"/>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SalesRestrictionFlag"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="SALES_RESTRICTION_FLAG"
+      Expression="SALES_RESTRICTION_FLAG"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.SalesRestrictionFlag_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ComplexFlag"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="COMPLEX_FLAG"
+      Expression="COMPLEX_FLAG"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.ComplexFlag_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TranslationFlag"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="TRANSLATION_FLAG"
+      Expression="TRANSLATION_FLAG"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.TranslationFlag_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ResellerFyiRequiredFlag"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="RESELLER_FYI_REQUIRED_FLAG"
+      Expression="RESELLER_FYI_REQUIRED_FLAG"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.ResellerFyiRequiredFlag_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="WrittenApprovalRequiredFlag"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="WRITTEN_APPROVAL_REQUIRED_FLAG"
+      Expression="WRITTEN_APPROVAL_REQUIRED_FLAG"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.WrittenApprovalRequiredFlag_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Status"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="STATUS"
+      Expression="STATUS"
+      SQLType="VARCHAR"
+      LOVName="LOV_Status">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.Status_LABEL"/>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EffectiveStartDate"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="EFFECTIVE_START_DATE"
+      Expression="EFFECTIVE_START_DATE"
+      SQLType="DATE">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.EffectiveStartDate_LABEL"/>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.EffectiveStartDate_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.EffectiveStartDate_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EffectiveEndDate"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="EFFECTIVE_END_DATE"
+      Expression="EFFECTIVE_END_DATE"
+      SQLType="DATE">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.EffectiveEndDate_LABEL"/>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.EffectiveEndDate_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.EffectiveEndDate_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PublicationStartDate"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="PUBLICATION_START_DATE"
+      Expression="PUBLICATION_START_DATE"
+      SQLType="DATE">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.PublicationStartDate_LABEL"/>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.PublicationStartDate_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.PublicationStartDate_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PublicationEndDate"
+      IsPersistent="false"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="PUBLICATION_END_DATE"
+      Expression="PUBLICATION_END_DATE"
+      SQLType="DATE">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.PublicationEndDate_LABEL"/>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.PublicationEndDate_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.PublicationEndDate_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EmbargoDays"
+      IsPersistent="false"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="EMBARGO_DAYS"
+      Expression="EMBARGO_DAYS"
+      SQLType="NUMERIC">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.EmbargoDays_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReverseEmbargoDays"
+      IsPersistent="false"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="REVERSE_EMBARGO_DAYS"
+      Expression="REVERSE_EMBARGO_DAYS"
+      SQLType="NUMERIC">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.ReverseEmbargoDays_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ComplexRuleDescription"
+      IsPersistent="false"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="COMPLEX_RULE_DESCRIPTION"
+      Expression="COMPLEX_RULE_DESCRIPTION"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.ComplexRuleDescription_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="while_insert"
+      EntityAttrName="CreatedBy"
+      EntityUsage="JTraxTitleContractRight"
+      AliasName="CREATED_BY" />
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="while_insert"
+      EntityAttrName="CreatedDate"
+      EntityUsage="JTraxTitleContractRight"
+      AliasName="CREATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.CreatedDate_LABEL"/>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.CreatedDate_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="JTraxTitleContractRight"
+      AliasName="LAST_UPDATED_BY" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.LastUpdatedBy_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="JTraxTitleContractRight"
+      AliasName="LAST_UPDATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.LastUpdatedDate_LABEL"/>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.LastUpdatedDate_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.LastUpdatedDate_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContractId"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="CONTRACT_ID"
+      Expression="CONTRACT_ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RightTemplateId"
+      IsPersistent="false"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="RIGHT_TEMPLATE_ID"
+      Expression="RIGHT_TEMPLATE_ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RightType"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="RIGHT_TYPE"
+      Expression="RIGHT_TYPE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.RightType_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TemplateName"
+      IsPersistent="false"
+      Precision="255"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TEMPLATE_NAME"
+      Expression="TEMPLATE_NAME"
+      SQLType="VARCHAR" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.JContractTitleContractRightView.TemplateName_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="JContractTitleContractRightViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.JContractTitleContractRightView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow81"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_RuleNumber"
+            ViewAttribute="RuleNumber"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_PermissionType"
+            ViewAttribute="PermissionType"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_RightOrRestrictionType"
+            ViewAttribute="RightOrRestrictionType"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_IncludesOrExcludes"
+            ViewAttribute="IncludesOrExcludes"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_SalesRestrictionFlag"
+            ViewAttribute="SalesRestrictionFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_ComplexFlag"
+            ViewAttribute="ComplexFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_TranslationFlag"
+            ViewAttribute="TranslationFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_ResellerFyiRequiredFlag"
+            ViewAttribute="ResellerFyiRequiredFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_WrittenApprovalRequiredFlag"
+            ViewAttribute="WrittenApprovalRequiredFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_Status"
+            ViewAttribute="Status"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="EffectiveStartDate"
+            ViewAttribute="EffectiveStartDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_EffectiveEndDate"
+            ViewAttribute="EffectiveEndDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_PublicationStartDate"
+            ViewAttribute="PublicationStartDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_PublicationEndDate"
+            ViewAttribute="PublicationEndDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_EmbargoDays"
+            ViewAttribute="EmbargoDays"
+            Conjunction="AND"
+            Required="Optional"
+            Operator="="/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_ReverseEmbargoDays"
+            ViewAttribute="ReverseEmbargoDays"
+            Conjunction="AND"
+            Required="Optional"
+            Operator="="/>
+         <ViewCriteriaItem
+            Name="JContractTitleContractRightViewCriteria_vcrow81_ComplexRuleDescription"
+            ViewAttribute="ComplexRuleDescription"
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Id" />
+   </AttrArray>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

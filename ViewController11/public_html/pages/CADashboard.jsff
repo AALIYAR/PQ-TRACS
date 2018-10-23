@@ -1,0 +1,1921 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplate.jspx">
+    <f:facet name="pageContent">
+      <af:panelStretchLayout topHeight="auto" id="psl0" partialTriggers=""
+                             rendered="#{jhsUserRoles['CO, ADMIN']}">
+        <f:facet name="top">
+          <af:panelGroupLayout layout="scroll" id="CADTopLc" partialTriggers=""
+                               rendered="#{jhsUserRoles['CO, ADMIN']}">
+            <f:facet name="separator">
+              <af:spacer width="10" height="10" id="sp0"/>
+            </f:facet>
+            <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (default/pageComponent/groupContent.vm) -->
+            <af:group id="g0"></af:group>
+            <af:switcher rendered="#{bindings.CADashboardIterator.findMode!='true'}"
+                         id="CADSw" defaultFacet="hasRows"
+                         facetName="#{( bindings.CADashboardIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+              <f:facet name="noRows">
+                <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                    styleUsage="pageStamp" id="CADNoRowsFound"/>
+              </f:facet>
+              <f:facet name="hasRows">
+                <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (default/pageComponent/groupContent.vm), disabled (default/pageComponent/formGroup.vm) -->
+                <af:panelGroupLayout id="CADFC" layout="vertical">
+                  <f:facet name="separator">
+                    <af:spacer width="10" height="10" id="sp1"/>
+                  </f:facet>
+                  <af:panelFormLayout rows="1" labelAlignment="start"
+                                      maxColumns="2" id="CADFI">
+                    <af:inputText id="CADDisplayName"
+                                  value="#{bindings.CADDisplayName.inputValue}"
+                                  label="Welcome"
+                                  required="#{bindings.CADDisplayName.hints.mandatory}"
+                                  rows="#{bindings.CADDisplayName.hints.displayHeight}"
+                                  columns="#{bindings.CADDisplayName.hints.displayWidth}"
+                                  maximumLength="240" readOnly="true"
+                                  shortDesc="#{bindings.CADDisplayName.hints.tooltip}">
+                      <f:validator binding="#{bindings.CADDisplayName.validator}"/>
+                    </af:inputText>
+                  </af:panelFormLayout>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: enabled (default), disabled (default/pageComponent/groupContent.vm) -->
+              </f:facet>
+            </af:switcher>
+            <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+            <af:spacer width="10" height="10" id="sp2"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelDashboard id="CADDb" columns="2" rowHeight="300px">
+            <af:panelBox text="#{nls['TABLE_TITLE_CAACTIVITYDASHBOARD']}"
+                         id="CAcPb">
+              <f:facet name="toolbar"/>
+              <af:panelStretchLayout topHeight="auto" id="CAcTopLc"
+                                     partialTriggers=" CADTopLc qsAreaCAcSearchOptions"
+                                     rendered="#{jhsUserRoles['CO, ADMIN']}">
+                <f:facet name="top">
+                  <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (tracs_templates/pageComponent/dashboardContent.vm) -->
+                  <af:group id="g1">
+                    <af:panelGroupLayout id="modelSearchAreaCAc"
+                                         rendered="#{!pageFlowScope.createModes.CreateCAActivityDashboard and !pageFlowScope.hideSearchArea}"
+                                         partialTriggers="">
+                      <f:attribute name="JhsIgnoreChanges" value="true"/>
+                      <af:quickQuery id="qsAreaCAcSearchOptions"
+                                     label="#{nls['FILTER_BY']}"
+                                     value="#{bindings.CAActivityDashboardIteratorActivityDashboardViewCriteriaQuery.queryDescriptor}"
+                                     model="#{bindings.CAActivityDashboardIteratorActivityDashboardViewCriteriaQuery.queryModel}"
+                                     queryListener="#{bindings.CAActivityDashboardIteratorActivityDashboardViewCriteriaQuery.processQuery}"></af:quickQuery>
+                    </af:panelGroupLayout>
+                    <af:spacer width="10" height="10" id="sp3"/>
+                  </af:group>
+                  <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelStretchLayout topHeight="0" id="psl1">
+                    <f:facet name="top"></f:facet>
+                    <f:facet name="center">
+                      <af:panelCollection id="CAcPC" featuresOff=" "
+                                          styleClass="AFStretchWidth">
+                        <f:facet name="menus">
+                          <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                                   id="menu0">
+                            <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu1">
+                              <af:group id="CActbb"
+                                        rendered="#{ bindings.CAActivityDashboardIterator.currentRow!=null }">
+                                <af:commandMenuItem actionListener="#{bindings.FirstCAActivityDashboard.execute}"
+                                                    id="CAcFirst"
+                                                    partialSubmit="true"
+                                                    icon="/afr/shuttleleftall_ena.png"
+                                                    textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.PreviousCAActivityDashboard.execute}"
+                                                    icon="/afr/shuttleleft_ena.png"
+                                                    textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                    id="CAcPrevious"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.NextCAActivityDashboard.execute}"
+                                                    icon="/afr/shuttleright_ena.png"
+                                                    textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                    id="CAcNext"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.LastCAActivityDashboard.execute}"
+                                                    icon="/afr/shuttlerightall_ena.png"
+                                                    textAndAccessKey="#{nls['LAST_ROW']}"
+                                                    id="CAcLast"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                              </af:group>
+                            </af:menu>
+                            <af:commandMenuItem partialSubmit="true"
+                                                textAndAccessKey="#{nls['EXPORT']}"
+                                                icon="/jheadstart/images/excel.png"
+                                                immediate="true" id="cmi0">
+                              <af:exportCollectionActionListener exportedId="CAcTab"
+                                                                 type="excelHTML"
+                                                                 filename="CAActivityDashboard.xls"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </f:facet>
+                        <f:facet name="toolbar">
+                          <af:toolbar id="tbar0">
+                            <af:commandImageLink immediate="true"
+                                                 partialSubmit="true" id="cl0"
+                                                 shortDesc="#{nls['EXPORT']}"
+                                                 icon="/jheadstart/images/excel.png">
+                              <af:exportCollectionActionListener exportedId="CAcTab"
+                                                                 type="excelHTML"
+                                                                 filename="CAActivityDashboard.xls"/>
+                            </af:commandImageLink>
+                            <af:commandToolbarButton text="Print" id="CAcPrint"
+                                                     shortDesc="Opens a new tab with printer friendly format.">
+                              <af:showPrintablePageBehavior/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar">
+                          <af:toolbar>
+                            <af:outputText value="#{bindings.CAActivityDashboardIterator.estimatedRowCount} rows found"/>
+                          </af:toolbar>
+                        </f:facet>
+                        <af:table id="CAcTab" contentDelivery="immediate"
+                                  value="#{bindings.CAActivityDashboardTable.collectionModel}"
+                                  columnStretching="blank"
+                                  rowBandingInterval="0" editingMode="editAll"
+                                  columnSelection="multiple"
+                                  contextMenuSelect="true" rowSelection="single"
+                                  selectionListener="#{pageFlowScope.CAActivityDashboardTable.makeCurrent}"
+                                  selectedRowKeys="#{pageFlowScope.CAActivityDashboardTable.selectedRow}"
+                                  rowDisclosureListener="#{pageFlowScope.CAActivityDashboardTable.discloseRow}"
+                                  var="row" varStatus="status"
+                                  fetchSize="#{bindings.CAActivityDashboardTable.rangeSize}"
+                                  emptyText="#{nls['NO_ROWS_FOUND']}"
+                                  queryListener="#{bindings.CAActivityDashboardIteratorActivityDashboardViewCriteriaQuery.processQuery}"
+                                  filterModel="#{bindings.CAActivityDashboardIteratorActivityDashboardViewCriteriaQuery.queryDescriptor}"
+                                  filterVisible="true"
+                                  binding="#{pageFlowScope.CAActivityDashboardTable.table}"
+                                  partialTriggers=":::qsAreaCAcSearchOptions :::CAcPC ::CAcFirst ::CAcPrevious ::CAcNext ::CAcLast"
+                                  styleClass="AFStretchWidth"
+                                  summary="#{nls['TABLE_TITLE_CAACTIVITYDASHBOARD']}">
+                          <f:facet name="contextMenu">
+                            <af:popup id="CAcTablePopup"
+                                      childCreation="deferred">
+                              <af:menu id="menu2">
+                                <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                         id="menu3"></af:menu>
+                              </af:menu>
+                            </af:popup>
+                          </f:facet>
+                          <af:column id="CAcTypeCol" sortable="true"
+                                     noWrap="true" width="240"
+                                     sortProperty="Type" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.Type.label}"
+                                              id="ol0"/>
+                            </f:facet>
+                            <af:inputText id="cl1"
+                                          value="#{row.bindings.Type.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.Type.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.Type.mandatory}"
+                                          rows="#{bindings.CAActivityDashboardTable.hints.Type.displayHeight}"
+                                          columns="#{bindings.CAActivityDashboardTable.hints.Type.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.Type.tooltip}"
+                                          rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                              <f:validator binding="#{row.bindings.Type.validator}"/>
+                            </af:inputText>
+                            <af:commandLink id="CAcType"
+                                            text="#{row.bindings.Type.attributeValue}"
+                                            shortDesc="#{bindings.CAActivityDashboardTable.hints.Type.tooltip}"
+                                            action="LaunchTab"
+                                            rendered="#{adfFacesContext.outputMode != 'printable'}">
+                              <af:setActionListener from="ActivitiesTab"
+                                                    to="#{jhsDynTabLauncher.taskFlowName}"/>
+                              <af:setActionListener from="#{row.ActivityId}"
+                                                    to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                              <af:setActionListener from="Activity"
+                                                    to="#{jhsDynTabLauncher.label}"/>
+                              <af:setActionListener from="#{row.ActivityId}"
+                                                    to="#{jhsDynTabLauncher.parameters.rowKeyValueActivitiesTab}"/>
+                              <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                    to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                            </af:commandLink>
+                          </af:column>
+                          <af:column id="CAcSubTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="240"
+                                     sortProperty="SubType" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.SubType.label}"
+                                              id="ol1"/>
+                            </f:facet>
+                            <af:inputText id="CAcSubType"
+                                          value="#{row.bindings.SubType.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.SubType.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.SubType.mandatory}"
+                                          rows="#{bindings.CAActivityDashboardTable.hints.SubType.displayHeight}"
+                                          columns="#{bindings.CAActivityDashboardTable.hints.SubType.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.SubType.tooltip}">
+                              <f:validator binding="#{row.bindings.SubType.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CAcDescriptionCol" sortable="true"
+                                     filterable="true" noWrap="true" width="500"
+                                     sortProperty="Description"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.Description.label}"
+                                              id="ol2"/>
+                            </f:facet>
+                            <af:inputText id="CAcDescription"
+                                          value="#{row.bindings.Description.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.Description.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.Description.mandatory}"
+                                          rows="#{bindings.CAActivityDashboardTable.hints.Description.displayHeight}"
+                                          columns="#{bindings.CAActivityDashboardTable.hints.Description.displayWidth}"
+                                          maximumLength="4000" readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.Description.tooltip}">
+                              <f:validator binding="#{row.bindings.Description.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CAcDueDateCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="DueDate" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.DueDate.label}"
+                                              id="ol3"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.DueDate}"
+                                            id="id0">
+                                <af:convertDateTime pattern="#{nls.datepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="CAcDueDate"
+                                          value="#{row.bindings.DueDate.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.DueDate.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.DueDate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.DueDate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="CAcUserTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="UserType" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.UserType.label}"
+                                              id="ol4"/>
+                            </f:facet>
+                            <af:inputText id="CAcUserType"
+                                          value="#{row.bindings.UserType.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.UserType.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.UserType.mandatory}"
+                                          rows="#{bindings.CAActivityDashboardTable.hints.UserType.displayHeight}"
+                                          columns="#{bindings.CAActivityDashboardTable.hints.UserType.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.UserType.tooltip}">
+                              <f:validator binding="#{row.bindings.UserType.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CAcStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Status" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.Status.label}"
+                                              id="ol5"/>
+                            </f:facet>
+                            <af:inputText id="CAcStatus"
+                                          value="#{row.bindings.Status.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.Status.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.Status.mandatory}"
+                                          rows="#{bindings.CAActivityDashboardTable.hints.Status.displayHeight}"
+                                          columns="#{bindings.CAActivityDashboardTable.hints.Status.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.Status.tooltip}">
+                              <f:validator binding="#{row.bindings.Status.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CAcCatalogNumberCol" sortable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="CatalogNumber"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.CatalogNumber.label}"
+                                              id="ol6"/>
+                            </f:facet>
+                            <af:inputText id="cl2"
+                                          value="#{row.bindings.CatalogNumber.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.CatalogNumber.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.CatalogNumber.mandatory}"
+                                          rows="#{bindings.CAActivityDashboardTable.hints.CatalogNumber.displayHeight}"
+                                          columns="#{bindings.CAActivityDashboardTable.hints.CatalogNumber.displayWidth}"
+                                          maximumLength="200" readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.CatalogNumber.tooltip}"
+                                          rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                              <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                            </af:inputText>
+                            <af:commandLink id="CAcCatalogNumber"
+                                            text="#{row.bindings.CatalogNumber.attributeValue}"
+                                            shortDesc="#{bindings.CAActivityDashboardTable.hints.CatalogNumber.tooltip}"
+                                            action="LaunchTab"
+                                            rendered="#{adfFacesContext.outputMode != 'printable'}">
+                              <af:setActionListener from="Titles"
+                                                    to="#{jhsDynTabLauncher.taskFlowName}"/>
+                              <af:setActionListener from="TTL#{row.TtlId}"
+                                                    to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                              <af:setActionListener from="Title - #{row.CatalogNumber}"
+                                                    to="#{jhsDynTabLauncher.label}"/>
+                              <af:setActionListener from="#{row.TtlId}"
+                                                    to="#{jhsDynTabLauncher.parameters.rowKeyValueTitles}"/>
+                              <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                    to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                            </af:commandLink>
+                          </af:column>
+                          <af:column id="CAcTitleCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="LongTitle" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.LongTitle.label}"
+                                              id="ol7"/>
+                            </f:facet>
+                            <af:inputText id="CAcTitle"
+                                          value="#{row.bindings.LongTitle.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.LongTitle.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.LongTitle.mandatory}"
+                                          rows="#{bindings.CAActivityDashboardTable.hints.LongTitle.displayHeight}"
+                                          columns="#{bindings.CAActivityDashboardTable.hints.LongTitle.displayWidth}"
+                                          maximumLength="200" readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.LongTitle.tooltip}">
+                              <f:validator binding="#{row.bindings.LongTitle.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CAcAccountNoCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="AccountNo" align="right"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.AccountNo.label}"
+                                              id="ol8"/>
+                            </f:facet>
+                            <af:inputText id="CAcAccountNo"
+                                          value="#{row.bindings.AccountNo.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.AccountNo.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.AccountNo.mandatory}"
+                                          rows="#{bindings.CAActivityDashboardTable.hints.AccountNo.displayHeight}"
+                                          columns="#{bindings.CAActivityDashboardTable.hints.AccountNo.displayWidth}"
+                                          maximumLength="38" readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.AccountNo.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountNo.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.CAActivityDashboardTable.hints.AccountNo.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CAcAccountNameCol" sortable="true"
+                                     noWrap="true" width="180"
+                                     sortProperty="AccountName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.AccountName.label}"
+                                              id="ol9"/>
+                            </f:facet>
+                            <af:inputText id="cl3"
+                                          value="#{row.bindings.AccountName.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.AccountName.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.AccountName.mandatory}"
+                                          rows="#{bindings.CAActivityDashboardTable.hints.AccountName.displayHeight}"
+                                          columns="#{bindings.CAActivityDashboardTable.hints.AccountName.displayWidth}"
+                                          maximumLength="400" readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.AccountName.tooltip}"
+                                          rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                              <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                            </af:inputText>
+                            <af:commandLink id="CAcAccountName"
+                                            text="#{row.bindings.AccountName.attributeValue}"
+                                            shortDesc="#{bindings.CAActivityDashboardTable.hints.AccountName.tooltip}"
+                                            action="LaunchTab"
+                                            rendered="#{adfFacesContext.outputMode != 'printable'}">
+                              <af:setActionListener from="ContentOwner"
+                                                    to="#{jhsDynTabLauncher.taskFlowName}"/>
+                              <af:setActionListener from="#{row.ContentOwnerId}"
+                                                    to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                              <af:setActionListener from="#{row.AccountName}"
+                                                    to="#{jhsDynTabLauncher.label}"/>
+                              <af:setActionListener from="#{row.ContentOwnerId}"
+                                                    to="#{jhsDynTabLauncher.parameters.rowKeyValueContentOwner}"/>
+                              <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                    to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                            </af:commandLink>
+                          </af:column>
+                          <af:column id="CAcAccountSiteCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="AccountSite"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.AccountSite.label}"
+                                              id="ol10"/>
+                            </f:facet>
+                            <af:inputText id="CAcAccountSite"
+                                          value="#{row.bindings.AccountSite.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.AccountSite.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.AccountSite.mandatory}"
+                                          rows="#{bindings.CAActivityDashboardTable.hints.AccountSite.displayHeight}"
+                                          columns="#{bindings.CAActivityDashboardTable.hints.AccountSite.displayWidth}"
+                                          maximumLength="200" readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.AccountSite.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountSite.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CAcCreatedByCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="CreatedBy" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.CreatedBy.label}"
+                                              id="ol11"/>
+                            </f:facet>
+                            <af:inputText id="CAcCreatedBy"
+                                          value="#{row.bindings.CreatedBy.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.CreatedBy.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.CreatedBy.mandatory}"
+                                          rows="#{bindings.CAActivityDashboardTable.hints.CreatedBy.displayHeight}"
+                                          columns="#{bindings.CAActivityDashboardTable.hints.CreatedBy.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.CreatedBy.tooltip}">
+                              <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CAcCreatedDateCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CreatedDate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAActivityDashboardTable.hints.CreatedDate.label}"
+                                              id="ol12"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                            id="id1">
+                                <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="CAcCreatedDate"
+                                          value="#{row.bindings.CreatedDate.inputValue}"
+                                          label="#{bindings.CAActivityDashboardTable.hints.CreatedDate.label}"
+                                          required="#{bindings.CAActivityDashboardTable.hints.CreatedDate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.CAActivityDashboardTable.hints.CreatedDate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+              </af:panelStretchLayout>
+            </af:panelBox>
+            <af:panelBox text="#{nls['TABLE_TITLE_CARECENTOPPORTUNITIES']}"
+                         id="CROPb">
+              <f:facet name="toolbar"/>
+              <af:panelStretchLayout topHeight="auto" id="CROTopLc"
+                                     partialTriggers=" CADTopLc qsAreaCROSearchOptions"
+                                     rendered="#{jhsUserRoles['CO, ADMIN']}">
+                <f:facet name="top">
+                  <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (tracs_templates/pageComponent/dashboardContent.vm) -->
+                  <af:group id="g2">
+                    <af:panelGroupLayout id="modelSearchAreaCRO"
+                                         rendered="#{!pageFlowScope.createModes.CreateCARecentOpportunities and !pageFlowScope.hideSearchArea}"
+                                         partialTriggers="">
+                      <f:attribute name="JhsIgnoreChanges" value="true"/>
+                      <af:quickQuery id="qsAreaCROSearchOptions"
+                                     label="#{nls['FILTER_BY']}"
+                                     value="#{bindings.CARecentOpportunitiesIteratorRecentOpportunitiesDashboardViewCriteriaQuery.queryDescriptor}"
+                                     model="#{bindings.CARecentOpportunitiesIteratorRecentOpportunitiesDashboardViewCriteriaQuery.queryModel}"
+                                     queryListener="#{bindings.CARecentOpportunitiesIteratorRecentOpportunitiesDashboardViewCriteriaQuery.processQuery}"></af:quickQuery>
+                    </af:panelGroupLayout>
+                    <af:spacer width="10" height="10" id="sp4"/>
+                  </af:group>
+                  <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelStretchLayout topHeight="0" id="psl2">
+                    <f:facet name="top"></f:facet>
+                    <f:facet name="center">
+                      <af:panelCollection id="CROPC" featuresOff=" "
+                                          styleClass="AFStretchWidth">
+                        <f:facet name="menus">
+                          <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                                   id="menu4">
+                            <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu5">
+                              <af:group id="CROtbb"
+                                        rendered="#{ bindings.CARecentOpportunitiesIterator.currentRow!=null }">
+                                <af:commandMenuItem actionListener="#{bindings.FirstCARecentOpportunities.execute}"
+                                                    id="CROFirst"
+                                                    partialSubmit="true"
+                                                    icon="/afr/shuttleleftall_ena.png"
+                                                    textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.PreviousCARecentOpportunities.execute}"
+                                                    icon="/afr/shuttleleft_ena.png"
+                                                    textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                    id="CROPrevious"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.NextCARecentOpportunities.execute}"
+                                                    icon="/afr/shuttleright_ena.png"
+                                                    textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                    id="CRONext"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.LastCARecentOpportunities.execute}"
+                                                    icon="/afr/shuttlerightall_ena.png"
+                                                    textAndAccessKey="#{nls['LAST_ROW']}"
+                                                    id="CROLast"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                              </af:group>
+                            </af:menu>
+                            <af:commandMenuItem partialSubmit="true"
+                                                textAndAccessKey="#{nls['EXPORT']}"
+                                                icon="/jheadstart/images/excel.png"
+                                                immediate="true" id="cmi1">
+                              <af:exportCollectionActionListener exportedId="CROTab"
+                                                                 type="excelHTML"
+                                                                 filename="CARecentOpportunities.xls"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </f:facet>
+                        <f:facet name="toolbar">
+                          <af:toolbar id="tbar1">
+                            <af:commandImageLink immediate="true"
+                                                 partialSubmit="true" id="cl4"
+                                                 shortDesc="#{nls['EXPORT']}"
+                                                 icon="/jheadstart/images/excel.png">
+                              <af:exportCollectionActionListener exportedId="CROTab"
+                                                                 type="excelHTML"
+                                                                 filename="CARecentOpportunities.xls"/>
+                            </af:commandImageLink>
+                            <af:commandToolbarButton text="Print" id="CROPrint"
+                                                     shortDesc="Opens a new tab with printer friendly format.">
+                              <af:showPrintablePageBehavior/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar">
+                          <af:toolbar>
+                            <af:outputText value="#{bindings.CARecentOpportunitiesIterator.estimatedRowCount} rows found"/>
+                          </af:toolbar>
+                        </f:facet>
+                        <af:table id="CROTab" contentDelivery="immediate"
+                                  value="#{bindings.CARecentOpportunitiesTable.collectionModel}"
+                                  columnStretching="blank"
+                                  rowBandingInterval="0" editingMode="editAll"
+                                  columnSelection="multiple"
+                                  contextMenuSelect="true" rowSelection="single"
+                                  selectionListener="#{pageFlowScope.CARecentOpportunitiesTable.makeCurrent}"
+                                  selectedRowKeys="#{pageFlowScope.CARecentOpportunitiesTable.selectedRow}"
+                                  rowDisclosureListener="#{pageFlowScope.CARecentOpportunitiesTable.discloseRow}"
+                                  var="row" varStatus="status"
+                                  fetchSize="#{bindings.CARecentOpportunitiesTable.rangeSize}"
+                                  emptyText="#{nls['NO_ROWS_FOUND']}"
+                                  queryListener="#{bindings.CARecentOpportunitiesIteratorRecentOpportunitiesDashboardViewCriteriaQuery.processQuery}"
+                                  filterModel="#{bindings.CARecentOpportunitiesIteratorRecentOpportunitiesDashboardViewCriteriaQuery.queryDescriptor}"
+                                  filterVisible="true"
+                                  binding="#{pageFlowScope.CARecentOpportunitiesTable.table}"
+                                  partialTriggers=":::qsAreaCROSearchOptions :::CROPC ::CROFirst ::CROPrevious ::CRONext ::CROLast"
+                                  styleClass="AFStretchWidth"
+                                  summary="#{nls['TABLE_TITLE_CARECENTOPPORTUNITIES']}">
+                          <f:facet name="contextMenu">
+                            <af:popup id="CROTablePopup"
+                                      childCreation="deferred">
+                              <af:menu id="menu6">
+                                <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                         id="menu7"></af:menu>
+                              </af:menu>
+                            </af:popup>
+                          </f:facet>
+                          <af:column id="CROOpportunityNoCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpportunityNo"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.OpportunityNo.label}"
+                                              id="ol13"/>
+                            </f:facet>
+                            <af:inputText id="CROOpportunityNo"
+                                          value="#{row.bindings.OpportunityNo.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.OpportunityNo.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.OpportunityNo.mandatory}"
+                                          rows="#{bindings.CARecentOpportunitiesTable.hints.OpportunityNo.displayHeight}"
+                                          columns="#{bindings.CARecentOpportunitiesTable.hints.OpportunityNo.displayWidth}"
+                                          maximumLength="38" readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.OpportunityNo.tooltip}">
+                              <f:validator binding="#{row.bindings.OpportunityNo.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.CARecentOpportunitiesTable.hints.OpportunityNo.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CROOpportunityNameCol" sortable="true"
+                                     noWrap="true" width="240"
+                                     sortProperty="OpportunityName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.OpportunityName.label}"
+                                              id="ol14"/>
+                            </f:facet>
+                            <af:inputText id="cl5"
+                                          value="#{row.bindings.OpportunityName.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.OpportunityName.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.OpportunityName.mandatory}"
+                                          rows="#{bindings.CARecentOpportunitiesTable.hints.OpportunityName.displayHeight}"
+                                          columns="#{bindings.CARecentOpportunitiesTable.hints.OpportunityName.displayWidth}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.OpportunityName.tooltip}"
+                                          rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                              <f:validator binding="#{row.bindings.OpportunityName.validator}"/>
+                            </af:inputText>
+                            <af:commandLink id="CROOpportunityName"
+                                            text="#{row.bindings.OpportunityName.attributeValue}"
+                                            shortDesc="#{bindings.CARecentOpportunitiesTable.hints.OpportunityName.tooltip}"
+                                            action="LaunchTab"
+                                            rendered="#{adfFacesContext.outputMode != 'printable'}">
+                              <af:setActionListener from="#{(row.OpportunityType != 'Auto-Add') ? 'Opportunities' : 'ProcessingGroups'}"
+                                                    to="#{jhsDynTabLauncher.taskFlowName}"/>
+                              <af:setActionListener from="#{row.Id}"
+                                                    to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                              <af:setActionListener from="#{row.OpportunityName}"
+                                                    to="#{jhsDynTabLauncher.label}"/>
+                              <af:setActionListener from="#{row.Id}"
+                                                    to="#{(row.OpportunityType != 'Auto-Add') ? jhsDynTabLauncher.parameters.rowKeyValueOpportunities : jhsDynTabLauncher.parameters.rowKeyValueProcessingGroups}"/>
+                              <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                    to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                            </af:commandLink>
+                          </af:column>
+                          <af:column id="CROCurrentStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="CurrentStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.CurrentStatus.label}"
+                                              id="ol15"/>
+                            </f:facet>
+                            <af:selectOneChoice id="CROCurrentStatus"
+                                                value="#{row.bindings.CurrentStatus.inputValue}"
+                                                label="#{bindings.CARecentOpportunitiesTable.hints.CurrentStatus.label}"
+                                                required="#{bindings.CARecentOpportunitiesTable.hints.CurrentStatus.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.CARecentOpportunitiesTable.hints.CurrentStatus.tooltip}">
+                              <f:selectItems value="#{row.bindings.CurrentStatus.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                          <af:column id="CROAccountNameCol" sortable="true"
+                                     filterable="true" noWrap="true" width="240"
+                                     sortProperty="AccountName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.AccountName.label}"
+                                              id="ol16"/>
+                            </f:facet>
+                            <af:inputText id="CROAccountName"
+                                          value="#{row.bindings.AccountName.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.AccountName.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.AccountName.mandatory}"
+                                          rows="#{bindings.CARecentOpportunitiesTable.hints.AccountName.displayHeight}"
+                                          columns="#{bindings.CARecentOpportunitiesTable.hints.AccountName.displayWidth}"
+                                          maximumLength="400" readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.AccountName.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CROCreatedDateCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CreatedDate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.CreatedDate.label}"
+                                              id="ol17"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                            id="id2">
+                                <af:convertDateTime pattern="#{nls.datepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="CROCreatedDate"
+                                          value="#{row.bindings.CreatedDate.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.CreatedDate.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.CreatedDate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.CreatedDate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="CROAccountManagerCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="AccountManager"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.AccountManager.label}"
+                                              id="ol18"/>
+                            </f:facet>
+                            <af:inputText id="CROAccountManager"
+                                          value="#{row.bindings.AccountManager.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.AccountManager.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.AccountManager.mandatory}"
+                                          rows="#{bindings.CARecentOpportunitiesTable.hints.AccountManager.displayHeight}"
+                                          columns="#{bindings.CARecentOpportunitiesTable.hints.AccountManager.displayWidth}"
+                                          maximumLength="101" readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.AccountManager.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountManager.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CROCataloguedCountCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CataloguedCount"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.CataloguedCount.label}"
+                                              id="ol19"/>
+                            </f:facet>
+                            <af:inputText id="CROCataloguedCount"
+                                          value="#{row.bindings.CataloguedCount.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.CataloguedCount.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.CataloguedCount.mandatory}"
+                                          rows="#{bindings.CARecentOpportunitiesTable.hints.CataloguedCount.displayHeight}"
+                                          columns="#{bindings.CARecentOpportunitiesTable.hints.CataloguedCount.displayWidth}"
+                                          maximumLength="10" readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.CataloguedCount.tooltip}">
+                              <f:validator binding="#{row.bindings.CataloguedCount.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.CARecentOpportunitiesTable.hints.CataloguedCount.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CROUncataloguedCountCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="UncataloguedCount"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.UncataloguedCount.label}"
+                                              id="ol20"/>
+                            </f:facet>
+                            <af:inputText id="CROUncataloguedCount"
+                                          value="#{row.bindings.UncataloguedCount.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.UncataloguedCount.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.UncataloguedCount.mandatory}"
+                                          rows="#{bindings.CARecentOpportunitiesTable.hints.UncataloguedCount.displayHeight}"
+                                          columns="#{bindings.CARecentOpportunitiesTable.hints.UncataloguedCount.displayWidth}"
+                                          maximumLength="10" readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.UncataloguedCount.tooltip}">
+                              <f:validator binding="#{row.bindings.UncataloguedCount.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.CARecentOpportunitiesTable.hints.UncataloguedCount.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CROAgreementLogindateCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="AgreementLogindate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.AgreementLogindate.label}"
+                                              id="ol21"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.AgreementLogindate}"
+                                            id="id3">
+                                <af:convertDateTime pattern="#{nls.datepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="CROAgreementLogindate"
+                                          value="#{row.bindings.AgreementLogindate.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.AgreementLogindate.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.AgreementLogindate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.AgreementLogindate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="CROCurrentPreStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="CurrentPreStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.CurrentPreStatus.label}"
+                                              id="ol22"/>
+                            </f:facet>
+                            <af:inputText id="CROCurrentPreStatus"
+                                          value="#{row.bindings.CurrentPreStatus.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.CurrentPreStatus.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.CurrentPreStatus.mandatory}"
+                                          rows="#{bindings.CARecentOpportunitiesTable.hints.CurrentPreStatus.displayHeight}"
+                                          columns="#{bindings.CARecentOpportunitiesTable.hints.CurrentPreStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.CurrentPreStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentPreStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CROCurrentCatalogingStatusCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="120"
+                                     sortProperty="CurrentCatalogingStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                              id="ol23"/>
+                            </f:facet>
+                            <af:inputText id="CROCurrentCatalogingStatus"
+                                          value="#{row.bindings.CurrentCatalogingStatus.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.CurrentCatalogingStatus.mandatory}"
+                                          rows="#{bindings.CARecentOpportunitiesTable.hints.CurrentCatalogingStatus.displayHeight}"
+                                          columns="#{bindings.CARecentOpportunitiesTable.hints.CurrentCatalogingStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.CurrentCatalogingStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentCatalogingStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CROCurrentAgreementStatusCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="120"
+                                     sortProperty="CurrentAgreementStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                              id="ol24"/>
+                            </f:facet>
+                            <af:inputText id="CROCurrentAgreementStatus"
+                                          value="#{row.bindings.CurrentAgreementStatus.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.CurrentAgreementStatus.mandatory}"
+                                          rows="#{bindings.CARecentOpportunitiesTable.hints.CurrentAgreementStatus.displayHeight}"
+                                          columns="#{bindings.CARecentOpportunitiesTable.hints.CurrentAgreementStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.CurrentAgreementStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentAgreementStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CROAgreementDataFlagCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="AgreementDataFlag"
+                                     align="center" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.AgreementDataFlag.label}"
+                                              id="ol25"/>
+                            </f:facet>
+                            <af:selectBooleanCheckbox id="CROAgreementDataFlag"
+                                                      label="#{bindings.CARecentOpportunitiesTable.hints.AgreementDataFlag.label}"
+                                                      value="#{CROAgreementDataFlagcheckboxInTable.value}"
+                                                      readOnly="true"
+                                                      shortDesc="#{bindings.CARecentOpportunitiesTable.hints.AgreementDataFlag.tooltip}"></af:selectBooleanCheckbox>
+                          </af:column>
+                          <af:column id="CROFormCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Form" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.Form.label}"
+                                              id="ol26"/>
+                            </f:facet>
+                            <af:inputText id="CROForm"
+                                          value="#{row.bindings.Form.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.Form.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.Form.mandatory}"
+                                          rows="#{bindings.CARecentOpportunitiesTable.hints.Form.displayHeight}"
+                                          columns="#{bindings.CARecentOpportunitiesTable.hints.Form.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.Form.tooltip}">
+                              <f:validator binding="#{row.bindings.Form.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CROTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Type" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.Type.label}"
+                                              id="ol27"/>
+                            </f:facet>
+                            <af:inputText id="CROType"
+                                          value="#{row.bindings.Type.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.Type.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.Type.mandatory}"
+                                          rows="#{bindings.CARecentOpportunitiesTable.hints.Type.displayHeight}"
+                                          columns="#{bindings.CARecentOpportunitiesTable.hints.Type.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.Type.tooltip}">
+                              <f:validator binding="#{row.bindings.Type.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CROOpportunityTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpportunityType"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CARecentOpportunitiesTable.hints.OpportunityType.label}"
+                                              id="ol28"/>
+                            </f:facet>
+                            <af:inputText id="CROOpportunityType"
+                                          value="#{row.bindings.OpportunityType.inputValue}"
+                                          label="#{bindings.CARecentOpportunitiesTable.hints.OpportunityType.label}"
+                                          required="#{bindings.CARecentOpportunitiesTable.hints.OpportunityType.mandatory}"
+                                          rows="#{bindings.CARecentOpportunitiesTable.hints.OpportunityType.displayHeight}"
+                                          columns="#{bindings.CARecentOpportunitiesTable.hints.OpportunityType.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CARecentOpportunitiesTable.hints.OpportunityType.tooltip}">
+                              <f:validator binding="#{row.bindings.OpportunityType.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+              </af:panelStretchLayout>
+            </af:panelBox>
+            <af:panelBox text="#{nls['TABLE_TITLE_CAINPROCESSOPPORTUNITIES']}"
+                         id="CIOPb">
+              <f:facet name="toolbar"/>
+              <af:panelStretchLayout topHeight="auto" id="CIOTopLc"
+                                     partialTriggers=" CADTopLc qsAreaCIOSearchOptions"
+                                     rendered="#{jhsUserRoles['CO, ADMIN']}">
+                <f:facet name="top">
+                  <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (tracs_templates/pageComponent/dashboardContent.vm) -->
+                  <af:group id="g3">
+                    <af:panelGroupLayout id="modelSearchAreaCIO"
+                                         rendered="#{!pageFlowScope.createModes.CreateCAInProcessOpportunities and !pageFlowScope.hideSearchArea}"
+                                         partialTriggers="">
+                      <f:attribute name="JhsIgnoreChanges" value="true"/>
+                      <af:quickQuery id="qsAreaCIOSearchOptions"
+                                     label="#{nls['FILTER_BY']}"
+                                     value="#{bindings.CAInProcessOpportunitiesIteratorInProcessOpportunitiesDashboardViewCriteriaQuery.queryDescriptor}"
+                                     model="#{bindings.CAInProcessOpportunitiesIteratorInProcessOpportunitiesDashboardViewCriteriaQuery.queryModel}"
+                                     queryListener="#{bindings.CAInProcessOpportunitiesIteratorInProcessOpportunitiesDashboardViewCriteriaQuery.processQuery}"></af:quickQuery>
+                    </af:panelGroupLayout>
+                    <af:spacer width="10" height="10" id="sp5"/>
+                  </af:group>
+                  <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelStretchLayout topHeight="0" id="psl3">
+                    <f:facet name="top"></f:facet>
+                    <f:facet name="center">
+                      <af:panelCollection id="CIOPC" featuresOff=" "
+                                          styleClass="AFStretchWidth">
+                        <f:facet name="menus">
+                          <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                                   id="menu8">
+                            <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu9">
+                              <af:group id="CIOtbb"
+                                        rendered="#{ bindings.CAInProcessOpportunitiesIterator.currentRow!=null }">
+                                <af:commandMenuItem actionListener="#{bindings.FirstCAInProcessOpportunities.execute}"
+                                                    id="CIOFirst"
+                                                    partialSubmit="true"
+                                                    icon="/afr/shuttleleftall_ena.png"
+                                                    textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.PreviousCAInProcessOpportunities.execute}"
+                                                    icon="/afr/shuttleleft_ena.png"
+                                                    textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                    id="CIOPrevious"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.NextCAInProcessOpportunities.execute}"
+                                                    icon="/afr/shuttleright_ena.png"
+                                                    textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                    id="CIONext"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.LastCAInProcessOpportunities.execute}"
+                                                    icon="/afr/shuttlerightall_ena.png"
+                                                    textAndAccessKey="#{nls['LAST_ROW']}"
+                                                    id="CIOLast"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                              </af:group>
+                            </af:menu>
+                            <af:commandMenuItem partialSubmit="true"
+                                                textAndAccessKey="#{nls['EXPORT']}"
+                                                icon="/jheadstart/images/excel.png"
+                                                immediate="true" id="cmi2">
+                              <af:exportCollectionActionListener exportedId="CIOTab"
+                                                                 type="excelHTML"
+                                                                 filename="CAInProcessOpportunities.xls"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </f:facet>
+                        <f:facet name="toolbar">
+                          <af:toolbar id="tbar2">
+                            <af:commandImageLink immediate="true"
+                                                 partialSubmit="true" id="cl6"
+                                                 shortDesc="#{nls['EXPORT']}"
+                                                 icon="/jheadstart/images/excel.png">
+                              <af:exportCollectionActionListener exportedId="CIOTab"
+                                                                 type="excelHTML"
+                                                                 filename="CAInProcessOpportunities.xls"/>
+                            </af:commandImageLink>
+                            <af:commandToolbarButton text="Print" id="CIOPrint"
+                                                     shortDesc="Opens a new tab with printer friendly format.">
+                              <af:showPrintablePageBehavior/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar">
+                          <af:toolbar>
+                            <af:outputText value="#{bindings.CAInProcessOpportunitiesIterator.estimatedRowCount} rows found"/>
+                          </af:toolbar>
+                        </f:facet>
+                        <af:table id="CIOTab" contentDelivery="immediate"
+                                  value="#{bindings.CAInProcessOpportunitiesTable.collectionModel}"
+                                  columnStretching="blank"
+                                  rowBandingInterval="0" editingMode="editAll"
+                                  columnSelection="multiple"
+                                  contextMenuSelect="true" rowSelection="single"
+                                  selectionListener="#{pageFlowScope.CAInProcessOpportunitiesTable.makeCurrent}"
+                                  selectedRowKeys="#{pageFlowScope.CAInProcessOpportunitiesTable.selectedRow}"
+                                  rowDisclosureListener="#{pageFlowScope.CAInProcessOpportunitiesTable.discloseRow}"
+                                  var="row" varStatus="status"
+                                  fetchSize="#{bindings.CAInProcessOpportunitiesTable.rangeSize}"
+                                  emptyText="#{nls['NO_ROWS_FOUND']}"
+                                  queryListener="#{bindings.CAInProcessOpportunitiesIteratorInProcessOpportunitiesDashboardViewCriteriaQuery.processQuery}"
+                                  filterModel="#{bindings.CAInProcessOpportunitiesIteratorInProcessOpportunitiesDashboardViewCriteriaQuery.queryDescriptor}"
+                                  filterVisible="true"
+                                  binding="#{pageFlowScope.CAInProcessOpportunitiesTable.table}"
+                                  partialTriggers=":::qsAreaCIOSearchOptions :::CIOPC ::CIOFirst ::CIOPrevious ::CIONext ::CIOLast"
+                                  styleClass="AFStretchWidth"
+                                  summary="#{nls['TABLE_TITLE_CAINPROCESSOPPORTUNITIES']}">
+                          <f:facet name="contextMenu">
+                            <af:popup id="CIOTablePopup"
+                                      childCreation="deferred">
+                              <af:menu id="menu10">
+                                <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                         id="menu11"></af:menu>
+                              </af:menu>
+                            </af:popup>
+                          </f:facet>
+                          <af:column id="CIOOpportunityNoCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpportunityNo"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityNo.label}"
+                                              id="ol29"/>
+                            </f:facet>
+                            <af:inputText id="CIOOpportunityNo"
+                                          value="#{row.bindings.OpportunityNo.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityNo.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityNo.mandatory}"
+                                          rows="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityNo.displayHeight}"
+                                          columns="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityNo.displayWidth}"
+                                          maximumLength="38" readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityNo.tooltip}">
+                              <f:validator binding="#{row.bindings.OpportunityNo.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityNo.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CIOOpportunityNameCol" sortable="true"
+                                     noWrap="true" width="240"
+                                     sortProperty="OpportunityName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityName.label}"
+                                              id="ol30"/>
+                            </f:facet>
+                            <af:inputText id="cl7"
+                                          value="#{row.bindings.OpportunityName.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityName.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityName.mandatory}"
+                                          rows="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityName.displayHeight}"
+                                          columns="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityName.displayWidth}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityName.tooltip}"
+                                          rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                              <f:validator binding="#{row.bindings.OpportunityName.validator}"/>
+                            </af:inputText>
+                            <af:commandLink id="CIOOpportunityName"
+                                            text="#{row.bindings.OpportunityName.attributeValue}"
+                                            shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityName.tooltip}"
+                                            action="LaunchTab"
+                                            rendered="#{adfFacesContext.outputMode != 'printable'}">
+                              <af:setActionListener from="#{(row.OpportunityType != 'Auto-Add') ? 'Opportunities' : 'ProcessingGroups'}"
+                                                    to="#{jhsDynTabLauncher.taskFlowName}"/>
+                              <af:setActionListener from="#{row.Id}"
+                                                    to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                              <af:setActionListener from="#{row.OpportunityName}"
+                                                    to="#{jhsDynTabLauncher.label}"/>
+                              <af:setActionListener from="#{row.Id}"
+                                                    to="#{(row.OpportunityType != 'Auto-Add') ? jhsDynTabLauncher.parameters.rowKeyValueOpportunities : jhsDynTabLauncher.parameters.rowKeyValueProcessingGroups}"/>
+                              <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                    to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                            </af:commandLink>
+                          </af:column>
+                          <af:column id="CIOCurrentStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="CurrentStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentStatus.label}"
+                                              id="ol31"/>
+                            </f:facet>
+                            <af:selectOneChoice id="CIOCurrentStatus"
+                                                value="#{row.bindings.CurrentStatus.inputValue}"
+                                                label="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentStatus.label}"
+                                                required="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentStatus.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentStatus.tooltip}">
+                              <f:selectItems value="#{row.bindings.CurrentStatus.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                          <af:column id="CIOAccountNameCol" sortable="true"
+                                     filterable="true" noWrap="true" width="240"
+                                     sortProperty="AccountName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.AccountName.label}"
+                                              id="ol32"/>
+                            </f:facet>
+                            <af:inputText id="CIOAccountName"
+                                          value="#{row.bindings.AccountName.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.AccountName.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.AccountName.mandatory}"
+                                          rows="#{bindings.CAInProcessOpportunitiesTable.hints.AccountName.displayHeight}"
+                                          columns="#{bindings.CAInProcessOpportunitiesTable.hints.AccountName.displayWidth}"
+                                          maximumLength="400" readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.AccountName.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CIOCreatedDateCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CreatedDate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.CreatedDate.label}"
+                                              id="ol33"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                            id="id4">
+                                <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="CIOCreatedDate"
+                                          value="#{row.bindings.CreatedDate.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.CreatedDate.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.CreatedDate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.CreatedDate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="CIOAccountManagerCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="AccountManager"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.AccountManager.label}"
+                                              id="ol34"/>
+                            </f:facet>
+                            <af:inputText id="CIOAccountManager"
+                                          value="#{row.bindings.AccountManager.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.AccountManager.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.AccountManager.mandatory}"
+                                          rows="#{bindings.CAInProcessOpportunitiesTable.hints.AccountManager.displayHeight}"
+                                          columns="#{bindings.CAInProcessOpportunitiesTable.hints.AccountManager.displayWidth}"
+                                          maximumLength="101" readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.AccountManager.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountManager.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CIOCataloguedCountCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CataloguedCount"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.CataloguedCount.label}"
+                                              id="ol35"/>
+                            </f:facet>
+                            <af:inputText id="CIOCataloguedCount"
+                                          value="#{row.bindings.CataloguedCount.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.CataloguedCount.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.CataloguedCount.mandatory}"
+                                          rows="#{bindings.CAInProcessOpportunitiesTable.hints.CataloguedCount.displayHeight}"
+                                          columns="#{bindings.CAInProcessOpportunitiesTable.hints.CataloguedCount.displayWidth}"
+                                          maximumLength="10" readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.CataloguedCount.tooltip}">
+                              <f:validator binding="#{row.bindings.CataloguedCount.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.CAInProcessOpportunitiesTable.hints.CataloguedCount.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CIOUncataloguedCountCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="UncataloguedCount"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.UncataloguedCount.label}"
+                                              id="ol36"/>
+                            </f:facet>
+                            <af:inputText id="CIOUncataloguedCount"
+                                          value="#{row.bindings.UncataloguedCount.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.UncataloguedCount.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.UncataloguedCount.mandatory}"
+                                          rows="#{bindings.CAInProcessOpportunitiesTable.hints.UncataloguedCount.displayHeight}"
+                                          columns="#{bindings.CAInProcessOpportunitiesTable.hints.UncataloguedCount.displayWidth}"
+                                          maximumLength="10" readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.UncataloguedCount.tooltip}">
+                              <f:validator binding="#{row.bindings.UncataloguedCount.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.CAInProcessOpportunitiesTable.hints.UncataloguedCount.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CIOAgreementLogindateCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="AgreementLogindate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.AgreementLogindate.label}"
+                                              id="ol37"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.AgreementLogindate}"
+                                            id="id5">
+                                <af:convertDateTime pattern="#{nls.datepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="CIOAgreementLogindate"
+                                          value="#{row.bindings.AgreementLogindate.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.AgreementLogindate.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.AgreementLogindate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.AgreementLogindate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="CIOCurrentPreStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="CurrentPreStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentPreStatus.label}"
+                                              id="ol38"/>
+                            </f:facet>
+                            <af:inputText id="CIOCurrentPreStatus"
+                                          value="#{row.bindings.CurrentPreStatus.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentPreStatus.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentPreStatus.mandatory}"
+                                          rows="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentPreStatus.displayHeight}"
+                                          columns="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentPreStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentPreStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentPreStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CIOCurrentCatalogingStatusCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="120"
+                                     sortProperty="CurrentCatalogingStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                              id="ol39"/>
+                            </f:facet>
+                            <af:inputText id="CIOCurrentCatalogingStatus"
+                                          value="#{row.bindings.CurrentCatalogingStatus.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentCatalogingStatus.mandatory}"
+                                          rows="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentCatalogingStatus.displayHeight}"
+                                          columns="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentCatalogingStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentCatalogingStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentCatalogingStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CIOCurrentAgreementStatusCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="120"
+                                     sortProperty="CurrentAgreementStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                              id="ol40"/>
+                            </f:facet>
+                            <af:inputText id="CIOCurrentAgreementStatus"
+                                          value="#{row.bindings.CurrentAgreementStatus.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentAgreementStatus.mandatory}"
+                                          rows="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentAgreementStatus.displayHeight}"
+                                          columns="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentAgreementStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.CurrentAgreementStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentAgreementStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CIOAgreementDataFlagCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="AgreementDataFlag"
+                                     align="center" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.AgreementDataFlag.label}"
+                                              id="ol41"/>
+                            </f:facet>
+                            <af:selectBooleanCheckbox id="CIOAgreementDataFlag"
+                                                      label="#{bindings.CAInProcessOpportunitiesTable.hints.AgreementDataFlag.label}"
+                                                      value="#{CIOAgreementDataFlagcheckboxInTable.value}"
+                                                      readOnly="true"
+                                                      shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.AgreementDataFlag.tooltip}"></af:selectBooleanCheckbox>
+                          </af:column>
+                          <af:column id="CIOFormCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Form" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.Form.label}"
+                                              id="ol42"/>
+                            </f:facet>
+                            <af:inputText id="CIOForm"
+                                          value="#{row.bindings.Form.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.Form.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.Form.mandatory}"
+                                          rows="#{bindings.CAInProcessOpportunitiesTable.hints.Form.displayHeight}"
+                                          columns="#{bindings.CAInProcessOpportunitiesTable.hints.Form.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.Form.tooltip}">
+                              <f:validator binding="#{row.bindings.Form.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CIOTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Type" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.Type.label}"
+                                              id="ol43"/>
+                            </f:facet>
+                            <af:inputText id="CIOType"
+                                          value="#{row.bindings.Type.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.Type.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.Type.mandatory}"
+                                          rows="#{bindings.CAInProcessOpportunitiesTable.hints.Type.displayHeight}"
+                                          columns="#{bindings.CAInProcessOpportunitiesTable.hints.Type.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.Type.tooltip}">
+                              <f:validator binding="#{row.bindings.Type.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="CIOOpportunityTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpportunityType"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityType.label}"
+                                              id="ol44"/>
+                            </f:facet>
+                            <af:inputText id="CIOOpportunityType"
+                                          value="#{row.bindings.OpportunityType.inputValue}"
+                                          label="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityType.label}"
+                                          required="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityType.mandatory}"
+                                          rows="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityType.displayHeight}"
+                                          columns="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityType.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CAInProcessOpportunitiesTable.hints.OpportunityType.tooltip}">
+                              <f:validator binding="#{row.bindings.OpportunityType.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+              </af:panelStretchLayout>
+            </af:panelBox>
+            <af:panelBox text="#{nls['TABLE_TITLE_CAONHOLDOPPORTUNITIES']}"
+                         id="COOPb">
+              <f:facet name="toolbar"/>
+              <af:panelStretchLayout topHeight="auto" id="COOTopLc"
+                                     partialTriggers=" CADTopLc qsAreaCOOSearchOptions"
+                                     rendered="#{jhsUserRoles['CO, ADMIN']}">
+                <f:facet name="top">
+                  <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (tracs_templates/pageComponent/dashboardContent.vm) -->
+                  <af:group id="g4">
+                    <af:panelGroupLayout id="modelSearchAreaCOO"
+                                         rendered="#{!pageFlowScope.createModes.CreateCAOnHoldOpportunities and !pageFlowScope.hideSearchArea}"
+                                         partialTriggers="">
+                      <f:attribute name="JhsIgnoreChanges" value="true"/>
+                      <af:quickQuery id="qsAreaCOOSearchOptions"
+                                     label="#{nls['FILTER_BY']}"
+                                     value="#{bindings.CAOnHoldOpportunitiesIteratorOnHoldOpportunitiesDashboardViewCriteriaQuery.queryDescriptor}"
+                                     model="#{bindings.CAOnHoldOpportunitiesIteratorOnHoldOpportunitiesDashboardViewCriteriaQuery.queryModel}"
+                                     queryListener="#{bindings.CAOnHoldOpportunitiesIteratorOnHoldOpportunitiesDashboardViewCriteriaQuery.processQuery}"></af:quickQuery>
+                    </af:panelGroupLayout>
+                    <af:spacer width="10" height="10" id="sp6"/>
+                  </af:group>
+                  <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelStretchLayout topHeight="0" id="psl4">
+                    <f:facet name="top"></f:facet>
+                    <f:facet name="center">
+                      <af:panelCollection id="COOPC" featuresOff=" "
+                                          styleClass="AFStretchWidth">
+                        <f:facet name="menus">
+                          <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                                   id="menu12">
+                            <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu13">
+                              <af:group id="COOtbb"
+                                        rendered="#{ bindings.CAOnHoldOpportunitiesIterator.currentRow!=null }">
+                                <af:commandMenuItem actionListener="#{bindings.FirstCAOnHoldOpportunities.execute}"
+                                                    id="COOFirst"
+                                                    partialSubmit="true"
+                                                    icon="/afr/shuttleleftall_ena.png"
+                                                    textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.PreviousCAOnHoldOpportunities.execute}"
+                                                    icon="/afr/shuttleleft_ena.png"
+                                                    textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                    id="COOPrevious"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.NextCAOnHoldOpportunities.execute}"
+                                                    icon="/afr/shuttleright_ena.png"
+                                                    textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                    id="COONext"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                                <af:commandMenuItem actionListener="#{bindings.LastCAOnHoldOpportunities.execute}"
+                                                    icon="/afr/shuttlerightall_ena.png"
+                                                    textAndAccessKey="#{nls['LAST_ROW']}"
+                                                    id="COOLast"
+                                                    partialSubmit="true"></af:commandMenuItem>
+                              </af:group>
+                            </af:menu>
+                            <af:commandMenuItem partialSubmit="true"
+                                                textAndAccessKey="#{nls['EXPORT']}"
+                                                icon="/jheadstart/images/excel.png"
+                                                immediate="true" id="cmi3">
+                              <af:exportCollectionActionListener exportedId="COOTab"
+                                                                 type="excelHTML"
+                                                                 filename="CAOnHoldOpportunities.xls"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </f:facet>
+                        <f:facet name="toolbar">
+                          <af:toolbar id="tbar3">
+                            <af:commandImageLink immediate="true"
+                                                 partialSubmit="true" id="cl8"
+                                                 shortDesc="#{nls['EXPORT']}"
+                                                 icon="/jheadstart/images/excel.png">
+                              <af:exportCollectionActionListener exportedId="COOTab"
+                                                                 type="excelHTML"
+                                                                 filename="CAOnHoldOpportunities.xls"/>
+                            </af:commandImageLink>
+                            <af:commandToolbarButton text="Print" id="COOPrint"
+                                                     shortDesc="Opens a new tab with printer friendly format.">
+                              <af:showPrintablePageBehavior/>
+                            </af:commandToolbarButton>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="statusbar">
+                          <af:toolbar>
+                            <af:outputText value="#{bindings.CAOnHoldOpportunitiesIterator.estimatedRowCount} rows found"/>
+                          </af:toolbar>
+                        </f:facet>
+                        <af:table id="COOTab" contentDelivery="immediate"
+                                  value="#{bindings.CAOnHoldOpportunitiesTable.collectionModel}"
+                                  columnStretching="blank"
+                                  rowBandingInterval="0" editingMode="editAll"
+                                  columnSelection="multiple"
+                                  contextMenuSelect="true" rowSelection="single"
+                                  selectionListener="#{pageFlowScope.CAOnHoldOpportunitiesTable.makeCurrent}"
+                                  selectedRowKeys="#{pageFlowScope.CAOnHoldOpportunitiesTable.selectedRow}"
+                                  rowDisclosureListener="#{pageFlowScope.CAOnHoldOpportunitiesTable.discloseRow}"
+                                  var="row" varStatus="status"
+                                  fetchSize="#{bindings.CAOnHoldOpportunitiesTable.rangeSize}"
+                                  emptyText="#{nls['NO_ROWS_FOUND']}"
+                                  queryListener="#{bindings.CAOnHoldOpportunitiesIteratorOnHoldOpportunitiesDashboardViewCriteriaQuery.processQuery}"
+                                  filterModel="#{bindings.CAOnHoldOpportunitiesIteratorOnHoldOpportunitiesDashboardViewCriteriaQuery.queryDescriptor}"
+                                  filterVisible="true"
+                                  binding="#{pageFlowScope.CAOnHoldOpportunitiesTable.table}"
+                                  partialTriggers=":::qsAreaCOOSearchOptions :::COOPC ::COOFirst ::COOPrevious ::COONext ::COOLast"
+                                  styleClass="AFStretchWidth"
+                                  summary="#{nls['TABLE_TITLE_CAONHOLDOPPORTUNITIES']}">
+                          <f:facet name="contextMenu">
+                            <af:popup id="COOTablePopup"
+                                      childCreation="deferred">
+                              <af:menu id="menu14">
+                                <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                         id="menu15"></af:menu>
+                              </af:menu>
+                            </af:popup>
+                          </f:facet>
+                          <af:column id="COOOpportunityNoCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpportunityNo"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityNo.label}"
+                                              id="ol45"/>
+                            </f:facet>
+                            <af:inputText id="COOOpportunityNo"
+                                          value="#{row.bindings.OpportunityNo.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityNo.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityNo.mandatory}"
+                                          rows="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityNo.displayHeight}"
+                                          columns="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityNo.displayWidth}"
+                                          maximumLength="38" readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityNo.tooltip}">
+                              <f:validator binding="#{row.bindings.OpportunityNo.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityNo.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="COOOpportunityNameCol" sortable="true"
+                                     noWrap="true" width="240"
+                                     sortProperty="OpportunityName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityName.label}"
+                                              id="ol46"/>
+                            </f:facet>
+                            <af:inputText id="cl9"
+                                          value="#{row.bindings.OpportunityName.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityName.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityName.mandatory}"
+                                          rows="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityName.displayHeight}"
+                                          columns="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityName.displayWidth}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityName.tooltip}"
+                                          rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                              <f:validator binding="#{row.bindings.OpportunityName.validator}"/>
+                            </af:inputText>
+                            <af:commandLink id="COOOpportunityName"
+                                            text="#{row.bindings.OpportunityName.attributeValue}"
+                                            shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityName.tooltip}"
+                                            action="LaunchTab"
+                                            rendered="#{adfFacesContext.outputMode != 'printable'}">
+                              <af:setActionListener from="#{(row.OpportunityType != 'Auto-Add') ? 'Opportunities' : 'ProcessingGroups'}"
+                                                    to="#{jhsDynTabLauncher.taskFlowName}"/>
+                              <af:setActionListener from="#{row.Id}"
+                                                    to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                              <af:setActionListener from="#{row.OpportunityName}"
+                                                    to="#{jhsDynTabLauncher.label}"/>
+                              <af:setActionListener from="#{row.Id}"
+                                                    to="#{(row.OpportunityType != 'Auto-Add') ? jhsDynTabLauncher.parameters.rowKeyValueOpportunities : jhsDynTabLauncher.parameters.rowKeyValueProcessingGroups}"/>
+                              <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                    to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                            </af:commandLink>
+                          </af:column>
+                          <af:column id="COOCurrentStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="CurrentStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentStatus.label}"
+                                              id="ol47"/>
+                            </f:facet>
+                            <af:selectOneChoice id="COOCurrentStatus"
+                                                value="#{row.bindings.CurrentStatus.inputValue}"
+                                                label="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentStatus.label}"
+                                                required="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentStatus.mandatory}"
+                                                readOnly="true"
+                                                shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentStatus.tooltip}">
+                              <f:selectItems value="#{row.bindings.CurrentStatus.items}"/>
+                            </af:selectOneChoice>
+                          </af:column>
+                          <af:column id="COOAccountNameCol" sortable="true"
+                                     filterable="true" noWrap="true" width="240"
+                                     sortProperty="AccountName"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.AccountName.label}"
+                                              id="ol48"/>
+                            </f:facet>
+                            <af:inputText id="COOAccountName"
+                                          value="#{row.bindings.AccountName.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.AccountName.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.AccountName.mandatory}"
+                                          rows="#{bindings.CAOnHoldOpportunitiesTable.hints.AccountName.displayHeight}"
+                                          columns="#{bindings.CAOnHoldOpportunitiesTable.hints.AccountName.displayWidth}"
+                                          maximumLength="400" readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.AccountName.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="COOCreatedDateCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CreatedDate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.CreatedDate.label}"
+                                              id="ol49"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                            id="id6">
+                                <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="COOCreatedDate"
+                                          value="#{row.bindings.CreatedDate.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.CreatedDate.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.CreatedDate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.CreatedDate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="COOAccountManagerCol" sortable="true"
+                                     filterable="true" noWrap="true" width="180"
+                                     sortProperty="AccountManager"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.AccountManager.label}"
+                                              id="ol50"/>
+                            </f:facet>
+                            <af:inputText id="COOAccountManager"
+                                          value="#{row.bindings.AccountManager.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.AccountManager.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.AccountManager.mandatory}"
+                                          rows="#{bindings.CAOnHoldOpportunitiesTable.hints.AccountManager.displayHeight}"
+                                          columns="#{bindings.CAOnHoldOpportunitiesTable.hints.AccountManager.displayWidth}"
+                                          maximumLength="101" readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.AccountManager.tooltip}">
+                              <f:validator binding="#{row.bindings.AccountManager.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="COOCataloguedCountCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="CataloguedCount"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.CataloguedCount.label}"
+                                              id="ol51"/>
+                            </f:facet>
+                            <af:inputText id="COOCataloguedCount"
+                                          value="#{row.bindings.CataloguedCount.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.CataloguedCount.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.CataloguedCount.mandatory}"
+                                          rows="#{bindings.CAOnHoldOpportunitiesTable.hints.CataloguedCount.displayHeight}"
+                                          columns="#{bindings.CAOnHoldOpportunitiesTable.hints.CataloguedCount.displayWidth}"
+                                          maximumLength="10" readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.CataloguedCount.tooltip}">
+                              <f:validator binding="#{row.bindings.CataloguedCount.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.CAOnHoldOpportunitiesTable.hints.CataloguedCount.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="COOUncataloguedCountCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="UncataloguedCount"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.UncataloguedCount.label}"
+                                              id="ol52"/>
+                            </f:facet>
+                            <af:inputText id="COOUncataloguedCount"
+                                          value="#{row.bindings.UncataloguedCount.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.UncataloguedCount.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.UncataloguedCount.mandatory}"
+                                          rows="#{bindings.CAOnHoldOpportunitiesTable.hints.UncataloguedCount.displayHeight}"
+                                          columns="#{bindings.CAOnHoldOpportunitiesTable.hints.UncataloguedCount.displayWidth}"
+                                          maximumLength="10" readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.UncataloguedCount.tooltip}">
+                              <f:validator binding="#{row.bindings.UncataloguedCount.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.CAOnHoldOpportunitiesTable.hints.UncataloguedCount.format}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="COOAgreementLogindateCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="AgreementLogindate"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.AgreementLogindate.label}"
+                                              id="ol53"/>
+                            </f:facet>
+                            <f:facet name="filter">
+                              <af:inputDate value="#{status.filterCriteria.AgreementLogindate}"
+                                            id="id7">
+                                <af:convertDateTime pattern="#{nls.datepattern}"/>
+                              </af:inputDate>
+                            </f:facet>
+                            <af:inputDate id="COOAgreementLogindate"
+                                          value="#{row.bindings.AgreementLogindate.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.AgreementLogindate.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.AgreementLogindate.mandatory}"
+                                          readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.AgreementLogindate.tooltip}">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                          </af:column>
+                          <af:column id="COOCurrentPreStatusCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="CurrentPreStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentPreStatus.label}"
+                                              id="ol54"/>
+                            </f:facet>
+                            <af:inputText id="COOCurrentPreStatus"
+                                          value="#{row.bindings.CurrentPreStatus.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentPreStatus.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentPreStatus.mandatory}"
+                                          rows="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentPreStatus.displayHeight}"
+                                          columns="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentPreStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentPreStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentPreStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="COOCurrentCatalogingStatusCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="120"
+                                     sortProperty="CurrentCatalogingStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                              id="ol55"/>
+                            </f:facet>
+                            <af:inputText id="COOCurrentCatalogingStatus"
+                                          value="#{row.bindings.CurrentCatalogingStatus.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentCatalogingStatus.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentCatalogingStatus.mandatory}"
+                                          rows="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentCatalogingStatus.displayHeight}"
+                                          columns="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentCatalogingStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentCatalogingStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentCatalogingStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="COOCurrentAgreementStatusCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="120"
+                                     sortProperty="CurrentAgreementStatus"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                              id="ol56"/>
+                            </f:facet>
+                            <af:inputText id="COOCurrentAgreementStatus"
+                                          value="#{row.bindings.CurrentAgreementStatus.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentAgreementStatus.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentAgreementStatus.mandatory}"
+                                          rows="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentAgreementStatus.displayHeight}"
+                                          columns="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentAgreementStatus.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.CurrentAgreementStatus.tooltip}">
+                              <f:validator binding="#{row.bindings.CurrentAgreementStatus.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="COOAgreementDataFlagCol"
+                                     sortable="true" filterable="true"
+                                     noWrap="true" width="100"
+                                     sortProperty="AgreementDataFlag"
+                                     align="center" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.AgreementDataFlag.label}"
+                                              id="ol57"/>
+                            </f:facet>
+                            <af:selectBooleanCheckbox id="COOAgreementDataFlag"
+                                                      label="#{bindings.CAOnHoldOpportunitiesTable.hints.AgreementDataFlag.label}"
+                                                      value="#{COOAgreementDataFlagcheckboxInTable.value}"
+                                                      readOnly="true"
+                                                      shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.AgreementDataFlag.tooltip}"></af:selectBooleanCheckbox>
+                          </af:column>
+                          <af:column id="COOFormCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Form" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.Form.label}"
+                                              id="ol58"/>
+                            </f:facet>
+                            <af:inputText id="COOForm"
+                                          value="#{row.bindings.Form.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.Form.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.Form.mandatory}"
+                                          rows="#{bindings.CAOnHoldOpportunitiesTable.hints.Form.displayHeight}"
+                                          columns="#{bindings.CAOnHoldOpportunitiesTable.hints.Form.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.Form.tooltip}">
+                              <f:validator binding="#{row.bindings.Form.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="COOTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="120"
+                                     sortProperty="Type" rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.Type.label}"
+                                              id="ol59"/>
+                            </f:facet>
+                            <af:inputText id="COOType"
+                                          value="#{row.bindings.Type.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.Type.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.Type.mandatory}"
+                                          rows="#{bindings.CAOnHoldOpportunitiesTable.hints.Type.displayHeight}"
+                                          columns="#{bindings.CAOnHoldOpportunitiesTable.hints.Type.displayWidth}"
+                                          maximumLength="40" readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.Type.tooltip}">
+                              <f:validator binding="#{row.bindings.Type.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                          <af:column id="COOOpportunityTypeCol" sortable="true"
+                                     filterable="true" noWrap="true" width="100"
+                                     sortProperty="OpportunityType"
+                                     rowHeader="false"
+                                     filterFeatures="caseInsensitive">
+                            <f:facet name="header">
+                              <af:outputLabel value="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityType.label}"
+                                              id="ol60"/>
+                            </f:facet>
+                            <af:inputText id="COOOpportunityType"
+                                          value="#{row.bindings.OpportunityType.inputValue}"
+                                          label="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityType.label}"
+                                          required="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityType.mandatory}"
+                                          rows="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityType.displayHeight}"
+                                          columns="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityType.displayWidth}"
+                                          maximumLength="20" readOnly="true"
+                                          shortDesc="#{bindings.CAOnHoldOpportunitiesTable.hints.OpportunityType.tooltip}">
+                              <f:validator binding="#{row.bindings.OpportunityType.validator}"/>
+                            </af:inputText>
+                          </af:column>
+                        </af:table>
+                      </af:panelCollection>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+              </af:panelStretchLayout>
+            </af:panelBox>
+          </af:panelDashboard>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

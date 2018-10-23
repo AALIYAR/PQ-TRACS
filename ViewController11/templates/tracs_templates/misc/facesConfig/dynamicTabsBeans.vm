@@ -1,0 +1,83 @@
+## revision_history
+## 28-jan-2010 Steven Davelaar
+## 1.0         Initial creation
+
+  <managed-bean id="#NEW_ID("__")">
+    <managed-bean-name id="#NEW_ID("__")">jhsDynTabContext</managed-bean-name>
+    <managed-bean-class id="#NEW_ID("__")">oracle.jheadstart.view.dyntab.DynTabContext</managed-bean-class>
+    <managed-bean-scope id="#NEW_ID("__")">view</managed-bean-scope>
+    <managed-property id="#NEW_ID("__")">
+      <property-name id="#NEW_ID("__")">tabTracker</property-name>
+      <property-class>oracle.jheadstart.view.dyntab.DynTabTracker</property-class>
+      <value id="#NEW_ID("__")">#{viewScope.jhsDynTabTracker}</value>
+    </managed-property>
+    <managed-property id="#NEW_ID("__")">
+      <property-name id="#NEW_ID("__")">doUpdateDocumentTitle</property-name>
+      <property-class>java.lang.Boolean</property-class>
+      <value id="#NEW_ID("__")">true</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="#NEW_ID("__")">
+    <managed-bean-name id="#NEW_ID("__")">jhsDynTabTracker</managed-bean-name>
+    <managed-bean-class id="#NEW_ID("__")">oracle.jheadstart.view.dyntab.DynTabTracker</managed-bean-class>
+    <managed-bean-scope id="#NEW_ID("__")">view</managed-bean-scope>
+    <managed-property id="#NEW_ID("__")">
+      <property-name id="#NEW_ID("__")">maxNumberOfTabs</property-name>
+      <property-class>java.lang.Integer</property-class>
+      <value id="#NEW_ID("__")">15</value>
+    </managed-property>
+    <managed-property id="#NEW_ID("__")">
+      <property-name id="#NEW_ID("__")">initialTabs</property-name>
+      <property-class>java.util.List</property-class>
+      <list-entries>
+        #foreach ($group in ${JHS.application.initialTabGroups})
+          <value id="#NEW_ID("__")">#{viewScope.${group.name}Tab}</value> 
+        #end
+      </list-entries>
+    </managed-property>
+    <managed-property id="#NEW_ID("__")">
+      <property-name id="#NEW_ID("__")">selectedTabIndex</property-name>
+      <property-class>java.lang.Integer</property-class>
+      #if (${JHS.application.initialTabGroups.size()}>0)
+      <value id="#NEW_ID("__")">0</value>
+      #else
+      <value id="#NEW_ID("__")">-1</value>
+      #end
+    </managed-property>
+    <managed-property id="#NEW_ID("__")">
+      <property-name id="#NEW_ID("__")">emptyTaskFlowDocument</property-name>
+      <property-class>java.lang.String</property-class>
+      <value id="#NEW_ID("__")">#BLANK_TASK_FLOW_PATH()#blank</value>
+    </managed-property>
+</managed-bean>
+
+  #set ($index = 0)
+  #foreach ($group in ${JHS.application.initialTabGroups})
+  <managed-bean id="#NEW_ID("__")">
+    <managed-bean-name id="#NEW_ID("__")">${group.name}Tab</managed-bean-name>
+    <managed-bean-class id="#NEW_ID("__")">oracle.jheadstart.view.dyntab.DynTab</managed-bean-class>
+    <managed-bean-scope id="#NEW_ID("__")">view</managed-bean-scope>
+    <managed-property id="#NEW_ID("__")">
+      <property-name id="#NEW_ID("__")">taskFlowConfig</property-name>
+      <value id="#NEW_ID("__")">#{pageFlowScope.${group.name}TaskFlowConfig}</value>
+    </managed-property>
+    <managed-property id="#NEW_ID("__")">
+      <property-name id="#NEW_ID("__")">index</property-name>
+      <value id="#NEW_ID("__")">${index}</value>
+    </managed-property>
+    <managed-property id="#NEW_ID("__")">
+      <property-name id="#NEW_ID("__")">active</property-name>
+      <value id="#NEW_ID("__")">true</value>
+    </managed-property>
+    <managed-property id="#NEW_ID("__")">
+      <property-name id="#NEW_ID("__")">closeable</property-name>
+      #if (${group.addMenuEntry})
+      <value id="#NEW_ID("__")">true</value>
+      #else
+      <value id="#NEW_ID("__")">false</value>
+      #end  
+    </managed-property>
+  </managed-bean>
+  #set ($index = $index+1)
+  #end
+  

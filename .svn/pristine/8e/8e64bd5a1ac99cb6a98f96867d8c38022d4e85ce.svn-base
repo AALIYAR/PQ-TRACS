@@ -1,0 +1,691 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="OvrPublisherView"
+   Version="11.1.1.64.93"
+   OrderBy="end_date desc nulls first"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   ComponentClass="com.pq.tracs.model.dao.TracsView"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_objectSuperClassName"
+         Value="com.pq.tracs.model.dao.TracsView"/>
+   </DesignTime>
+   <ViewAccessor
+      Name="GenerationMethodLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Generation Method']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="PublisherLOV"
+      ViewObjectName="com.pq.tracs.model.ro.PublisherROView"
+      RowLevelBinds="true"/>
+   <ViewAccessor
+      Name="PublisherUrlLOV"
+      ViewObjectName="com.pq.tracs.model.lookups.PublisherUrlView"
+      RowLevelBinds="true"/>
+   <ViewAccessor
+      Name="PublisherAddressLOV"
+      ViewObjectName="com.pq.tracs.model.dao.PublisherAddressLOVView">
+      <ViewCriteriaUsage
+         Name="PublisherAddressLOVViewCriteria"
+         FullName="com.pq.tracs.model.dao.PublisherAddressLOVView.PublisherAddressLOVViewCriteria"/>
+      <ParameterMap>
+         <PIMap Variable="publisher_id">
+            <TransientExpression><![CDATA[PublisherId]]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_GenerationMethod"
+      ListVOName="GenerationMethodLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="GenerationMethod"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_Url"
+      ListVOName="PublisherUrlLOV"
+      ListRangeSize="10"
+      NullValueFlag="none"
+      NullValueId="LOV_Url_LOVUIHints_NullValueId"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="Url"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+         <Item Value="OrderBy1"/>
+         <Item Value="Description"/>
+         <Item Value="CreatedBy"/>
+         <Item Value="CreatedDate"/>
+         <Item Value="LastUpdatedBy"/>
+         <Item Value="LastUpdatedDate"/>
+      </AttrArray>
+      <DisplayCriteria
+         Hint="showAndExecute"
+         Name="PublisherUrlViewCriteria"/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_Name"
+      ListVOName="PublisherLOV"
+      ListRangeSize="10"
+      NullValueFlag="none"
+      NullValueId="LOV_Name_LOVUIHints_NullValueId"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="Name"/>
+      </AttrArray>
+      <AttrArray Name="DerivedAttrNames">
+         <Item Value="PublisherId"/>
+         <Item Value="PubId"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="Name"/>
+         <Item Value="Id"/>
+         <Item Value="PubId"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="PubId"/>
+         <Item Value="Name"/>
+         <Item Value="OrgId"/>
+         <Item Value="MsId"/>
+         <Item Value="StreetAddress"/>
+         <Item Value="City"/>
+         <Item Value="StateOrProvince"/>
+         <Item Value="Country"/>
+         <Item Value="Url"/>
+      </AttrArray>
+      <DisplayCriteria
+         Name="PublisherROViewCriteria"/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_Address"
+      ListVOName="PublisherAddressLOV"
+      ListRangeSize="10"
+      NullValueFlag="none"
+      NullValueId="LOV_Address_LOVUIHints_NullValueId"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="Address"/>
+      </AttrArray>
+      <AttrArray Name="DerivedAttrNames">
+         <Item Value="PublisherAddressId"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="StreetAddress"/>
+         <Item Value="Id"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="StreetAddress"/>
+         <Item Value="StreetAddress2"/>
+         <Item Value="City"/>
+         <Item Value="StateOrProvince"/>
+         <Item Value="ZipOrPostalCode"/>
+         <Item Value="Country"/>
+         <Item Value="DefaultFlag"/>
+      </AttrArray>
+      <DisplayCriteria
+         Name="PublisherAddressLOVViewCriteria"
+         Hint="showAndExecute"/>
+   </ListBinding>
+   <SQLQuery><![CDATA[SELECT OvrPublisher.ID, 
+       OvrPublisher.TITLE_RECORD_ID,
+       Publisher.NAME,  
+       OvrPublisher.PUBLISHER_ID, 
+       (case 
+        WHEN OvrPublisher.PUBLISHER_ADDRESS_ID is not null  THEN     (PublisherAddress.STREET_ADDRESS  || '  ' || PublisherAddress.CITY|| '  ' || PublisherAddress.STATE_OR_PROVINCE || '  ' ||PublisherAddress.COUNTRY)
+        ELSE (PublisherAddress1.STREET_ADDRESS  || '  '|| PublisherAddress1.CITY|| '  ' ||PublisherAddress1.STATE_OR_PROVINCE || '  '||PublisherAddress1.COUNTRY)
+      END) as Address,
+       OvrPublisher.END_DATE, 
+       OvrPublisher.URL, 
+       OvrPublisher.NOTES, 
+       Publisher.ORG_ID,
+       Publisher.MS_ID,
+       Publisher.URL AS URL1,
+       Publisher.NOTES AS NOTES1,  
+       OvrPublisher.GENERATION_METHOD,
+       OvrPublisher.CREATED_BY, 
+       OvrPublisher.CREATED_DATE, 
+       OvrPublisher.LAST_UPDATED_BY, 
+       OvrPublisher.LAST_UPDATED_DATE, 
+       OvrPublisher.PUBLISHER_ADDRESS_ID, 
+       OvrPublisher.START_DATE, 
+       Publisher.ID AS ID1, 
+       PublisherAddress.ID AS ID2,
+       PublisherAddress1.ID AS ID3, 
+       NVL(OvrPublisher.URL, 'Publisher: ' || Publisher.URL) as URL2,
+       PublisherAddress.VP_ID,
+       Publisher.PUB_ID
+FROM TRAX_OVR_PUBLISHER OvrPublisher 
+INNER JOIN TRAX_PUBLISHER Publisher ON OvrPublisher.PUBLISHER_ID = Publisher.ID 
+LEFT OUTER JOIN TRAX_PUBLISHER_ADDRESS PublisherAddress ON OvrPublisher.PUBLISHER_ADDRESS_ID = PublisherAddress.ID
+LEFT OUTER JOIN TRAX_PUBLISHER_ADDRESS PublisherAddress1 ON (Publisher.ID = PublisherAddress1.PUBLISHER_ID AND (PublisherAddress1.DEFAULT_FLAG = 'Y' OR PublisherAddress1.DEFAULT_FLAG IS NULL))]]></SQLQuery>
+   <EntityUsage
+      Name="OvrPublisher"
+      Entity="com.pq.tracs.model.bo.OvrPublisher" >
+   </EntityUsage>
+   <EntityUsage
+      Name="Publisher"
+      Entity="com.pq.tracs.model.bo.Publisher"
+      Association="com.pq.tracs.model.bo.PublisherToOvrPublisherFkAssoc"
+      AssociationEnd="com.pq.tracs.model.bo.PublisherToOvrPublisherFkAssoc.Publisher"
+      SourceUsage="com.pq.tracs.model.dao.OvrPublisherView.OvrPublisher"
+      ReadOnly="true"
+      Reference="true" >
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="com.pq.tracs.model.bo.OvrPublisher.PublisherId" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="com.pq.tracs.model.bo.Publisher.Id" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="PublisherAddress"
+      Entity="com.pq.tracs.model.bo.PublisherAddress"
+      Association="com.pq.tracs.model.bo.PublisherAddressToOvrPublisherFkAssoc"
+      AssociationEnd="com.pq.tracs.model.bo.PublisherAddressToOvrPublisherFkAssoc.PublisherAddress"
+      SourceUsage="com.pq.tracs.model.dao.OvrPublisherView.OvrPublisher"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="com.pq.tracs.model.bo.OvrPublisher.PublisherAddressId" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="com.pq.tracs.model.bo.PublisherAddress.Id" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <EntityUsage
+      Name="PublisherAddress1"
+      Entity="com.pq.tracs.model.bo.PublisherAddress"
+      Association="com.pq.tracs.model.bo.PublisherAddressToOvrPublisherFkAssoc"
+      AssociationEnd="com.pq.tracs.model.bo.PublisherAddressToOvrPublisherFkAssoc.PublisherAddress"
+      SourceUsage="com.pq.tracs.model.dao.OvrPublisherView.OvrPublisher"
+      ReadOnly="true"
+      Reference="true"
+      DeleteParticipant="false">
+      <DesignTime>
+         <AttrArray Name="_srcAttributes">
+            <Item Value="com.pq.tracs.model.bo.OvrPublisher.PublisherAddressId" />
+         </AttrArray>
+         <AttrArray Name="_dstAttributes">
+            <Item Value="com.pq.tracs.model.bo.PublisherAddress.Id" />
+         </AttrArray>
+      </DesignTime>
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      IsNotNull="true"
+      EntityAttrName="Id"
+      EntityUsage="OvrPublisher"
+      AliasName="ID" />
+   <ViewAttribute
+      Name="TitleRecordId"
+      IsNotNull="true"
+      EntityAttrName="TitleRecordId"
+      EntityUsage="OvrPublisher"
+      AliasName="TITLE_RECORD_ID" />
+   <ViewAttribute
+      Name="Name"
+      IsUpdateable="false"
+      IsNotNull="true"
+      EntityAttrName="Name"
+      EntityUsage="Publisher"
+      AliasName="NAME"
+      LOVName="LOV_Name">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="input_text_lov"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PublisherId"
+      IsNotNull="true"
+      EntityAttrName="PublisherId"
+      EntityUsage="OvrPublisher"
+      AliasName="PUBLISHER_ID" >
+      <Properties >
+         <SchemaBasedProperties >
+            <DISPLAYWIDTH
+               Value="12"/>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.OvrPublisherView.PublisherId_LABEL"/>
+            <DISPLAYHINT/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Address"
+      IsPersistent="false"
+      Precision="1006"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ADDRESS"
+      Expression="ADDRESS"
+      SQLType="VARCHAR"
+      LOVName="LOV_Address">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1006"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <DISPLAYWIDTH
+               Value="40"/>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.OvrPublisherView.Address_LABEL"/>
+            <CONTROLTYPE
+               Value="input_text_lov"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EndDate"
+      EntityAttrName="EndDate"
+      EntityUsage="OvrPublisher"
+      AliasName="END_DATE"/>
+   <ViewAttribute
+      Name="Url"
+      EntityAttrName="Url"
+      EntityUsage="OvrPublisher"
+      AliasName="URL"
+      LOVName="LOV_Url">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="input_text_lov"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Notes"
+      EntityAttrName="Notes"
+      EntityUsage="OvrPublisher"
+      AliasName="NOTES"/>
+   <ViewAttribute
+      Name="OrgId"
+      IsPersistent="false"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="ORG_ID"
+      Expression="ORG_ID"
+      SQLType="NUMERIC">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.OvrPublisherView.OrgId_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="MsId"
+      IsPersistent="false"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="MS_ID"
+      Expression="MS_ID"
+      SQLType="NUMERIC">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.OvrPublisherView.MsId_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Url1"
+      IsUpdateable="false"
+      EntityAttrName="Url"
+      EntityUsage="Publisher"
+      AliasName="URL1">
+      <Properties>
+         <SchemaBasedProperties>
+            <DISPLAYWIDTH
+               Value="40"/>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.OvrPublisherView.Url1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Notes1"
+      IsUpdateable="false"
+      EntityAttrName="Notes"
+      EntityUsage="Publisher"
+      AliasName="NOTES1">
+      <Properties>
+         <SchemaBasedProperties>
+            <DISPLAYHEIGHT
+               Value="2"/>
+            <DISPLAYWIDTH
+               Value="40"/>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.OvrPublisherView.Notes1_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="GenerationMethod"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="GenerationMethod"
+      EntityUsage="OvrPublisher"
+      AliasName="GENERATION_METHOD"
+      LOVName="LOV_GenerationMethod">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.OvrPublisherView.GenerationMethod_LABEL"/>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      IsNotNull="true"
+      EntityAttrName="CreatedBy"
+      EntityUsage="OvrPublisher"
+      AliasName="CREATED_BY"/>
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      IsNotNull="true"
+      EntityAttrName="CreatedDate"
+      EntityUsage="OvrPublisher"
+      AliasName="CREATED_DATE"/>
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      IsNotNull="true"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="OvrPublisher"
+      AliasName="LAST_UPDATED_BY"/>
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      IsUpdateable="false"
+      IsNotNull="true"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="OvrPublisher"
+      AliasName="LAST_UPDATED_DATE">
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.OvrPublisherView.LastUpdatedDate_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PublisherAddressId"
+      EntityAttrName="PublisherAddressId"
+      EntityUsage="OvrPublisher"
+      AliasName="PUBLISHER_ADDRESS_ID" >
+      <Properties >
+         <SchemaBasedProperties >
+            <DISPLAYHINT
+               Value="Hide" >
+            </DISPLAYHINT>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.OvrPublisherView.PublisherAddressId_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="StartDate"
+      EntityAttrName="StartDate"
+      EntityUsage="OvrPublisher"
+      AliasName="START_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.OvrPublisherView.StartDate_LABEL"/>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.OvrPublisherView.StartDate_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Id1"
+      IsUpdateable="false"
+      EntityAttrName="Id"
+      EntityUsage="Publisher"
+      AliasName="ID1" />
+   <ViewAttribute
+      Name="Id2"
+      IsUpdateable="false"
+      EntityAttrName="Id"
+      EntityUsage="PublisherAddress"
+      AliasName="ID2" />
+   <ViewAttribute
+      Name="Id3"
+      IsUpdateable="false"
+      EntityAttrName="Id"
+      EntityUsage="PublisherAddress1"
+      AliasName="ID3" />
+   <ViewAttribute
+      Name="Url2"
+      IsPersistent="false"
+      Precision="266"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="URL2"
+      Expression="URL2"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="266" />
+      </DesignTime>
+      <Properties >
+         <SchemaBasedProperties >
+            <DISPLAYWIDTH
+               Value="40" >
+            </DISPLAYWIDTH>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="VpId"
+      PrecisionRule="true"
+      EntityAttrName="VpId"
+      EntityUsage="PublisherAddress"
+      AliasName="VP_ID"
+      IsUpdateable="false"/>
+   <ViewAttribute
+      Name="PubId"
+      IsPersistent="false"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="PUB_ID"
+      Expression="PUB_ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.OvrPublisherView.PubId_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedDate1_1"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="$none$"
+      AliasName="LAST_UPDATED_DATE1"
+      SQLType="$none$"/>
+   <ViewCriteria
+      Name="OvrPublisherViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.OvrPublisherView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow108"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="OvrPublisherViewCriteria_vcrow108_Name"
+            ViewAttribute="Name"
+            Conjunction="AND"
+            Required="Optional"
+            Operator="="/>
+         <ViewCriteriaItem
+            Name="PublisherId"
+            ViewAttribute="PublisherId"
+            Conjunction="AND"
+            Required="Optional"
+            Operator="="/>
+         <ViewCriteriaItem
+            Name="OvrPublisherViewCriteria_vcrow108_Address"
+            ViewAttribute="Address"
+            Conjunction="AND"
+            Required="Optional"
+            Operator="="/>
+         <ViewCriteriaItem
+            Name="OvrPublisherViewCriteria_vcrow108_EndDate"
+            ViewAttribute="EndDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="Url"
+            ViewAttribute="Url"
+            Conjunction="AND"
+            Required="Optional"
+            Operator="="/>
+         <ViewCriteriaItem
+            Name="OvrPublisherViewCriteria_vcrow108_Notes"
+            ViewAttribute="Notes"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="OrgId"
+            ViewAttribute="OrgId"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="MsId"
+            ViewAttribute="MsId"
+            Conjunction="AND"
+            Required="Optional"
+            Operator="="/>
+         <ViewCriteriaItem
+            Name="Url1"
+            ViewAttribute="Url1"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="Notes1"
+            ViewAttribute="Notes1"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="OvrPublisherViewCriteria_vcrow108_GenerationMethod"
+            ViewAttribute="GenerationMethod"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="OvrPublisherViewCriteria_vcrow108_CreatedBy"
+            ViewAttribute="CreatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="OvrPublisherViewCriteria_vcrow108_CreatedDate"
+            ViewAttribute="CreatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="OvrPublisherViewCriteria_vcrow108_LastUpdatedBy"
+            ViewAttribute="LastUpdatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="OvrPublisherViewCriteria_vcrow108_LastUpdatedDate"
+            ViewAttribute="LastUpdatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Id" />
+   </AttrArray>
+   <ViewLinkAccessor
+      Name="PublisherAddressView"
+      ViewLink="com.pq.tracs.model.dao.OvrPublisherToPublisherAddressViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

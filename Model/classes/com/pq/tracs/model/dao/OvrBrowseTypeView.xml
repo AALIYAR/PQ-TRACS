@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="OvrBrowseTypeView"
+   Version="11.1.1.61.92"
+   SelectList="OvrBrowseType.ID, 
+       OvrBrowseType.TITLE_RECORD_ID, 
+       OvrBrowseType.BROWSE_TYPE, 
+       OvrBrowseType.CREATED_BY, 
+       OvrBrowseType.CREATED_DATE, 
+       OvrBrowseType.LAST_UPDATED_BY, 
+       OvrBrowseType.LAST_UPDATED_DATE"
+   FromList="TRAX_OVR_BROWSE_TYPE OvrBrowseType"
+   BindingStyle="OracleName"
+   CustomQuery="false"
+   ComponentClass="com.pq.tracs.model.dao.OvrBrowseTypeViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10"
+   RowClass="com.pq.tracs.model.dao.OvrBrowseTypeViewRowImpl">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+      <Attr Name="_objectSuperClassName" Value="com.pq.tracs.model.dao.TracsView" />
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <ViewAccessor
+      Name="BrowseTypeLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Browse Type']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_BrowseType"
+      ListVOName="BrowseTypeLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="BrowseType"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <EntityUsage
+      Name="OvrBrowseType"
+      Entity="com.pq.tracs.model.bo.OvrBrowseType" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      IsNotNull="true"
+      EntityAttrName="Id"
+      EntityUsage="OvrBrowseType"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TitleRecordId"
+      IsNotNull="true"
+      EntityAttrName="TitleRecordId"
+      EntityUsage="OvrBrowseType"
+      AliasName="TITLE_RECORD_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BrowseType"
+      IsNotNull="true"
+      EntityAttrName="BrowseType"
+      EntityUsage="OvrBrowseType"
+      AliasName="BROWSE_TYPE"
+      LOVName="LOV_BrowseType">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="OvrBrowseType"
+      AliasName="CREATED_BY" />
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      IsNotNull="true"
+      EntityAttrName="CreatedDate"
+      EntityUsage="OvrBrowseType"
+      AliasName="CREATED_DATE" />
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="OvrBrowseType"
+      AliasName="LAST_UPDATED_BY" />
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      IsUpdateable="false"
+      IsNotNull="true"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="OvrBrowseType"
+      AliasName="LAST_UPDATED_DATE" />
+   <ViewCriteria
+      Name="OvrBrowseTypeViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.OvrBrowseTypeView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow105"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="OvrBrowseTypeViewCriteria_vcrow105_BrowseType"
+            ViewAttribute="BrowseType"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="OvrBrowseTypeViewCriteria_vcrow105_CreatedBy"
+            ViewAttribute="CreatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="OvrBrowseTypeViewCriteria_vcrow105_CreatedDate"
+            ViewAttribute="CreatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="OvrBrowseTypeViewCriteria_vcrow105_LastUpdatedBy"
+            ViewAttribute="LastUpdatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="OvrBrowseTypeViewCriteria_vcrow105_LastUpdatedDate"
+            ViewAttribute="LastUpdatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ViewLinkAccessor
+      Name="TitleRecordView"
+      ViewLink="com.pq.tracs.model.dao.OvrBrowseTypeViewLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

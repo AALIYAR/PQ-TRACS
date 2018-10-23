@@ -1,0 +1,759 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="s17TopLc"
+                             partialTriggers=" s17DeleteDialog s17fbb s17NewButton s17DelB s17SaveButton0 s17CancelButton0 s17SaveButton1 s17CancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateContractGuarantee ? nls['INSERT_TITLE_CONTRACTGUARANTEE'] :  (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'] ? nls['EDIT_TITLE_CONTRACTGUARANTE: #{bindings.s17Media.inputValue}'] : nls['VIEW_TITLE_CONTRACTGUARANTE: #{bindings.s17Media.inputValue}'])  }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="s17fbb" layout="horizontal"
+                                       rendered="#{ bindings.ContractGuaranteeIterator.currentRow!=null  and bindings.ContractGuaranteeIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateContractGuarantee and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="s17First s17Previous s17Next s17Last">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstContractGuarantee.execute}"
+                                             id="s17First" partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.ContractGuaranteeIterator.rangeStart+bindings.ContractGuaranteeIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.ContractGuaranteeIterator.rangeStart+bindings.ContractGuaranteeIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousContractGuarantee.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="s17Previous"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.ContractGuaranteeIterator.rangeStart+bindings.ContractGuaranteeIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.ContractGuaranteeIterator.rangeStart+bindings.ContractGuaranteeIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.ContractGuaranteeIterator.rangeStart+bindings.ContractGuaranteeIterator.currentRowIndexInRange+1} / #{bindings.ContractGuaranteeIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextContractGuarantee.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="s17Next" partialSubmit="true"
+                                             rendered="#{bindings.ContractGuaranteeIterator.rangeStart+bindings.ContractGuaranteeIterator.currentRowIndexInRange+1 lt bindings.ContractGuaranteeIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.ContractGuaranteeIterator.rangeStart+bindings.ContractGuaranteeIterator.currentRowIndexInRange+1 lt bindings.ContractGuaranteeIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastContractGuarantee.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="s17Last" partialSubmit="true"
+                                             rendered="#{bindings.ContractGuaranteeIterator.rangeStart+bindings.ContractGuaranteeIterator.currentRowIndexInRange+1 lt bindings.ContractGuaranteeIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.ContractGuaranteeIterator.rangeStart+bindings.ContractGuaranteeIterator.currentRowIndexInRange+1 lt bindings.ContractGuaranteeIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateContractGuarantee.execute}"
+                                             action="Creates17"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_CONTRACTGUARANTEE']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateContractGuarantee and (true) and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             id="s17NewButton"></af:commandToolbarButton>
+                    <af:commandToolbarButton action="DeleteContractGuarantee"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_CONTRACTGUARANTEE']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateContractGuarantee and  bindings.ContractGuaranteeIterator.currentRow!=null   and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             immediate="true" id="s17DelB">
+                      <af:showPopupBehavior popupId="s17DeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1">
+                    <af:popup id="confirmAddPopup0"
+                              binding="#{pageFlowScope.ContractGuaranteeTable.confirmAddPopup}">
+                      <af:dialog modal="true" type="okCancel"
+                                 title="Set Values and Comfirm to add Guarantess for the Contract"
+                                 dialogListener="#{pageFlowScope.ContractGuaranteeTable.handleCreateOK}">
+                        <af:outputText value="Are you sure you want to Add rows?"/>
+                        <af:selectOneChoice value="#{pageFlowScope.ContractGuaranteeTable.newCurrency}"
+                                            label="Currency" required="false"
+                                            shortDesc="#{bindings.ContractGuaranteeCurrencyLookup.hints.tooltip}"
+                                            id="cgCurrencySelect">
+                          <f:selectItems value="#{bindings.ContractGuaranteeCurrencyLookup.items}"
+                                         id="cgCurrencyItems"/>
+                        </af:selectOneChoice>
+                        <af:inputText label="Amount"
+                                      value="#{pageFlowScope.ContractGuaranteeTable.newAmount}"
+                                      required="true" id="cgAmount"/>
+                        <af:selectOneChoice value="#{pageFlowScope.ContractGuaranteeTable.newMedia}"
+                                            label="Media" required="false"
+                                            shortDesc="#{bindings.ContractGuaranteeMediaCodeLookup.hints.tooltip}"
+                                            id="cgMediaSelect">
+                          <f:selectItems value="#{bindings.ContractGuaranteeMediaCodeLookup.items}"
+                                         id="cgMediaItems"/>
+                        </af:selectOneChoice>
+                        <af:selectOneChoice value="#{pageFlowScope.ContractGuaranteeTable.newDeliveryFormat}"
+                                            label="Delivery Format"
+                                            required="false"
+                                            shortDesc="#{bindings.ContractGuaranteeDeliveryFormatLookup.hints.tooltip}"
+                                            id="cgDeliveryFormatSelect">
+                          <f:selectItems value="#{bindings.ContractGuaranteeDeliveryFormatLookup.items}"
+                                         id="cgDeliveryFormatItems"/>
+                        </af:selectOneChoice>
+                        <af:selectOneChoice value="#{pageFlowScope.ContractGuaranteeTable.newProductCode}"
+                                            label="Product Code"
+                                            required="false"
+                                            shortDesc="#{bindings.ContractGuaranteeProductCodeLookup.hints.tooltip}"
+                                            id="cgProductCodeSelect">
+                          <f:selectItems value="#{bindings.ContractGuaranteeProductCodeLookup.items}"
+                                         id="cgProductCodeItems"/>
+                        </af:selectOneChoice>
+                        <af:selectOneChoice value="#{pageFlowScope.ContractGuaranteeTable.newInventoryDivision}"
+                                            label="Inventory Division"
+                                            required="false"
+                                            shortDesc="#{bindings.ContractGuaranteeInventoryDivisionLookup.hints.tooltip}"
+                                            id="cgInventoryDivisionSelect">
+                          <f:selectItems value="#{bindings.ContractGuaranteeInventoryDivisionLookup.items}"
+                                         id="cgInventoryDivisionItems"/>
+                        </af:selectOneChoice>
+                        <br/>
+                      </af:dialog>
+                    </af:popup>
+                    <af:commandButton id="s17AMG" textAndAccessKey="Create Rows"
+                                      rendered="false"
+                                      disabled="#{bindings.ConTermLength.value eq 'Evergreen'}">
+                      <af:showPopupBehavior popupId="confirmAddPopup0"
+                                            align="beforeStart"/>
+                    </af:commandButton>
+                    <af:popup id="confirmDeletePopup0"
+                              binding="#{pageFlowScope.ContractGuaranteeTable.confirmDeletePopup}">
+                      <af:dialog modal="true" type="okCancel"
+                                 title="Confirm Delete"
+                                 dialogListener="#{pageFlowScope.ContractGuaranteeTable.handleOK}">
+                        <af:outputText value="Are you sure you want to delete the selected rows?"/>
+                      </af:dialog>
+                    </af:popup>
+                    <af:commandButton id="s17MUD"
+                                      textAndAccessKey="Delete Selected"
+                                      rendered="false">
+                      <af:showPopupBehavior popupId="confirmDeletePopup0"
+                                            align="beforeStart"/>
+                    </af:commandButton>
+                  </af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="s17Print"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveContractGuarantee.execute}"
+                                      rendered="#{(((((jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="s17SaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="s17CancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.ContractGuaranteeIterator.findMode!='true'}"
+                       id="s17Sw" defaultFacet="hasRows"
+                       facetName="#{( bindings.ContractGuaranteeIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="s17NoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="s17FC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="3"
+                                    id="s17FI">
+                  <af:selectOneChoice id="s17Cur"
+                                      value="#{bindings.s17Currency.inputValue}"
+                                      label="#{bindings.s17Currency.hints.label}"
+                                      required="#{bindings.s17Currency.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:selectItems value="#{bindings.s17Currency.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="s17Amt"
+                                value="#{bindings.s17Amount.inputValue}"
+                                label="#{bindings.s17Amount.hints.label}"
+                                required="#{bindings.s17Amount.hints.mandatory}"
+                                rows="#{bindings.s17Amount.hints.displayHeight}"
+                                columns="#{bindings.s17Amount.hints.displayWidth}"
+                                maximumLength="13"
+                                readOnly="#{((pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s17Amount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s17Amount.format}"/>
+                  </af:inputText>
+                  <af:inputDate id="s17ESD"
+                                value="#{bindings.s17EffectiveStartDate.inputValue}"
+                                label="#{bindings.s17EffectiveStartDate.hints.label}"
+                                required="#{bindings.s17EffectiveStartDate.hints.mandatory}"
+                                readOnly="#{((pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputDate id="s17EED"
+                                value="#{bindings.s17EffectiveEndDate.inputValue}"
+                                label="#{bindings.s17EffectiveEndDate.hints.label}"
+                                required="#{bindings.s17EffectiveEndDate.hints.mandatory}"
+                                readOnly="#{((pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:selectOneChoice id="s17Md"
+                                      value="#{bindings.s17Media.inputValue}"
+                                      label="#{bindings.s17Media.hints.label}"
+                                      required="#{bindings.s17Media.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:selectItems value="#{bindings.s17Media.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="s17DF"
+                                      value="#{bindings.s17DeliveryFormat.inputValue}"
+                                      label="#{bindings.s17DeliveryFormat.hints.label}"
+                                      required="#{bindings.s17DeliveryFormat.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:selectItems value="#{bindings.s17DeliveryFormat.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="s17PCd"
+                                      value="#{bindings.s17ProductCode.inputValue}"
+                                      label="#{bindings.s17ProductCode.hints.label}"
+                                      required="#{bindings.s17ProductCode.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:selectItems value="#{bindings.s17ProductCode.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="s17ID"
+                                      value="#{bindings.s17InventoryDivision.inputValue}"
+                                      label="#{bindings.s17InventoryDivision.hints.label}"
+                                      required="#{bindings.s17InventoryDivision.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:selectItems value="#{bindings.s17InventoryDivision.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="s17Com"
+                                value="#{bindings.s17Comments.inputValue}"
+                                label="#{bindings.s17Comments.hints.label}"
+                                required="#{bindings.s17Comments.hints.mandatory}"
+                                rows="#{bindings.s17Comments.hints.displayHeight}"
+                                columns="#{bindings.s17Comments.hints.displayWidth}"
+                                maximumLength="4000"
+                                readOnly="#{((pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContractGuarantee) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s17Comments.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s17CB"
+                                value="#{bindings.s17CreatedBy.inputValue}"
+                                label="#{bindings.s17CreatedBy.hints.label}"
+                                required="#{bindings.s17CreatedBy.hints.mandatory}"
+                                rows="#{bindings.s17CreatedBy.hints.displayHeight}"
+                                columns="#{bindings.s17CreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s17CreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s17CD"
+                                value="#{bindings.s17CreatedDate.inputValue}"
+                                label="#{bindings.s17CreatedDate.hints.label}"
+                                required="#{bindings.s17CreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="s17LUB"
+                                value="#{bindings.s17LastUpdatedBy.inputValue}"
+                                label="#{bindings.s17LastUpdatedBy.hints.label}"
+                                required="#{bindings.s17LastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.s17LastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.s17LastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s17LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s17LUD"
+                                value="#{bindings.s17LastUpdatedDate.inputValue}"
+                                label="#{bindings.s17LastUpdatedDate.hints.label}"
+                                required="#{bindings.s17LastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveContractGuarantee.execute}"
+                                            rendered="#{(((((jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="s17SaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="s17CancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_CONTRACTGUARANTEETITLE']}"
+                               partialTriggers=" s17TopLc s170DeleteDialog qsAreas170SearchOptions s170PC:s170Arm s170PC:s170delrmTM s170PC:s170Arl s170PC:s170Tab:s170delrm s170PC:s170Tab:s170delrl"
+                               id="s170TopLcSdi"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                               disabled="#{!jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+              <af:panelGroupLayout layout="vertical" id="s170TopLc"
+                                   partialTriggers=" s17TopLc s170DeleteDialog qsAreas170SearchOptions s170PC:s170Arm s170PC:s170delrmTM s170PC:s170Arl s170PC:s170Tab:s170delrm s170PC:s170Tab:s170delrl"
+                                   rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0">
+                  <af:panelGroupLayout id="modelSearchAreas170"
+                                       rendered="#{!pageFlowScope.createModes.CreateContractGuaranteeTitle and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreas170SearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.ContractGuaranteeTitleIteratorContractGuaranteeTitleViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.ContractGuaranteeTitleIteratorContractGuaranteeTitleViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.ContractGuaranteeTitleIteratorContractGuaranteeTitleViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl0">
+                  <af:panelCollection id="s170PC" featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="s170tbb"
+                                    rendered="#{ bindings.ContractGuaranteeTitleIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstContractGuaranteeTitle.execute}"
+                                                id="s170First"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousContractGuaranteeTitle.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="s170Previous"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextContractGuaranteeTitle.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="s170Next"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastContractGuaranteeTitle.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="s170Last"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="s170Arm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.ContractGuaranteeTitleTable.addRow}"
+                                            rendered="#{ bindings.ContractGuaranteeIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="s170delrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                          <af:showPopupBehavior popupId="::s170DeletePopup"/>
+                        </af:commandMenuItem>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi0">
+                          <af:exportCollectionActionListener exportedId="s170Tab"
+                                                             type="excelHTML"
+                                                             filename="ContractGuaranteeTitle.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <!-- Also create CreateContractGuaranteeTitle bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="s170Arl" immediate="false"
+                                             rendered="#{ bindings.ContractGuaranteeIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.ContractGuaranteeTitleTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl0"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="s170Tab"
+                                                             type="excelHTML"
+                                                             filename="ContractGuaranteeTitle.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print" id="s170Print"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                        <af:popup id="confirmDeletePopup1"
+                                  binding="#{pageFlowScope.ContractGuaranteeTitleTable.confirmDeletePopup}">
+                          <af:dialog modal="true" type="okCancel"
+                                     title="Confirm Delete"
+                                     dialogListener="#{pageFlowScope.ContractGuaranteeTitleTable.handleOK}">
+                            <af:outputText value="Are you sure you want to delete the selected rows?"/>
+                          </af:dialog>
+                        </af:popup>
+                        <af:commandButton id="s170MDB"
+                                          textAndAccessKey="Delete Selected">
+                          <af:showPopupBehavior popupId="confirmDeletePopup1"
+                                                align="beforeStart"/>
+                        </af:commandButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.ContractGuaranteeTitleIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="s170Tab" contentDelivery="immediate"
+                              value="#{bindings.ContractGuaranteeTitleTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true"
+                              selectionListener="#{bindings.ContractGuaranteeTitleTable.collectionModel.makeCurrent}"
+                              rowSelection="multiple"
+                              rowDisclosureListener="#{pageFlowScope.ContractGuaranteeTitleTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.ContractGuaranteeTitleTable.rangeSize}"
+                              autoHeightRows="#{bindings.ContractGuaranteeTitleTable.estimatedRowCount lt 5 ? 5 : bindings.ContractGuaranteeTitleTable.estimatedRowCount lt bindings.ContractGuaranteeTitleTable.rangeSize ? bindings.ContractGuaranteeTitleTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.ContractGuaranteeTitleTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.ContractGuaranteeTitleIteratorContractGuaranteeTitleViewCriteriaQuery.processQuery}"
+                              binding="#{pageFlowScope.ContractGuaranteeTitleTable.table}"
+                              partialTriggers=":::qsAreas170SearchOptions :::s170PC ::s170First ::s170Previous ::s170Next ::s170Last"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_CONTRACTGUARANTEETITLE']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="s170TablePopup" childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="s170delrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                              <af:showPopupBehavior popupId=":::s170DeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="s170ActionColumn" frozen="true" width="20"
+                                 align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl1">
+                          <af:commandImageLink id="s170delrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::s170DeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="s170CNoCol" sortable="true" noWrap="true"
+                                 width="110" sortProperty="CatalogNumber"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractGuaranteeTitleTable.hints.CatalogNumber.label}"
+                                          showRequired="#{bindings.ContractGuaranteeTitleTable.hints.CatalogNumber.mandatory}"
+                                          id="ol0"/>
+                        </f:facet>
+                        <af:panelGroupLayout id="s170CatalogNumberPgl"
+                                             layout="horizontal">
+                          <af:inputText id="s170CNo"
+                                        label="#{bindings.ContractGuaranteeTitleTable.hints.CatalogNumber.label}"
+                                        readOnly="#{(((pageFlowScope.ContractGuaranteeTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.ContractGuaranteeTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))) or (!(pageFlowScope.ContractGuaranteeTitleTable.newRow))}"
+                                        columns="#{bindings.ContractGuaranteeTitleTable.hints.CatalogNumber.displayWidth}"
+                                        maximumLength="40"
+                                        value="#{row.bindings.CatalogNumber.inputValue}"
+                                        autoSubmit="true"
+                                        valueChangeListener="#{pageFlowScope.s170CatalogNumberLovItemInTable.validateWithLov}"
+                                        binding="#{pageFlowScope.s170CatalogNumberLovItemInTable.lovField}"
+                                        simple="true">
+                            <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                          </af:inputText>
+                          <af:commandLink immediate="true" partialSubmit="true"
+                                          rendered="#{!((((pageFlowScope.ContractGuaranteeTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.ContractGuaranteeTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))) or (!(pageFlowScope.ContractGuaranteeTitleTable.newRow)))}"
+                                          id="cl1"
+                                          actionListener="#{pageFlowScope.s170CatalogNumberLovItemInTable.lovIconClicked}">
+                            <af:image source="/jheadstart/images/lov.png"
+                                      id="s170CatalogNumberIcon"
+                                      clientComponent="true"
+                                      shortDesc="CatalogNumber"/>
+                          </af:commandLink>
+                          <af:commandButton text="hidden" id="cb2"
+                                            rendered="false"
+                                            action="#{pageFlowScope.s170CatalogNumberLovItemInTable.validationAction}"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            binding="#{pageFlowScope.s170CatalogNumberLovItemInTable.validationButton}"/>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="s170TtlCol" sortable="true" noWrap="true"
+                                 width="180" sortProperty="LongTitle"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractGuaranteeTitleTable.hints.LongTitle.label}"
+                                          id="ol1"/>
+                        </f:facet>
+                        <af:inputText id="s170Ttl"
+                                      value="#{row.bindings.LongTitle.inputValue}"
+                                      label="#{bindings.ContractGuaranteeTitleTable.hints.LongTitle.label}"
+                                      required="#{bindings.ContractGuaranteeTitleTable.hints.LongTitle.mandatory}"
+                                      rows="#{bindings.ContractGuaranteeTitleTable.hints.LongTitle.displayHeight}"
+                                      columns="#{bindings.ContractGuaranteeTitleTable.hints.LongTitle.displayWidth}"
+                                      maximumLength="4000" readOnly="true">
+                          <f:validator binding="#{row.bindings.LongTitle.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s170PLnCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="ProductLine"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractGuaranteeTitleTable.hints.ProductLine.label}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s170PLn"
+                                            value="#{row.bindings.ProductLine.inputValue}"
+                                            label="#{bindings.ContractGuaranteeTitleTable.hints.ProductLine.label}"
+                                            required="#{bindings.ContractGuaranteeTitleTable.hints.ProductLine.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.ProductLine.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s170PSYCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="PublicationStartYear"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractGuaranteeTitleTable.hints.PublicationStartYear.label}"
+                                          id="ol3"/>
+                        </f:facet>
+                        <af:inputText id="s170PSY"
+                                      value="#{row.bindings.PublicationStartYear.inputValue}"
+                                      label="#{bindings.ContractGuaranteeTitleTable.hints.PublicationStartYear.label}"
+                                      required="#{bindings.ContractGuaranteeTitleTable.hints.PublicationStartYear.mandatory}"
+                                      rows="#{bindings.ContractGuaranteeTitleTable.hints.PublicationStartYear.displayHeight}"
+                                      columns="#{bindings.ContractGuaranteeTitleTable.hints.PublicationStartYear.displayWidth}"
+                                      maximumLength="4" readOnly="true">
+                          <f:validator binding="#{row.bindings.PublicationStartYear.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s170PEYCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="PublicationEndYear"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractGuaranteeTitleTable.hints.PublicationEndYear.label}"
+                                          id="ol4"/>
+                        </f:facet>
+                        <af:inputText id="s170PEY"
+                                      value="#{row.bindings.PublicationEndYear.inputValue}"
+                                      label="#{bindings.ContractGuaranteeTitleTable.hints.PublicationEndYear.label}"
+                                      required="#{bindings.ContractGuaranteeTitleTable.hints.PublicationEndYear.mandatory}"
+                                      rows="#{bindings.ContractGuaranteeTitleTable.hints.PublicationEndYear.displayHeight}"
+                                      columns="#{bindings.ContractGuaranteeTitleTable.hints.PublicationEndYear.displayWidth}"
+                                      maximumLength="4" readOnly="true">
+                          <f:validator binding="#{row.bindings.PublicationEndYear.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s170FACol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="FilmAvailability"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractGuaranteeTitleTable.hints.FilmAvailability.label}"
+                                          id="ol5"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s170FA"
+                                            value="#{row.bindings.FilmAvailability.inputValue}"
+                                            label="#{bindings.ContractGuaranteeTitleTable.hints.FilmAvailability.label}"
+                                            required="#{bindings.ContractGuaranteeTitleTable.hints.FilmAvailability.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.FilmAvailability.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s170BSCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="BibliographicStatus"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractGuaranteeTitleTable.hints.BibliographicStatus.label}"
+                                          id="ol6"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s170BS"
+                                            value="#{row.bindings.BibliographicStatus.inputValue}"
+                                            label="#{bindings.ContractGuaranteeTitleTable.hints.BibliographicStatus.label}"
+                                            required="#{bindings.ContractGuaranteeTitleTable.hints.BibliographicStatus.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.BibliographicStatus.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s170ERCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="ExercisingRights"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractGuaranteeTitleTable.hints.ExercisingRights.label}"
+                                          id="ol7"/>
+                        </f:facet>
+                        <af:inputText id="s170ER"
+                                      value="#{row.bindings.ExercisingRights.inputValue}"
+                                      label="#{bindings.ContractGuaranteeTitleTable.hints.ExercisingRights.label}"
+                                      required="#{bindings.ContractGuaranteeTitleTable.hints.ExercisingRights.mandatory}"
+                                      rows="#{bindings.ContractGuaranteeTitleTable.hints.ExercisingRights.displayHeight}"
+                                      columns="#{bindings.ContractGuaranteeTitleTable.hints.ExercisingRights.displayWidth}"
+                                      maximumLength="40" readOnly="true">
+                          <f:validator binding="#{row.bindings.ExercisingRights.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s170PMCCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="PrimaryPmClass"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractGuaranteeTitleTable.hints.PrimaryPmClass.label}"
+                                          id="ol8"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s170PMC"
+                                            value="#{row.bindings.PrimaryPmClass.inputValue}"
+                                            label="#{bindings.ContractGuaranteeTitleTable.hints.PrimaryPmClass.label}"
+                                            required="#{bindings.ContractGuaranteeTitleTable.hints.PrimaryPmClass.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.PrimaryPmClass.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s170StatusCol" sortable="true"
+                                 noWrap="true" width="120" sortProperty="Status"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.ContractGuaranteeTitleTable.hints.Status.label}"
+                                          id="ol9"/>
+                        </f:facet>
+                        <af:inputText id="s170Status"
+                                      value="#{row.bindings.Status.inputValue}"
+                                      label="#{bindings.ContractGuaranteeTitleTable.hints.Status.label}"
+                                      required="#{bindings.ContractGuaranteeTitleTable.hints.Status.mandatory}"
+                                      rows="#{bindings.ContractGuaranteeTitleTable.hints.Status.displayHeight}"
+                                      columns="#{bindings.ContractGuaranteeTitleTable.hints.Status.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.ContractGuaranteeTitleTable.hints.Status.tooltip}">
+                          <f:validator binding="#{row.bindings.Status.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="s17DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s17DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_CONTRACTGUARANTE: #{bindings.s17Media.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteContractGuarantee.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s170DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s170DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_CONTRACTGUARANTEETITL:#{pageFlowScope.ContractGuaranteeTitleTable.currentRowAttributeValues.CatalogNumber}']} "
+                           id="ot1"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteContractGuaranteeTitle.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="jhsLovPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher"
+                  binding="#{pageFlowScope.jhsLovPopup.component}">
+          <af:dialog modal="true" title="#{pageFlowScope.LovItemBean.lovTitle}"
+                     type="none" id="dialog0" resize="on"
+                     stretchChildren="first"
+                     contentWidth="#{pageFlowScope.LovItemBean.lovWidth}"
+                     contentHeight="#{pageFlowScope.LovItemBean.lovHeight}">
+            <af:region value="#{bindings.LovTaskFlow.regionModel}"
+                       id="region0"/>
+            <f:facet name="buttonBar">
+              <af:group id="g1">
+                <af:commandButton textAndAccessKey="#{nls['OK_BUTTON_LABEL']}"
+                                  id="cb0" partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.handleLovSelection}"/>
+                <af:commandButton textAndAccessKey="#{nls['CANCEL']}" id="cb1"
+                                  partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.cancelLov}"/>
+              </af:group>
+            </f:facet>
+          </af:dialog>
+          <af:clientListener method="popupClosedListener" type="popupClosed"/>
+          <af:serverListener type="serverPopupClosed"
+                             method="#{pageFlowScope.LovItemBean.cancelLov}"/>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

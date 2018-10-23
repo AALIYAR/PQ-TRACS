@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="TraxTitleUlrichsTitleView"
+  Version="11.1.1.62.29"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  ComponentClass="com.pq.tracs.model.dao.TracsView"
+  PageIterMode="Partial"
+  UseGlueCode="false"
+  RowClass="com.pq.tracs.model.vo.TraxTitleUlrichsTitleViewRowImpl">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.pq.tracs.model.vo.TraxTitleUlrichsTitleView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewAccessor
+    Name="UlrichsTitleLookupView"
+    ViewObjectName="com.pq.tracs.model.lookups.UlrichsTitleLookupView"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_Title"
+    ListVOName="UlrichsTitleLookupView"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_Title_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="Title"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="Id1"/>
+      <Item Value="UlrichsSerialId"/>
+      <Item Value="Publisher"/>
+      <Item Value="LastUpdatedDate1"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Title"/>
+      <Item Value="Id"/>
+      <Item Value="UlrichsSerialId"/>
+      <Item Value="Publisher"/>
+      <Item Value="LastUpdatedDate"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="UlrichsSerialId"/>
+      <Item Value="Title"/>
+      <Item Value="Publisher"/>
+      <Item Value="LastUpdatedDate"/>
+      <Item Value="Issn"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="UlrichsTitleLookupViewCriteria"/>
+  </ListBinding>
+  <SQLQuery>
+    <![CDATA[SELECT TraxTitleUlrichsRelation.ID, 
+       TraxTitleUlrichsRelation.TITLE_ID, 
+       TraxTitleUlrichsRelation.ULRICHS_SERIAL_ID, 
+       TraxTitleUlrichsRelation.PRIMARY_FLAG, 
+       TraxTitleUlrichsRelation.CREATED_BY, 
+       TraxTitleUlrichsRelation.CREATED_DATE, 
+       TraxTitleUlrichsRelation.LAST_UPDATED_BY, 
+       TraxTitleUlrichsRelation.LAST_UPDATED_DATE,
+       TraxUlrichsTitle.ID AS ID1, 
+       TraxUlrichsTitle.TITLE, 
+       TraxUlrichsPublisher.PUBLISHER, 
+       TraxUlrichsTitle.LAST_UPDATED_DATE AS LAST_UPDATED_DATE1, 
+       TraxUlrichsPublisher.ID AS ID2, 
+       TraxUlrichsPublisher.LAST_UPDATED_DATE AS LAST_UPDATED_DATE2
+FROM TRAX_TITLE_ULRICHS_RELATION TraxTitleUlrichsRelation
+INNER JOIN TRAX_ULRICHS_TITLE TraxUlrichsTitle ON (TraxTitleUlrichsRelation.ULRICHS_SERIAL_ID = TraxUlrichsTitle.ULRICHS_SERIAL_ID)
+LEFT OUTER JOIN TRAX_ULRICHS_PUBLISHER TraxUlrichsPublisher ON (TraxUlrichsTitle.ID = TraxUlrichsPublisher.ULRICHS_TITLE_ID)]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="TraxTitleUlrichsRelation"
+    Entity="com.pq.tracs.model.eo.TraxTitleUlrichsRelation"/>
+  <ViewAttribute
+    Name="Id"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxTitleUlrichsRelation"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="TitleId"
+    IsUnique="true"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="TitleId"
+    EntityUsage="TraxTitleUlrichsRelation"
+    AliasName="TITLE_ID"/>
+  <ViewAttribute
+    Name="UlrichsSerialId"
+    IsUnique="true"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="UlrichsSerialId"
+    EntityUsage="TraxTitleUlrichsRelation"
+    AliasName="ULRICHS_SERIAL_ID"/>
+  <ViewAttribute
+    Name="PrimaryFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PrimaryFlag"
+    EntityUsage="TraxTitleUlrichsRelation"
+    AliasName="PRIMARY_FLAG"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsUpdateable="while_insert"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="TraxTitleUlrichsRelation"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="CreatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedDate"
+    EntityUsage="TraxTitleUlrichsRelation"
+    AliasName="CREATED_DATE"/>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="TraxTitleUlrichsRelation"
+    AliasName="LAST_UPDATED_BY"/>
+  <ViewAttribute
+    Name="LastUpdatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="TraxTitleUlrichsRelation"
+    AliasName="LAST_UPDATED_DATE"/>
+  <ViewAttribute
+    Name="Id1"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ID1"
+    Expression="ID1"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Title"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1000"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TITLE"
+    Expression="TITLE"
+    SQLType="VARCHAR"
+    LOVName="LOV_Title">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1000"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="30"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Publisher"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="400"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PUBLISHER"
+    Expression="PUBLISHER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="400"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LastUpdatedDate1"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="LAST_UPDATED_DATE1"
+    Expression="LAST_UPDATED_DATE1"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxTitleUlrichsTitleView.LastUpdatedDate1_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Id2"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ID2"
+    Expression="ID2"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LastUpdatedDate2"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="LAST_UPDATED_DATE2"
+    Expression="LAST_UPDATED_DATE2"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewLinkAccessor
+    Name="TitleView"
+    ViewLink="com.pq.tracs.model.vl.TitleToUlrichsTitleViewLink"
+    Type="oracle.jbo.Row"
+    Reversed="true"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

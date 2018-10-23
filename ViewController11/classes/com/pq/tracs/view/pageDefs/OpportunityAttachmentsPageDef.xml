@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="OpportunityAttachmentsPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare"
+               value="#{'OpportunitiesPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="OpportunityAttachmentsIterator"
+              Binds="PrmOpportunityAttachmentView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OpportunityAttachmentsIteratorPrmOpportunityAttachmentViewCriteriaQuery"
+                  Binds="OpportunityAttachmentsIterator"
+                  Criteria="PrmOpportunityAttachmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttachmentType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="sa2Name" IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2AttachmentType"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="AttachmentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2Attachment"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2AttachmentDL"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2Description"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2FileSize"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="FileSize"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2CreatedBy"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2CreatedDate"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2LastUpdatedBy"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2LastUpdatedDate"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityAttachmentsTable"
+          IterBinding="OpportunityAttachmentsIterator">
+      <nodeDefinition Name="OpportunityAttachments"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityAttachmentView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="AttachmentType"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Description"/>
+          <Item Value="FileSize"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityAttachments}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

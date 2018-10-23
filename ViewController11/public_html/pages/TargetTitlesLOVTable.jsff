@@ -1,0 +1,485 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplate.jspx">
+    <f:facet name="pageContent">
+      <af:panelStretchLayout topHeight="auto" id="TargetTitlesLOVTopLc"
+                             partialTriggers="">
+        <f:facet name="top">
+          <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (default/pageComponent/groupContent.vm) -->
+          <af:group id="g0">
+            <af:panelHeader id="ph0"
+                            text="#{nls['TABLE_TITLE_TARGETTITLESLOV']}">
+              <f:facet name="toolbar">
+                <af:toolbox id="tbox0">
+                  <af:toolbar id="tbar0">
+                    <af:group id="gr0"></af:group>
+                    <af:group id="gr1"></af:group>
+                    <af:group id="gr2"></af:group>
+                  </af:toolbar>
+                </af:toolbox>
+              </f:facet>
+              <f:facet name="context"></f:facet>
+              <af:subform id="TargetTitlesLOVSbf"
+                          rendered="#{!pageFlowScope.createModes.CreateTargetTitlesLOV and !pageFlowScope.hideSearchArea}"
+                          defaultCommand="TargetTitlesLOVQuickSearchButton">
+                <af:panelGroupLayout id="searchAreaTargetTitlesLOV"
+                                     partialTriggers="">
+                  <f:attribute name="JhsIgnoreChanges" value="true"/>
+                  <af:panelGroupLayout id="qsAreaTargetTitlesLOV"
+                                       rendered="#{pageFlowScope.searchTargetTitlesLOV.quickSearchMode}"
+                                       layout="horizontal">
+                    <af:selectOneChoice id="qsSelectTargetTitlesLOV"
+                                        label="#{nls['FILTER_BY']}"
+                                        value="#{pageFlowScope.searchTargetTitlesLOV.searchItem}"
+                                        autoSubmit="true" immediate="true"
+                                        valueChangeListener="#{pageFlowScope.searchTargetTitlesLOV.searchItemChanged}">
+                      <af:selectItem label="#{bindings.TargetTitlesLOVTable.hints.TargetTrackingNo.label}"
+                                     value="TargetTitlesLOVTargetTrackingNo"
+                                     id="si0"/>
+                      <af:selectItem label="#{bindings.TargetTitlesLOVTable.hints.CatalogNumber.label}"
+                                     value="TargetTitlesLOVCatalogNumber"
+                                     id="si1"/>
+                      <af:selectItem label="#{bindings.TargetTitlesLOVTable.hints.LongTitle.label}"
+                                     value="TargetTitlesLOVLongTitle" id="si2"/>
+                      <af:selectItem label="#{bindings.TargetTitlesLOVTable.hints.ContentOwner.label}"
+                                     value="TargetTitlesLOVContentOwner"
+                                     id="si3"/>
+                      <af:selectItem label="#{bindings.TargetTitlesLOVTable.hints.ShortTitle.label}"
+                                     value="TargetTitlesLOVShortTitle"
+                                     id="si4"/>
+                      <af:selectItem label="#{bindings.TargetTitlesLOVTable.hints.PublicationStartYear.label}"
+                                     value="TargetTitlesLOVPublicationStartYear"
+                                     id="si5"/>
+                      <af:selectItem label="#{bindings.TargetTitlesLOVTable.hints.PublicationEndYear.label}"
+                                     value="TargetTitlesLOVPublicationEndYear"
+                                     id="si6"/>
+                      <af:selectItem label="#{bindings.TargetTitlesLOVTable.hints.FilmAvailability.label}"
+                                     value="TargetTitlesLOVFilmAvailability"
+                                     id="si7"/>
+                      <af:selectItem label="#{bindings.TargetTitlesLOVTable.hints.CatalogRoot.label}"
+                                     value="TargetTitlesLOVCatalogRoot"
+                                     id="si8"/>
+                      <af:selectItem label="#{bindings.TargetTitlesLOVTable.hints.Site.label}"
+                                     value="TargetTitlesLOVSite" id="si9"/>
+                      <af:selectItem label="#{bindings.TargetTitlesLOVTable.hints.ContentOwnerNo.label}"
+                                     value="TargetTitlesLOVContentOwnerNo"
+                                     id="si10"/>
+                    </af:selectOneChoice>
+                    <af:spacer width="4" id="qsAreaTargetTitlesLOVSpacer1"/>
+                    <af:panelGroupLayout partialTriggers="qsSelectTargetTitlesLOV"
+                                         id="qsAreaTargetTitlesLOVpanelGroupLayout">
+                      <af:switcher facetName="#{pageFlowScope.searchTargetTitlesLOV.searchItem}"
+                                   id="qsAreaTargetTitlesLOVSwitcher">
+                        <f:facet name="TargetTitlesLOVTargetTrackingNo">
+                          <af:inputText id="QuickSearchTargetTitlesLOVTargetTrackingNo"
+                                        value="#{pageFlowScope.searchTargetTitlesLOV.searchText}"
+                                        label="#{bindings.TargetTitlesLOVTable.hints.TargetTrackingNo.label}"
+                                        shortDesc="#{bindings.TargetTitlesLOVTable.hints.TargetTrackingNo.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetTitlesLOVTable.hints.TargetTrackingNo.displayWidth}"
+                                        maximumLength="4000">
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.TargetTitlesLOVTable.hints.TargetTrackingNo.format}"/>
+                          </af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetTitlesLOVCatalogNumber">
+                          <af:inputText id="QuickSearchTargetTitlesLOVCatalogNumber"
+                                        value="#{pageFlowScope.searchTargetTitlesLOV.searchText}"
+                                        label="#{bindings.TargetTitlesLOVTable.hints.CatalogNumber.label}"
+                                        simple="true"
+                                        columns="#{bindings.TargetTitlesLOVTable.hints.CatalogNumber.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetTitlesLOVLongTitle">
+                          <af:inputText id="QuickSearchTargetTitlesLOVLongTitle"
+                                        value="#{pageFlowScope.searchTargetTitlesLOV.searchText}"
+                                        label="#{bindings.TargetTitlesLOVTable.hints.LongTitle.label}"
+                                        simple="true"
+                                        columns="#{bindings.TargetTitlesLOVTable.hints.LongTitle.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetTitlesLOVContentOwner">
+                          <af:inputText id="QuickSearchTargetTitlesLOVContentOwner"
+                                        value="#{pageFlowScope.searchTargetTitlesLOV.searchText}"
+                                        label="#{bindings.TargetTitlesLOVTable.hints.ContentOwner.label}"
+                                        simple="true"
+                                        columns="#{bindings.TargetTitlesLOVTable.hints.ContentOwner.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetTitlesLOVShortTitle">
+                          <af:inputText id="QuickSearchTargetTitlesLOVShortTitle"
+                                        value="#{pageFlowScope.searchTargetTitlesLOV.searchText}"
+                                        label="#{bindings.TargetTitlesLOVTable.hints.ShortTitle.label}"
+                                        simple="true"
+                                        columns="#{bindings.TargetTitlesLOVTable.hints.ShortTitle.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetTitlesLOVPublicationStartYear">
+                          <af:inputText id="QuickSearchTargetTitlesLOVPublicationStartYear"
+                                        value="#{pageFlowScope.searchTargetTitlesLOV.searchText}"
+                                        label="#{bindings.TargetTitlesLOVTable.hints.PublicationStartYear.label}"
+                                        simple="true"
+                                        columns="#{bindings.TargetTitlesLOVTable.hints.PublicationStartYear.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetTitlesLOVPublicationEndYear">
+                          <af:inputText id="QuickSearchTargetTitlesLOVPublicationEndYear"
+                                        value="#{pageFlowScope.searchTargetTitlesLOV.searchText}"
+                                        label="#{bindings.TargetTitlesLOVTable.hints.PublicationEndYear.label}"
+                                        simple="true"
+                                        columns="#{bindings.TargetTitlesLOVTable.hints.PublicationEndYear.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetTitlesLOVFilmAvailability">
+                          <af:inputText id="QuickSearchTargetTitlesLOVFilmAvailability"
+                                        value="#{pageFlowScope.searchTargetTitlesLOV.searchText}"
+                                        label="#{bindings.TargetTitlesLOVTable.hints.FilmAvailability.label}"
+                                        simple="true"
+                                        columns="#{bindings.TargetTitlesLOVTable.hints.FilmAvailability.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetTitlesLOVCatalogRoot">
+                          <af:inputText id="QuickSearchTargetTitlesLOVCatalogRoot"
+                                        value="#{pageFlowScope.searchTargetTitlesLOV.searchText}"
+                                        label="#{bindings.TargetTitlesLOVTable.hints.CatalogRoot.label}"
+                                        shortDesc="#{bindings.TargetTitlesLOVTable.hints.CatalogRoot.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetTitlesLOVTable.hints.CatalogRoot.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetTitlesLOVSite">
+                          <af:inputText id="QuickSearchTargetTitlesLOVSite"
+                                        value="#{pageFlowScope.searchTargetTitlesLOV.searchText}"
+                                        label="#{bindings.TargetTitlesLOVTable.hints.Site.label}"
+                                        shortDesc="#{bindings.TargetTitlesLOVTable.hints.Site.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetTitlesLOVTable.hints.Site.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="TargetTitlesLOVContentOwnerNo">
+                          <af:inputText id="QuickSearchTargetTitlesLOVContentOwnerNo"
+                                        value="#{pageFlowScope.searchTargetTitlesLOV.searchText}"
+                                        label="#{bindings.TargetTitlesLOVTable.hints.ContentOwnerNo.label}"
+                                        shortDesc="#{bindings.TargetTitlesLOVTable.hints.ContentOwnerNo.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.TargetTitlesLOVTable.hints.ContentOwnerNo.displayWidth}"
+                                        maximumLength="4000">
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.TargetTitlesLOVTable.hints.ContentOwnerNo.format}"/>
+                          </af:inputText>
+                        </f:facet>
+                      </af:switcher>
+                    </af:panelGroupLayout>
+                    <af:spacer width="4" id="qsAreaTargetTitlesLOVSpacer2"/>
+                    <af:commandImageLink action="#{pageFlowScope.searchTargetTitlesLOV.quickSearch}"
+                                         shortDesc="#{nls['FILTER_BY']}"
+                                         icon="/jheadstart/images/go_ena.png"
+                                         id="TargetTitlesLOVQuickSearchButton"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:subform>
+            </af:panelHeader>
+            <af:spacer width="10" height="10" id="sp0"/>
+          </af:group>
+          <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+        </f:facet>
+        <f:facet name="center">
+          <af:panelStretchLayout topHeight="0" id="psl0">
+            <f:facet name="top"></f:facet>
+            <f:facet name="center">
+              <af:panelCollection id="TargetTitlesLOVPC" featuresOff=" "
+                                  styleClass="AFStretchWidth">
+                <f:facet name="menus">
+                  <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                           id="menu0">
+                    <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                             id="menu1">
+                      <af:group id="TargetTitlesLOVtbb"
+                                rendered="#{ (bindings.TargetTitlesLOVIterator.viewObject!=null and bindings.TargetTitlesLOVIterator.viewObject.currentRow!=null)}">
+                        <af:commandMenuItem actionListener="#{bindings.FirstTargetTitlesLOV.execute}"
+                                            id="TargetTitlesLOVFirst"
+                                            partialSubmit="true"
+                                            icon="/afr/shuttleleftall_ena.png"
+                                            textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.PreviousTargetTitlesLOV.execute}"
+                                            icon="/afr/shuttleleft_ena.png"
+                                            textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                            id="TargetTitlesLOVPrevious"
+                                            partialSubmit="true"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.NextTargetTitlesLOV.execute}"
+                                            icon="/afr/shuttleright_ena.png"
+                                            textAndAccessKey="#{nls['NEXT_ROW']}"
+                                            id="TargetTitlesLOVNext"
+                                            partialSubmit="true"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.LastTargetTitlesLOV.execute}"
+                                            icon="/afr/shuttlerightall_ena.png"
+                                            textAndAccessKey="#{nls['LAST_ROW']}"
+                                            id="TargetTitlesLOVLast"
+                                            partialSubmit="true"></af:commandMenuItem>
+                      </af:group>
+                    </af:menu>
+                  </af:menu>
+                </f:facet>
+                <f:facet name="toolbar">
+                  <af:toolbar id="tbar1">
+                    <af:commandToolbarButton text="Print"
+                                             id="TargetTitlesLOVPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="statusbar">
+                  <af:toolbar>
+                    <af:outputText value="#{bindings.TargetTitlesLOVIterator.estimatedRowCount} rows found"/>
+                  </af:toolbar>
+                </f:facet>
+                <af:table id="TargetTitlesLOVTab" contentDelivery="immediate"
+                          value="#{bindings.TargetTitlesLOVTable.collectionModel}"
+                          columnStretching="blank" rowBandingInterval="0"
+                          editingMode="editAll" columnSelection="multiple"
+                          contextMenuSelect="true" rowSelection="multiple"
+                          selectionListener="#{pageFlowScope.TargetTitlesLOVPage.selectionListener}"
+                          selectedRowKeys="#{pageFlowScope.TargetTitlesLOVPage.selectedRowKeySet}"
+                          rowDisclosureListener="#{pageFlowScope.TargetTitlesLOVTable.discloseRow}"
+                          var="row" varStatus="status"
+                          fetchSize="#{bindings.TargetTitlesLOVTable.rangeSize}"
+                          emptyText="#{nls['NO_ROWS_FOUND']}"
+                          binding="#{pageFlowScope.TargetTitlesLOVPage.lovTable}"
+                          partialTriggers=" :::TargetTitlesLOVPC ::TargetTitlesLOVFirst ::TargetTitlesLOVPrevious ::TargetTitlesLOVNext ::TargetTitlesLOVLast"
+                          styleClass="AFStretchWidth"
+                          summary="#{nls['TABLE_TITLE_TARGETTITLESLOV']}">
+                  <f:facet name="contextMenu">
+                    <af:popup id="TargetTitlesLOVTablePopup"
+                              childCreation="deferred">
+                      <af:menu id="menu2">
+                        <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3"></af:menu>
+                      </af:menu>
+                    </af:popup>
+                  </f:facet>
+                  <af:column id="TargetTitlesLOVTargetTrackingNoCol"
+                             sortable="true" noWrap="true" width="100"
+                             sortProperty="TargetTrackingNo" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetTitlesLOVTable.hints.TargetTrackingNo.label}"
+                                      id="ol0"/>
+                    </f:facet>
+                    <af:inputText id="TargetTitlesLOVTargetTrackingNo"
+                                  value="#{row.bindings.TargetTrackingNo.inputValue}"
+                                  label="#{bindings.TargetTitlesLOVTable.hints.TargetTrackingNo.label}"
+                                  required="#{bindings.TargetTitlesLOVTable.hints.TargetTrackingNo.mandatory}"
+                                  rows="#{bindings.TargetTitlesLOVTable.hints.TargetTrackingNo.displayHeight}"
+                                  columns="#{bindings.TargetTitlesLOVTable.hints.TargetTrackingNo.displayWidth}"
+                                  maximumLength="38" readOnly="true"
+                                  shortDesc="#{bindings.TargetTitlesLOVTable.hints.TargetTrackingNo.tooltip}">
+                      <f:validator binding="#{row.bindings.TargetTrackingNo.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.TargetTitlesLOVTable.hints.TargetTrackingNo.format}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetTitlesLOVCatalogNumberCol"
+                             sortable="true" noWrap="true" width="120"
+                             sortProperty="CatalogNumber" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetTitlesLOVTable.hints.CatalogNumber.label}"
+                                      id="ol1"/>
+                    </f:facet>
+                    <af:inputText id="TargetTitlesLOVCatalogNumber"
+                                  value="#{row.bindings.CatalogNumber.inputValue}"
+                                  label="#{bindings.TargetTitlesLOVTable.hints.CatalogNumber.label}"
+                                  required="#{bindings.TargetTitlesLOVTable.hints.CatalogNumber.mandatory}"
+                                  rows="#{bindings.TargetTitlesLOVTable.hints.CatalogNumber.displayHeight}"
+                                  columns="#{bindings.TargetTitlesLOVTable.hints.CatalogNumber.displayWidth}"
+                                  maximumLength="40" readOnly="true">
+                      <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetTitlesLOVLongTitleCol" sortable="true"
+                             noWrap="true" width="120" sortProperty="LongTitle"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetTitlesLOVTable.hints.LongTitle.label}"
+                                      id="ol2"/>
+                    </f:facet>
+                    <af:inputText id="TargetTitlesLOVLongTitle"
+                                  value="#{row.bindings.LongTitle.inputValue}"
+                                  label="#{bindings.TargetTitlesLOVTable.hints.LongTitle.label}"
+                                  required="#{bindings.TargetTitlesLOVTable.hints.LongTitle.mandatory}"
+                                  rows="#{bindings.TargetTitlesLOVTable.hints.LongTitle.displayHeight}"
+                                  columns="#{bindings.TargetTitlesLOVTable.hints.LongTitle.displayWidth}"
+                                  maximumLength="4000" readOnly="true">
+                      <f:validator binding="#{row.bindings.LongTitle.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetTitlesLOVContentOwnerCol" sortable="true"
+                             noWrap="true" width="120"
+                             sortProperty="ContentOwner" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetTitlesLOVTable.hints.ContentOwner.label}"
+                                      id="ol3"/>
+                    </f:facet>
+                    <af:inputText id="TargetTitlesLOVContentOwner"
+                                  value="#{row.bindings.ContentOwner.inputValue}"
+                                  label="#{bindings.TargetTitlesLOVTable.hints.ContentOwner.label}"
+                                  required="#{bindings.TargetTitlesLOVTable.hints.ContentOwner.mandatory}"
+                                  rows="#{bindings.TargetTitlesLOVTable.hints.ContentOwner.displayHeight}"
+                                  columns="#{bindings.TargetTitlesLOVTable.hints.ContentOwner.displayWidth}"
+                                  maximumLength="400" readOnly="true">
+                      <f:validator binding="#{row.bindings.ContentOwner.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetTitlesLOVShortTitleCol" sortable="true"
+                             noWrap="true" width="120" sortProperty="ShortTitle"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetTitlesLOVTable.hints.ShortTitle.label}"
+                                      id="ol4"/>
+                    </f:facet>
+                    <af:inputText id="TargetTitlesLOVShortTitle"
+                                  value="#{row.bindings.ShortTitle.inputValue}"
+                                  label="#{bindings.TargetTitlesLOVTable.hints.ShortTitle.label}"
+                                  required="#{bindings.TargetTitlesLOVTable.hints.ShortTitle.mandatory}"
+                                  rows="#{bindings.TargetTitlesLOVTable.hints.ShortTitle.displayHeight}"
+                                  columns="#{bindings.TargetTitlesLOVTable.hints.ShortTitle.displayWidth}"
+                                  maximumLength="30" readOnly="true">
+                      <f:validator binding="#{row.bindings.ShortTitle.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetTitlesLOVPublicationStartYearCol"
+                             sortable="true" noWrap="true" width="120"
+                             sortProperty="PublicationStartYear"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetTitlesLOVTable.hints.PublicationStartYear.label}"
+                                      id="ol5"/>
+                    </f:facet>
+                    <af:inputText id="TargetTitlesLOVPublicationStartYear"
+                                  value="#{row.bindings.PublicationStartYear.inputValue}"
+                                  label="#{bindings.TargetTitlesLOVTable.hints.PublicationStartYear.label}"
+                                  required="#{bindings.TargetTitlesLOVTable.hints.PublicationStartYear.mandatory}"
+                                  rows="#{bindings.TargetTitlesLOVTable.hints.PublicationStartYear.displayHeight}"
+                                  columns="#{bindings.TargetTitlesLOVTable.hints.PublicationStartYear.displayWidth}"
+                                  maximumLength="4" readOnly="true">
+                      <f:validator binding="#{row.bindings.PublicationStartYear.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetTitlesLOVPublicationEndYearCol"
+                             sortable="true" noWrap="true" width="120"
+                             sortProperty="PublicationEndYear" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetTitlesLOVTable.hints.PublicationEndYear.label}"
+                                      id="ol6"/>
+                    </f:facet>
+                    <af:inputText id="TargetTitlesLOVPublicationEndYear"
+                                  value="#{row.bindings.PublicationEndYear.inputValue}"
+                                  label="#{bindings.TargetTitlesLOVTable.hints.PublicationEndYear.label}"
+                                  required="#{bindings.TargetTitlesLOVTable.hints.PublicationEndYear.mandatory}"
+                                  rows="#{bindings.TargetTitlesLOVTable.hints.PublicationEndYear.displayHeight}"
+                                  columns="#{bindings.TargetTitlesLOVTable.hints.PublicationEndYear.displayWidth}"
+                                  maximumLength="4" readOnly="true">
+                      <f:validator binding="#{row.bindings.PublicationEndYear.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetTitlesLOVFilmAvailabilityCol"
+                             sortable="true" noWrap="true" width="120"
+                             sortProperty="FilmAvailability" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetTitlesLOVTable.hints.FilmAvailability.label}"
+                                      id="ol7"/>
+                    </f:facet>
+                    <af:inputText id="TargetTitlesLOVFilmAvailability"
+                                  value="#{row.bindings.FilmAvailability.inputValue}"
+                                  label="#{bindings.TargetTitlesLOVTable.hints.FilmAvailability.label}"
+                                  required="#{bindings.TargetTitlesLOVTable.hints.FilmAvailability.mandatory}"
+                                  rows="#{bindings.TargetTitlesLOVTable.hints.FilmAvailability.displayHeight}"
+                                  columns="#{bindings.TargetTitlesLOVTable.hints.FilmAvailability.displayWidth}"
+                                  maximumLength="40" readOnly="true">
+                      <f:validator binding="#{row.bindings.FilmAvailability.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetTitlesLOVCatalogRootCol" sortable="true"
+                             noWrap="true" width="120"
+                             sortProperty="CatalogRoot" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetTitlesLOVTable.hints.CatalogRoot.label}"
+                                      id="ol8"/>
+                    </f:facet>
+                    <af:inputText id="TargetTitlesLOVCatalogRoot"
+                                  value="#{row.bindings.CatalogRoot.inputValue}"
+                                  label="#{bindings.TargetTitlesLOVTable.hints.CatalogRoot.label}"
+                                  required="#{bindings.TargetTitlesLOVTable.hints.CatalogRoot.mandatory}"
+                                  rows="#{bindings.TargetTitlesLOVTable.hints.CatalogRoot.displayHeight}"
+                                  columns="#{bindings.TargetTitlesLOVTable.hints.CatalogRoot.displayWidth}"
+                                  maximumLength="20" readOnly="true"
+                                  shortDesc="#{bindings.TargetTitlesLOVTable.hints.CatalogRoot.tooltip}">
+                      <f:validator binding="#{row.bindings.CatalogRoot.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetTitlesLOVSiteCol" sortable="true"
+                             noWrap="true" width="180" sortProperty="Site"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetTitlesLOVTable.hints.Site.label}"
+                                      id="ol9"/>
+                    </f:facet>
+                    <af:inputText id="TargetTitlesLOVSite"
+                                  value="#{row.bindings.Site.inputValue}"
+                                  label="#{bindings.TargetTitlesLOVTable.hints.Site.label}"
+                                  required="#{bindings.TargetTitlesLOVTable.hints.Site.mandatory}"
+                                  rows="#{bindings.TargetTitlesLOVTable.hints.Site.displayHeight}"
+                                  columns="#{bindings.TargetTitlesLOVTable.hints.Site.displayWidth}"
+                                  maximumLength="400" readOnly="true"
+                                  shortDesc="#{bindings.TargetTitlesLOVTable.hints.Site.tooltip}">
+                      <f:validator binding="#{row.bindings.Site.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="TargetTitlesLOVContentOwnerNoCol"
+                             sortable="true" noWrap="true" width="100"
+                             sortProperty="ContentOwnerNo" align="right"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.TargetTitlesLOVTable.hints.ContentOwnerNo.label}"
+                                      id="ol10"/>
+                    </f:facet>
+                    <af:inputText id="TargetTitlesLOVContentOwnerNo"
+                                  value="#{row.bindings.ContentOwnerNo.inputValue}"
+                                  label="#{bindings.TargetTitlesLOVTable.hints.ContentOwnerNo.label}"
+                                  required="#{bindings.TargetTitlesLOVTable.hints.ContentOwnerNo.mandatory}"
+                                  rows="#{bindings.TargetTitlesLOVTable.hints.ContentOwnerNo.displayHeight}"
+                                  columns="#{bindings.TargetTitlesLOVTable.hints.ContentOwnerNo.displayWidth}"
+                                  maximumLength="38" readOnly="true"
+                                  shortDesc="#{bindings.TargetTitlesLOVTable.hints.ContentOwnerNo.tooltip}">
+                      <f:validator binding="#{row.bindings.ContentOwnerNo.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.TargetTitlesLOVTable.hints.ContentOwnerNo.format}"/>
+                    </af:inputText>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

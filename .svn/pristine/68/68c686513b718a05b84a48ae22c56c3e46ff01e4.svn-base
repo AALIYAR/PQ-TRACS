@@ -1,0 +1,366 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplate.jspx">
+    <f:facet name="pageContent">
+      <af:panelStretchLayout topHeight="auto" id="UsersLOVTopLc"
+                             partialTriggers="">
+        <f:facet name="top">
+          <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (default/pageComponent/groupContent.vm) -->
+          <af:group id="g0">
+            <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_USERSLOV']}">
+              <f:facet name="toolbar">
+                <af:toolbox id="tbox0">
+                  <af:toolbar id="tbar0">
+                    <af:group id="gr0"></af:group>
+                    <af:group id="gr1"></af:group>
+                    <af:group id="gr2"></af:group>
+                  </af:toolbar>
+                </af:toolbox>
+              </f:facet>
+              <f:facet name="context"></f:facet>
+              <af:subform id="UsersLOVSbf"
+                          rendered="#{!pageFlowScope.createModes.CreateUsersLOV and !pageFlowScope.hideSearchArea}"
+                          defaultCommand="UsersLOVQuickSearchButton">
+                <af:panelGroupLayout id="searchAreaUsersLOV"
+                                     partialTriggers=" qsButtonUsersLOV asButtonUsersLOV ">
+                  <f:attribute name="JhsIgnoreChanges" value="true"/>
+                  <af:showDetailHeader size="1" id="asAreaUsersLOV"
+                                       disclosed="true"
+                                       text="#{nls['ADVANCED_SEARCH']}"
+                                       rendered="#{!pageFlowScope.searchUsersLOV.quickSearchMode}">
+                    <f:facet name="toolbar">
+                      <af:commandButton partialSubmit="true"
+                                        id="qsButtonUsersLOV" immediate="true"
+                                        textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                        action="#{pageFlowScope.searchUsersLOV.switchToQuickSearchMode}"/>
+                    </f:facet>
+                    <af:panelGroupLayout id="asAreaUsersLOVSearchOptions">
+                      <af:selectOneRadio label="#{nls['QUERY_MATCH_LABEL']}"
+                                         layout="horizontal"
+                                         value="#{pageFlowScope.searchUsersLOV.allConditionsMet}"
+                                         id="asAreaUsersLOVConditions">
+                        <af:selectItem value="true"
+                                       label="#{nls['ALL_CONDITIONS_MET']}"/>
+                        <af:selectItem value="false"
+                                       label="#{nls['ANY_CONDITION_MET']}"/>
+                      </af:selectOneRadio>
+                      <af:selectBooleanCheckbox value="#{pageFlowScope.searchUsersLOV.caseSensitive}"
+                                                label="#{nls['CASE_SENSITIVE']}"
+                                                id="asAreaUsersLOVCaseSensitive"/>
+                      <af:selectBooleanCheckbox value="#{pageFlowScope.searchUsersLOV.diacriticNeutral}"
+                                                label="Diacritic Neutral?"
+                                                id="asAreaUsersLOVDiacriticNeutral"/>
+                    </af:panelGroupLayout>
+                    <af:panelFormLayout rows="1" labelAlignment="start"
+                                        maxColumns="2" id="asAreaUsersLOVItems">
+                      <af:inputText id="SearchUsersLOVUsername"
+                                    value="#{pageFlowScope.searchUsersLOV.criteria.UsersLOVUsername}"
+                                    label="#{bindings.UsersLOVTable.hints.Username.label}"
+                                    columns="#{bindings.UsersLOVTable.hints.Username.displayWidth}"
+                                    maximumLength="4000"></af:inputText>
+                      <af:inputText id="SearchUsersLOVFirstName"
+                                    value="#{pageFlowScope.searchUsersLOV.criteria.UsersLOVFirstName}"
+                                    label="#{bindings.UsersLOVTable.hints.FirstName.label}"
+                                    columns="#{bindings.UsersLOVTable.hints.FirstName.displayWidth}"
+                                    maximumLength="4000"></af:inputText>
+                      <af:inputText id="SearchUsersLOVLastName"
+                                    value="#{pageFlowScope.searchUsersLOV.criteria.UsersLOVLastName}"
+                                    label="#{bindings.UsersLOVTable.hints.LastName.label}"
+                                    columns="#{bindings.UsersLOVTable.hints.LastName.displayWidth}"
+                                    maximumLength="4000"></af:inputText>
+                      <af:inputText id="SearchUsersLOVDisplayName"
+                                    value="#{pageFlowScope.searchUsersLOV.criteria.UsersLOVDisplayName}"
+                                    label="#{bindings.UsersLOVTable.hints.DisplayName.label}"
+                                    columns="#{bindings.UsersLOVTable.hints.DisplayName.displayWidth}"
+                                    maximumLength="4000"></af:inputText>
+                      <af:inputText id="SearchUsersLOVEmailAddress"
+                                    value="#{pageFlowScope.searchUsersLOV.criteria.UsersLOVEmailAddress}"
+                                    label="#{bindings.UsersLOVTable.hints.EmailAddress.label}"
+                                    columns="#{bindings.UsersLOVTable.hints.EmailAddress.displayWidth}"
+                                    maximumLength="4000"></af:inputText>
+                    </af:panelFormLayout>
+                    <af:panelGroupLayout id="asAreaUsersLOVButtons"
+                                         layout="horizontal" halign="right">
+                      <f:facet name="separator">
+                        <af:spacer id="sp0" width="4"/>
+                      </f:facet>
+                      <af:commandButton textAndAccessKey="#{nls['FIND']}"
+                                        action="#{pageFlowScope.searchUsersLOV.advancedSearch}"
+                                        id="cb0"/>
+                      <af:commandButton textAndAccessKey="#{nls['CLEAR']}"
+                                        actionListener="#{pageFlowScope.searchUsersLOV.clearSearchCriteria}"
+                                        id="cb1"/>
+                    </af:panelGroupLayout>
+                  </af:showDetailHeader>
+                  <af:panelGroupLayout id="qsAreaUsersLOV"
+                                       rendered="#{pageFlowScope.searchUsersLOV.quickSearchMode}"
+                                       layout="horizontal">
+                    <af:selectOneChoice id="qsSelectUsersLOV"
+                                        label="#{nls['FILTER_BY']}"
+                                        value="#{pageFlowScope.searchUsersLOV.searchItem}"
+                                        autoSubmit="true" immediate="true"
+                                        valueChangeListener="#{pageFlowScope.searchUsersLOV.searchItemChanged}">
+                      <af:selectItem label="#{bindings.UsersLOVTable.hints.Username.label}"
+                                     value="UsersLOVUsername" id="si0"/>
+                      <af:selectItem label="#{bindings.UsersLOVTable.hints.FirstName.label}"
+                                     value="UsersLOVFirstName" id="si1"/>
+                      <af:selectItem label="#{bindings.UsersLOVTable.hints.LastName.label}"
+                                     value="UsersLOVLastName" id="si2"/>
+                      <af:selectItem label="#{bindings.UsersLOVTable.hints.DisplayName.label}"
+                                     value="UsersLOVDisplayName" id="si3"/>
+                      <af:selectItem label="#{bindings.UsersLOVTable.hints.EmailAddress.label}"
+                                     value="UsersLOVEmailAddress" id="si4"/>
+                    </af:selectOneChoice>
+                    <af:spacer width="4" id="qsAreaUsersLOVSpacer1"/>
+                    <af:panelGroupLayout partialTriggers="qsSelectUsersLOV"
+                                         id="qsAreaUsersLOVpanelGroupLayout">
+                      <af:switcher facetName="#{pageFlowScope.searchUsersLOV.searchItem}"
+                                   id="qsAreaUsersLOVSwitcher">
+                        <f:facet name="UsersLOVUsername">
+                          <af:inputText id="QuickSearchUsersLOVUsername"
+                                        value="#{pageFlowScope.searchUsersLOV.searchText}"
+                                        label="#{bindings.UsersLOVTable.hints.Username.label}"
+                                        simple="true"
+                                        columns="#{bindings.UsersLOVTable.hints.Username.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="UsersLOVFirstName">
+                          <af:inputText id="QuickSearchUsersLOVFirstName"
+                                        value="#{pageFlowScope.searchUsersLOV.searchText}"
+                                        label="#{bindings.UsersLOVTable.hints.FirstName.label}"
+                                        simple="true"
+                                        columns="#{bindings.UsersLOVTable.hints.FirstName.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="UsersLOVLastName">
+                          <af:inputText id="QuickSearchUsersLOVLastName"
+                                        value="#{pageFlowScope.searchUsersLOV.searchText}"
+                                        label="#{bindings.UsersLOVTable.hints.LastName.label}"
+                                        simple="true"
+                                        columns="#{bindings.UsersLOVTable.hints.LastName.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="UsersLOVDisplayName">
+                          <af:inputText id="QuickSearchUsersLOVDisplayName"
+                                        value="#{pageFlowScope.searchUsersLOV.searchText}"
+                                        label="#{bindings.UsersLOVTable.hints.DisplayName.label}"
+                                        simple="true"
+                                        columns="#{bindings.UsersLOVTable.hints.DisplayName.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="UsersLOVEmailAddress">
+                          <af:inputText id="QuickSearchUsersLOVEmailAddress"
+                                        value="#{pageFlowScope.searchUsersLOV.searchText}"
+                                        label="#{bindings.UsersLOVTable.hints.EmailAddress.label}"
+                                        simple="true"
+                                        columns="#{bindings.UsersLOVTable.hints.EmailAddress.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                      </af:switcher>
+                    </af:panelGroupLayout>
+                    <af:spacer width="4" id="qsAreaUsersLOVSpacer2"/>
+                    <af:commandImageLink action="#{pageFlowScope.searchUsersLOV.quickSearch}"
+                                         shortDesc="#{nls['FILTER_BY']}"
+                                         icon="/jheadstart/images/go_ena.png"
+                                         id="UsersLOVQuickSearchButton"/>
+                    <af:spacer width="4" id="qsAreaUsersLOVSpacer3"/>
+                    <af:commandLink id="asButtonUsersLOV"
+                                    textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                    partialSubmit="true" immediate="true"
+                                    action="#{pageFlowScope.searchUsersLOV.switchToAdvancedSearchMode}"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:subform>
+            </af:panelHeader>
+            <af:spacer width="10" height="10" id="sp1"/>
+          </af:group>
+          <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+        </f:facet>
+        <f:facet name="center">
+          <af:panelStretchLayout topHeight="0" id="psl0">
+            <f:facet name="top"></f:facet>
+            <f:facet name="center">
+              <af:panelCollection id="UsersLOVPC" featuresOff=" "
+                                  styleClass="AFStretchWidth">
+                <f:facet name="menus">
+                  <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                           id="menu0">
+                    <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                             id="menu1">
+                      <af:group id="UsersLOVtbb"
+                                rendered="#{ bindings.UsersLOVIterator.currentRow!=null }">
+                        <af:commandMenuItem actionListener="#{bindings.FirstUsersLOV.execute}"
+                                            id="UsersLOVFirst"
+                                            partialSubmit="true"
+                                            icon="/afr/shuttleleftall_ena.png"
+                                            textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.PreviousUsersLOV.execute}"
+                                            icon="/afr/shuttleleft_ena.png"
+                                            textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                            id="UsersLOVPrevious"
+                                            partialSubmit="true"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.NextUsersLOV.execute}"
+                                            icon="/afr/shuttleright_ena.png"
+                                            textAndAccessKey="#{nls['NEXT_ROW']}"
+                                            id="UsersLOVNext"
+                                            partialSubmit="true"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.LastUsersLOV.execute}"
+                                            icon="/afr/shuttlerightall_ena.png"
+                                            textAndAccessKey="#{nls['LAST_ROW']}"
+                                            id="UsersLOVLast"
+                                            partialSubmit="true"></af:commandMenuItem>
+                      </af:group>
+                    </af:menu>
+                  </af:menu>
+                </f:facet>
+                <f:facet name="toolbar">
+                  <af:toolbar id="tbar1">
+                    <af:commandToolbarButton text="Print" id="UsersLOVPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="statusbar">
+                  <af:toolbar>
+                    <af:outputText value="#{bindings.UsersLOVIterator.estimatedRowCount} rows found"/>
+                  </af:toolbar>
+                </f:facet>
+                <af:table id="UsersLOVTab" contentDelivery="immediate"
+                          value="#{bindings.UsersLOVTable.collectionModel}"
+                          columnStretching="blank" rowBandingInterval="0"
+                          editingMode="editAll" columnSelection="multiple"
+                          contextMenuSelect="true" rowSelection="single"
+                          selectionListener="#{pageFlowScope.UsersLOVPage.selectionListener}"
+                          selectedRowKeys="#{pageFlowScope.UsersLOVPage.selectedRowKeySet}"
+                          rowDisclosureListener="#{pageFlowScope.UsersLOVTable.discloseRow}"
+                          var="row" varStatus="status"
+                          fetchSize="#{bindings.UsersLOVTable.rangeSize}"
+                          emptyText="#{nls['NO_ROWS_FOUND']}"
+                          queryListener="#{bindings.UsersLOVIteratorQuery.processQuery}"
+                          filterModel="#{bindings.UsersLOVIteratorQuery.queryDescriptor}"
+                          filterVisible="true"
+                          binding="#{pageFlowScope.UsersLOVPage.lovTable}"
+                          partialTriggers=" :::UsersLOVPC ::UsersLOVFirst ::UsersLOVPrevious ::UsersLOVNext ::UsersLOVLast"
+                          styleClass="AFStretchWidth"
+                          summary="#{nls['TABLE_TITLE_USERSLOV']}">
+                  <f:facet name="contextMenu">
+                    <af:popup id="UsersLOVTablePopup" childCreation="deferred">
+                      <af:menu id="menu2">
+                        <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3"></af:menu>
+                      </af:menu>
+                    </af:popup>
+                  </f:facet>
+                  <af:column id="UsersLOVUsernameCol" sortable="true"
+                             filterable="true" noWrap="true" width="180"
+                             sortProperty="Username" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.UsersLOVTable.hints.Username.label}"
+                                      id="ol0"/>
+                    </f:facet>
+                    <af:inputText id="UsersLOVUsername"
+                                  value="#{row.bindings.Username.inputValue}"
+                                  label="#{bindings.UsersLOVTable.hints.Username.label}"
+                                  required="#{bindings.UsersLOVTable.hints.Username.mandatory}"
+                                  rows="#{bindings.UsersLOVTable.hints.Username.displayHeight}"
+                                  columns="#{bindings.UsersLOVTable.hints.Username.displayWidth}"
+                                  maximumLength="240" readOnly="true">
+                      <f:validator binding="#{row.bindings.Username.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="UsersLOVFirstNameCol" sortable="true"
+                             filterable="true" noWrap="true" width="180"
+                             sortProperty="FirstName" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.UsersLOVTable.hints.FirstName.label}"
+                                      id="ol1"/>
+                    </f:facet>
+                    <af:inputText id="UsersLOVFirstName"
+                                  value="#{row.bindings.FirstName.inputValue}"
+                                  label="#{bindings.UsersLOVTable.hints.FirstName.label}"
+                                  required="#{bindings.UsersLOVTable.hints.FirstName.mandatory}"
+                                  rows="#{bindings.UsersLOVTable.hints.FirstName.displayHeight}"
+                                  columns="#{bindings.UsersLOVTable.hints.FirstName.displayWidth}"
+                                  maximumLength="50" readOnly="true">
+                      <f:validator binding="#{row.bindings.FirstName.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="UsersLOVLastNameCol" sortable="true"
+                             filterable="true" noWrap="true" width="180"
+                             sortProperty="LastName" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.UsersLOVTable.hints.LastName.label}"
+                                      id="ol2"/>
+                    </f:facet>
+                    <af:inputText id="UsersLOVLastName"
+                                  value="#{row.bindings.LastName.inputValue}"
+                                  label="#{bindings.UsersLOVTable.hints.LastName.label}"
+                                  required="#{bindings.UsersLOVTable.hints.LastName.mandatory}"
+                                  rows="#{bindings.UsersLOVTable.hints.LastName.displayHeight}"
+                                  columns="#{bindings.UsersLOVTable.hints.LastName.displayWidth}"
+                                  maximumLength="50" readOnly="true">
+                      <f:validator binding="#{row.bindings.LastName.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="UsersLOVDisplayNameCol" sortable="true"
+                             filterable="true" noWrap="true" width="180"
+                             sortProperty="DisplayName" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.UsersLOVTable.hints.DisplayName.label}"
+                                      id="ol3"/>
+                    </f:facet>
+                    <af:inputText id="UsersLOVDisplayName"
+                                  value="#{row.bindings.DisplayName.inputValue}"
+                                  label="#{bindings.UsersLOVTable.hints.DisplayName.label}"
+                                  required="#{bindings.UsersLOVTable.hints.DisplayName.mandatory}"
+                                  rows="#{bindings.UsersLOVTable.hints.DisplayName.displayHeight}"
+                                  columns="#{bindings.UsersLOVTable.hints.DisplayName.displayWidth}"
+                                  maximumLength="240" readOnly="true">
+                      <f:validator binding="#{row.bindings.DisplayName.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="UsersLOVEmailAddressCol" sortable="true"
+                             filterable="true" noWrap="true" width="180"
+                             sortProperty="EmailAddress" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.UsersLOVTable.hints.EmailAddress.label}"
+                                      id="ol4"/>
+                    </f:facet>
+                    <af:inputText id="UsersLOVEmailAddress"
+                                  value="#{row.bindings.EmailAddress.inputValue}"
+                                  label="#{bindings.UsersLOVTable.hints.EmailAddress.label}"
+                                  required="#{bindings.UsersLOVTable.hints.EmailAddress.mandatory}"
+                                  rows="#{bindings.UsersLOVTable.hints.EmailAddress.displayHeight}"
+                                  columns="#{bindings.UsersLOVTable.hints.EmailAddress.displayWidth}"
+                                  maximumLength="240" readOnly="true">
+                      <f:validator binding="#{row.bindings.EmailAddress.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

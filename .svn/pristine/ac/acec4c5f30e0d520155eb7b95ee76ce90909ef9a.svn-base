@@ -1,0 +1,342 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="ContractRightCategoryView"
+   Version="11.1.1.64.93"
+   OrderBy="PERMIT_FLAG DESC, CATEGORY_ID, VALUE"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="com.pq.tracs.model.dao.ContractRightCategoryViewRowImpl"
+   ComponentClass="com.pq.tracs.model.dao.ContractRightCategoryViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_objectSuperClassName"
+         Value="com.pq.tracs.model.dao.TracsView"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <ViewAccessor
+      Name="CategoryValueLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.CategoryValueLookup">
+      <ParameterMap>
+         <PIMap Variable="CATEGORY_ID">
+            <TransientExpression><![CDATA[CategoryId]]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="CategoryLookup1"
+      ViewObjectName="com.pq.tracs.model.lookups.CategoryLookup"
+      RowLevelBinds="true"/>
+   <ViewAccessor
+      Name="SubCategoryValueLookup1"
+      ViewObjectName="com.pq.tracs.model.lookups.SubCategoryValueLookup">
+      <ParameterMap>
+         <PIMap Variable="CAT_VALUE">
+            <TransientExpression><![CDATA[Value]]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_CategoryId"
+      ListVOName="CategoryLookup1"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="CategoryId"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="Id"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="Name"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_Value"
+      ListVOName="CategoryValueLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="Value"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_SubcategoryValue"
+      ListVOName="SubCategoryValueLookup1"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="SubcategoryValue"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <SQLQuery><![CDATA[SELECT ContractRightCategory.ID, 
+       ContractRightCategory.CONTRACT_RIGHT_ID, 
+       ContractRightCategory.CATEGORY_ID, 
+       ContractRightCategory.NAME, 
+       ContractRightCategory.VALUE, 
+       ContractRightCategory.FULL_OR_PARTIAL, 
+       ContractRightCategory.PERMIT_FLAG,
+       ContractRightCategory.SUBCATEGORY_VALUE, 
+       ContractRightCategory.SUBCATEGORY_VALUE_PERMIT_FLAG,
+       ContractRightCategory.CREATED_BY, 
+       ContractRightCategory.CREATED_DATE, 
+       ContractRightCategory.LAST_UPDATED_BY, 
+       ContractRightCategory.LAST_UPDATED_DATE, 
+       (select FULL_OR_PARTIAL_FLAG from trax_category tc where tc.id=ContractRightCategory.CATEGORY_ID) as FULL_OR_PARTIAL_FLAG
+FROM TRAX_CONTRACT_RIGHT_CATEGORY ContractRightCategory]]></SQLQuery>
+   <EntityUsage
+      Name="ContractRightCategory"
+      Entity="com.pq.tracs.model.bo.ContractRightCategory" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      EntityAttrName="Id"
+      EntityUsage="ContractRightCategory"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContractRightId"
+      EntityAttrName="ContractRightId"
+      EntityUsage="ContractRightCategory"
+      AliasName="CONTRACT_RIGHT_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CategoryId"
+      EntityAttrName="CategoryId"
+      EntityUsage="ContractRightCategory"
+      AliasName="CATEGORY_ID"
+      LOVName="LOV_CategoryId">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Name"
+      IsNotNull="true"
+      EntityAttrName="Name"
+      EntityUsage="ContractRightCategory"
+      AliasName="NAME" />
+   <ViewAttribute
+      Name="Value"
+      IsNotNull="true"
+      EntityAttrName="Value"
+      EntityUsage="ContractRightCategory"
+      AliasName="VALUE"
+      LOVName="LOV_Value">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="FullOrPartial"
+      EntityAttrName="FullOrPartial"
+      EntityUsage="ContractRightCategory"
+      AliasName="FULL_OR_PARTIAL"/>
+   <ViewAttribute
+      Name="PermitFlag"
+      IsNotNull="true"
+      EntityAttrName="PermitFlag"
+      EntityUsage="ContractRightCategory"
+      AliasName="PERMIT_FLAG"/>
+   <ViewAttribute
+      Name="SubcategoryValue"
+      PrecisionRule="true"
+      EntityAttrName="SubcategoryValue"
+      EntityUsage="ContractRightCategory"
+      AliasName="SUBCATEGORY_VALUE"
+      LOVName="LOV_SubcategoryValue">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.ContractRightCategoryView.SubcategoryValue_LABEL"/>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SubcategoryValuePermitFlag"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="SubcategoryValuePermitFlag"
+      EntityUsage="ContractRightCategory"
+      AliasName="SUBCATEGORY_VALUE_PERMIT_FLAG">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.ContractRightCategoryView.SubcategoryValuePermitFlag_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="ContractRightCategory"
+      AliasName="CREATED_BY"/>
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      EntityAttrName="CreatedDate"
+      EntityUsage="ContractRightCategory"
+      AliasName="CREATED_DATE"/>
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="ContractRightCategory"
+      AliasName="LAST_UPDATED_BY"/>
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      IsUpdateable="false"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="ContractRightCategory"
+      AliasName="LAST_UPDATED_DATE"/>
+   <ViewAttribute
+      Name="FullOrPartialFlag"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="FULL_OR_PARTIAL_FLAG"
+      Expression="FULL_OR_PARTIAL_FLAG"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.ContractRightCategoryView.FullOrPartialFlag_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="ContractRightCategoryViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.ContractRightCategoryView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow108"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="ContractRightCategoryViewCriteria_vcrow108_CategoryId"
+            ViewAttribute="CategoryId"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightCategoryViewCriteria_vcrow108_Value"
+            ViewAttribute="Value"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightCategoryViewCriteria_vcrow108_FullOrPartial"
+            ViewAttribute="FullOrPartial"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightCategoryViewCriteria_vcrow108_PermitFlag"
+            ViewAttribute="PermitFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="SubcategoryValue"
+            ViewAttribute="SubcategoryValue"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="SubcategoryValuePermitFlag"
+            ViewAttribute="SubcategoryValuePermitFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightCategoryViewCriteria_vcrow108_CreatedBy"
+            ViewAttribute="CreatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightCategoryViewCriteria_vcrow108_CreatedDate"
+            ViewAttribute="CreatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightCategoryViewCriteria_vcrow108_LastUpdatedBy"
+            ViewAttribute="LastUpdatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightCategoryViewCriteria_vcrow108_LastUpdatedDate"
+            ViewAttribute="LastUpdatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ViewLinkAccessor
+      Name="JTraxTitleContractRightView"
+      ViewLink="com.pq.tracs.model.dao.TitleContractRightToCategoryViewLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="TraxActivityContractView"
+  Version="11.1.1.61.92"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Partial"
+  UseGlueCode="false"
+  ComponentClass="com.pq.tracs.model.dao.TracsView"
+  FetchMode="FETCH_AS_NEEDED"
+  FetchSize="15"
+  RangeSize="10">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="ContractOV"
+    ViewObjectName="com.pq.tracs.model.lookups.ContractROView">
+    <ParameterMap>
+      <PIMap Variable="SHOW_ALL">
+        <TransientExpression><![CDATA['ALL']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_ContractNumber"
+    ListVOName="ContractOV"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ContractNumber_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ContractNumber"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="ContractId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="ContractNumber"/>
+      <Item Value="Id"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="ContractNumber"/>
+      <Item Value="ContentOwner"/>
+      <Item Value="Form"/>
+      <Item Value="Status"/>
+      <Item Value="Type"/>
+      <Item Value="Division"/>
+      <Item Value="EffectiveDate"/>
+      <Item Value="ExpirationDate"/>
+      <Item Value="TermLength"/>
+      <Item Value="RelationshipOwner"/>
+      <Item Value="ActiveFlag"/>
+      <Item Value="AgreementName"/>
+      <Item Value="QaName"/>
+      <Item Value="TechnicalName"/>
+      <Item Value="Site"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="ContractROViewCriteria"/>
+  </ListBinding>
+  <SQLQuery>
+    <![CDATA[SELECT TraxActivityContract.ID, 
+       TraxActivityContract.ACTIVITY_ID, 
+       TraxActivityContract.CONTRACT_ID,
+       TraxContract.CONTRACT_NUMBER, 
+       TraxActivityContract.PRIMARY_FLAG,
+       TraxActivityContract.ADDED_DATE, 
+       TraxActivityContract.REMOVED_DATE, 
+       TraxActivityContract.CREATED_BY, 
+       TraxActivityContract.CREATED_DATE, 
+       TraxActivityContract.LAST_UPDATED_BY, 
+       TraxActivityContract.LAST_UPDATED_DATE,
+       TraxContract.ID AS CONT_ID
+FROM TRAX_ACTIVITY_CONTRACT TraxActivityContract
+    INNER JOIN TRAX_CONTRACT TraxContract
+        ON TraxActivityContract.CONTRACT_ID = TraxContract.ID]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="TraxActivityContract"
+    Entity="com.pq.tracs.model.eo.TraxActivityContract"/>
+  <ViewAttribute
+    Name="Id"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxActivityContract"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="ActivityId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ActivityId"
+    EntityUsage="TraxActivityContract"
+    AliasName="ACTIVITY_ID"/>
+  <ViewAttribute
+    Name="ContractId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ContractId"
+    EntityUsage="TraxActivityContract"
+    AliasName="CONTRACT_ID"/>
+  <ViewAttribute
+    Name="ContractNumber"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CONTRACT_NUMBER"
+    Expression="CONTRACT_NUMBER"
+    SQLType="VARCHAR"
+    LOVName="LOV_ContractNumber">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxActivityContractView.ContractNumber_LABEL"/>
+        <DISPLAYWIDTH
+          Value="15"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PrimaryFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="PrimaryFlag"
+    EntityUsage="TraxActivityContract"
+    AliasName="PRIMARY_FLAG"/>
+  <ViewAttribute
+    Name="AddedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="AddedDate"
+    EntityUsage="TraxActivityContract"
+    AliasName="ADDED_DATE"/>
+  <ViewAttribute
+    Name="RemovedDate"
+    PrecisionRule="true"
+    EntityAttrName="RemovedDate"
+    EntityUsage="TraxActivityContract"
+    AliasName="REMOVED_DATE"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="TraxActivityContract"
+    AliasName="CREATED_BY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="CreatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedDate"
+    EntityUsage="TraxActivityContract"
+    AliasName="CREATED_DATE"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="TraxActivityContract"
+    AliasName="LAST_UPDATED_BY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="LastUpdatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="TraxActivityContract"
+    AliasName="LAST_UPDATED_DATE"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="ContId"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="CONT_ID"
+    Expression="CONT_ID"
+    SQLType="NUMERIC"/>
+  <ViewCriteria
+    Name="TraxActivityContractViewCriteria"
+    ViewObjectName="com.pq.tracs.model.vo.TraxActivityContractView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow202"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="ContractNumber"
+        ViewAttribute="ContractNumber"
+        Conjunction="AND"
+        Required="Optional"
+        Operator="="
+        UpperColumns="1"/>
+      <ViewCriteriaItem
+        Name="PrimaryFlag"
+        ViewAttribute="PrimaryFlag"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="AddedDate"
+        ViewAttribute="AddedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="RemovedDate"
+        ViewAttribute="RemovedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="CreatedBy"
+        ViewAttribute="CreatedBy"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="CreatedDate"
+        ViewAttribute="CreatedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="LastUpdatedBy"
+        ViewAttribute="LastUpdatedBy"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="LastUpdatedDate"
+        ViewAttribute="LastUpdatedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

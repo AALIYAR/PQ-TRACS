@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="RolesRootReadOnlyView"
+   Version="11.1.1.59.23"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|VarAccess" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <Variable
+      Name="user_id"
+      Kind="where"
+      Type="java.lang.String" >
+   </Variable>
+   <SQLQuery><![CDATA[
+select 'Responsibilities' resps,:user_id as user_name from dual
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="Resps"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="16"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="RESPS"
+      Expression="RESPS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="16" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="UserName"
+      IsPersistent="false"
+      Precision="32"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="USER_NAME"
+      Expression="USER_NAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="32" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.custom.dao.RolesRootReadOnlyView.UserName_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="RolesRootReadOnlyViewCriteria"
+      ViewObjectName="com.pq.tracs.model.custom.dao.RolesRootReadOnlyView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow161"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="RolesRootReadOnlyViewCriteria_vcrow161_Resps"
+            ViewAttribute="Resps"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Value=""
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ViewLinkAccessor
+      Name="RolesView"
+      ViewLink="com.pq.tracs.model.custom.dao.RootToRolesVL"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

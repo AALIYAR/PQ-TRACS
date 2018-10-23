@@ -1,0 +1,2005 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="PubTopLc"
+                             partialTriggers=" PubDeleteDialog Pubfbb PubNewButton PubDelB PubSaveButton0 PubCancelButton0 PubSaveButton1 PubCancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreatePublishers ? nls['INSERT_TITLE_PUBLISHERS'] :  (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'] ? nls['EDIT_TITLE_PUBLISHER: #{bindings.PubName.inputValue}'] : nls['VIEW_TITLE_PUBLISHER: #{bindings.PubName.inputValue}'])  }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="Pubfbb" layout="horizontal"
+                                       rendered="#{ (bindings.PublishersIterator.viewObject!=null and bindings.PublishersIterator.viewObject.currentRow!=null) and bindings.PublishersIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreatePublishers and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="PubFirst PubPrevious PubNext PubLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstPublishers.execute}"
+                                             id="PubFirst" partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.PublishersIterator.rangeStart+bindings.PublishersIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.PublishersIterator.rangeStart+bindings.PublishersIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousPublishers.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="PubPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.PublishersIterator.rangeStart+bindings.PublishersIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.PublishersIterator.rangeStart+bindings.PublishersIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.PublishersIterator.rangeStart+bindings.PublishersIterator.currentRowIndexInRange+1} / #{bindings.PublishersIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextPublishers.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="PubNext" partialSubmit="true"
+                                             rendered="#{bindings.PublishersIterator.rangeStart+bindings.PublishersIterator.currentRowIndexInRange+1 lt bindings.PublishersIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.PublishersIterator.rangeStart+bindings.PublishersIterator.currentRowIndexInRange+1 lt bindings.PublishersIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastPublishers.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="PubLast" partialSubmit="true"
+                                             rendered="#{bindings.PublishersIterator.rangeStart+bindings.PublishersIterator.currentRowIndexInRange+1 lt bindings.PublishersIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.PublishersIterator.rangeStart+bindings.PublishersIterator.currentRowIndexInRange+1 lt bindings.PublishersIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreatePublishers.execute}"
+                                             action="CreatePub"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_PUBLISHERS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreatePublishers and (true) and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             id="PubNewButton"></af:commandToolbarButton>
+                    <af:commandToolbarButton action="DeletePublishers"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_PUBLISHERS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreatePublishers and  (bindings.PublishersIterator.viewObject!=null and bindings.PublishersIterator.viewObject.currentRow!=null)  and (jhsUserRoles['ADMIN'])}"
+                                             immediate="true" id="PubDelB">
+                      <af:showPopupBehavior popupId="PubDeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="PubPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SavePublishers.execute}"
+                                      rendered="#{(((((jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="PubSaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="PubCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.PublishersIterator.findMode!='true'}"
+                       id="PubSw" defaultFacet="hasRows"
+                       facetName="#{( (bindings.PublishersIterator.viewObject!=null and bindings.PublishersIterator.viewObject.currentRow!=null)) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="PubNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="PubFC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="4"
+                                    id="PubFI">
+                  <af:inputText id="PubName"
+                                value="#{bindings.PubName.inputValue}"
+                                label="#{bindings.PubName.hints.label}"
+                                required="#{bindings.PubName.hints.mandatory}"
+                                rows="#{bindings.PubName.hints.displayHeight}"
+                                columns="#{bindings.PubName.hints.displayWidth}"
+                                maximumLength="500"
+                                readOnly="#{((pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                autoSubmit="true"
+                                valueChangeListener="#{PubNameDependsOnItem.updateModelValue}">
+                    <f:validator binding="#{bindings.PubName.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="PubPublisherId"
+                                value="#{bindings.PubPublisherId.inputValue}"
+                                label="#{bindings.PubPublisherId.hints.label}"
+                                required="false"
+                                rows="#{bindings.PubPublisherId.hints.displayHeight}"
+                                columns="#{bindings.PubPublisherId.hints.displayWidth}"
+                                maximumLength="10" readOnly="true">
+                    <f:validator binding="#{bindings.PubPublisherId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.PubPublisherId.format}"/>
+                  </af:inputText>
+                  <af:inputText id="PubSortName"
+                                value="#{bindings.PubSortName.inputValue}"
+                                label="#{bindings.PubSortName.hints.label}"
+                                required="false"
+                                rows="#{bindings.PubSortName.hints.displayHeight}"
+                                columns="#{bindings.PubSortName.hints.displayWidth}"
+                                maximumLength="500"
+                                readOnly="#{((pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.PubSortName.validator}"/>
+                  </af:inputText>
+                  <af:inputListOfValues id="PubUrl"
+                                        popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.PublishersTable.hints.Url.label}"
+                                        searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.PublishersTable.hints.Url.label}"
+                                        value="#{bindings.PubUrl.inputValue}"
+                                        label="#{bindings.PubUrl.hints.label}"
+                                        required="#{bindings.PubUrl.hints.mandatory}"
+                                        columns="#{bindings.PubUrl.hints.displayWidth}"
+                                        maximumLength="255"
+                                        readOnly="#{((pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                        autoSubmit="true"
+                                        model="#{bindings.PubUrl.listOfValuesModel}">
+                    <f:validator binding="#{bindings.PubUrl.validator}"/>
+                  </af:inputListOfValues>
+                  <af:inputText id="PubNotes"
+                                value="#{bindings.PubNotes.inputValue}"
+                                label="#{bindings.PubNotes.hints.label}"
+                                required="#{bindings.PubNotes.hints.mandatory}"
+                                rows="#{bindings.PubNotes.hints.displayHeight}"
+                                columns="#{bindings.PubNotes.hints.displayWidth}"
+                                maximumLength="4000"
+                                readOnly="#{((pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.PubNotes.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="PubOrgId"
+                                value="#{bindings.PubOrgId.inputValue}"
+                                label="#{bindings.PubOrgId.hints.label}"
+                                required="false"
+                                rows="#{bindings.PubOrgId.hints.displayHeight}"
+                                columns="#{bindings.PubOrgId.hints.displayWidth}"
+                                maximumLength="10"
+                                readOnly="#{((pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.PubOrgId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.PubOrgId.format}"/>
+                  </af:inputText>
+                  <af:inputText id="PubMsId"
+                                value="#{bindings.PubMsId.inputValue}"
+                                label="#{bindings.PubMsId.hints.label}"
+                                required="false"
+                                rows="#{bindings.PubMsId.hints.displayHeight}"
+                                columns="#{bindings.PubMsId.hints.displayWidth}"
+                                maximumLength="10"
+                                readOnly="#{((pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.PubMsId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.PubMsId.format}"/>
+                  </af:inputText>
+                  <af:inputListOfValues id="PubContentOwnerName"
+                                        popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.PublishersTable.hints.ContentOwnerName.label}"
+                                        searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.PublishersTable.hints.ContentOwnerName.label}"
+                                        value="#{bindings.PubContentOwnerName.inputValue}"
+                                        label="#{bindings.PubContentOwnerName.hints.label}"
+                                        required="#{bindings.PubContentOwnerName.hints.mandatory}"
+                                        columns="#{bindings.PubContentOwnerName.hints.displayWidth}"
+                                        maximumLength="400"
+                                        readOnly="#{((pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                        shortDesc="#{bindings.PubContentOwnerName.hints.tooltip}"
+                                        autoSubmit="true"
+                                        valueChangeListener="#{PubContentOwnerNameDependsOnItem.updateModelValue}"
+                                        model="#{bindings.PubContentOwnerName.listOfValuesModel}">
+                    <f:validator binding="#{bindings.PubContentOwnerName.validator}"/>
+                  </af:inputListOfValues>
+                  <af:inputText id="PubContentOwnerSite"
+                                value="#{bindings.PubContentOwnerSite.inputValue}"
+                                label="#{bindings.PubContentOwnerSite.hints.label}"
+                                required="#{bindings.PubContentOwnerSite.hints.mandatory}"
+                                rows="#{bindings.PubContentOwnerSite.hints.displayHeight}"
+                                columns="#{bindings.PubContentOwnerSite.hints.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                shortDesc="#{bindings.PubContentOwnerSite.hints.tooltip}">
+                    <f:validator binding="#{bindings.PubContentOwnerSite.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="PubContentOwnerNoNpr"
+                                value="#{bindings.PubContentOwnerNo.inputValue}"
+                                label="#{bindings.PubContentOwnerNo.hints.label}"
+                                required="#{bindings.PubContentOwnerNo.hints.mandatory}"
+                                rows="#{bindings.PubContentOwnerNo.hints.displayHeight}"
+                                columns="#{bindings.PubContentOwnerNo.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}"
+                                shortDesc="#{bindings.PubContentOwnerNo.hints.tooltip}">
+                    <f:validator binding="#{bindings.PubContentOwnerNo.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.PubContentOwnerNo.format}"/>
+                  </af:inputText>
+                  <af:panelLabelAndMessage id="PubContentOwnerNoPlm"
+                                           label="#{bindings.PubContentOwnerNo.hints.label}"
+                                           shortDesc="#{bindings.PubContentOwnerNo.hints.tooltip}"
+                                           rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:commandLink id="PubContentOwnerNo"
+                                    text="#{bindings.PubContentOwnerNo.attributeValue}"
+                                    shortDesc="#{bindings.PubContentOwnerNo.hints.tooltip}"
+                                    action="LaunchTab">
+                      <af:setActionListener from="ContentOwner"
+                                            to="#{jhsDynTabLauncher.taskFlowName}"/>
+                      <af:setActionListener from="#{bindings.PubContentOwnerID.inputValue}"
+                                            to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                      <af:setActionListener from="Content Owner #{bindings.PubContentOwnerNo.inputValue}"
+                                            to="#{jhsDynTabLauncher.label}"/>
+                      <af:setActionListener from="#{bindings.PubContentOwnerID.inputValue}"
+                                            to="#{jhsDynTabLauncher.parameters.rowKeyValueContentOwner}"/>
+                      <af:setActionListener from="#{jhsDynTabLauncher}"
+                                            to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                    </af:commandLink>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl0" valign="top"
+                                           layout="horizontal"></af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:inputText id="PubCreatedBy"
+                                value="#{bindings.PubCreatedBy.inputValue}"
+                                label="#{bindings.PubCreatedBy.hints.label}"
+                                required="#{bindings.PubCreatedBy.hints.mandatory}"
+                                rows="#{bindings.PubCreatedBy.hints.displayHeight}"
+                                columns="#{bindings.PubCreatedBy.hints.displayWidth}"
+                                maximumLength="20" readOnly="true">
+                    <f:validator binding="#{bindings.PubCreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="PubCreatedDateSearch"
+                                value="#{bindings.PubCreatedDateSearch.inputValue}"
+                                label="#{bindings.PubCreatedDateSearch.hints.label}"
+                                required="#{bindings.PubCreatedDateSearch.hints.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.PubCreatedDateSearch.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="PubLastUpdatedBy"
+                                value="#{bindings.PubLastUpdatedBy.inputValue}"
+                                label="#{bindings.PubLastUpdatedBy.hints.label}"
+                                required="#{bindings.PubLastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.PubLastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.PubLastUpdatedBy.hints.displayWidth}"
+                                maximumLength="20" readOnly="true">
+                    <f:validator binding="#{bindings.PubLastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="PubLastUpdatedDateSearch"
+                                value="#{bindings.PubLastUpdatedDateSearch.inputValue}"
+                                label="#{bindings.PubLastUpdatedDateSearch.hints.label}"
+                                required="#{bindings.PubLastUpdatedDateSearch.hints.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.PubLastUpdatedDateSearch.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="PubId" value="#{bindings.PubId.inputValue}"
+                                label="#{bindings.PubId.hints.label}"
+                                required="#{bindings.PubId.hints.mandatory}"
+                                rows="#{bindings.PubId.hints.displayHeight}"
+                                columns="#{bindings.PubId.hints.displayWidth}"
+                                maximumLength="38"
+                                readOnly="#{((pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreatePublishers) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                shortDesc="#{bindings.PubId.hints.tooltip}">
+                    <f:validator binding="#{bindings.PubId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.PubId.format}"/>
+                  </af:inputText>
+                  <af:inputText id="PubUrl2"
+                                value="#{bindings.PubUrl2.inputValue}"
+                                label="#{bindings.PubUrl2.hints.label}"
+                                required="#{bindings.PubUrl2.hints.mandatory}"
+                                rows="#{bindings.PubUrl2.hints.displayHeight}"
+                                columns="#{bindings.PubUrl2.hints.displayWidth}"
+                                maximumLength="255" readOnly="true"
+                                shortDesc="#{bindings.PubUrl2.hints.tooltip}">
+                    <f:validator binding="#{bindings.PubUrl2.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="PubContentOwnerName2"
+                                value="#{bindings.PubContentOwnerName2.inputValue}"
+                                label="#{bindings.PubContentOwnerName2.hints.label}"
+                                required="#{bindings.PubContentOwnerName2.hints.mandatory}"
+                                rows="#{bindings.PubContentOwnerName2.hints.displayHeight}"
+                                columns="#{bindings.PubContentOwnerName2.hints.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                shortDesc="#{bindings.PubContentOwnerName2.hints.tooltip}">
+                    <f:validator binding="#{bindings.PubContentOwnerName2.validator}"/>
+                  </af:inputText>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SavePublishers.execute}"
+                                            rendered="#{(((((jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="PubSaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="PubCancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_PUBLISHERADDRESSES']}"
+                               partialTriggers=" PubTopLc s60DeleteDialog qsAreas60SearchOptions s60PC:s60Arm s60PC:s60delrmTM s60PC:s60Arl s60PC:s60Tab:s60delrm s60PC:s60Tab:s60delrl"
+                               id="s60TopLcSdi"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                               disabled="#{!jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+              <af:panelGroupLayout layout="vertical" id="s60TopLc"
+                                   partialTriggers=" PubTopLc s60DeleteDialog qsAreas60SearchOptions s60PC:s60Arm s60PC:s60delrmTM s60PC:s60Arl s60PC:s60Tab:s60delrm s60PC:s60Tab:s60delrl"
+                                   rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0">
+                  <af:panelGroupLayout id="modelSearchAreas60"
+                                       rendered="#{!pageFlowScope.createModes.CreatePublisherAddresses and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreas60SearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.PublisherAddressesIteratorPublisherAddressViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.PublisherAddressesIteratorPublisherAddressViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.PublisherAddressesIteratorPublisherAddressViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl1">
+                  <af:panelCollection id="s60PC" featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="s60tbb"
+                                    rendered="#{ bindings.PublisherAddressesIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstPublisherAddresses.execute}"
+                                                id="s60First"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousPublisherAddresses.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="s60Previous"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextPublisherAddresses.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="s60Next"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastPublisherAddresses.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="s60Last"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="s60Arm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.PublisherAddressesTable.addRow}"
+                                            rendered="#{ (bindings.PublishersIterator.viewObject!=null and bindings.PublishersIterator.viewObject.currentRow!=null) and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="s60delrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                          <af:showPopupBehavior popupId="::s60DeletePopup"/>
+                        </af:commandMenuItem>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi0">
+                          <af:exportCollectionActionListener exportedId="s60Tab"
+                                                             type="excelHTML"
+                                                             filename="PublisherAddresses.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <!-- Also create CreatePublisherAddresses bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="s60Arl" immediate="false"
+                                             rendered="#{ (bindings.PublishersIterator.viewObject!=null and bindings.PublishersIterator.viewObject.currentRow!=null) and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.PublisherAddressesTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl0"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="s60Tab"
+                                                             type="excelHTML"
+                                                             filename="PublisherAddresses.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print" id="s60Print"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.PublisherAddressesIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="s60Tab" contentDelivery="immediate"
+                              value="#{bindings.PublisherAddressesTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.PublisherAddressesTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.PublisherAddressesTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.PublisherAddressesTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.PublisherAddressesTable.rangeSize}"
+                              autoHeightRows="#{bindings.PublisherAddressesTable.estimatedRowCount lt 5 ? 5 : bindings.PublisherAddressesTable.estimatedRowCount lt bindings.PublisherAddressesTable.rangeSize ? bindings.PublisherAddressesTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.PublisherAddressesTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.PublisherAddressesIteratorPublisherAddressViewCriteriaQuery.processQuery}"
+                              filterModel="#{bindings.PublisherAddressesIteratorPublisherAddressViewCriteriaQuery.queryDescriptor}"
+                              filterVisible="true"
+                              binding="#{pageFlowScope.PublisherAddressesTable.table}"
+                              partialTriggers=":::qsAreas60SearchOptions :::s60PC ::s60First ::s60Previous ::s60Next ::s60Last"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_PUBLISHERADDRESSES']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="s60TablePopup" childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="s60delrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                              <af:showPopupBehavior popupId=":::s60DeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="s60ActionColumn" frozen="true" width="20"
+                                 align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl2">
+                          <af:commandImageLink id="s60delrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::s60DeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="s60VpIdCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="VpId" align="right"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.VpId.label}"
+                                          id="ol0"/>
+                        </f:facet>
+                        <af:inputText id="s60VpId"
+                                      value="#{row.bindings.VpId.inputValue}"
+                                      label="#{bindings.PublisherAddressesTable.hints.VpId.label}"
+                                      required="#{bindings.PublisherAddressesTable.hints.VpId.mandatory}"
+                                      rows="#{bindings.PublisherAddressesTable.hints.VpId.displayHeight}"
+                                      columns="#{bindings.PublisherAddressesTable.hints.VpId.displayWidth}"
+                                      maximumLength="38" readOnly="true"
+                                      shortDesc="#{bindings.PublisherAddressesTable.hints.VpId.tooltip}">
+                          <f:validator binding="#{row.bindings.VpId.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.PublisherAddressesTable.hints.VpId.format}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s60StreetAddressCol" sortable="true"
+                                 filterable="true" noWrap="true" width="240"
+                                 sortProperty="StreetAddress" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.StreetAddress.label}"
+                                          showRequired="#{bindings.PublisherAddressesTable.hints.StreetAddress.mandatory}"
+                                          id="ol1"/>
+                        </f:facet>
+                        <af:inputText id="s60StreetAddress"
+                                      value="#{row.bindings.StreetAddress.inputValue}"
+                                      label="#{bindings.PublisherAddressesTable.hints.StreetAddress.label}"
+                                      required="#{bindings.PublisherAddressesTable.hints.StreetAddress.mandatory}"
+                                      rows="#{bindings.PublisherAddressesTable.hints.StreetAddress.displayHeight}"
+                                      columns="#{bindings.PublisherAddressesTable.hints.StreetAddress.displayWidth}"
+                                      maximumLength="400"
+                                      readOnly="#{((pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                          <f:validator binding="#{row.bindings.StreetAddress.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s60StreetAddress2Col" sortable="true"
+                                 filterable="true" noWrap="true" width="120"
+                                 sortProperty="StreetAddress2" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.StreetAddress2.label}"
+                                          showRequired="#{bindings.PublisherAddressesTable.hints.StreetAddress2.mandatory}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:inputText id="s60StreetAddress2"
+                                      value="#{row.bindings.StreetAddress2.inputValue}"
+                                      label="#{bindings.PublisherAddressesTable.hints.StreetAddress2.label}"
+                                      required="#{bindings.PublisherAddressesTable.hints.StreetAddress2.mandatory}"
+                                      rows="#{bindings.PublisherAddressesTable.hints.StreetAddress2.displayHeight}"
+                                      columns="#{bindings.PublisherAddressesTable.hints.StreetAddress2.displayWidth}"
+                                      maximumLength="400"
+                                      readOnly="#{((pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                          <f:validator binding="#{row.bindings.StreetAddress2.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s60CityCol" sortable="true"
+                                 filterable="true" noWrap="true" width="120"
+                                 sortProperty="City" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.City.label}"
+                                          showRequired="#{bindings.PublisherAddressesTable.hints.City.mandatory}"
+                                          id="ol3"/>
+                        </f:facet>
+                        <af:inputText id="s60City"
+                                      value="#{row.bindings.City.inputValue}"
+                                      label="#{bindings.PublisherAddressesTable.hints.City.label}"
+                                      required="#{bindings.PublisherAddressesTable.hints.City.mandatory}"
+                                      rows="#{bindings.PublisherAddressesTable.hints.City.displayHeight}"
+                                      columns="#{bindings.PublisherAddressesTable.hints.City.displayWidth}"
+                                      maximumLength="200"
+                                      readOnly="#{((pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                          <f:validator binding="#{row.bindings.City.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s60StateOrProvinceCol" sortable="true"
+                                 filterable="true" noWrap="true" width="120"
+                                 sortProperty="StateOrProvince"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.StateOrProvince.label}"
+                                          showRequired="#{bindings.PublisherAddressesTable.hints.StateOrProvince.mandatory}"
+                                          id="ol4"/>
+                        </f:facet>
+                        <af:inputText id="s60StateOrProvince"
+                                      value="#{row.bindings.StateOrProvince.inputValue}"
+                                      label="#{bindings.PublisherAddressesTable.hints.StateOrProvince.label}"
+                                      required="#{bindings.PublisherAddressesTable.hints.StateOrProvince.mandatory}"
+                                      rows="#{bindings.PublisherAddressesTable.hints.StateOrProvince.displayHeight}"
+                                      columns="#{bindings.PublisherAddressesTable.hints.StateOrProvince.displayWidth}"
+                                      maximumLength="200"
+                                      readOnly="#{((pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                          <f:validator binding="#{row.bindings.StateOrProvince.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s60ZipOrPostalCodeCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="ZipOrPostalCode"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.ZipOrPostalCode.label}"
+                                          showRequired="#{bindings.PublisherAddressesTable.hints.ZipOrPostalCode.mandatory}"
+                                          id="ol5"/>
+                        </f:facet>
+                        <af:inputText id="s60ZipOrPostalCode"
+                                      value="#{row.bindings.ZipOrPostalCode.inputValue}"
+                                      label="#{bindings.PublisherAddressesTable.hints.ZipOrPostalCode.label}"
+                                      required="#{bindings.PublisherAddressesTable.hints.ZipOrPostalCode.mandatory}"
+                                      rows="#{bindings.PublisherAddressesTable.hints.ZipOrPostalCode.displayHeight}"
+                                      columns="#{bindings.PublisherAddressesTable.hints.ZipOrPostalCode.displayWidth}"
+                                      maximumLength="40"
+                                      readOnly="#{((pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                          <f:validator binding="#{row.bindings.ZipOrPostalCode.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s60ZipPlusFourCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="ZipPlusFour" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.ZipPlusFour.label}"
+                                          showRequired="false" id="ol6"/>
+                        </f:facet>
+                        <af:inputText id="s60ZipPlusFour"
+                                      value="#{row.bindings.ZipPlusFour.inputValue}"
+                                      label="#{bindings.PublisherAddressesTable.hints.ZipPlusFour.label}"
+                                      required="false" rows="1"
+                                      columns="#{bindings.PublisherAddressesTable.hints.ZipPlusFour.displayWidth}"
+                                      maximumLength="10"
+                                      readOnly="#{((pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                          <f:validator binding="#{row.bindings.ZipPlusFour.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s60CountryCol" sortable="true"
+                                 filterable="true" noWrap="true" width="180"
+                                 sortProperty="Country" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.Country.label}"
+                                          showRequired="#{bindings.PublisherAddressesTable.hints.Country.mandatory}"
+                                          id="ol7"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s60Country"
+                                            value="#{row.bindings.Country.inputValue}"
+                                            label="#{bindings.PublisherAddressesTable.hints.Country.label}"
+                                            required="#{bindings.PublisherAddressesTable.hints.Country.mandatory}"
+                                            readOnly="#{((pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                          <f:selectItems value="#{row.bindings.Country.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s60DefaultFlagCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="DefaultFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.DefaultFlag.label}"
+                                          showRequired="#{bindings.PublisherAddressesTable.hints.DefaultFlag.mandatory}"
+                                          id="ol8"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="s60DefaultFlag"
+                                                  label="#{bindings.PublisherAddressesTable.hints.DefaultFlag.label}"
+                                                  value="#{s60DefaultFlagcheckboxInTable.value}"
+                                                  readOnly="#{((pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublisherAddressesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="s60CreatedByCol" sortable="true"
+                                 filterable="true" noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.CreatedBy.label}"
+                                          id="ol9"/>
+                        </f:facet>
+                        <af:inputText id="s60CreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.PublisherAddressesTable.hints.CreatedBy.label}"
+                                      required="#{bindings.PublisherAddressesTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.PublisherAddressesTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.PublisherAddressesTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s60CreatedDateCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.CreatedDate.label}"
+                                          id="ol10"/>
+                        </f:facet>
+                        <f:facet name="filter">
+                          <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                        id="id0">
+                            <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                          </af:inputDate>
+                        </f:facet>
+                        <af:inputDate id="s60CreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.PublisherAddressesTable.hints.CreatedDate.label}"
+                                      required="#{bindings.PublisherAddressesTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="s60LastUpdatedByCol" sortable="true"
+                                 filterable="true" noWrap="true" width="120"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.LastUpdatedBy.label}"
+                                          id="ol11"/>
+                        </f:facet>
+                        <af:inputText id="s60LastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.PublisherAddressesTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.PublisherAddressesTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.PublisherAddressesTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.PublisherAddressesTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s60LastUpdatedDateCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherAddressesTable.hints.LastUpdatedDate.label}"
+                                          id="ol12"/>
+                        </f:facet>
+                        <f:facet name="filter">
+                          <af:inputDate value="#{status.filterCriteria.LastUpdatedDate}"
+                                        id="id1">
+                            <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                          </af:inputDate>
+                        </f:facet>
+                        <af:inputDate id="s60LastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.PublisherAddressesTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.PublisherAddressesTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_PUBLISHEROVRS']}"
+                               partialTriggers=" PubTopLc qsAreas61SearchOptions"
+                               id="s61TopLcSdi"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                               disabled="#{!jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+              <af:panelGroupLayout layout="vertical" id="s61TopLc"
+                                   partialTriggers=" PubTopLc qsAreas61SearchOptions"
+                                   rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp4"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g1">
+                  <af:panelGroupLayout id="modelSearchAreas61"
+                                       rendered="#{!pageFlowScope.createModes.CreatePublisherOVRs and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreas61SearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.PublisherOVRsIteratorOvrPublisherROViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.PublisherOVRsIteratorOvrPublisherROViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.PublisherOVRsIteratorOvrPublisherROViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl3">
+                  <af:panelCollection id="s61PC" featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu4">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu5">
+                          <af:group id="s61tbb"
+                                    rendered="#{ bindings.PublisherOVRsIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstPublisherOVRs.execute}"
+                                                id="s61First"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousPublisherOVRs.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="s61Previous"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextPublisherOVRs.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="s61Next"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastPublisherOVRs.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="s61Last"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi1">
+                          <af:exportCollectionActionListener exportedId="s61Tab"
+                                                             type="excelHTML"
+                                                             filename="PublisherOVRs.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar2">
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl1"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="s61Tab"
+                                                             type="excelHTML"
+                                                             filename="PublisherOVRs.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print" id="s61Print"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.PublisherOVRsIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="s61Tab" contentDelivery="immediate"
+                              value="#{bindings.PublisherOVRsTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.PublisherOVRsTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.PublisherOVRsTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.PublisherOVRsTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.PublisherOVRsTable.rangeSize}"
+                              autoHeightRows="#{bindings.PublisherOVRsTable.estimatedRowCount lt 5 ? 5 : bindings.PublisherOVRsTable.estimatedRowCount lt bindings.PublisherOVRsTable.rangeSize ? bindings.PublisherOVRsTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.PublisherOVRsTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.PublisherOVRsIteratorOvrPublisherROViewCriteriaQuery.processQuery}"
+                              filterModel="#{bindings.PublisherOVRsIteratorOvrPublisherROViewCriteriaQuery.queryDescriptor}"
+                              filterVisible="true"
+                              binding="#{pageFlowScope.PublisherOVRsTable.table}"
+                              partialTriggers=":::qsAreas61SearchOptions :::s61PC ::s61First ::s61Previous ::s61Next ::s61Last"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_PUBLISHEROVRS']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="s61TablePopup" childCreation="deferred">
+                          <af:menu id="menu6">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu7"></af:menu>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="s61OvrIdLinkCol" sortable="true"
+                                 noWrap="true" width="100" sortProperty="OvrId"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherOVRsTable.hints.OvrId.label}"
+                                          id="ol13"/>
+                        </f:facet>
+                        <af:inputText id="cl2"
+                                      value="#{row.bindings.OvrId.inputValue}"
+                                      label="#{bindings.PublisherOVRsTable.hints.OvrId.label}"
+                                      required="false"
+                                      rows="#{bindings.PublisherOVRsTable.hints.OvrId.displayHeight}"
+                                      columns="#{bindings.PublisherOVRsTable.hints.OvrId.displayWidth}"
+                                      readOnly="true"
+                                      rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                          <f:validator binding="#{row.bindings.OvrId.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.PublisherOVRsTable.hints.OvrId.format}"/>
+                        </af:inputText>
+                        <af:commandLink id="s61OvrIdLink"
+                                        text="#{row.bindings.OvrId.attributeValue}"
+                                        action="LaunchTab"
+                                        rendered="#{adfFacesContext.outputMode != 'printable'}">
+                          <af:setActionListener from="OVRs"
+                                                to="#{jhsDynTabLauncher.taskFlowName}"/>
+                          <af:setActionListener from="#{bindings.s61TitleRecordId.inputValue}"
+                                                to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                          <af:setActionListener from="OVR #{bindings.s61OvrId.inputValue}"
+                                                to="#{jhsDynTabLauncher.label}"/>
+                          <af:setActionListener from="#{bindings.s61TitleRecordId.inputValue}"
+                                                to="#{jhsDynTabLauncher.parameters.rowKeyValueOVRs}"/>
+                          <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                        </af:commandLink>
+                      </af:column>
+                      <af:column id="s61PmTitleCol" sortable="true"
+                                 filterable="true" noWrap="true" width="240"
+                                 sortProperty="PmTitle" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherOVRsTable.hints.PmTitle.label}"
+                                          id="ol14"/>
+                        </f:facet>
+                        <af:inputText id="s61PmTitle"
+                                      value="#{row.bindings.PmTitle.inputValue}"
+                                      label="#{bindings.PublisherOVRsTable.hints.PmTitle.label}"
+                                      required="#{bindings.PublisherOVRsTable.hints.PmTitle.mandatory}"
+                                      rows="#{bindings.PublisherOVRsTable.hints.PmTitle.displayHeight}"
+                                      columns="#{bindings.PublisherOVRsTable.hints.PmTitle.displayWidth}"
+                                      maximumLength="1000" readOnly="true">
+                          <f:validator binding="#{row.bindings.PmTitle.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s61AddressCol" sortable="true"
+                                 filterable="true" noWrap="true" width="240"
+                                 sortProperty="Address" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherOVRsTable.hints.Address.label}"
+                                          id="ol15"/>
+                        </f:facet>
+                        <af:inputText id="s61Address"
+                                      value="#{row.bindings.Address.inputValue}"
+                                      label="#{bindings.PublisherOVRsTable.hints.Address.label}"
+                                      required="false"
+                                      rows="#{bindings.PublisherOVRsTable.hints.Address.displayHeight}"
+                                      columns="#{bindings.PublisherOVRsTable.hints.Address.displayWidth}"
+                                      readOnly="true">
+                          <f:validator binding="#{row.bindings.Address.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s61EndDateCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="EndDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherOVRsTable.hints.EndDate.label}"
+                                          id="ol16"/>
+                        </f:facet>
+                        <f:facet name="filter">
+                          <af:inputDate value="#{status.filterCriteria.EndDate}"
+                                        id="id2">
+                            <af:convertDateTime pattern="#{nls.datepattern}"/>
+                          </af:inputDate>
+                        </f:facet>
+                        <af:inputDate id="s61EndDate"
+                                      value="#{row.bindings.EndDate.inputValue}"
+                                      label="#{bindings.PublisherOVRsTable.hints.EndDate.label}"
+                                      required="#{bindings.PublisherOVRsTable.hints.EndDate.mandatory}"
+                                      readOnly="true">
+                          <af:convertDateTime pattern="#{nls.datepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="s61UrlCol" sortable="true"
+                                 filterable="true" noWrap="true" width="240"
+                                 sortProperty="Url" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherOVRsTable.hints.Url.label}"
+                                          id="ol17"/>
+                        </f:facet>
+                        <af:inputText id="s61Url"
+                                      value="#{row.bindings.Url.inputValue}"
+                                      label="#{bindings.PublisherOVRsTable.hints.Url.label}"
+                                      required="#{bindings.PublisherOVRsTable.hints.Url.mandatory}"
+                                      rows="#{bindings.PublisherOVRsTable.hints.Url.displayHeight}"
+                                      columns="#{bindings.PublisherOVRsTable.hints.Url.displayWidth}"
+                                      maximumLength="255" readOnly="true">
+                          <f:validator binding="#{row.bindings.Url.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s61NotesCol" sortable="true"
+                                 filterable="true" noWrap="true" width="240"
+                                 sortProperty="Notes" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherOVRsTable.hints.Notes.label}"
+                                          id="ol18"/>
+                        </f:facet>
+                        <af:inputText id="s61Notes"
+                                      value="#{row.bindings.Notes.inputValue}"
+                                      label="#{bindings.PublisherOVRsTable.hints.Notes.label}"
+                                      required="#{bindings.PublisherOVRsTable.hints.Notes.mandatory}"
+                                      rows="#{bindings.PublisherOVRsTable.hints.Notes.displayHeight}"
+                                      columns="#{bindings.PublisherOVRsTable.hints.Notes.displayWidth}"
+                                      maximumLength="4000" readOnly="true">
+                          <f:validator binding="#{row.bindings.Notes.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s61CblIdCol" sortable="true"
+                                 filterable="true" noWrap="true" width="120"
+                                 sortProperty="CblId" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherOVRsTable.hints.CblId.label}"
+                                          id="ol19"/>
+                        </f:facet>
+                        <af:inputText id="s61CblId"
+                                      value="#{row.bindings.CblId.inputValue}"
+                                      label="#{bindings.PublisherOVRsTable.hints.CblId.label}"
+                                      required="#{bindings.PublisherOVRsTable.hints.CblId.mandatory}"
+                                      rows="#{bindings.PublisherOVRsTable.hints.CblId.displayHeight}"
+                                      columns="#{bindings.PublisherOVRsTable.hints.CblId.displayWidth}"
+                                      maximumLength="38" readOnly="true"
+                                      shortDesc="#{bindings.PublisherOVRsTable.hints.CblId.tooltip}">
+                          <f:validator binding="#{row.bindings.CblId.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.PublisherOVRsTable.hints.CblId.format}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s61ContentSourceCol" sortable="true"
+                                 filterable="true" noWrap="true" width="180"
+                                 sortProperty="ContentSource" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherOVRsTable.hints.ContentSource.label}"
+                                          id="ol20"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s61ContentSource"
+                                            value="#{row.bindings.ContentSource.inputValue}"
+                                            label="#{bindings.PublisherOVRsTable.hints.ContentSource.label}"
+                                            required="#{bindings.PublisherOVRsTable.hints.ContentSource.mandatory}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.PublisherOVRsTable.hints.ContentSource.tooltip}">
+                          <f:selectItems value="#{row.bindings.ContentSource.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                      <f:facet name="detailStamp">
+                        <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                        <af:panelGroupLayout id="pgl4"
+                                             rendered="#{bindings.PublisherOVRsIterator.estimatedRowCount>0}"
+                                             layout="scroll">
+                          <f:facet name="separator">
+                            <af:spacer width="10" height="10" id="sp5"/>
+                          </f:facet>
+                          <af:panelFormLayout rows="1" maxColumns="1"
+                                              labelAlignment="start" id="pfl0">
+                            <af:inputText id="s61CreatedBy"
+                                          value="#{row.bindings.CreatedBy.inputValue}"
+                                          label="#{bindings.s61CreatedBy.hints.label}"
+                                          required="#{bindings.s61CreatedBy.hints.mandatory}"
+                                          rows="#{bindings.PublisherOVRsTable.hints.CreatedBy.displayHeight}"
+                                          columns="#{bindings.PublisherOVRsTable.hints.CreatedBy.displayWidth}"
+                                          maximumLength="20" readOnly="true">
+                              <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                            </af:inputText>
+                            <af:inputDate id="s61CreatedDate"
+                                          value="#{row.bindings.CreatedDate.inputValue}"
+                                          label="#{bindings.s61CreatedDate.hints.label}"
+                                          required="#{bindings.s61CreatedDate.hints.mandatory}"
+                                          readOnly="true">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                            <af:inputText id="s61LastUpdatedBy"
+                                          value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                          label="#{bindings.s61LastUpdatedBy.hints.label}"
+                                          required="#{bindings.s61LastUpdatedBy.hints.mandatory}"
+                                          rows="#{bindings.PublisherOVRsTable.hints.LastUpdatedBy.displayHeight}"
+                                          columns="#{bindings.PublisherOVRsTable.hints.LastUpdatedBy.displayWidth}"
+                                          maximumLength="20" readOnly="true">
+                              <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                            </af:inputText>
+                            <af:inputDate id="s61LastUpdatedDate"
+                                          value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                          label="#{bindings.s61LastUpdatedDate.hints.label}"
+                                          required="#{bindings.s61LastUpdatedDate.hints.mandatory}"
+                                          readOnly="true">
+                              <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                            </af:inputDate>
+                          </af:panelFormLayout>
+                        </af:panelGroupLayout>
+                        <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                      </f:facet>
+                       
+                      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_PUBLISHERVPID']}"
+                               partialTriggers=" PubTopLc qsAreaPublisherVPIDSearchOptions"
+                               id="PublisherVPIDTopLcSdi"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                               disabled="#{!jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+              <af:panelGroupLayout layout="vertical" id="PublisherVPIDTopLc"
+                                   partialTriggers=" PubTopLc qsAreaPublisherVPIDSearchOptions"
+                                   rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp6"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g2">
+                  <af:panelGroupLayout id="modelSearchAreaPublisherVPID"
+                                       rendered="#{!pageFlowScope.createModes.CreatePublisherVPID and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreaPublisherVPIDSearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.PublisherVPIDIteratorPublisherAddressViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.PublisherVPIDIteratorPublisherAddressViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.PublisherVPIDIteratorPublisherAddressViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl5">
+                  <af:panelCollection id="PublisherVPIDPC" featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu8">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu9">
+                          <af:group id="PublisherVPIDtbb"
+                                    rendered="#{ bindings.PublisherVPIDIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstPublisherVPID.execute}"
+                                                id="PublisherVPIDFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousPublisherVPID.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="PublisherVPIDPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextPublisherVPID.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="PublisherVPIDNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastPublisherVPID.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="PublisherVPIDLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi2">
+                          <af:exportCollectionActionListener exportedId="PublisherVPIDTab"
+                                                             type="excelHTML"
+                                                             filename="PublisherVPID.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar3">
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl3"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="PublisherVPIDTab"
+                                                             type="excelHTML"
+                                                             filename="PublisherVPID.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print"
+                                                 id="PublisherVPIDPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.PublisherVPIDIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="PublisherVPIDTab" contentDelivery="immediate"
+                              value="#{bindings.PublisherVPIDTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.PublisherVPIDTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.PublisherVPIDTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.PublisherVPIDTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.PublisherVPIDTable.rangeSize}"
+                              autoHeightRows="#{bindings.PublisherVPIDTable.estimatedRowCount lt 5 ? 5 : bindings.PublisherVPIDTable.estimatedRowCount lt bindings.PublisherVPIDTable.rangeSize ? bindings.PublisherVPIDTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.PublisherVPIDTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.PublisherVPIDIteratorPublisherAddressViewCriteriaQuery.processQuery}"
+                              filterModel="#{bindings.PublisherVPIDIteratorPublisherAddressViewCriteriaQuery.queryDescriptor}"
+                              filterVisible="true"
+                              binding="#{pageFlowScope.PublisherVPIDTable.table}"
+                              partialTriggers=":::qsAreaPublisherVPIDSearchOptions :::PublisherVPIDPC ::PublisherVPIDFirst ::PublisherVPIDPrevious ::PublisherVPIDNext ::PublisherVPIDLast"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_PUBLISHERVPID']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="PublisherVPIDTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu10">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu11"></af:menu>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="PublisherVPIDVpIdCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="VpId" align="right"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.VpId.label}"
+                                          id="ol21"/>
+                        </f:facet>
+                        <af:inputText id="PublisherVPIDVpId"
+                                      value="#{row.bindings.VpId.inputValue}"
+                                      label="#{bindings.PublisherVPIDTable.hints.VpId.label}"
+                                      required="#{bindings.PublisherVPIDTable.hints.VpId.mandatory}"
+                                      rows="#{bindings.PublisherVPIDTable.hints.VpId.displayHeight}"
+                                      columns="#{bindings.PublisherVPIDTable.hints.VpId.displayWidth}"
+                                      maximumLength="38" readOnly="true"
+                                      shortDesc="#{bindings.PublisherVPIDTable.hints.VpId.tooltip}">
+                          <f:validator binding="#{row.bindings.VpId.validator}"/>
+                          <af:convertNumber groupingUsed="false"
+                                            pattern="#{bindings.PublisherVPIDTable.hints.VpId.format}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="PublisherVPIDStreetAddressCol"
+                                 sortable="true" filterable="true" noWrap="true"
+                                 width="240" sortProperty="StreetAddress"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.StreetAddress.label}"
+                                          id="ol22"/>
+                        </f:facet>
+                        <af:inputText id="PublisherVPIDStreetAddress"
+                                      value="#{row.bindings.StreetAddress.inputValue}"
+                                      label="#{bindings.PublisherVPIDTable.hints.StreetAddress.label}"
+                                      required="#{bindings.PublisherVPIDTable.hints.StreetAddress.mandatory}"
+                                      rows="#{bindings.PublisherVPIDTable.hints.StreetAddress.displayHeight}"
+                                      columns="#{bindings.PublisherVPIDTable.hints.StreetAddress.displayWidth}"
+                                      maximumLength="400" readOnly="true">
+                          <f:validator binding="#{row.bindings.StreetAddress.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="PublisherVPIDStreetAddress2Col"
+                                 sortable="true" filterable="true" noWrap="true"
+                                 width="120" sortProperty="StreetAddress2"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.StreetAddress2.label}"
+                                          id="ol23"/>
+                        </f:facet>
+                        <af:inputText id="PublisherVPIDStreetAddress2"
+                                      value="#{row.bindings.StreetAddress2.inputValue}"
+                                      label="#{bindings.PublisherVPIDTable.hints.StreetAddress2.label}"
+                                      required="#{bindings.PublisherVPIDTable.hints.StreetAddress2.mandatory}"
+                                      rows="#{bindings.PublisherVPIDTable.hints.StreetAddress2.displayHeight}"
+                                      columns="#{bindings.PublisherVPIDTable.hints.StreetAddress2.displayWidth}"
+                                      maximumLength="400" readOnly="true">
+                          <f:validator binding="#{row.bindings.StreetAddress2.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="PublisherVPIDCityCol" sortable="true"
+                                 filterable="true" noWrap="true" width="120"
+                                 sortProperty="City" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.City.label}"
+                                          id="ol24"/>
+                        </f:facet>
+                        <af:inputText id="PublisherVPIDCity"
+                                      value="#{row.bindings.City.inputValue}"
+                                      label="#{bindings.PublisherVPIDTable.hints.City.label}"
+                                      required="#{bindings.PublisherVPIDTable.hints.City.mandatory}"
+                                      rows="#{bindings.PublisherVPIDTable.hints.City.displayHeight}"
+                                      columns="#{bindings.PublisherVPIDTable.hints.City.displayWidth}"
+                                      maximumLength="200" readOnly="true">
+                          <f:validator binding="#{row.bindings.City.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="PublisherVPIDStateOrProvinceCol"
+                                 sortable="true" filterable="true" noWrap="true"
+                                 width="120" sortProperty="StateOrProvince"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.StateOrProvince.label}"
+                                          id="ol25"/>
+                        </f:facet>
+                        <af:inputText id="PublisherVPIDStateOrProvince"
+                                      value="#{row.bindings.StateOrProvince.inputValue}"
+                                      label="#{bindings.PublisherVPIDTable.hints.StateOrProvince.label}"
+                                      required="#{bindings.PublisherVPIDTable.hints.StateOrProvince.mandatory}"
+                                      rows="#{bindings.PublisherVPIDTable.hints.StateOrProvince.displayHeight}"
+                                      columns="#{bindings.PublisherVPIDTable.hints.StateOrProvince.displayWidth}"
+                                      maximumLength="200" readOnly="true">
+                          <f:validator binding="#{row.bindings.StateOrProvince.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="PublisherVPIDZipOrPostalCodeCol"
+                                 sortable="true" filterable="true" noWrap="true"
+                                 width="100" sortProperty="ZipOrPostalCode"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.ZipOrPostalCode.label}"
+                                          id="ol26"/>
+                        </f:facet>
+                        <af:inputText id="PublisherVPIDZipOrPostalCode"
+                                      value="#{row.bindings.ZipOrPostalCode.inputValue}"
+                                      label="#{bindings.PublisherVPIDTable.hints.ZipOrPostalCode.label}"
+                                      required="#{bindings.PublisherVPIDTable.hints.ZipOrPostalCode.mandatory}"
+                                      rows="#{bindings.PublisherVPIDTable.hints.ZipOrPostalCode.displayHeight}"
+                                      columns="#{bindings.PublisherVPIDTable.hints.ZipOrPostalCode.displayWidth}"
+                                      maximumLength="40" readOnly="true">
+                          <f:validator binding="#{row.bindings.ZipOrPostalCode.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="PublisherVPIDZipPlusFourCol"
+                                 sortable="true" filterable="true" noWrap="true"
+                                 width="100" sortProperty="ZipPlusFour"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.ZipPlusFour.label}"
+                                          id="ol27"/>
+                        </f:facet>
+                        <af:inputText id="PublisherVPIDZipPlusFour"
+                                      value="#{row.bindings.ZipPlusFour.inputValue}"
+                                      label="#{bindings.PublisherVPIDTable.hints.ZipPlusFour.label}"
+                                      required="false" rows="1"
+                                      columns="#{bindings.PublisherVPIDTable.hints.ZipPlusFour.displayWidth}"
+                                      maximumLength="10" readOnly="true">
+                          <f:validator binding="#{row.bindings.ZipPlusFour.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="PublisherVPIDCountryCol" sortable="true"
+                                 filterable="true" noWrap="true" width="180"
+                                 sortProperty="Country" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.Country.label}"
+                                          id="ol28"/>
+                        </f:facet>
+                        <af:selectOneChoice id="PublisherVPIDCountry"
+                                            value="#{row.bindings.Country.inputValue}"
+                                            label="#{bindings.PublisherVPIDTable.hints.Country.label}"
+                                            required="#{bindings.PublisherVPIDTable.hints.Country.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.Country.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="PublisherVPIDDefaultFlagCol"
+                                 sortable="true" filterable="true" noWrap="true"
+                                 width="100" sortProperty="DefaultFlag"
+                                 align="center" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.DefaultFlag.label}"
+                                          id="ol29"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="PublisherVPIDDefaultFlag"
+                                                  label="#{bindings.PublisherVPIDTable.hints.DefaultFlag.label}"
+                                                  value="#{PublisherVPIDDefaultFlagcheckboxInTable.value}"
+                                                  readOnly="true"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="PublisherVPIDCreatedByCol" sortable="true"
+                                 filterable="true" noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.CreatedBy.label}"
+                                          id="ol30"/>
+                        </f:facet>
+                        <af:inputText id="PublisherVPIDCreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.PublisherVPIDTable.hints.CreatedBy.label}"
+                                      required="#{bindings.PublisherVPIDTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.PublisherVPIDTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.PublisherVPIDTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="PublisherVPIDCreatedDateCol"
+                                 sortable="true" filterable="true" noWrap="true"
+                                 width="100" sortProperty="CreatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.CreatedDate.label}"
+                                          id="ol31"/>
+                        </f:facet>
+                        <f:facet name="filter">
+                          <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                        id="id3">
+                            <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                          </af:inputDate>
+                        </f:facet>
+                        <af:inputDate id="PublisherVPIDCreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.PublisherVPIDTable.hints.CreatedDate.label}"
+                                      required="#{bindings.PublisherVPIDTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="PublisherVPIDLastUpdatedByCol"
+                                 sortable="true" filterable="true" noWrap="true"
+                                 width="120" sortProperty="LastUpdatedBy"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.LastUpdatedBy.label}"
+                                          id="ol32"/>
+                        </f:facet>
+                        <af:inputText id="PublisherVPIDLastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.PublisherVPIDTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.PublisherVPIDTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.PublisherVPIDTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.PublisherVPIDTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="20" readOnly="true">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="PublisherVPIDLastUpdatedDateCol"
+                                 sortable="true" filterable="true" noWrap="true"
+                                 width="100" sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.PublisherVPIDTable.hints.LastUpdatedDate.label}"
+                                          id="ol33"/>
+                        </f:facet>
+                        <f:facet name="filter">
+                          <af:inputDate value="#{status.filterCriteria.LastUpdatedDate}"
+                                        id="id4">
+                            <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                          </af:inputDate>
+                        </f:facet>
+                        <af:inputDate id="PublisherVPIDLastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.PublisherVPIDTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.PublisherVPIDTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                      <f:facet name="detailStamp">
+                        <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                        <af:panelGroupLayout id="pgl6"
+                                             rendered="#{bindings.PublisherVPIDIterator.estimatedRowCount>0}"
+                                             layout="scroll">
+                          <f:facet name="separator">
+                            <af:spacer width="10" height="10" id="sp7"/>
+                          </f:facet>
+                          <af:panelFormLayout rows="1" maxColumns="1"
+                                              labelAlignment="start" id="pfl1"></af:panelFormLayout>
+                          <af:panelGroupLayout layout="vertical" id="vptrTopLc"
+                                               partialTriggers=" qsAreavptrSearchOptions"
+                                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                            <f:facet name="separator">
+                              <af:spacer width="10" height="10" id="sp8"/>
+                            </f:facet>
+                            <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                            <af:group id="g3">
+                              <af:panelGroupLayout id="modelSearchAreavptr"
+                                                   rendered="#{!pageFlowScope.createModes.CreateVPIDTitleRecords and !pageFlowScope.hideSearchArea}"
+                                                   partialTriggers="">
+                                <f:attribute name="JhsIgnoreChanges"
+                                             value="true"/>
+                                <af:quickQuery id="qsAreavptrSearchOptions"
+                                               label="#{nls['FILTER_BY']}"
+                                               value="#{bindings.VPIDTitleRecordsIteratorPublisherVpIdOvrViewCriteriaQuery.queryDescriptor}"
+                                               model="#{bindings.VPIDTitleRecordsIteratorPublisherVpIdOvrViewCriteriaQuery.queryModel}"
+                                               queryListener="#{bindings.VPIDTitleRecordsIteratorPublisherVpIdOvrViewCriteriaQuery.processQuery}"></af:quickQuery>
+                              </af:panelGroupLayout>
+                            </af:group>
+                            <af:panelGroupLayout layout="vertical" id="pgl7">
+                              <af:panelCollection id="vptrPC" featuresOff=" "
+                                                  styleClass="AFStretchWidth">
+                                <f:facet name="menus">
+                                  <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                                           id="menu12">
+                                    <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                             id="menu13">
+                                      <af:group id="vptrtbb"
+                                                rendered="#{ bindings.VPIDTitleRecordsIterator.currentRow!=null }">
+                                        <af:commandMenuItem actionListener="#{bindings.FirstVPIDTitleRecords.execute}"
+                                                            id="vptrFirst"
+                                                            partialSubmit="true"
+                                                            icon="/afr/shuttleleftall_ena.png"
+                                                            textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                                        <af:commandMenuItem actionListener="#{bindings.PreviousVPIDTitleRecords.execute}"
+                                                            icon="/afr/shuttleleft_ena.png"
+                                                            textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                            id="vptrPrevious"
+                                                            partialSubmit="true"></af:commandMenuItem>
+                                        <af:commandMenuItem actionListener="#{bindings.NextVPIDTitleRecords.execute}"
+                                                            icon="/afr/shuttleright_ena.png"
+                                                            textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                            id="vptrNext"
+                                                            partialSubmit="true"></af:commandMenuItem>
+                                        <af:commandMenuItem actionListener="#{bindings.LastVPIDTitleRecords.execute}"
+                                                            icon="/afr/shuttlerightall_ena.png"
+                                                            textAndAccessKey="#{nls['LAST_ROW']}"
+                                                            id="vptrLast"
+                                                            partialSubmit="true"></af:commandMenuItem>
+                                      </af:group>
+                                    </af:menu>
+                                    <af:commandMenuItem partialSubmit="true"
+                                                        textAndAccessKey="#{nls['EXPORT']}"
+                                                        icon="/jheadstart/images/excel.png"
+                                                        immediate="true"
+                                                        id="cmi3">
+                                      <af:exportCollectionActionListener exportedId="vptrTab"
+                                                                         type="excelHTML"
+                                                                         filename="VPIDTitleRecords.xls"/>
+                                    </af:commandMenuItem>
+                                  </af:menu>
+                                </f:facet>
+                                <f:facet name="toolbar">
+                                  <af:toolbar id="tbar4">
+                                    <af:commandImageLink immediate="true"
+                                                         partialSubmit="true"
+                                                         id="cl4"
+                                                         shortDesc="#{nls['EXPORT']}"
+                                                         icon="/jheadstart/images/excel.png">
+                                      <af:exportCollectionActionListener exportedId="vptrTab"
+                                                                         type="excelHTML"
+                                                                         filename="VPIDTitleRecords.xls"/>
+                                    </af:commandImageLink>
+                                    <af:commandToolbarButton text="Print"
+                                                             id="vptrPrint"
+                                                             shortDesc="Opens a new tab with printer friendly format.">
+                                      <af:showPrintablePageBehavior/>
+                                    </af:commandToolbarButton>
+                                  </af:toolbar>
+                                </f:facet>
+                                <f:facet name="statusbar">
+                                  <af:toolbar>
+                                    <af:outputText value="#{bindings.VPIDTitleRecordsIterator.estimatedRowCount} rows found"/>
+                                  </af:toolbar>
+                                </f:facet>
+                                <af:table id="vptrTab"
+                                          contentDelivery="immediate"
+                                          value="#{bindings.VPIDTitleRecordsTable.collectionModel}"
+                                          columnStretching="blank"
+                                          rowBandingInterval="0"
+                                          editingMode="editAll"
+                                          columnSelection="multiple"
+                                          contextMenuSelect="true"
+                                          rowSelection="single"
+                                          selectionListener="#{pageFlowScope.VPIDTitleRecordsTable.makeCurrent}"
+                                          selectedRowKeys="#{pageFlowScope.VPIDTitleRecordsTable.selectedRow}"
+                                          rowDisclosureListener="#{pageFlowScope.VPIDTitleRecordsTable.discloseRow}"
+                                          var="row" varStatus="status"
+                                          rows="#{bindings.VPIDTitleRecordsTable.rangeSize}"
+                                          autoHeightRows="#{bindings.VPIDTitleRecordsTable.estimatedRowCount lt 5 ? 5 : bindings.VPIDTitleRecordsTable.estimatedRowCount lt bindings.VPIDTitleRecordsTable.rangeSize ? bindings.VPIDTitleRecordsTable.estimatedRowCount : 0 }"
+                                          fetchSize="#{bindings.VPIDTitleRecordsTable.rangeSize}"
+                                          emptyText="#{nls['NO_ROWS_FOUND']}"
+                                          queryListener="#{bindings.VPIDTitleRecordsIteratorPublisherVpIdOvrViewCriteriaQuery.processQuery}"
+                                          filterModel="#{bindings.VPIDTitleRecordsIteratorPublisherVpIdOvrViewCriteriaQuery.queryDescriptor}"
+                                          filterVisible="true"
+                                          binding="#{pageFlowScope.VPIDTitleRecordsTable.table}"
+                                          partialTriggers=":::qsAreavptrSearchOptions :::vptrPC ::vptrFirst ::vptrPrevious ::vptrNext ::vptrLast"
+                                          styleClass="AFStretchWidth"
+                                          summary="#{nls['TABLE_TITLE_VPIDTITLERECORDS']}">
+                                  <f:facet name="contextMenu">
+                                    <af:popup id="vptrTablePopup"
+                                              childCreation="deferred">
+                                      <af:menu id="menu14">
+                                        <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                                 id="menu15"></af:menu>
+                                      </af:menu>
+                                    </af:popup>
+                                  </f:facet>
+                                  <af:column id="vptrOvrIDLinkCol"
+                                             sortable="true" noWrap="true"
+                                             width="100" sortProperty="OvrId"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.OvrId.label}"
+                                                      id="ol34"/>
+                                    </f:facet>
+                                    <af:inputText id="cl5"
+                                                  value="#{row.bindings.OvrId.inputValue}"
+                                                  label="#{bindings.VPIDTitleRecordsTable.hints.OvrId.label}"
+                                                  required="false"
+                                                  rows="#{bindings.VPIDTitleRecordsTable.hints.OvrId.displayHeight}"
+                                                  columns="#{bindings.VPIDTitleRecordsTable.hints.OvrId.displayWidth}"
+                                                  readOnly="true"
+                                                  rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                                      <f:validator binding="#{row.bindings.OvrId.validator}"/>
+                                      <af:convertNumber groupingUsed="false"
+                                                        pattern="#{bindings.VPIDTitleRecordsTable.hints.OvrId.format}"/>
+                                    </af:inputText>
+                                    <af:commandLink id="vptrOvrIDLink"
+                                                    text="#{row.bindings.OvrId.attributeValue}"
+                                                    action="LaunchTab"
+                                                    rendered="#{adfFacesContext.outputMode != 'printable'}">
+                                      <af:setActionListener from="OVRs"
+                                                            to="#{jhsDynTabLauncher.taskFlowName}"/>
+                                      <af:setActionListener from="#{bindings.vptrTitleRecordId.inputValue}"
+                                                            to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                                      <af:setActionListener from="OVR #{bindings.vptrOvrID.inputValue}"
+                                                            to="#{jhsDynTabLauncher.label}"/>
+                                      <af:setActionListener from="#{bindings.vptrTitleRecordId.inputValue}"
+                                                            to="#{jhsDynTabLauncher.parameters.rowKeyValueOVRs}"/>
+                                      <af:setActionListener from="#{jhsDynTabLauncher}"
+                                                            to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                                    </af:commandLink>
+                                  </af:column>
+                                  <af:column id="vptrContentSourceCol"
+                                             sortable="true" filterable="true"
+                                             noWrap="true" width="180"
+                                             sortProperty="ContentSource"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.ContentSource.label}"
+                                                      id="ol35"/>
+                                    </f:facet>
+                                    <af:selectOneChoice id="vptrContentSource"
+                                                        value="#{row.bindings.ContentSource.inputValue}"
+                                                        label="#{bindings.VPIDTitleRecordsTable.hints.ContentSource.label}"
+                                                        required="false"
+                                                        readOnly="true">
+                                      <f:selectItems value="#{row.bindings.ContentSource.items}"/>
+                                    </af:selectOneChoice>
+                                  </af:column>
+                                  <af:column id="vptrPmidCol" sortable="true"
+                                             filterable="true" noWrap="true"
+                                             width="120" sortProperty="Pmid"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.Pmid.label}"
+                                                      id="ol36"/>
+                                    </f:facet>
+                                    <af:inputText id="vptrPmid"
+                                                  value="#{row.bindings.Pmid.inputValue}"
+                                                  label="#{bindings.VPIDTitleRecordsTable.hints.Pmid.label}"
+                                                  required="#{bindings.VPIDTitleRecordsTable.hints.Pmid.mandatory}"
+                                                  rows="#{bindings.VPIDTitleRecordsTable.hints.Pmid.displayHeight}"
+                                                  columns="#{bindings.VPIDTitleRecordsTable.hints.Pmid.displayWidth}"
+                                                  maximumLength="40"
+                                                  readOnly="true">
+                                      <f:validator binding="#{row.bindings.Pmid.validator}"/>
+                                    </af:inputText>
+                                  </af:column>
+                                  <af:column id="vptrPmTitleCol" sortable="true"
+                                             filterable="true" noWrap="true"
+                                             width="180" sortProperty="PmTitle"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.PmTitle.label}"
+                                                      id="ol37"/>
+                                    </f:facet>
+                                    <af:inputText id="vptrPmTitle"
+                                                  value="#{row.bindings.PmTitle.inputValue}"
+                                                  label="#{bindings.VPIDTitleRecordsTable.hints.PmTitle.label}"
+                                                  required="#{bindings.VPIDTitleRecordsTable.hints.PmTitle.mandatory}"
+                                                  rows="#{bindings.VPIDTitleRecordsTable.hints.PmTitle.displayHeight}"
+                                                  columns="#{bindings.VPIDTitleRecordsTable.hints.PmTitle.displayWidth}"
+                                                  maximumLength="4000"
+                                                  readOnly="true">
+                                      <f:validator binding="#{row.bindings.PmTitle.validator}"/>
+                                    </af:inputText>
+                                  </af:column>
+                                  <af:column id="vptrSubTitleCol"
+                                             sortable="true" filterable="true"
+                                             noWrap="true" width="180"
+                                             sortProperty="SubTitle"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.SubTitle.label}"
+                                                      id="ol38"/>
+                                    </f:facet>
+                                    <af:inputText id="vptrSubTitle"
+                                                  value="#{row.bindings.SubTitle.inputValue}"
+                                                  label="#{bindings.VPIDTitleRecordsTable.hints.SubTitle.label}"
+                                                  required="#{bindings.VPIDTitleRecordsTable.hints.SubTitle.mandatory}"
+                                                  rows="#{bindings.VPIDTitleRecordsTable.hints.SubTitle.displayHeight}"
+                                                  columns="#{bindings.VPIDTitleRecordsTable.hints.SubTitle.displayWidth}"
+                                                  maximumLength="4000"
+                                                  readOnly="true">
+                                      <f:validator binding="#{row.bindings.SubTitle.validator}"/>
+                                    </af:inputText>
+                                  </af:column>
+                                  <af:column id="vptrEditionCol" sortable="true"
+                                             filterable="true" noWrap="true"
+                                             width="180" sortProperty="Edition"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.Edition.label}"
+                                                      id="ol39"/>
+                                    </f:facet>
+                                    <af:inputText id="vptrEdition"
+                                                  value="#{row.bindings.Edition.inputValue}"
+                                                  label="#{bindings.VPIDTitleRecordsTable.hints.Edition.label}"
+                                                  required="#{bindings.VPIDTitleRecordsTable.hints.Edition.mandatory}"
+                                                  rows="#{bindings.VPIDTitleRecordsTable.hints.Edition.displayHeight}"
+                                                  columns="#{bindings.VPIDTitleRecordsTable.hints.Edition.displayWidth}"
+                                                  maximumLength="4000"
+                                                  readOnly="true">
+                                      <f:validator binding="#{row.bindings.Edition.validator}"/>
+                                    </af:inputText>
+                                  </af:column>
+                                  <af:column id="vptrQualifierCol"
+                                             sortable="true" filterable="true"
+                                             noWrap="true" width="180"
+                                             sortProperty="Qualifier"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.Qualifier.label}"
+                                                      id="ol40"/>
+                                    </f:facet>
+                                    <af:inputText id="vptrQualifier"
+                                                  value="#{row.bindings.Qualifier.inputValue}"
+                                                  label="#{bindings.VPIDTitleRecordsTable.hints.Qualifier.label}"
+                                                  required="#{bindings.VPIDTitleRecordsTable.hints.Qualifier.mandatory}"
+                                                  rows="#{bindings.VPIDTitleRecordsTable.hints.Qualifier.displayHeight}"
+                                                  columns="#{bindings.VPIDTitleRecordsTable.hints.Qualifier.displayWidth}"
+                                                  maximumLength="4000"
+                                                  readOnly="true">
+                                      <f:validator binding="#{row.bindings.Qualifier.validator}"/>
+                                    </af:inputText>
+                                  </af:column>
+                                  <af:column id="vptrPartNumberCol"
+                                             sortable="true" filterable="true"
+                                             noWrap="true" width="180"
+                                             sortProperty="PartNumber"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.PartNumber.label}"
+                                                      id="ol41"/>
+                                    </f:facet>
+                                    <af:inputText id="vptrPartNumber"
+                                                  value="#{row.bindings.PartNumber.inputValue}"
+                                                  label="#{bindings.VPIDTitleRecordsTable.hints.PartNumber.label}"
+                                                  required="#{bindings.VPIDTitleRecordsTable.hints.PartNumber.mandatory}"
+                                                  rows="#{bindings.VPIDTitleRecordsTable.hints.PartNumber.displayHeight}"
+                                                  columns="#{bindings.VPIDTitleRecordsTable.hints.PartNumber.displayWidth}"
+                                                  maximumLength="40"
+                                                  readOnly="true">
+                                      <f:validator binding="#{row.bindings.PartNumber.validator}"/>
+                                    </af:inputText>
+                                  </af:column>
+                                  <af:column id="vptrPartNameCol"
+                                             sortable="true" filterable="true"
+                                             noWrap="true" width="180"
+                                             sortProperty="PartName"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.PartName.label}"
+                                                      id="ol42"/>
+                                    </f:facet>
+                                    <af:inputText id="vptrPartName"
+                                                  value="#{row.bindings.PartName.inputValue}"
+                                                  label="#{bindings.VPIDTitleRecordsTable.hints.PartName.label}"
+                                                  required="#{bindings.VPIDTitleRecordsTable.hints.PartName.mandatory}"
+                                                  rows="#{bindings.VPIDTitleRecordsTable.hints.PartName.displayHeight}"
+                                                  columns="#{bindings.VPIDTitleRecordsTable.hints.PartName.displayWidth}"
+                                                  maximumLength="40"
+                                                  readOnly="true">
+                                      <f:validator binding="#{row.bindings.PartName.validator}"/>
+                                    </af:inputText>
+                                  </af:column>
+                                  <af:column id="vptrPrimarySourceTypeCol"
+                                             sortable="true" filterable="true"
+                                             noWrap="true" width="180"
+                                             sortProperty="PrimarySourceType"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.PrimarySourceType.label}"
+                                                      id="ol43"/>
+                                    </f:facet>
+                                    <af:selectOneChoice id="vptrPrimarySourceType"
+                                                        value="#{row.bindings.PrimarySourceType.inputValue}"
+                                                        label="#{bindings.VPIDTitleRecordsTable.hints.PrimarySourceType.label}"
+                                                        required="#{bindings.VPIDTitleRecordsTable.hints.PrimarySourceType.mandatory}"
+                                                        readOnly="true">
+                                      <f:selectItems value="#{row.bindings.PrimarySourceType.items}"/>
+                                    </af:selectOneChoice>
+                                  </af:column>
+                                  <af:column id="vptrVaultNameCol"
+                                             sortable="true" filterable="true"
+                                             noWrap="true" width="120"
+                                             sortProperty="VaultName"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.VaultName.label}"
+                                                      id="ol44"/>
+                                    </f:facet>
+                                    <af:selectOneChoice id="vptrVaultName"
+                                                        value="#{row.bindings.VaultName.inputValue}"
+                                                        label="#{bindings.VPIDTitleRecordsTable.hints.VaultName.label}"
+                                                        required="#{bindings.VPIDTitleRecordsTable.hints.VaultName.mandatory}"
+                                                        readOnly="true">
+                                      <f:selectItems value="#{row.bindings.VaultName.items}"/>
+                                    </af:selectOneChoice>
+                                  </af:column>
+                                  <af:column id="vptrPmTypeCol" sortable="true"
+                                             filterable="true" noWrap="true"
+                                             width="180" sortProperty="PmType"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.PmType.label}"
+                                                      id="ol45"/>
+                                    </f:facet>
+                                    <af:selectOneChoice id="vptrPmType"
+                                                        value="#{row.bindings.PmType.inputValue}"
+                                                        label="#{bindings.VPIDTitleRecordsTable.hints.PmType.label}"
+                                                        required="#{bindings.VPIDTitleRecordsTable.hints.PmType.mandatory}"
+                                                        readOnly="true">
+                                      <f:selectItems value="#{row.bindings.PmType.items}"/>
+                                    </af:selectOneChoice>
+                                  </af:column>
+                                  <af:column id="vptrJournalCodeCol"
+                                             sortable="true" filterable="true"
+                                             noWrap="true" width="120"
+                                             sortProperty="JournalCode"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.JournalCode.label}"
+                                                      id="ol46"/>
+                                    </f:facet>
+                                    <af:inputText id="vptrJournalCode"
+                                                  value="#{row.bindings.JournalCode.inputValue}"
+                                                  label="#{bindings.VPIDTitleRecordsTable.hints.JournalCode.label}"
+                                                  required="#{bindings.VPIDTitleRecordsTable.hints.JournalCode.mandatory}"
+                                                  rows="#{bindings.VPIDTitleRecordsTable.hints.JournalCode.displayHeight}"
+                                                  columns="#{bindings.VPIDTitleRecordsTable.hints.JournalCode.displayWidth}"
+                                                  maximumLength="40"
+                                                  readOnly="true">
+                                      <f:validator binding="#{row.bindings.JournalCode.validator}"/>
+                                    </af:inputText>
+                                  </af:column>
+                                  <af:column id="vptrCblIdCol" sortable="true"
+                                             filterable="true" noWrap="true"
+                                             width="100" sortProperty="CblId"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.CblId.label}"
+                                                      id="ol47"/>
+                                    </f:facet>
+                                    <af:inputText id="vptrCblId"
+                                                  value="#{row.bindings.CblId.inputValue}"
+                                                  label="#{bindings.VPIDTitleRecordsTable.hints.CblId.label}"
+                                                  required="#{bindings.VPIDTitleRecordsTable.hints.CblId.mandatory}"
+                                                  rows="#{bindings.VPIDTitleRecordsTable.hints.CblId.displayHeight}"
+                                                  columns="#{bindings.VPIDTitleRecordsTable.hints.CblId.displayWidth}"
+                                                  maximumLength="38"
+                                                  readOnly="true"
+                                                  shortDesc="#{bindings.VPIDTitleRecordsTable.hints.CblId.tooltip}">
+                                      <f:validator binding="#{row.bindings.CblId.validator}"/>
+                                      <af:convertNumber groupingUsed="false"
+                                                        pattern="#{bindings.VPIDTitleRecordsTable.hints.CblId.format}"/>
+                                    </af:inputText>
+                                  </af:column>
+                                  <af:column id="vptrCatalogNumberCol"
+                                             sortable="true" filterable="true"
+                                             noWrap="true" width="100"
+                                             sortProperty="CatalogNumber"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.CatalogNumber.label}"
+                                                      id="ol48"/>
+                                    </f:facet>
+                                    <af:inputText id="vptrCatalogNumber"
+                                                  value="#{row.bindings.CatalogNumber.inputValue}"
+                                                  label="#{bindings.VPIDTitleRecordsTable.hints.CatalogNumber.label}"
+                                                  required="#{bindings.VPIDTitleRecordsTable.hints.CatalogNumber.mandatory}"
+                                                  rows="#{bindings.VPIDTitleRecordsTable.hints.CatalogNumber.displayHeight}"
+                                                  columns="#{bindings.VPIDTitleRecordsTable.hints.CatalogNumber.displayWidth}"
+                                                  maximumLength="40"
+                                                  readOnly="true"
+                                                  shortDesc="#{bindings.VPIDTitleRecordsTable.hints.CatalogNumber.tooltip}">
+                                      <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                                    </af:inputText>
+                                  </af:column>
+                                  <af:column id="vptrSortTitleCol"
+                                             sortable="true" filterable="true"
+                                             noWrap="true" width="180"
+                                             sortProperty="SortTitle"
+                                             rowHeader="false"
+                                             filterFeatures="caseInsensitive">
+                                    <f:facet name="header">
+                                      <af:outputLabel value="#{bindings.VPIDTitleRecordsTable.hints.SortTitle.label}"
+                                                      id="ol49"/>
+                                    </f:facet>
+                                    <af:inputText id="vptrSortTitle"
+                                                  value="#{row.bindings.SortTitle.inputValue}"
+                                                  label="#{bindings.VPIDTitleRecordsTable.hints.SortTitle.label}"
+                                                  required="#{bindings.VPIDTitleRecordsTable.hints.SortTitle.mandatory}"
+                                                  rows="#{bindings.VPIDTitleRecordsTable.hints.SortTitle.displayHeight}"
+                                                  columns="#{bindings.VPIDTitleRecordsTable.hints.SortTitle.displayWidth}"
+                                                  maximumLength="1000"
+                                                  readOnly="true"
+                                                  shortDesc="#{bindings.VPIDTitleRecordsTable.hints.SortTitle.tooltip}">
+                                      <f:validator binding="#{row.bindings.SortTitle.validator}"/>
+                                    </af:inputText>
+                                  </af:column>
+                                </af:table>
+                              </af:panelCollection>
+                            </af:panelGroupLayout>
+                            <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                        <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                      </f:facet>
+                       
+                      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="PubDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="PubDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_PUBLISHER: #{bindings.PubName.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeletePublishers.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s60DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s60DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_PUBLISHERADDRESSE:#{pageFlowScope.PublisherAddressesTable.currentRowAttributeValues.StreetAddress}']} "
+                           id="ot1"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeletePublisherAddresses.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

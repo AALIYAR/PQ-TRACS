@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="OppTaskFlow">
+    <template-reference>
+      <document id="__0">/WEB-INF/jhs-fragment-taskflow-template.xml</document>
+      <id id="__1">jhs-fragment-taskflow-template</id>
+    </template-reference>
+    <default-activity id="__2">StartOpp</default-activity>
+    <input-parameter-definition id="__3">
+      <name id="__4">createOpp</name>
+      <value id="__5">#{pageFlowScope.createOpp}</value>
+      <class id="__6">java.lang.Object</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__7">
+      <name id="__8">rowKeyStrOpp</name>
+      <value id="__9">#{pageFlowScope.rowKeyStrOpp}</value>
+      <class id="__10">java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__11">
+      <name id="__12">rowKeyValueOpp</name>
+      <value id="__13">#{pageFlowScope.rowKeyValueOpp}</value>
+      <class id="__14">java.lang.Object</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__15">
+      <name id="__16">rowKeyOpp</name>
+      <value id="__17">#{pageFlowScope.rowKeyOpp}</value>
+      <class id="__18">oracle.jbo.Key</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__19">
+      <name id="__20">altKeyNameOpp</name>
+      <value id="__21">#{pageFlowScope.altKeyNameOpp}</value>
+      <class id="__22">java.lang.String</class>
+    </input-parameter-definition>
+    <managed-bean id="__23">
+      <managed-bean-name id="__24">jhsTaskFlowManager</managed-bean-name>
+      <managed-bean-class id="__25">oracle.jheadstart.controller.jsf.bean.TaskFlowManager</managed-bean-class>
+      <managed-bean-scope id="__26">pageFlow</managed-bean-scope>
+      <managed-property id="__27">
+        <property-name id="__28">initializeParentContextEntries</property-name>
+        <map-entries id="__29">
+          <map-entry id="__30">
+            <key id="__31">jhsCurrentGroupName</key>
+            <value id="__32">Opp</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__33">
+      <managed-bean-name id="__34">CreateOpp</managed-bean-name>
+      <managed-bean-class id="__35">oracle.jheadstart.controller.jsf.bean.CreateRowBean</managed-bean-class>
+      <managed-bean-scope id="__36">request</managed-bean-scope>
+      <managed-property id="__37">
+        <property-name id="__38">createBinding</property-name>
+        <value id="__39">#{bindings.CreateOpp}</value>
+      </managed-property>
+      <managed-property id="__40">
+        <property-name id="__41">successOutcome</property-name>
+        <value id="__42">deepLinkPage</value>
+      </managed-property>
+      <managed-property id="__43">
+        <property-name id="__44">failureOutcome</property-name>
+        <value id="__45">firstPage</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__46">
+      <managed-bean-name id="__47">SaveOpp</managed-bean-name>
+      <managed-bean-class id="__48">oracle.jheadstart.controller.jsf.bean.CommitBean</managed-bean-class>
+      <managed-bean-scope id="__49">request</managed-bean-scope>
+      <managed-property id="__50">
+        <property-name id="__51">commitBinding</property-name>
+        <value id="__52">#{bindings.Commit}</value>
+      </managed-property>
+      <managed-property id="__53">
+        <property-name id="__54">successOutcome</property-name>
+        <value id="__55">Commit</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__56">
+      <managed-bean-name id="__57">jhsRollback</managed-bean-name>
+      <managed-bean-class id="__58">oracle.jheadstart.controller.jsf.bean.RollbackBean</managed-bean-class>
+      <managed-bean-scope id="__59">request</managed-bean-scope>
+      <managed-property id="__60">
+        <property-name id="__61">rollbackBinding</property-name>
+        <value id="__62">#{bindings.Rollback}</value>
+      </managed-property>
+      <managed-property id="__63">
+        <property-name id="__64">successOutcome</property-name>
+        <value id="__65">Cancel</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__66">
+      <managed-bean-name id="__67">OppTable</managed-bean-name>
+      <managed-bean-class id="__68">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__69">pageFlow</managed-bean-scope>
+      <managed-property id="__70">
+        <property-name id="__71">name</property-name>
+        <value id="__72">OppTable</value>
+      </managed-property>
+      <managed-property id="__73">
+        <property-name id="__74">rangeBindingExpr</property-name>
+        <value id="__75">#{'#{bindings.OppTable}'}</value>
+      </managed-property>
+      <managed-property id="__76">
+        <property-name id="__77">createNewRowAtTop</property-name>
+        <value id="__78">true</value>
+      </managed-property>
+      <managed-property id="__79">
+        <property-name id="__80">focusItemId</property-name>
+        <value id="__81">opptestAgreementReceivedDate</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__82">
+      <managed-bean-name id="__83">DeleteOpp</managed-bean-name>
+      <managed-bean-class id="__84">oracle.jheadstart.controller.jsf.bean.DeleteRowBean</managed-bean-class>
+      <managed-bean-scope id="__85">request</managed-bean-scope>
+      <managed-property id="__86">
+        <property-name id="__87">deleteBinding</property-name>
+        <value id="__88">#{bindings.DeleteOpp}</value>
+      </managed-property>
+      <managed-property id="__89">
+        <property-name id="__90">commitBean</property-name>
+        <value id="__91">#{jhsCommit}</value>
+      </managed-property>
+    </managed-bean>
+    <router id="StartOpp">
+      <case id="__92">
+        <expression id="__93">#{pageFlowScope.createOpp!=null}</expression>
+        <outcome id="__94">createOpp</outcome>
+      </case>
+      <case id="__95">
+        <expression id="__96">#{pageFlowScope.rowKeyStrOpp!=null or
+                              pageFlowScope.rowKeyValueOpp!=null or
+                              pageFlowScope.rowKeyOpp!=null}</expression>
+        <outcome id="__97">SetCurrentRowOpp</outcome>
+      </case>
+      <case id="__98">
+        <expression id="__99">#{pageFlowScope.isDeepLink!=null and
+                              pageFlowScope.isDeepLink}</expression>
+        <outcome id="__100">deepLinkPage</outcome>
+      </case>
+      <default-outcome id="__101">firstPage</default-outcome>
+    </router>
+    <method-call id="CreateOpp">
+      <method id="__102">#{CreateOpp.execute}</method>
+      <!-- execute condition param -->
+      <parameter>
+        <class id="__103">java.lang.Object</class>
+        <value id="__104">#{pageFlowScope.createOpp}</value>
+      </parameter>
+      <outcome id="__105">
+        <to-string/>
+      </outcome>
+    </method-call>
+    <method-call id="SetCurrentRowOpp">
+      <method id="__106">#{jhsSetCurrentRow.execute}</method>
+      <!-- iterator param -->
+      <parameter>
+        <class id="__107">oracle.adf.model.binding.DCIteratorBinding</class>
+        <value id="__108">#{bindings.OppIterator}</value>
+      </parameter>
+      <!-- rowKeyStr param -->
+      <parameter>
+        <class id="__109">java.lang.String</class>
+        <value id="__110">#{pageFlowScope.rowKeyStrOpp}</value>
+      </parameter>
+      <!-- rowKeyValue param -->
+      <parameter>
+        <class id="__111">java.lang.Object</class>
+        <value id="__112">#{pageFlowScope.rowKeyValueOpp}</value>
+      </parameter>
+      <!-- rowKey param -->
+      <parameter>
+        <class id="__113">oracle.jbo.Key</class>
+        <value id="__114">#{pageFlowScope.rowKeyOpp}</value>
+      </parameter>
+      <!-- altKeyName param -->
+      <parameter>
+        <class id="__115">java.lang.String</class>
+        <value id="__116">#{pageFlowScope.altKeyNameOpp}</value>
+      </parameter>
+      <outcome id="__117">
+        <fixed-outcome id="__118">deepLinkPage</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-return id="CancelOppReturn">
+      <outcome id="__119">
+        <name id="__120">CancelOpp</name>
+      </outcome>
+    </task-flow-return>
+    <task-flow-return id="DoneOppReturn">
+      <outcome id="__121">
+        <name id="__122">DoneOpp</name>
+      </outcome>
+    </task-flow-return>
+    <view id="OppTable">
+      <page id="__123">/pages/OppTable.jsff</page>
+    </view>
+    <view id="Opp">
+      <page id="__124">/pages/Opp.jsff</page>
+    </view>
+    <control-flow-rule id="__125">
+      <from-activity-id id="__126">*</from-activity-id>
+      <control-flow-case id="__127">
+        <from-outcome id="__128">SetCurrentRowOpp</from-outcome>
+        <to-activity-id id="__129">SetCurrentRowOpp</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__130">
+        <from-outcome id="__131">firstPage</from-outcome>
+        <to-activity-id id="__132">OppTable</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__133">
+        <from-outcome id="__134">deepLinkPage</from-outcome>
+        <to-activity-id id="__135">Opp</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__136">
+        <from-outcome id="__137">OppTableBreadcrumb</from-outcome>
+        <to-activity-id id="__138">OppTable</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__139">
+        <from-outcome id="__140">OppBreadcrumb</from-outcome>
+        <to-activity-id id="__141">Opp</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__142">
+        <from-outcome id="__143">Cancel</from-outcome>
+        <to-activity-id id="__144">StartOpp</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__145">
+        <from-outcome id="__146">CancelOppReturn</from-outcome>
+        <to-activity-id id="__147">CancelOppReturn</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__148">
+        <from-outcome id="__149">DoneOppReturn</from-outcome>
+        <to-activity-id id="__150">DoneOppReturn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__151">
+      <from-activity-id id="__152">OppTable</from-activity-id>
+      <control-flow-case id="__153">
+        <from-outcome id="__154">Createopptest</from-outcome>
+        <to-activity-id id="__155">Opp</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__156">
+        <from-outcome id="__157">OppDetails</from-outcome>
+        <to-activity-id id="__158">Opp</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__159">
+      <from-activity-id id="__160">*</from-activity-id>
+      <control-flow-case id="__161">
+        <from-outcome id="__162">createOpp</from-outcome>
+        <to-activity-id id="__163">CreateOpp</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+  <!-- This bean must be defined outside the task-flow-definition element
+       because it needs to be available in the pageFlowScope of the unbounded
+       task-flow not in the pageFlowScope of the bounded task flow itself. -->
+  <managed-bean id="__164">
+    <managed-bean-name id="__165">OppTaskFlowConfig</managed-bean-name>
+    <managed-bean-class id="__166">oracle.jheadstart.controller.jsf.bean.TaskFlowConfigBean</managed-bean-class>
+    <managed-bean-scope id="__167">pageFlow</managed-bean-scope>
+    <managed-property id="__168">
+      <property-name id="__169">params</property-name>
+      <property-class id="__170">java.util.Map</property-class>
+      <map-entries id="__171">
+        <map-entry id="__172">
+          <key id="__173">parentContext</key>
+          <value id="__174">#{pageFlowScope.parentContext}</value>
+        </map-entry>
+      </map-entries>
+    </managed-property>
+    <managed-property id="__175">
+      <property-name id="__176">name</property-name>
+      <value id="__177">Opp</value>
+    </managed-property>
+    <managed-property id="__178">
+      <property-name id="__179">taskFlowId</property-name>
+      <value id="__180">/WEB-INF/adfc-config-Opp.xml#OppTaskFlow</value>
+    </managed-property>
+    <managed-property id="__181">
+      <property-name id="__182">tabUniqueIdentifier</property-name>
+      <value id="__183">Opp</value>
+    </managed-property>
+    <managed-property id="__184">
+      <property-name id="__185">label</property-name>
+      <value id="__186">OPP</value>
+    </managed-property>
+  </managed-bean>
+</adfc-config>

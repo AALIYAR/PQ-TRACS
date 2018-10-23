@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="ContractTemplateRightsPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare"
+               value="#{'StandardContractPageDef'}"/>
+    <parameter id="roles" value="#{'ADMIN'}"/>
+  </parameters>
+  <executables>
+    <iterator id="ContractTemplateRightsIterator" Binds="ContractRightView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContractTemplateRightsIteratorContractRightViewCriteriaQuery"
+                  Binds="ContractTemplateRightsIterator"
+                  Criteria="ContractRightViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="PermissionType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContractTmplRightCatsIterator"
+              Binds="ContractRightCategoryView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContractTmplRightCatsIteratorQuery"
+                  Binds="ContractTmplRightCatsIterator"
+                  Criteria="__ImplicitViewCriteria__"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CategoryId"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <taskFlow id="LovTaskFlow"
+              taskFlowId="#{pageFlowScope.jhsLovTaskFlowManager.currentTaskFlowId}"
+              activation="deferred"
+              parametersMap="#{pageFlowScope.jhsLovTaskFlowManager.currentParamMap}"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings>
+    <attributeValues id="ContractTemplateRightsRightType"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="RightType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRightsRightTemplateId"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="RightTemplateId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRightsTemplateName"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="TemplateName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContractTemplateRightsIterator"
+          id="ContractTemplateRightsPermissionType" Uses="LOV_PermissionType"
+          StaticList="false"/>
+    <list IterBinding="ContractTemplateRightsIterator"
+          id="ContractTemplateRightsPermissionSubType"
+          Uses="LOV_PermissionSubType" StaticList="false"/>
+    <list IterBinding="ContractTemplateRightsIterator"
+          id="ContractTemplateRightsStatus" Uses="LOV_Status"
+          StaticList="false"/>
+    <list IterBinding="ContractTemplateRightsIterator"
+          id="ContractTemplateRightsRightOrRestrictionType"
+          Uses="LOV_RightOrRestrictionType" StaticList="false"/>
+    <button id="ContractTemplateRightsSalesRestrictionFlag"
+            IterBinding="ContractTemplateRightsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="SalesRestrictionFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="ContractTemplateRightsIterator"
+          id="ContractTemplateRightsIncludesOrExcludes"
+          Uses="LOV_IncludesOrExcludes" StaticList="false"/>
+    <button id="ContractTemplateRightsTranslationFlag"
+            IterBinding="ContractTemplateRightsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="TranslationFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="ContractTemplateRightsResellerFyiRequiredFlag"
+            IterBinding="ContractTemplateRightsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ResellerFyiRequiredFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="ContractTemplateRightsWrittenApprovalRequiredFlag"
+            IterBinding="ContractTemplateRightsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="WrittenApprovalRequiredFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="ContractTemplateRightsCreatedBy"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRightsCreatedDate"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRightsLastUpdatedBy"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRightsLastUpdatedDate"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContractTemplateRightsTable"
+          IterBinding="ContractTemplateRightsIterator">
+      <nodeDefinition Name="ContractTemplateRights"
+                      DefName="com.pq.tracs.model.dao.ContractRightView">
+        <AttrNames>
+          <Item Value="RightType"/>
+          <Item Value="RightTemplateId"/>
+          <Item Value="TemplateName"/>
+          <Item Value="PermissionType"/>
+          <Item Value="PermissionSubType"/>
+          <Item Value="Status"/>
+          <Item Value="RightOrRestrictionType"/>
+          <Item Value="SalesRestrictionFlag"/>
+          <Item Value="IncludesOrExcludes"/>
+          <Item Value="TranslationFlag"/>
+          <Item Value="ResellerFyiRequiredFlag"/>
+          <Item Value="WrittenApprovalRequiredFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContractTemplateRights}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="ContractTmplRightCatsIterator"
+          id="ContractTmplRightCatsCategoryId" Uses="LOV_CategoryId"
+          StaticList="false"/>
+    <list IterBinding="ContractTmplRightCatsIterator"
+          id="ContractTmplRightCatsValue" Uses="LOV_Value" StaticList="false"/>
+    <attributeValues id="ContractTmplRightCatsFullOrPartial"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="FullOrPartial"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTmplRightCatsPermitFlag"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="PermitFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTmplRightCatsCreatedBy"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTmplRightCatsCreatedDate"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTmplRightCatsLastUpdatedBy"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTmplRightCatsLastUpdatedDate"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTmplRightCatsFullOrPartialFlag"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="FullOrPartialFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContractTmplRightCatsTable"
+          IterBinding="ContractTmplRightCatsIterator">
+      <nodeDefinition Name="ContractTmplRightCats"
+                      DefName="com.pq.tracs.model.dao.ContractRightCategoryView">
+        <AttrNames>
+          <Item Value="CategoryId"/>
+          <Item Value="Value"/>
+          <Item Value="FullOrPartial"/>
+          <Item Value="PermitFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="FullOrPartialFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContractTmplRightCats}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

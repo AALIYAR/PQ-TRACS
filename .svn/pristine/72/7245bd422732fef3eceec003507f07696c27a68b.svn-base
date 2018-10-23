@@ -1,0 +1,716 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="sa7TopLc"
+                             partialTriggers=" sa7fbb sa7CancelButton0 sa7CancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text=" #{nls['VIEW_TITLE_OPPORTUNITYPRERESUL: #{bindings.sa7PreBatchId.inputValue}']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="sa7fbb" layout="horizontal"
+                                       rendered="#{ bindings.OpportunityPreResultIterator.currentRow!=null  and bindings.OpportunityPreResultIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateOpportunityPreResult and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="sa7First sa7Previous sa7Next sa7Last">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstOpportunityPreResult.execute}"
+                                             id="sa7First" partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.OpportunityPreResultIterator.rangeStart+bindings.OpportunityPreResultIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.OpportunityPreResultIterator.rangeStart+bindings.OpportunityPreResultIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousOpportunityPreResult.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="sa7Previous"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.OpportunityPreResultIterator.rangeStart+bindings.OpportunityPreResultIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.OpportunityPreResultIterator.rangeStart+bindings.OpportunityPreResultIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.OpportunityPreResultIterator.rangeStart+bindings.OpportunityPreResultIterator.currentRowIndexInRange+1} / #{bindings.OpportunityPreResultIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextOpportunityPreResult.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="sa7Next" partialSubmit="true"
+                                             rendered="#{bindings.OpportunityPreResultIterator.rangeStart+bindings.OpportunityPreResultIterator.currentRowIndexInRange+1 lt bindings.OpportunityPreResultIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.OpportunityPreResultIterator.rangeStart+bindings.OpportunityPreResultIterator.currentRowIndexInRange+1 lt bindings.OpportunityPreResultIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastOpportunityPreResult.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="sa7Last" partialSubmit="true"
+                                             rendered="#{bindings.OpportunityPreResultIterator.rangeStart+bindings.OpportunityPreResultIterator.currentRowIndexInRange+1 lt bindings.OpportunityPreResultIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.OpportunityPreResultIterator.rangeStart+bindings.OpportunityPreResultIterator.currentRowIndexInRange+1 lt bindings.OpportunityPreResultIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0"></af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="sa7Print"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="sa7CancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.OpportunityPreResultIterator.findMode!='true'}"
+                       id="sa7Sw" defaultFacet="hasRows"
+                       facetName="#{( bindings.OpportunityPreResultIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="sa7NoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="sa7FC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="4"
+                                    id="sa7FI">
+                  <af:inputText id="sa7OutcomeNo"
+                                value="#{bindings.sa7OutcomeNo.inputValue}"
+                                label="#{bindings.sa7OutcomeNo.hints.label}"
+                                required="#{bindings.sa7OutcomeNo.hints.mandatory}"
+                                rows="#{bindings.sa7OutcomeNo.hints.displayHeight}"
+                                columns="#{bindings.sa7OutcomeNo.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.sa7OutcomeNo.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7OutcomeNo.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.sa7OutcomeNo.format}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7PreBatchId"
+                                value="#{bindings.sa7PreBatchId.inputValue}"
+                                label="#{bindings.sa7PreBatchId.hints.label}"
+                                required="#{bindings.sa7PreBatchId.hints.mandatory}"
+                                rows="#{bindings.sa7PreBatchId.hints.displayHeight}"
+                                columns="#{bindings.sa7PreBatchId.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.sa7PreBatchId.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7PreBatchId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.sa7PreBatchId.format}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7ChildId"
+                                value="#{bindings.sa7ChildId.inputValue}"
+                                label="#{bindings.sa7ChildId.hints.label}"
+                                required="#{bindings.sa7ChildId.hints.mandatory}"
+                                rows="#{bindings.sa7ChildId.hints.displayHeight}"
+                                columns="#{bindings.sa7ChildId.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.sa7ChildId.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7ChildId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.sa7ChildId.format}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7PqPlatform"
+                                value="#{bindings.sa7PqPlatform.inputValue}"
+                                label="#{bindings.sa7PqPlatform.hints.label}"
+                                required="#{bindings.sa7PqPlatform.hints.mandatory}"
+                                rows="#{bindings.sa7PqPlatform.hints.displayHeight}"
+                                columns="#{bindings.sa7PqPlatform.hints.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.sa7PqPlatform.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7PqPlatform.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7PqMfgFlow"
+                                value="#{bindings.sa7PqMfgFlow.inputValue}"
+                                label="#{bindings.sa7PqMfgFlow.hints.label}"
+                                required="#{bindings.sa7PqMfgFlow.hints.mandatory}"
+                                rows="#{bindings.sa7PqMfgFlow.hints.displayHeight}"
+                                columns="#{bindings.sa7PqMfgFlow.hints.displayWidth}"
+                                maximumLength="100" readOnly="true"
+                                shortDesc="#{bindings.sa7PqMfgFlow.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7PqMfgFlow.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7PqReceipt"
+                                value="#{bindings.sa7PqReceipt.inputValue}"
+                                label="#{bindings.sa7PqReceipt.hints.label}"
+                                required="#{bindings.sa7PqReceipt.hints.mandatory}"
+                                rows="#{bindings.sa7PqReceipt.hints.displayHeight}"
+                                columns="#{bindings.sa7PqReceipt.hints.displayWidth}"
+                                maximumLength="50" readOnly="true"
+                                shortDesc="#{bindings.sa7PqReceipt.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7PqReceipt.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7IlluminaPlatform"
+                                value="#{bindings.sa7IlluminaPlatform.inputValue}"
+                                label="#{bindings.sa7IlluminaPlatform.hints.label}"
+                                required="#{bindings.sa7IlluminaPlatform.hints.mandatory}"
+                                rows="#{bindings.sa7IlluminaPlatform.hints.displayHeight}"
+                                columns="#{bindings.sa7IlluminaPlatform.hints.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.sa7IlluminaPlatform.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7IlluminaPlatform.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7IlluminaMfgFlow"
+                                value="#{bindings.sa7IlluminaMfgFlow.inputValue}"
+                                label="#{bindings.sa7IlluminaMfgFlow.hints.label}"
+                                required="#{bindings.sa7IlluminaMfgFlow.hints.mandatory}"
+                                rows="#{bindings.sa7IlluminaMfgFlow.hints.displayHeight}"
+                                columns="#{bindings.sa7IlluminaMfgFlow.hints.displayWidth}"
+                                maximumLength="100" readOnly="true"
+                                shortDesc="#{bindings.sa7IlluminaMfgFlow.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7IlluminaMfgFlow.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7IlluminaReceipt"
+                                value="#{bindings.sa7IlluminaReceipt.inputValue}"
+                                label="#{bindings.sa7IlluminaReceipt.hints.label}"
+                                required="#{bindings.sa7IlluminaReceipt.hints.mandatory}"
+                                rows="#{bindings.sa7IlluminaReceipt.hints.displayHeight}"
+                                columns="#{bindings.sa7IlluminaReceipt.hints.displayWidth}"
+                                maximumLength="50" readOnly="true"
+                                shortDesc="#{bindings.sa7IlluminaReceipt.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7IlluminaReceipt.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7PrefImageStorage"
+                                value="#{bindings.sa7PrefImageStorage.inputValue}"
+                                label="#{bindings.sa7PrefImageStorage.hints.label}"
+                                required="#{bindings.sa7PrefImageStorage.hints.mandatory}"
+                                rows="#{bindings.sa7PrefImageStorage.hints.displayHeight}"
+                                columns="#{bindings.sa7PrefImageStorage.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                shortDesc="#{bindings.sa7PrefImageStorage.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7PrefImageStorage.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7MfgProcess"
+                                value="#{bindings.sa7MfgProcess.inputValue}"
+                                label="#{bindings.sa7MfgProcess.hints.label}"
+                                required="#{bindings.sa7MfgProcess.hints.mandatory}"
+                                rows="#{bindings.sa7MfgProcess.hints.displayHeight}"
+                                columns="#{bindings.sa7MfgProcess.hints.displayWidth}"
+                                maximumLength="100" readOnly="true"
+                                shortDesc="#{bindings.sa7MfgProcess.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7MfgProcess.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7RampType"
+                                value="#{bindings.sa7RampType.inputValue}"
+                                label="#{bindings.sa7RampType.hints.label}"
+                                required="#{bindings.sa7RampType.hints.mandatory}"
+                                rows="#{bindings.sa7RampType.hints.displayHeight}"
+                                columns="#{bindings.sa7RampType.hints.displayWidth}"
+                                maximumLength="50" readOnly="true"
+                                shortDesc="#{bindings.sa7RampType.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7RampType.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7OutcomeNotes"
+                                value="#{bindings.sa7OutcomeNotes.inputValue}"
+                                label="#{bindings.sa7OutcomeNotes.hints.label}"
+                                required="#{bindings.sa7OutcomeNotes.hints.mandatory}"
+                                rows="#{bindings.sa7OutcomeNotes.hints.displayHeight}"
+                                columns="#{bindings.sa7OutcomeNotes.hints.displayWidth}"
+                                maximumLength="4000" readOnly="true"
+                                shortDesc="#{bindings.sa7OutcomeNotes.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7OutcomeNotes.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="sa7DatePreCompleted"
+                                value="#{bindings.sa7DatePreCompleted.inputValue}"
+                                label="#{bindings.sa7DatePreCompleted.hints.label}"
+                                required="#{bindings.sa7DatePreCompleted.hints.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.sa7DatePreCompleted.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="sa7PrePerformedBy"
+                                value="#{bindings.sa7PrePerformedBy.inputValue}"
+                                label="#{bindings.sa7PrePerformedBy.hints.label}"
+                                required="#{bindings.sa7PrePerformedBy.hints.mandatory}"
+                                rows="#{bindings.sa7PrePerformedBy.hints.displayHeight}"
+                                columns="#{bindings.sa7PrePerformedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                shortDesc="#{bindings.sa7PrePerformedBy.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7PrePerformedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7PreTiming"
+                                value="#{bindings.sa7PreTiming.inputValue}"
+                                label="#{bindings.sa7PreTiming.hints.label}"
+                                required="#{bindings.sa7PreTiming.hints.mandatory}"
+                                rows="#{bindings.sa7PreTiming.hints.displayHeight}"
+                                columns="#{bindings.sa7PreTiming.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                shortDesc="#{bindings.sa7PreTiming.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7PreTiming.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7PqTargeted"
+                                value="#{bindings.sa7PqTargeted.inputValue}"
+                                label="#{bindings.sa7PqTargeted.hints.label}"
+                                required="#{bindings.sa7PqTargeted.hints.mandatory}"
+                                rows="#{bindings.sa7PqTargeted.hints.displayHeight}"
+                                columns="#{bindings.sa7PqTargeted.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7PqTargeted.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7PqTargeted.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7IlluminaTargeted"
+                                value="#{bindings.sa7IlluminaTargeted.inputValue}"
+                                label="#{bindings.sa7IlluminaTargeted.hints.label}"
+                                required="#{bindings.sa7IlluminaTargeted.hints.mandatory}"
+                                rows="#{bindings.sa7IlluminaTargeted.hints.displayHeight}"
+                                columns="#{bindings.sa7IlluminaTargeted.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7IlluminaTargeted.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7IlluminaTargeted.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7Abstract11"
+                                value="#{bindings.sa7Abstract11.inputValue}"
+                                label="#{bindings.sa7Abstract11.hints.label}"
+                                required="#{bindings.sa7Abstract11.hints.mandatory}"
+                                rows="#{bindings.sa7Abstract11.hints.displayHeight}"
+                                columns="#{bindings.sa7Abstract11.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7Abstract11.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7Abstract11.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7Indexing"
+                                value="#{bindings.sa7Indexing.inputValue}"
+                                label="#{bindings.sa7Indexing.hints.label}"
+                                required="#{bindings.sa7Indexing.hints.mandatory}"
+                                rows="#{bindings.sa7Indexing.hints.displayHeight}"
+                                columns="#{bindings.sa7Indexing.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7Indexing.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7Indexing.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7UnstructuredText"
+                                value="#{bindings.sa7UnstructuredText.inputValue}"
+                                label="#{bindings.sa7UnstructuredText.hints.label}"
+                                required="#{bindings.sa7UnstructuredText.hints.mandatory}"
+                                rows="#{bindings.sa7UnstructuredText.hints.displayHeight}"
+                                columns="#{bindings.sa7UnstructuredText.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7UnstructuredText.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7UnstructuredText.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7Fulltext"
+                                value="#{bindings.sa7Fulltext.inputValue}"
+                                label="#{bindings.sa7Fulltext.hints.label}"
+                                required="#{bindings.sa7Fulltext.hints.mandatory}"
+                                rows="#{bindings.sa7Fulltext.hints.displayHeight}"
+                                columns="#{bindings.sa7Fulltext.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7Fulltext.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7Fulltext.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7TextAndGraphics"
+                                value="#{bindings.sa7TextAndGraphics.inputValue}"
+                                label="#{bindings.sa7TextAndGraphics.hints.label}"
+                                required="#{bindings.sa7TextAndGraphics.hints.mandatory}"
+                                rows="#{bindings.sa7TextAndGraphics.hints.displayHeight}"
+                                columns="#{bindings.sa7TextAndGraphics.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7TextAndGraphics.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7TextAndGraphics.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7ArticleImage"
+                                value="#{bindings.sa7ArticleImage.inputValue}"
+                                label="#{bindings.sa7ArticleImage.hints.label}"
+                                required="#{bindings.sa7ArticleImage.hints.mandatory}"
+                                rows="#{bindings.sa7ArticleImage.hints.displayHeight}"
+                                columns="#{bindings.sa7ArticleImage.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7ArticleImage.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7ArticleImage.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7FullPageImage"
+                                value="#{bindings.sa7FullPageImage.inputValue}"
+                                label="#{bindings.sa7FullPageImage.hints.label}"
+                                required="#{bindings.sa7FullPageImage.hints.mandatory}"
+                                rows="#{bindings.sa7FullPageImage.hints.displayHeight}"
+                                columns="#{bindings.sa7FullPageImage.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7FullPageImage.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7FullPageImage.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7CitationReference"
+                                value="#{bindings.sa7CitationReference.inputValue}"
+                                label="#{bindings.sa7CitationReference.hints.label}"
+                                required="#{bindings.sa7CitationReference.hints.mandatory}"
+                                rows="#{bindings.sa7CitationReference.hints.displayHeight}"
+                                columns="#{bindings.sa7CitationReference.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7CitationReference.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7CitationReference.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7MultimediaVideo"
+                                value="#{bindings.sa7MultimediaVideo.inputValue}"
+                                label="#{bindings.sa7MultimediaVideo.hints.label}"
+                                required="#{bindings.sa7MultimediaVideo.hints.mandatory}"
+                                rows="#{bindings.sa7MultimediaVideo.hints.displayHeight}"
+                                columns="#{bindings.sa7MultimediaVideo.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7MultimediaVideo.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7MultimediaVideo.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7MultimediaTextBased"
+                                value="#{bindings.sa7MultimediaTextBased.inputValue}"
+                                label="#{bindings.sa7MultimediaTextBased.hints.label}"
+                                required="#{bindings.sa7MultimediaTextBased.hints.mandatory}"
+                                rows="#{bindings.sa7MultimediaTextBased.hints.displayHeight}"
+                                columns="#{bindings.sa7MultimediaTextBased.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7MultimediaTextBased.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7MultimediaTextBased.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7IllustrataObjects"
+                                value="#{bindings.sa7IllustrataObjects.inputValue}"
+                                label="#{bindings.sa7IllustrataObjects.hints.label}"
+                                required="#{bindings.sa7IllustrataObjects.hints.mandatory}"
+                                rows="#{bindings.sa7IllustrataObjects.hints.displayHeight}"
+                                columns="#{bindings.sa7IllustrataObjects.hints.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.sa7IllustrataObjects.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7IllustrataObjects.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="sa7PreRequestDate"
+                                value="#{bindings.sa7PreRequestDate.inputValue}"
+                                label="#{bindings.sa7PreRequestDate.hints.label}"
+                                required="#{bindings.sa7PreRequestDate.hints.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.sa7PreRequestDate.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="sa7PreRequestedBy"
+                                value="#{bindings.sa7PreRequestedBy.inputValue}"
+                                label="#{bindings.sa7PreRequestedBy.hints.label}"
+                                required="#{bindings.sa7PreRequestedBy.hints.mandatory}"
+                                rows="#{bindings.sa7PreRequestedBy.hints.displayHeight}"
+                                columns="#{bindings.sa7PreRequestedBy.hints.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.sa7PreRequestedBy.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7PreRequestedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="sa7CreatedBy"
+                                value="#{bindings.sa7CreatedBy.inputValue}"
+                                label="#{bindings.sa7CreatedBy.hints.label}"
+                                required="#{bindings.sa7CreatedBy.hints.mandatory}"
+                                rows="#{bindings.sa7CreatedBy.hints.displayHeight}"
+                                columns="#{bindings.sa7CreatedBy.hints.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.sa7CreatedBy.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7CreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="sa7CreatedDate"
+                                value="#{bindings.sa7CreatedDate.inputValue}"
+                                label="#{bindings.sa7CreatedDate.hints.label}"
+                                required="#{bindings.sa7CreatedDate.hints.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.sa7CreatedDate.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="sa7LastUpdatedBy"
+                                value="#{bindings.sa7LastUpdatedBy.inputValue}"
+                                label="#{bindings.sa7LastUpdatedBy.hints.label}"
+                                required="#{bindings.sa7LastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.sa7LastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.sa7LastUpdatedBy.hints.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.sa7LastUpdatedBy.hints.tooltip}">
+                    <f:validator binding="#{bindings.sa7LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="sa7LastUpdatedDate"
+                                value="#{bindings.sa7LastUpdatedDate.inputValue}"
+                                label="#{bindings.sa7LastUpdatedDate.hints.label}"
+                                required="#{bindings.sa7LastUpdatedDate.hints.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.sa7LastUpdatedDate.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="sa7CancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelGroupLayout layout="vertical" id="oprtTopLc"
+                               partialTriggers=" sa7TopLc qsAreaoprtSearchOptions"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+            <f:facet name="separator">
+              <af:spacer width="10" height="10" id="sp3"/>
+            </f:facet>
+            <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+            <af:panelHeader id="ph2"
+                            text="#{nls['TABLE_TITLE_OPPORTUNITYPRERESULTTARGET']}">
+              <f:facet name="toolbar">
+                <af:toolbox id="tbox1">
+                  <af:toolbar id="tbar1">
+                    <af:group id="gr4"></af:group>
+                    <af:group id="gr5"></af:group>
+                  </af:toolbar>
+                </af:toolbox>
+              </f:facet>
+              <f:facet name="context"></f:facet>
+              <af:panelGroupLayout id="modelSearchAreaoprt"
+                                   rendered="#{!pageFlowScope.createModes.CreateOpportunityPreResultTarget and !pageFlowScope.hideSearchArea}"
+                                   partialTriggers="">
+                <f:attribute name="JhsIgnoreChanges" value="true"/>
+                <af:quickQuery id="qsAreaoprtSearchOptions"
+                               label="#{nls['FILTER_BY']}"
+                               value="#{bindings.OpportunityPreResultTargetIteratorTraxPreResultTargetViewCriteriaQuery.queryDescriptor}"
+                               model="#{bindings.OpportunityPreResultTargetIteratorTraxPreResultTargetViewCriteriaQuery.queryModel}"
+                               queryListener="#{bindings.OpportunityPreResultTargetIteratorTraxPreResultTargetViewCriteriaQuery.processQuery}"></af:quickQuery>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelGroupLayout layout="vertical" id="pgl0">
+              <af:panelCollection id="oprtPC" featuresOff=" "
+                                  styleClass="AFStretchWidth">
+                <f:facet name="menus">
+                  <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                           id="menu0">
+                    <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                             id="menu1">
+                      <af:group id="oprttbb"
+                                rendered="#{ bindings.OpportunityPreResultTargetIterator.currentRow!=null }">
+                        <af:commandMenuItem actionListener="#{bindings.FirstOpportunityPreResultTarget.execute}"
+                                            id="oprtFirst" partialSubmit="true"
+                                            icon="/afr/shuttleleftall_ena.png"
+                                            textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.PreviousOpportunityPreResultTarget.execute}"
+                                            icon="/afr/shuttleleft_ena.png"
+                                            textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                            id="oprtPrevious"
+                                            partialSubmit="true"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.NextOpportunityPreResultTarget.execute}"
+                                            icon="/afr/shuttleright_ena.png"
+                                            textAndAccessKey="#{nls['NEXT_ROW']}"
+                                            id="oprtNext" partialSubmit="true"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.LastOpportunityPreResultTarget.execute}"
+                                            icon="/afr/shuttlerightall_ena.png"
+                                            textAndAccessKey="#{nls['LAST_ROW']}"
+                                            id="oprtLast" partialSubmit="true"></af:commandMenuItem>
+                      </af:group>
+                    </af:menu>
+                  </af:menu>
+                </f:facet>
+                <f:facet name="toolbar">
+                  <af:toolbar id="tbar2">
+                    <af:commandToolbarButton text="Print" id="oprtPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="statusbar">
+                  <af:toolbar>
+                    <af:outputText value="#{bindings.OpportunityPreResultTargetIterator.estimatedRowCount} rows found"/>
+                  </af:toolbar>
+                </f:facet>
+                <af:table id="oprtTab" contentDelivery="immediate"
+                          value="#{bindings.OpportunityPreResultTargetTable.collectionModel}"
+                          columnStretching="blank" rowBandingInterval="0"
+                          editingMode="editAll" columnSelection="multiple"
+                          contextMenuSelect="true" rowSelection="single"
+                          selectionListener="#{pageFlowScope.OpportunityPreResultTargetTable.makeCurrent}"
+                          selectedRowKeys="#{pageFlowScope.OpportunityPreResultTargetTable.selectedRow}"
+                          rowDisclosureListener="#{pageFlowScope.OpportunityPreResultTargetTable.discloseRow}"
+                          var="row" varStatus="status"
+                          rows="#{bindings.OpportunityPreResultTargetTable.rangeSize}"
+                          autoHeightRows="#{bindings.OpportunityPreResultTargetTable.estimatedRowCount lt 5 ? 5 : bindings.OpportunityPreResultTargetTable.estimatedRowCount lt bindings.OpportunityPreResultTargetTable.rangeSize ? bindings.OpportunityPreResultTargetTable.estimatedRowCount : 0 }"
+                          fetchSize="#{bindings.OpportunityPreResultTargetTable.rangeSize}"
+                          emptyText="#{nls['NO_ROWS_FOUND']}"
+                          queryListener="#{bindings.OpportunityPreResultTargetIteratorTraxPreResultTargetViewCriteriaQuery.processQuery}"
+                          binding="#{pageFlowScope.OpportunityPreResultTargetTable.table}"
+                          partialTriggers=":::qsAreaoprtSearchOptions :::oprtPC ::oprtFirst ::oprtPrevious ::oprtNext ::oprtLast"
+                          styleClass="AFStretchWidth"
+                          summary="#{nls['TABLE_TITLE_OPPORTUNITYPRERESULTTARGET']}">
+                  <f:facet name="contextMenu">
+                    <af:popup id="oprtTablePopup" childCreation="deferred">
+                      <af:menu id="menu2">
+                        <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3"></af:menu>
+                      </af:menu>
+                    </af:popup>
+                  </f:facet>
+                  <af:column id="oprtTargetTrackingNoCol" sortable="true"
+                             noWrap="true" width="100"
+                             sortProperty="TargetTrackingNo" align="right"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityPreResultTargetTable.hints.TargetTrackingNo.label}"
+                                      id="ol0"/>
+                    </f:facet>
+                    <af:inputText id="oprtTargetTrackingNo"
+                                  value="#{row.bindings.TargetTrackingNo.inputValue}"
+                                  label="#{bindings.OpportunityPreResultTargetTable.hints.TargetTrackingNo.label}"
+                                  required="#{bindings.OpportunityPreResultTargetTable.hints.TargetTrackingNo.mandatory}"
+                                  rows="#{bindings.OpportunityPreResultTargetTable.hints.TargetTrackingNo.displayHeight}"
+                                  columns="#{bindings.OpportunityPreResultTargetTable.hints.TargetTrackingNo.displayWidth}"
+                                  maximumLength="38" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityPreResultTargetTable.hints.TargetTrackingNo.tooltip}">
+                      <f:validator binding="#{row.bindings.TargetTrackingNo.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.OpportunityPreResultTargetTable.hints.TargetTrackingNo.format}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="oprtCatalogNumberCol" sortable="true"
+                             noWrap="true" width="100"
+                             sortProperty="CatalogNumber" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityPreResultTargetTable.hints.CatalogNumber.label}"
+                                      id="ol1"/>
+                    </f:facet>
+                    <af:inputText id="oprtCatalogNumber"
+                                  value="#{row.bindings.CatalogNumber.inputValue}"
+                                  label="#{bindings.OpportunityPreResultTargetTable.hints.CatalogNumber.label}"
+                                  required="#{bindings.OpportunityPreResultTargetTable.hints.CatalogNumber.mandatory}"
+                                  rows="#{bindings.OpportunityPreResultTargetTable.hints.CatalogNumber.displayHeight}"
+                                  columns="#{bindings.OpportunityPreResultTargetTable.hints.CatalogNumber.displayWidth}"
+                                  maximumLength="40" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityPreResultTargetTable.hints.CatalogNumber.tooltip}">
+                      <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="oprtLongTitleCol" sortable="true" noWrap="true"
+                             width="180" sortProperty="LongTitle"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityPreResultTargetTable.hints.LongTitle.label}"
+                                      id="ol2"/>
+                    </f:facet>
+                    <af:inputText id="oprtLongTitle"
+                                  value="#{row.bindings.LongTitle.inputValue}"
+                                  label="#{bindings.OpportunityPreResultTargetTable.hints.LongTitle.label}"
+                                  required="#{bindings.OpportunityPreResultTargetTable.hints.LongTitle.mandatory}"
+                                  rows="#{bindings.OpportunityPreResultTargetTable.hints.LongTitle.displayHeight}"
+                                  columns="#{bindings.OpportunityPreResultTargetTable.hints.LongTitle.displayWidth}"
+                                  maximumLength="4000" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityPreResultTargetTable.hints.LongTitle.tooltip}">
+                      <f:validator binding="#{row.bindings.LongTitle.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="oprtCreatedByCol" sortable="true" noWrap="true"
+                             width="180" sortProperty="CreatedBy"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityPreResultTargetTable.hints.CreatedBy.label}"
+                                      id="ol3"/>
+                    </f:facet>
+                    <af:inputText id="oprtCreatedBy"
+                                  value="#{row.bindings.CreatedBy.inputValue}"
+                                  label="#{bindings.OpportunityPreResultTargetTable.hints.CreatedBy.label}"
+                                  required="#{bindings.OpportunityPreResultTargetTable.hints.CreatedBy.mandatory}"
+                                  rows="#{bindings.OpportunityPreResultTargetTable.hints.CreatedBy.displayHeight}"
+                                  columns="#{bindings.OpportunityPreResultTargetTable.hints.CreatedBy.displayWidth}"
+                                  maximumLength="20" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityPreResultTargetTable.hints.CreatedBy.tooltip}">
+                      <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="oprtCreatedDateCol" sortable="true"
+                             noWrap="true" width="100"
+                             sortProperty="CreatedDate" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityPreResultTargetTable.hints.CreatedDate.label}"
+                                      id="ol4"/>
+                    </f:facet>
+                    <af:inputDate id="oprtCreatedDate"
+                                  value="#{row.bindings.CreatedDate.inputValue}"
+                                  label="#{bindings.OpportunityPreResultTargetTable.hints.CreatedDate.label}"
+                                  required="#{bindings.OpportunityPreResultTargetTable.hints.CreatedDate.mandatory}"
+                                  readOnly="true"
+                                  shortDesc="#{bindings.OpportunityPreResultTargetTable.hints.CreatedDate.tooltip}">
+                      <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                    </af:inputDate>
+                  </af:column>
+                  <af:column id="oprtLastUpdatedByCol" sortable="true"
+                             noWrap="true" width="180"
+                             sortProperty="LastUpdatedBy" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityPreResultTargetTable.hints.LastUpdatedBy.label}"
+                                      id="ol5"/>
+                    </f:facet>
+                    <af:inputText id="oprtLastUpdatedBy"
+                                  value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                  label="#{bindings.OpportunityPreResultTargetTable.hints.LastUpdatedBy.label}"
+                                  required="#{bindings.OpportunityPreResultTargetTable.hints.LastUpdatedBy.mandatory}"
+                                  rows="#{bindings.OpportunityPreResultTargetTable.hints.LastUpdatedBy.displayHeight}"
+                                  columns="#{bindings.OpportunityPreResultTargetTable.hints.LastUpdatedBy.displayWidth}"
+                                  maximumLength="20" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityPreResultTargetTable.hints.LastUpdatedBy.tooltip}">
+                      <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="oprtLastUpdatedDateCol" sortable="true"
+                             noWrap="true" width="100"
+                             sortProperty="LastUpdatedDate" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityPreResultTargetTable.hints.LastUpdatedDate.label}"
+                                      id="ol6"/>
+                    </f:facet>
+                    <af:inputDate id="oprtLastUpdatedDate"
+                                  value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                  label="#{bindings.OpportunityPreResultTargetTable.hints.LastUpdatedDate.label}"
+                                  required="#{bindings.OpportunityPreResultTargetTable.hints.LastUpdatedDate.mandatory}"
+                                  readOnly="true"
+                                  shortDesc="#{bindings.OpportunityPreResultTargetTable.hints.LastUpdatedDate.tooltip}">
+                      <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                    </af:inputDate>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </af:panelGroupLayout>
+            <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

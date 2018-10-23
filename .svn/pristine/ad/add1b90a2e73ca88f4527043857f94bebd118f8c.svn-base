@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.61.92" id="OpportunityPreResultPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare"
+               value="#{'OpportunitiesPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="OpportunityPreResultIterator" Binds="TraxPreResultView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OpportunityPreResultIteratorTraxPreResultViewCriteriaQuery"
+                  Binds="OpportunityPreResultIterator"
+                  Criteria="TraxPreResultViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="OutcomeNo"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOpportunityPreResultInvoke"
+                  Binds="ExecuteQueryOpportunityPreResult" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="OpportunityPreResultTargetIterator"
+              Binds="TraxPreResultTargetView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OpportunityPreResultTargetIteratorTraxPreResultTargetViewCriteriaQuery"
+                  Binds="OpportunityPreResultTargetIterator"
+                  Criteria="TraxPreResultTargetViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="TargetTrackingNo"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOpportunityPreResultTargetInvoke"
+                  Binds="ExecuteQueryOpportunityPreResultTarget"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+  </executables>
+  <bindings>
+    <action id="ExecuteQueryOpportunityPreResult"
+            IterBinding="OpportunityPreResultIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="sa7OutcomeNo"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="OutcomeNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PreBatchId"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PreBatchId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7ChildId" IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="ChildId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PqPlatform"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PqPlatform"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PqMfgFlow"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PqMfgFlow"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PqReceipt"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PqReceipt"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7IlluminaPlatform"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="IlluminaPlatform"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7IlluminaMfgFlow"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="IlluminaMfgFlow"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7IlluminaReceipt"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="IlluminaReceipt"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PrefImageStorage"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PrefImageStorage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7MfgProcess"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="MfgProcess"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7RampType"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="RampType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7OutcomeNotes"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="OutcomeNotes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7DatePreCompleted"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="DatePreCompleted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PrePerformedBy"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PrePerformedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PreTiming"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PreTiming"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PqTargeted"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PqTargeted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7IlluminaTargeted"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="IlluminaTargeted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7Abstract11"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="Abstract11"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7Indexing"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="Indexing"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7UnstructuredText"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="UnstructuredText"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7Fulltext"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="Fulltext"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7TextAndGraphics"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="TextAndGraphics"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7ArticleImage"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="ArticleImage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7FullPageImage"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="FullPageImage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7CitationReference"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="CitationReference"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7MultimediaVideo"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="MultimediaVideo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7MultimediaTextBased"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="MultimediaTextBased"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7IllustrataObjects"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="IllustrataObjects"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PreRequestDate"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PreRequestDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PreRequestedBy"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PreRequestedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7CreatedBy"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7CreatedDate"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7LastUpdatedBy"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7LastUpdatedDate"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityPreResultTable"
+          IterBinding="OpportunityPreResultIterator">
+      <nodeDefinition Name="OpportunityPreResult"
+                      DefName="com.pq.tracs.model.vo.TraxPreResultView">
+        <AttrNames>
+          <Item Value="OutcomeNo"/>
+          <Item Value="PreBatchId"/>
+          <Item Value="ChildId"/>
+          <Item Value="PqPlatform"/>
+          <Item Value="PqMfgFlow"/>
+          <Item Value="PqReceipt"/>
+          <Item Value="IlluminaPlatform"/>
+          <Item Value="IlluminaMfgFlow"/>
+          <Item Value="IlluminaReceipt"/>
+          <Item Value="PrefImageStorage"/>
+          <Item Value="MfgProcess"/>
+          <Item Value="RampType"/>
+          <Item Value="OutcomeNotes"/>
+          <Item Value="DatePreCompleted"/>
+          <Item Value="PrePerformedBy"/>
+          <Item Value="PreTiming"/>
+          <Item Value="PqTargeted"/>
+          <Item Value="IlluminaTargeted"/>
+          <Item Value="Abstract11"/>
+          <Item Value="Indexing"/>
+          <Item Value="UnstructuredText"/>
+          <Item Value="Fulltext"/>
+          <Item Value="TextAndGraphics"/>
+          <Item Value="ArticleImage"/>
+          <Item Value="FullPageImage"/>
+          <Item Value="CitationReference"/>
+          <Item Value="MultimediaVideo"/>
+          <Item Value="MultimediaTextBased"/>
+          <Item Value="IllustrataObjects"/>
+          <Item Value="PreRequestDate"/>
+          <Item Value="PreRequestedBy"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityPreResult"
+            IterBinding="OpportunityPreResultIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunityPreResult"
+            IterBinding="OpportunityPreResultIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOpportunityPreResult"
+            IterBinding="OpportunityPreResultIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityPreResult"
+            IterBinding="OpportunityPreResultIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunityPreResult"
+            IterBinding="OpportunityPreResultIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityPreResult}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryOpportunityPreResultTarget"
+            IterBinding="OpportunityPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="oprtTargetTrackingNo"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="oprtCatalogNumber"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="oprtLongTitle"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="oprtCreatedBy"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="oprtCreatedDate"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="oprtLastUpdatedBy"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="oprtLastUpdatedDate"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityPreResultTargetTable"
+          IterBinding="OpportunityPreResultTargetIterator">
+      <nodeDefinition Name="OpportunityPreResultTarget"
+                      DefName="com.pq.tracs.model.vo.TraxPreResultTargetView">
+        <AttrNames>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityPreResultTarget"
+            IterBinding="OpportunityPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunityPreResultTarget"
+            IterBinding="OpportunityPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOpportunityPreResultTarget"
+            IterBinding="OpportunityPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityPreResultTarget"
+            IterBinding="OpportunityPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunityPreResultTarget"
+            IterBinding="OpportunityPreResultTargetIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityPreResultTarget}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

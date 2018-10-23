@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="OvrRestrictionsPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare" value="#{'OVRsPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <invokeAction id="applyBindParamsOvrRestrictionsInvoke"
+                  Binds="applyBindParamsOvrRestrictions" Refresh="always"/>
+    <iterator id="OvrRestrictionsIterator"
+              Binds="TraxTitleRecordRestrictionsView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrRestrictionsIteratorTraxTitleRecordRightViewCriteriaQuery"
+                  Binds="OvrRestrictionsIterator"
+                  Criteria="TraxTitleRecordRightViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="RuleNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="RestrictionsTitleRecordRightCategoryIterator"
+              Binds="TraxTitleRecRightCategoryView6"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="RestrictionsTitleRecordRightCategoryIteratorTraxTitleRecRightCategoryViewCriteriaQuery"
+                  Binds="RestrictionsTitleRecordRightCategoryIterator"
+                  Criteria="TraxTitleRecRightCategoryViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CategoryId"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryRestrictionsTitleRecordRightCategoryInvoke"
+                  Binds="ExecuteQueryRestrictionsTitleRecordRightCategory"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+  </executables>
+  <bindings>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsOvrRestrictions"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="TraxTitleRecordRestrictionsView2"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{OvrRestrictionsQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <list IterBinding="OvrRestrictionsIterator"
+          id="OvrRestrictionsTemplateNameTable" Uses="LOV_TemplateName"
+          StaticList="false"/>
+    <attributeValues id="OvrRestrictionsRuleNumber"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="RuleNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRestrictionsRightType"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="RightType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRestrictionsRightTemplateId"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="RightTemplateId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRestrictionsRestrictions"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="Restrictions"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="OvrRestrictionsCompleteFlag"
+            IterBinding="OvrRestrictionsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="CompleteFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="OvrRestrictionsCreatedBy"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRestrictionsCreatedDate"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRestrictionsLastUpdatedBy"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRestrictionsLastUpdatedDate"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrRestrictionsTable" IterBinding="OvrRestrictionsIterator">
+      <nodeDefinition Name="OvrRestrictions"
+                      DefName="com.pq.tracs.model.dao.TraxTitleRecordRightView">
+        <AttrNames>
+          <Item Value="TemplateName"/>
+          <Item Value="RuleNumber"/>
+          <Item Value="RightType"/>
+          <Item Value="RightTemplateId"/>
+          <Item Value="Restrictions"/>
+          <Item Value="CompleteFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrRestrictions" IterBinding="OvrRestrictionsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrRestrictions" IterBinding="OvrRestrictionsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrRestrictions" IterBinding="OvrRestrictionsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrRestrictions" IterBinding="OvrRestrictionsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrRestrictions"
+            IterBinding="OvrRestrictionsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrRestrictions}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrRestrictions" IterBinding="OvrRestrictionsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrRestrictions" IterBinding="OvrRestrictionsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <list IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+          id="s340Category" Uses="LOV_CategoryId" StaticList="false"/>
+    <list IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+          id="s340Value" Uses="LOV_Value" StaticList="false"/>
+    <attributeValues id="s340CreatedBy"
+                     IterBinding="RestrictionsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s340CreatedDate"
+                     IterBinding="RestrictionsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s340LastUpdatedBy"
+                     IterBinding="RestrictionsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s340LastUpdatedDate"
+                     IterBinding="RestrictionsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s340PermitFlag"
+                     IterBinding="RestrictionsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="PermitFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="RestrictionsTitleRecordRightCategoryTable"
+          IterBinding="RestrictionsTitleRecordRightCategoryIterator">
+      <nodeDefinition Name="RestrictionsTitleRecordRightCategory"
+                      DefName="com.pq.tracs.model.dao.TraxTitleRecRightCategoryView">
+        <AttrNames>
+          <Item Value="CategoryId"/>
+          <Item Value="Value"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="PermitFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrRestrictionsTitleRecordRightCategory}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

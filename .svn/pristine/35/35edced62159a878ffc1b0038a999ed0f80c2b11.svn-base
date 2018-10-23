@@ -1,0 +1,499 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="OvrRestrictionsTopLc"
+                             partialTriggers=" OvrRestrictionsDeleteDialog OvrRestrictionsfbb OvrRestrictionsDelB OvrRestrictionsSaveButton0 OvrRestrictionsCancelButton0 OvrRestrictionsSaveButton1 OvrRestrictionsCancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="Restriction">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="OvrRestrictionsfbb"
+                                       layout="horizontal"
+                                       rendered="#{ bindings.OvrRestrictionsIterator.currentRow!=null  and bindings.OvrRestrictionsIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateOvrRestrictions and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="OvrRestrictionsFirst OvrRestrictionsPrevious OvrRestrictionsNext OvrRestrictionsLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstOvrRestrictions.execute}"
+                                             id="OvrRestrictionsFirst"
+                                             partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.OvrRestrictionsIterator.rangeStart+bindings.OvrRestrictionsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.OvrRestrictionsIterator.rangeStart+bindings.OvrRestrictionsIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousOvrRestrictions.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="OvrRestrictionsPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.OvrRestrictionsIterator.rangeStart+bindings.OvrRestrictionsIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.OvrRestrictionsIterator.rangeStart+bindings.OvrRestrictionsIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.OvrRestrictionsIterator.rangeStart+bindings.OvrRestrictionsIterator.currentRowIndexInRange+1} / #{bindings.OvrRestrictionsIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextOvrRestrictions.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="OvrRestrictionsNext"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.OvrRestrictionsIterator.rangeStart+bindings.OvrRestrictionsIterator.currentRowIndexInRange+1 lt bindings.OvrRestrictionsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.OvrRestrictionsIterator.rangeStart+bindings.OvrRestrictionsIterator.currentRowIndexInRange+1 lt bindings.OvrRestrictionsIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastOvrRestrictions.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="OvrRestrictionsLast"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.OvrRestrictionsIterator.rangeStart+bindings.OvrRestrictionsIterator.currentRowIndexInRange+1 lt bindings.OvrRestrictionsIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.OvrRestrictionsIterator.rangeStart+bindings.OvrRestrictionsIterator.currentRowIndexInRange+1 lt bindings.OvrRestrictionsIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton action="DeleteOvrRestrictions"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_OVRRESTRICTIONS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateOvrRestrictions and  bindings.OvrRestrictionsIterator.currentRow!=null   and (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}"
+                                             immediate="true"
+                                             id="OvrRestrictionsDelB">
+                      <af:showPopupBehavior popupId="OvrRestrictionsDeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print"
+                                             id="OvrRestrictionsPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveOvrRestrictions.execute}"
+                                      rendered="#{((((jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="OvrRestrictionsSaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel"
+                                      id="OvrRestrictionsCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.OvrRestrictionsIterator.findMode!='true'}"
+                       id="OvrRestrictionsSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.OvrRestrictionsIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp"
+                                  id="OvrRestrictionsNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="OvrRestrictionsFC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="4"
+                                    id="OvrRestrictionsFI">
+                  <af:inputText id="OvrRestrictionsRuleNumber"
+                                value="#{bindings.OvrRestrictionsRuleNumber.inputValue}"
+                                label="#{bindings.OvrRestrictionsRuleNumber.hints.label}"
+                                required="false"
+                                rows="#{bindings.OvrRestrictionsRuleNumber.hints.displayHeight}"
+                                columns="#{bindings.OvrRestrictionsRuleNumber.hints.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}"
+                                disabled="true">
+                    <f:validator binding="#{bindings.OvrRestrictionsRuleNumber.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="OvrRestrictionsRestrictions"
+                                value="#{bindings.OvrRestrictionsRestrictions.inputValue}"
+                                label="#{bindings.OvrRestrictionsRestrictions.hints.label}"
+                                required="#{bindings.OvrRestrictionsRestrictions.hints.mandatory}"
+                                rows="#{bindings.OvrRestrictionsRestrictions.hints.displayHeight}"
+                                columns="#{bindings.OvrRestrictionsRestrictions.hints.displayWidth}"
+                                maximumLength="4000" readOnly="true"
+                                shortDesc="#{bindings.OvrRestrictionsRestrictions.hints.tooltip}">
+                    <f:validator binding="#{bindings.OvrRestrictionsRestrictions.validator}"/>
+                  </af:inputText>
+                  <af:selectBooleanCheckbox id="OvrRestrictionsCompleteFlag"
+                                            value="#{bindings.OvrRestrictionsCompleteFlag.inputValue}"
+                                            label="#{bindings.OvrRestrictionsCompleteFlag.hints.label}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                  <af:inputText id="OvrRestrictionsCreatedBy"
+                                value="#{bindings.OvrRestrictionsCreatedBy.inputValue}"
+                                label="#{bindings.OvrRestrictionsCreatedBy.hints.label}"
+                                required="#{bindings.OvrRestrictionsCreatedBy.hints.mandatory}"
+                                rows="#{bindings.OvrRestrictionsCreatedBy.hints.displayHeight}"
+                                columns="#{bindings.OvrRestrictionsCreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.OvrRestrictionsCreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="OvrRestrictionsCreatedDate"
+                                value="#{bindings.OvrRestrictionsCreatedDate.inputValue}"
+                                label="#{bindings.OvrRestrictionsCreatedDate.hints.label}"
+                                required="#{bindings.OvrRestrictionsCreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="OvrRestrictionsLastUpdatedBy"
+                                value="#{bindings.OvrRestrictionsLastUpdatedBy.inputValue}"
+                                label="#{bindings.OvrRestrictionsLastUpdatedBy.hints.label}"
+                                required="#{bindings.OvrRestrictionsLastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.OvrRestrictionsLastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.OvrRestrictionsLastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.OvrRestrictionsLastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="OvrRestrictionsLastUpdatedDate"
+                                value="#{bindings.OvrRestrictionsLastUpdatedDate.inputValue}"
+                                label="#{bindings.OvrRestrictionsLastUpdatedDate.hints.label}"
+                                required="#{bindings.OvrRestrictionsLastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveOvrRestrictions.execute}"
+                                            rendered="#{((((jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="OvrRestrictionsSaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="OvrRestrictionsCancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_RESTRICTIONSTITLERECORDRIGHTCATEGORY']}"
+                               partialTriggers=" OvrRestrictionsTopLc s340DeleteDialog qsAreas340SearchOptions s340PC:s340Arm s340PC:s340delrmTM s340PC:s340Arl s340PC:s340Tab:s340delrm s340PC:s340Tab:s340delrl"
+                               id="s340TopLcSdi"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                               disabled="#{!jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+              <af:panelGroupLayout layout="vertical" id="s340TopLc"
+                                   partialTriggers=" OvrRestrictionsTopLc s340DeleteDialog qsAreas340SearchOptions s340PC:s340Arm s340PC:s340delrmTM s340PC:s340Arl s340PC:s340Tab:s340delrm s340PC:s340Tab:s340delrl"
+                                   rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0">
+                  <af:panelGroupLayout id="modelSearchAreas340"
+                                       rendered="#{!pageFlowScope.createModes.CreateRestrictionsTitleRecordRightCategory and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreas340SearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.RestrictionsTitleRecordRightCategoryIteratorTraxTitleRecRightCategoryViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.RestrictionsTitleRecordRightCategoryIteratorTraxTitleRecRightCategoryViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.RestrictionsTitleRecordRightCategoryIteratorTraxTitleRecRightCategoryViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl0">
+                  <af:panelCollection id="s340PC" featuresOff=" "
+                                      inlineStyle=" width:752px; ">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="s340tbb"
+                                    rendered="#{ bindings.RestrictionsTitleRecordRightCategoryIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstRestrictionsTitleRecordRightCategory.execute}"
+                                                id="s340First"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousRestrictionsTitleRecordRightCategory.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="s340Previous"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextRestrictionsTitleRecordRightCategory.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="s340Next"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastRestrictionsTitleRecordRightCategory.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="s340Last"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="s340Arm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.RestrictionsTitleRecordRightCategoryTable.addRow}"
+                                            rendered="#{ bindings.OvrRestrictionsIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="s340delrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']}">
+                          <af:showPopupBehavior popupId="::s340DeletePopup"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <!-- Also create CreateRestrictionsTitleRecordRightCategory bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="s340Arl" immediate="false"
+                                             rendered="#{ bindings.OvrRestrictionsIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.RestrictionsTitleRecordRightCategoryTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandToolbarButton text="Print" id="s340Print"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.RestrictionsTitleRecordRightCategoryIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="s340Tab" contentDelivery="immediate"
+                              value="#{bindings.RestrictionsTitleRecordRightCategoryTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.RestrictionsTitleRecordRightCategoryTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.RestrictionsTitleRecordRightCategoryTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.RestrictionsTitleRecordRightCategoryTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.RestrictionsTitleRecordRightCategoryTable.rangeSize}"
+                              autoHeightRows="#{bindings.RestrictionsTitleRecordRightCategoryTable.estimatedRowCount lt 5 ? 5 : bindings.RestrictionsTitleRecordRightCategoryTable.estimatedRowCount lt bindings.RestrictionsTitleRecordRightCategoryTable.rangeSize ? bindings.RestrictionsTitleRecordRightCategoryTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.RestrictionsTitleRecordRightCategoryTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.RestrictionsTitleRecordRightCategoryIteratorTraxTitleRecRightCategoryViewCriteriaQuery.processQuery}"
+                              binding="#{pageFlowScope.RestrictionsTitleRecordRightCategoryTable.table}"
+                              partialTriggers=":::qsAreas340SearchOptions :::s340PC ::s340First ::s340Previous ::s340Next ::s340Last"
+                              width="752px"
+                              summary="#{nls['TABLE_TITLE_RESTRICTIONSTITLERECORDRIGHTCATEGORY']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="s340TablePopup" childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="s340delrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']}">
+                              <af:showPopupBehavior popupId=":::s340DeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="s340ActionColumn" width="20" align="center"
+                                 headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl1">
+                          <af:commandImageLink id="s340delrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::s340DeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="s340CategoryCol" sortable="true"
+                                 noWrap="true" width="120"
+                                 sortProperty="CategoryId" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.CategoryId.label}"
+                                          showRequired="true" id="ol0"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s340Category"
+                                            value="#{row.bindings.CategoryId.inputValue}"
+                                            label="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.CategoryId.label}"
+                                            required="true"
+                                            readOnly="#{((pageFlowScope.RestrictionsTitleRecordRightCategoryTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.RestrictionsTitleRecordRightCategoryTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}"
+                                            autoSubmit="true"
+                                            valueChangeListener="#{s340CategoryDependsOnItem.updateModelValue}">
+                          <f:selectItems value="#{row.bindings.CategoryId.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s340ValueCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="Value"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.Value.label}"
+                                          showRequired="true" id="ol1"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s340Value"
+                                            value="#{row.bindings.Value.inputValue}"
+                                            label="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.Value.label}"
+                                            required="true"
+                                            readOnly="#{((pageFlowScope.RestrictionsTitleRecordRightCategoryTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn']))) or ((!pageFlowScope.RestrictionsTitleRecordRightCategoryTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])))}">
+                          <f:selectItems value="#{row.bindings.Value.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s340CreatedByCol" sortable="true"
+                                 noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.CreatedBy.label}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:inputText id="s340CreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.CreatedBy.label}"
+                                      required="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      disabled="true">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s340CreatedDateCol" sortable="true"
+                                 noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.CreatedDate.label}"
+                                          id="ol3"/>
+                        </f:facet>
+                        <af:inputDate id="s340CreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.CreatedDate.label}"
+                                      required="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true" disabled="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="s340LastUpdatedByCol" sortable="true"
+                                 noWrap="true" width="120"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.LastUpdatedBy.label}"
+                                          id="ol4"/>
+                        </f:facet>
+                        <af:inputText id="s340LastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      disabled="true">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s340LastUpdatedDateCol" sortable="true"
+                                 noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.LastUpdatedDate.label}"
+                                          id="ol5"/>
+                        </f:facet>
+                        <af:inputDate id="s340LastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.RestrictionsTitleRecordRightCategoryTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true" disabled="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="OvrRestrictionsDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="OvrRestrictionsDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_OVRRESTRICTION: #{bindings.OvrRestrictionsRuleNumber.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteOvrRestrictions.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="s340DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s340DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_RESTRICTIONSTITLERECORDRIGHTCATEGOR:#{pageFlowScope.RestrictionsTitleRecordRightCategoryTable.currentRowAttributeValues.CategoryId}']} "
+                           id="ot1"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteRestrictionsTitleRecordRightCategory.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

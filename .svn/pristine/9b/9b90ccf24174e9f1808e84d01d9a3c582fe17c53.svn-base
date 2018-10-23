@@ -1,0 +1,643 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="CntTopLc"
+                             partialTriggers=" CntSaveButton0 CntCancelButton0 asAreaCntSearchOptions qsAreaCntSearchOptions CntPC:CntArm CntPC:CntArl"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_CONTACTS']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreateContacts.execute}"
+                                      action="CreateCnt"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_CONTACTS']}"
+                                      rendered="#{(true) and (jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])}"
+                                      id="CntNewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton action="#{SaveContacts.execute}"
+                                      rendered="#{(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn']) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="CntSaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="CntCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaCnt"
+                                 rendered="#{!pageFlowScope.createModes.CreateContacts and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaCntSearchOptions:qsButtonCnt qsAreaCntSearchOptions:asButtonCnt ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaCntSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.ContactsIteratorContactViewCriteriaAdvQuery.queryDescriptor}"
+                        model="#{bindings.ContactsIteratorContactViewCriteriaAdvQuery.queryModel}"
+                        queryListener="#{bindings.ContactsIteratorContactViewCriteriaAdvQuery.processQuery}"
+                        queryOperationListener="#{bindings.ContactsIteratorContactViewCriteriaAdvQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchContacts.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonCnt"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchContacts.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaCntSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.ContactsIteratorContactViewCriteriaAdvQuery.queryDescriptor}"
+                             model="#{bindings.ContactsIteratorContactViewCriteriaAdvQuery.queryModel}"
+                             queryListener="#{bindings.ContactsIteratorContactViewCriteriaAdvQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchContacts.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonCnt"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchContacts.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="CntPC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="ContactsDetails"></af:commandMenuItem>
+                    <af:group id="Cnttbb"
+                              rendered="#{ (bindings.ContactsIterator.viewObject!=null and bindings.ContactsIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstContacts.execute}"
+                                          id="CntFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousContacts.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="CntPrevious" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextContacts.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="CntNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastContacts.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="CntLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem id="CntArm"
+                                      textAndAccessKey="#{nls['ADD_ROW']}"
+                                      immediate="false"
+                                      icon="/jheadstart/images/addRow.png"
+                                      partialSubmit="true"
+                                      actionListener="#{pageFlowScope.ContactsTable.addRow}"
+                                      rendered="#{(true) and (jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])}"></af:commandMenuItem>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="CntTab"
+                                                       type="excelHTML"
+                                                       filename="Contacts.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <!-- Also create CreateContacts bean so we can start table group in create mode as well -->
+                  <af:commandImageLink id="CntArl" immediate="false"
+                                       rendered="#{(true) and (jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])}"
+                                       partialSubmit="true"
+                                       actionListener="#{pageFlowScope.ContactsTable.addRow}"
+                                       shortDesc="#{nls['ADD_ROW']}"
+                                       icon="/jheadstart/images/addRow.png"/>
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="CntTab"
+                                                       type="excelHTML"
+                                                       filename="Contacts.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="CntPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.ContactsIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="CntTab" contentDelivery="immediate"
+                        value="#{bindings.ContactsTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.ContactsTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.ContactsTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.ContactsTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.ContactsTable.rangeSize}"
+                        autoHeightRows="#{bindings.ContactsTable.estimatedRowCount}"
+                        fetchSize="#{bindings.ContactsTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.ContactsIteratorContactViewCriteriaAdvQuery.processQuery}"
+                        filterModel="#{bindings.ContactsIteratorContactViewCriteriaAdvQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.ContactsTable.table}"
+                        partialTriggers=":::qsAreaCntSearchOptions :::asAreaCntSearchOptions :::CntPC ::CntFirst ::CntPrevious ::CntNext ::CntLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_CONTACTS']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="CntTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="ContactsDetails"></af:commandMenuItem>
+                      </af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="CntActionColumn" frozen="true" width="20"
+                           align="center" headerText=" ">
+                  <af:panelGroupLayout layout="horizontal" id="pgl1">
+                    <af:commandLink action="ContactsDetails" id="CntGtd">
+                      <af:image shortDesc="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                source="/jheadstart/images/editRow.png"
+                                id="im0"/>
+                    </af:commandLink>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column id="CntFirstNameCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="FirstName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.FirstName.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.FirstName.mandatory}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="CntFirstName"
+                                value="#{row.bindings.FirstName.inputValue}"
+                                label="#{bindings.ContactsTable.hints.FirstName.label}"
+                                required="#{bindings.ContactsTable.hints.FirstName.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.FirstName.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.FirstName.displayWidth}"
+                                maximumLength="100"
+                                readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}">
+                    <f:validator binding="#{row.bindings.FirstName.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntMiddleNameCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="MiddleName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.MiddleName.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.MiddleName.mandatory}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="CntMiddleName"
+                                value="#{row.bindings.MiddleName.inputValue}"
+                                label="#{bindings.ContactsTable.hints.MiddleName.label}"
+                                required="#{bindings.ContactsTable.hints.MiddleName.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.MiddleName.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.MiddleName.displayWidth}"
+                                maximumLength="40"
+                                readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}">
+                    <f:validator binding="#{row.bindings.MiddleName.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntLastNameCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="LastName"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.LastName.label}"
+                                    showRequired="true" id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="CntLastName"
+                                value="#{row.bindings.LastName.inputValue}"
+                                label="#{bindings.ContactsTable.hints.LastName.label}"
+                                required="true"
+                                rows="#{bindings.ContactsTable.hints.LastName.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.LastName.displayWidth}"
+                                maximumLength="100"
+                                readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}">
+                    <f:validator binding="#{row.bindings.LastName.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntTitleCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="Title"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.Title.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.Title.mandatory}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputText id="CntTitle"
+                                value="#{row.bindings.Title.inputValue}"
+                                label="#{bindings.ContactsTable.hints.Title.label}"
+                                required="#{bindings.ContactsTable.hints.Title.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.Title.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.Title.displayWidth}"
+                                maximumLength="20"
+                                readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}">
+                    <f:validator binding="#{row.bindings.Title.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntContentOwnerCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="Name" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.Name.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:inputText id="CntContentOwner"
+                                value="#{row.bindings.Name.inputValue}"
+                                label="#{bindings.ContactsTable.hints.Name.label}"
+                                required="true"
+                                rows="#{bindings.ContactsTable.hints.Name.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.Name.displayWidth}"
+                                maximumLength="400" readOnly="true">
+                    <f:validator binding="#{row.bindings.Name.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntSiteCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="Site"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.Site.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="CntSite"
+                                value="#{row.bindings.Site.inputValue}"
+                                label="#{bindings.ContactsTable.hints.Site.label}"
+                                required="#{bindings.ContactsTable.hints.Site.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.Site.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.Site.displayWidth}"
+                                maximumLength="400" readOnly="true">
+                    <f:validator binding="#{row.bindings.Site.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntJobRoleCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="JobRole"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.JobRole.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.JobRole.mandatory}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:selectOneChoice id="CntJobRole"
+                                      value="#{row.bindings.JobRole.inputValue}"
+                                      label="#{bindings.ContactsTable.hints.JobRole.label}"
+                                      required="#{bindings.ContactsTable.hints.JobRole.mandatory}"
+                                      readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}">
+                    <f:selectItems value="#{row.bindings.JobRole.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="CntGenderCol" sortable="true" filterable="true"
+                           noWrap="true" width="100" sortProperty="Gender"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.Gender.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.Gender.mandatory}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:selectOneChoice id="CntGender"
+                                      value="#{row.bindings.Gender.inputValue}"
+                                      label="#{bindings.ContactsTable.hints.Gender.label}"
+                                      required="#{bindings.ContactsTable.hints.Gender.mandatory}"
+                                      readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}"
+                                      unselectedLabel="">
+                    <af:selectItem id="si0" value="M" label="Male"/>
+                    <af:selectItem id="si1" value="F" label="Female"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="CntPronunciationCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="Pronunciation" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.Pronunciation.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.Pronunciation.mandatory}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:inputText id="CntPronunciation"
+                                value="#{row.bindings.Pronunciation.inputValue}"
+                                label="#{bindings.ContactsTable.hints.Pronunciation.label}"
+                                required="#{bindings.ContactsTable.hints.Pronunciation.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.Pronunciation.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.Pronunciation.displayWidth}"
+                                maximumLength="400"
+                                readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}">
+                    <f:validator binding="#{row.bindings.Pronunciation.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntJobTitleCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="JobTitle"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.JobTitle.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.JobTitle.mandatory}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:inputText id="CntJobTitle"
+                                value="#{row.bindings.JobTitle.inputValue}"
+                                label="#{bindings.ContactsTable.hints.JobTitle.label}"
+                                required="#{bindings.ContactsTable.hints.JobTitle.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.JobTitle.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.JobTitle.displayWidth}"
+                                maximumLength="4000"
+                                readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}">
+                    <f:validator binding="#{row.bindings.JobTitle.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntWorkEmailCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="WorkEmail" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.WorkEmail.label}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:inputText id="CntWorkEmail"
+                                value="#{row.bindings.WorkEmail.inputValue}"
+                                label="#{bindings.ContactsTable.hints.WorkEmail.label}"
+                                required="#{bindings.ContactsTable.hints.WorkEmail.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.WorkEmail.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.WorkEmail.displayWidth}"
+                                maximumLength="255" readOnly="true"
+                                shortDesc="#{bindings.ContactsTable.hints.WorkEmail.tooltip}">
+                    <f:validator binding="#{row.bindings.WorkEmail.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntWorkPhoneCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="WorkPhone" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.WorkPhone.label}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <af:inputText id="CntWorkPhone"
+                                value="#{row.bindings.WorkPhone.inputValue}"
+                                label="#{bindings.ContactsTable.hints.WorkPhone.label}"
+                                required="#{bindings.ContactsTable.hints.WorkPhone.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.WorkPhone.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.WorkPhone.displayWidth}"
+                                maximumLength="30" readOnly="true">
+                    <f:validator binding="#{row.bindings.WorkPhone.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntWorkFaxCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="WorkFax"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.WorkFax.label}"
+                                    id="ol12"/>
+                  </f:facet>
+                  <af:inputText id="CntWorkFax"
+                                value="#{row.bindings.WorkFax.inputValue}"
+                                label="#{bindings.ContactsTable.hints.WorkFax.label}"
+                                required="#{bindings.ContactsTable.hints.WorkFax.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.WorkFax.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.WorkFax.displayWidth}"
+                                maximumLength="40" readOnly="true">
+                    <f:validator binding="#{row.bindings.WorkFax.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntCellPhoneCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CellPhone" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.CellPhone.label}"
+                                    id="ol13"/>
+                  </f:facet>
+                  <af:inputText id="CntCellPhone"
+                                value="#{row.bindings.CellPhone.inputValue}"
+                                label="#{bindings.ContactsTable.hints.CellPhone.label}"
+                                required="#{bindings.ContactsTable.hints.CellPhone.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.CellPhone.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.CellPhone.displayWidth}"
+                                maximumLength="255" readOnly="true"
+                                shortDesc="#{bindings.ContactsTable.hints.CellPhone.tooltip}">
+                    <f:validator binding="#{row.bindings.CellPhone.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntActiveFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ActiveFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.ActiveFlag.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.ActiveFlag.mandatory}"
+                                    id="ol14"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="CntActiveFlag"
+                                            label="#{bindings.ContactsTable.hints.ActiveFlag.label}"
+                                            value="#{CntActiveFlagcheckboxInTable.value}"
+                                            readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="CntSendNewsletterFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="SendNewsletterFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.SendNewsletterFlag.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.SendNewsletterFlag.mandatory}"
+                                    id="ol15"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="CntSendNewsletterFlag"
+                                            label="#{bindings.ContactsTable.hints.SendNewsletterFlag.label}"
+                                            value="#{CntSendNewsletterFlagcheckboxInTable.value}"
+                                            readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="CntNeverMailFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="NeverMailFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.NeverMailFlag.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.NeverMailFlag.mandatory}"
+                                    id="ol16"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="CntNeverMailFlag"
+                                            label="#{bindings.ContactsTable.hints.NeverMailFlag.label}"
+                                            value="#{CntNeverMailFlagcheckboxInTable.value}"
+                                            readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="CntNeverEmailFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="NeverEmailFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.NeverEmailFlag.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.NeverEmailFlag.mandatory}"
+                                    id="ol17"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="CntNeverEmailFlag"
+                                            label="#{bindings.ContactsTable.hints.NeverEmailFlag.label}"
+                                            value="#{CntNeverEmailFlagcheckboxInTable.value}"
+                                            readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="CntNeverCallFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="NeverCallFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.NeverCallFlag.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.NeverCallFlag.mandatory}"
+                                    id="ol18"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="CntNeverCallFlag"
+                                            label="#{bindings.ContactsTable.hints.NeverCallFlag.label}"
+                                            value="#{CntNeverCallFlagcheckboxInTable.value}"
+                                            readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="CntTimezoneCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="Timezone"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.Timezone.label}"
+                                    showRequired="#{bindings.ContactsTable.hints.Timezone.mandatory}"
+                                    id="ol19"/>
+                  </f:facet>
+                  <af:inputText id="CntTimezone"
+                                value="#{row.bindings.Timezone.inputValue}"
+                                label="#{bindings.ContactsTable.hints.Timezone.label}"
+                                required="#{bindings.ContactsTable.hints.Timezone.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.Timezone.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.Timezone.displayWidth}"
+                                maximumLength="40"
+                                readOnly="#{(!(jhsUserRoles['RM, ActOnly, ADMIN, ActOnly, AllButTitl, AllButAdmn'])) or (!(pageFlowScope.ContactsTable.newRow))}">
+                    <f:validator binding="#{row.bindings.Timezone.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntCreatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CreatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.CreatedBy.label}"
+                                    id="ol20"/>
+                  </f:facet>
+                  <af:inputText id="CntCreatedBy"
+                                value="#{row.bindings.CreatedBy.inputValue}"
+                                label="#{bindings.ContactsTable.hints.CreatedBy.label}"
+                                required="#{bindings.ContactsTable.hints.CreatedBy.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.CreatedBy.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.CreatedBy.displayWidth}"
+                                maximumLength="40" readOnly="true">
+                    <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntCreatedBySearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedBySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.CreatedBySearch.label}"
+                                    id="ol21"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedBySearch}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="CntCreatedBySearch"
+                                value="#{row.bindings.CreatedBySearch.inputValue}"
+                                label="#{bindings.ContactsTable.hints.CreatedBySearch.label}"
+                                required="#{bindings.ContactsTable.hints.CreatedBySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.ContactsTable.hints.CreatedBySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="CntLastUpdatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="LastUpdatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.LastUpdatedBy.label}"
+                                    id="ol22"/>
+                  </f:facet>
+                  <af:inputText id="CntLastUpdatedBy"
+                                value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                label="#{bindings.ContactsTable.hints.LastUpdatedBy.label}"
+                                required="#{bindings.ContactsTable.hints.LastUpdatedBy.mandatory}"
+                                rows="#{bindings.ContactsTable.hints.LastUpdatedBy.displayHeight}"
+                                columns="#{bindings.ContactsTable.hints.LastUpdatedBy.displayWidth}"
+                                maximumLength="40" readOnly="true">
+                    <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CntLastUpdatedbySearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LastUpdatedbySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContactsTable.hints.LastUpdatedbySearch.label}"
+                                    id="ol23"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdatedbySearch}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="CntLastUpdatedbySearch"
+                                value="#{row.bindings.LastUpdatedbySearch.inputValue}"
+                                label="#{bindings.ContactsTable.hints.LastUpdatedbySearch.label}"
+                                required="#{bindings.ContactsTable.hints.LastUpdatedbySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.ContactsTable.hints.LastUpdatedbySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

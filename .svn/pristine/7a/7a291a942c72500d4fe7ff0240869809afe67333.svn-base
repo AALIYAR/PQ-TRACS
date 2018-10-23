@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="CatalogPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'ADMIN'}"/>
+  </parameters>
+  <executables>
+    <iterator id="CatalogIterator" Binds="CatalogNumberSequenceView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="CatalogIteratorCatalogNumberSequenceViewCriteriaQuery"
+                  Binds="CatalogIterator"
+                  Criteria="CatalogNumberSequenceViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="ContentOwner"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <taskFlow id="LovTaskFlow"
+              taskFlowId="#{pageFlowScope.jhsLovTaskFlowManager.currentTaskFlowId}"
+              activation="deferred"
+              parametersMap="#{pageFlowScope.jhsLovTaskFlowManager.currentParamMap}"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings>
+    <attributeValues id="CatalogDescription" IterBinding="CatalogIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CatalogCatalogRootMinimum"
+                     IterBinding="CatalogIterator">
+      <AttrNames>
+        <Item Value="CatalogRootMinimum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CatalogCatalogRootMaximum"
+                     IterBinding="CatalogIterator">
+      <AttrNames>
+        <Item Value="CatalogRootMaximum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CatalogCatalogRootNextval"
+                     IterBinding="CatalogIterator">
+      <AttrNames>
+        <Item Value="CatalogRootNextval"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CatalogCatalogSuffixStart"
+                     IterBinding="CatalogIterator">
+      <AttrNames>
+        <Item Value="CatalogSuffixStart"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CatalogIterator" id="CatalogProductLine"
+          Uses="LOV_ProductLine" StaticList="false"/>
+    <attributeValues id="CatalogContentOwnerId" IterBinding="CatalogIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CatalogContentOwner" IterBinding="CatalogIterator">
+      <AttrNames>
+        <Item Value="ContentOwner"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CatalogCreatedBy" IterBinding="CatalogIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CatalogCreatedDate" IterBinding="CatalogIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CatalogLastUpdatedBy" IterBinding="CatalogIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="CatalogLastUpdatedDate" IterBinding="CatalogIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="CatalogTable" IterBinding="CatalogIterator">
+      <nodeDefinition Name="Catalog"
+                      DefName="com.pq.tracs.model.dao.CatalogNumberSequenceView">
+        <AttrNames>
+          <Item Value="Description"/>
+          <Item Value="CatalogRootMinimum"/>
+          <Item Value="CatalogRootMaximum"/>
+          <Item Value="CatalogRootNextval"/>
+          <Item Value="CatalogSuffixStart"/>
+          <Item Value="ProductLine"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="ContentOwner"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstCatalog" IterBinding="CatalogIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousCatalog" IterBinding="CatalogIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextCatalog" IterBinding="CatalogIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastCatalog" IterBinding="CatalogIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyCatalog" IterBinding="CatalogIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{pageFlowScope.rowKeyStrCatalog}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateCatalog" IterBinding="CatalogIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteCatalog" IterBinding="CatalogIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

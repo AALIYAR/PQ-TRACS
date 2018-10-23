@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="OvrAttributeTypesPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'ADMIN'}"/>
+  </parameters>
+  <executables>
+    <iterator id="OvrAttributeTypesIterator" Binds="TraxOvrAttributeTypeView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="OvrAttributeTypesIteratorTraxOvrAttributeTypeSearchQuery"
+                  Binds="OvrAttributeTypesIterator"
+                  Criteria="TraxOvrAttributeTypeSearch"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttributeType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <list IterBinding="OvrAttributeTypesIterator"
+          id="OATContentSource" Uses="LOV_ContentSource" StaticList="false"/>
+    <attributeValues id="OATAttributeType"
+                     IterBinding="OvrAttributeTypesIterator">
+      <AttrNames>
+        <Item Value="AttributeType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OATDataType" IterBinding="OvrAttributeTypesIterator">
+      <AttrNames>
+        <Item Value="DataType"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OvrAttributeTypesIterator"
+          id="OATCodeSet" Uses="LOV_CodeSet" StaticList="false"/>
+    <attributeValues id="OATTrmsValue" IterBinding="OvrAttributeTypesIterator">
+      <AttrNames>
+        <Item Value="TrmsValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OATCreatedBy" IterBinding="OvrAttributeTypesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OATCreatedDate"
+                     IterBinding="OvrAttributeTypesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OATLastUpdatedBy"
+                     IterBinding="OvrAttributeTypesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OATLastUpdatedDate"
+                     IterBinding="OvrAttributeTypesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrAttributeTypesTable" IterBinding="OvrAttributeTypesIterator">
+      <nodeDefinition Name="OvrAttributeTypes"
+                      DefName="com.pq.tracs.model.vo.TraxOvrAttributeTypeView">
+        <AttrNames>
+          <Item Value="ContentSource"/>
+          <Item Value="AttributeType"/>
+          <Item Value="DataType"/>
+          <Item Value="CodeSet"/>
+          <Item Value="TrmsValue"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrAttributeTypes" IterBinding="OvrAttributeTypesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrAttributeTypes"
+            IterBinding="OvrAttributeTypesIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextOvrAttributeTypes" IterBinding="OvrAttributeTypesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrAttributeTypes" IterBinding="OvrAttributeTypesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrAttributeTypes"
+            IterBinding="OvrAttributeTypesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrAttributeTypes}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrAttributeTypes" IterBinding="OvrAttributeTypesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrAttributeTypes" IterBinding="OvrAttributeTypesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,19 @@
+
+#macro (DEPENDS_ON_ITEM_PROPS_CUSTOM)
+#if ($JHS.current.item.hasDependentItemToClear) valueChangeListener="#{#DEPENDS_ON_ITEM_BEAN().updateModelValue}"#end#end
+
+#macro (DEPENDS_ON_ITEM_PROPS_FORM_CUSTOM)
+#set ($includePrefix = ${JHS.engine.getTemplateContext("includeContext")})
+#DEPENDS_ON_ITEM_PROPS_CUSTOM() #end
+
+#macro (ITEM_VALUE_IN_FORM_WITH_PROP $property)
+#if ($JHS.current.pageComponent.hasOverflowInline)#ITEM_VALUE_IN_TABLE()#elseif ($JHS.current.item.value=='')$property="#{bindings.${JHS.current.item.bindingName}.inputValue}" #else $property="${JHS.current.item.value}"#end
+#end
+
+#macro (BUTTON_TEXT_IN_FORM_WITH_PROP $property)
+#if ($JHS.current.pageComponent.hasOverflowInline)#BUTTON_TEXT_IN_TABLE()#elseif ($JHS.current.item.dataBound) $property="#{bindings.${JHS.current.item.bindingName}.attributeValue}" #elseif (${JHS.current.item.value}!='') $property="${JHS.nls(${JHS.current.item.value}, "${JHS.current.group.name}_${JHS.current.item.name}")}" #else $property="${JHS.nls(${JHS.current.item.promptInForm}, "${JHS.current.group.name}_${JHS.current.item.name}")}"#end
+#end
+
+#macro (BUTTON_TEXT_IN_TABLE_WITH_PROP $property)
+$property="#if ($JHS.current.item.dataBound)#{row.bindings.${JHS.current.item.attributeName}.attributeValue}#else${JHS.nls(${JHS.current.item.promptInTable}, "${JHS.current.group.name}_${JHS.current.item.name}")}#end"
+#end

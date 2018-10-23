@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.61.92" id="TitleNTCPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="TitleNTCIterator" Binds="NTCTitleView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <variableIterator id="variables">
+      <variable Name="TitleNTCRowKeyVar" Type="java.lang.String"
+                DefaultValue="#{bindings.TitleNTCIterator.currentRowKeyString}"/>
+    </variableIterator>
+    <iterator id="NTCTitleTitlesIterator" Binds="TraxActivityTitleView3"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="NTCTitleTitlesIteratorQuery"
+                  Binds="NTCTitleTitlesIterator"
+                  Criteria="__ImplicitViewCriteria__"
+                  InitialQueryOverridden="true" DefaultQuickSearchAttrName="Id"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="NTCTitleAttachmentsIterator"
+              Binds="TraxActivityAttachmentView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="NTCTitleAttachmentsIteratorTraxActivityAttachmentViewCriteriaQuery"
+                  Binds="NTCTitleAttachmentsIterator"
+                  Criteria="TraxActivityAttachmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttachmentType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <taskFlow id="LovTaskFlow"
+              taskFlowId="#{pageFlowScope.jhsLovTaskFlowManager.currentTaskFlowId}"
+              activation="deferred"
+              parametersMap="#{pageFlowScope.jhsLovTaskFlowManager.currentParamMap}"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings>
+    <attributeValues id="TitleNTCNtcNumber" IterBinding="TitleNTCIterator">
+      <AttrNames>
+        <Item Value="NtcNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleNTCType" IterBinding="TitleNTCIterator">
+      <AttrNames>
+        <Item Value="Type"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="TitleNTCIterator" id="TitleNTCSubType"
+          Uses="LOV_SubType" StaticList="false"/>
+    <list IterBinding="TitleNTCIterator" id="TitleNTCNtcPriority"
+          Uses="LOV_NtcPriority" StaticList="false"/>
+    <button id="TitleNTCSupportDocumentationIncFlag"
+            IterBinding="TitleNTCIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="SupportDocumentationIncFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="TitleNTCIterator" id="TitleNTCCurrentManufactureType"
+          Uses="LOV_CurrentManufactureType" StaticList="false"/>
+    <list IterBinding="TitleNTCIterator" id="TitleNTCNewManufactureType"
+          Uses="LOV_NewManufactureType" StaticList="false"/>
+    <attributeValues id="TitleNTCLastVolumeIssueDate"
+                     IterBinding="TitleNTCIterator">
+      <AttrNames>
+        <Item Value="LastVolumeIssueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleNTCFirstVolumeIssueDate"
+                     IterBinding="TitleNTCIterator">
+      <AttrNames>
+        <Item Value="FirstVolumeIssueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleNTCNewTitle" IterBinding="TitleNTCIterator">
+      <AttrNames>
+        <Item Value="NewTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleNTCNewIssn" IterBinding="TitleNTCIterator">
+      <AttrNames>
+        <Item Value="NewIssn"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleNTCNewEIssn" IterBinding="TitleNTCIterator">
+      <AttrNames>
+        <Item Value="NewEissn"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleNTCDescription" IterBinding="TitleNTCIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleNTCNotes" IterBinding="TitleNTCIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TitleNTCEmailText" IterBinding="TitleNTCIterator">
+      <AttrNames>
+        <Item Value="EmailText"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="FirstTitleNTC" IterBinding="TitleNTCIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousTitleNTC" IterBinding="TitleNTCIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextTitleNTC" IterBinding="TitleNTCIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastTitleNTC" IterBinding="TitleNTCIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <attributeValues id="TitleNTCRowKey" IterBinding="variables">
+      <AttrNames>
+        <Item Value="TitleNTCRowKeyVar"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="SetCurrentRowWithKeyTitleNTC" IterBinding="TitleNTCIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{bindings.TitleNTCRowKey}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateTitleNTC" IterBinding="TitleNTCIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <attributeValues id="NTCTitleTitlesId" IterBinding="NTCTitleTitlesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleTitlesActivityId"
+                     IterBinding="NTCTitleTitlesIterator">
+      <AttrNames>
+        <Item Value="ActivityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleTitlesTitleId"
+                     IterBinding="NTCTitleTitlesIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleTitlesTargetTrackingNo"
+                     IterBinding="NTCTitleTitlesIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleTitlesCatalogNumber"
+                     IterBinding="NTCTitleTitlesIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleTitlesLongTitle"
+                     IterBinding="NTCTitleTitlesIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleTitlesAccountNum"
+                     IterBinding="NTCTitleTitlesIterator">
+      <AttrNames>
+        <Item Value="AccountNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleTitlesAccountName"
+                     IterBinding="NTCTitleTitlesIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="NTCTitleTitlesPrimaryFlag" IterBinding="NTCTitleTitlesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="NTCTitleTitlesAddedDate"
+                     IterBinding="NTCTitleTitlesIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NTCTitleTitlesTable" IterBinding="NTCTitleTitlesIterator">
+      <nodeDefinition Name="NTCTitleTitles"
+                      DefName="com.pq.tracs.model.vo.TraxActivityTitleView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ActivityId"/>
+          <Item Value="TitleId"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="AccountNum"/>
+          <Item Value="AccountName"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="AddedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNTCTitleTitles" IterBinding="NTCTitleTitlesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousNTCTitleTitles" IterBinding="NTCTitleTitlesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextNTCTitleTitles" IterBinding="NTCTitleTitlesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastNTCTitleTitles" IterBinding="NTCTitleTitlesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyNTCTitleTitles"
+            IterBinding="NTCTitleTitlesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNTCTitleTitles}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateNTCTitleTitles" IterBinding="NTCTitleTitlesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteNTCTitleTitles" IterBinding="NTCTitleTitlesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="NTCTitleAttachmentsName"
+                     IterBinding="NTCTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleAttachmentsAttachmentType"
+                     IterBinding="NTCTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="AttachmentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleAttachmentsAttachment"
+                     IterBinding="NTCTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleAttachmentsAttachmentDL"
+                     IterBinding="NTCTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleAttachmentsDescription"
+                     IterBinding="NTCTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleAttachmentsFileSize"
+                     IterBinding="NTCTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="FileSize"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleAttachmentsCreatedBy"
+                     IterBinding="NTCTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleAttachmentsCreatedDate"
+                     IterBinding="NTCTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleAttachmentsLastUpdatedBy"
+                     IterBinding="NTCTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="NTCTitleAttachmentsLastUpdatedDate"
+                     IterBinding="NTCTitleAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="NTCTitleAttachmentsTable"
+          IterBinding="NTCTitleAttachmentsIterator">
+      <nodeDefinition Name="NTCTitleAttachments"
+                      DefName="com.pq.tracs.model.vo.TraxActivityAttachmentView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="AttachmentType"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Description"/>
+          <Item Value="FileSize"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstNTCTitleAttachments"
+            IterBinding="NTCTitleAttachmentsIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousNTCTitleAttachments"
+            IterBinding="NTCTitleAttachmentsIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextNTCTitleAttachments"
+            IterBinding="NTCTitleAttachmentsIterator" RequiresUpdateModel="true"
+            Action="next"/>
+    <action id="LastNTCTitleAttachments"
+            IterBinding="NTCTitleAttachmentsIterator" RequiresUpdateModel="true"
+            Action="last"/>
+    <action id="SetCurrentRowWithKeyNTCTitleAttachments"
+            IterBinding="NTCTitleAttachmentsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrNTCTitleAttachments}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateNTCTitleAttachments"
+            IterBinding="NTCTitleAttachmentsIterator" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="DeleteNTCTitleAttachments"
+            IterBinding="NTCTitleAttachmentsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

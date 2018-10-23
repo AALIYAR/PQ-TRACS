@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html">
+  <jsp:output omit-xml-declaration="true" doctype-root-element="HTML"
+              doctype-system="http://www.w3.org/TR/html4/loose.dtd"
+              doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view beforePhase="#{jhsPhaseListener.beforePhase}">
+    <af:document title="Tracs" id="doc0" initialFocusId="pt:username">
+      <f:facet name="metaContainer">
+        <trh:script source="/jheadstart/jhs11.js" id="script1"></trh:script>
+      </f:facet>
+      <af:form id="dataForm" defaultCommand="pt:login">
+        <af:pageTemplate id="pt"
+                         viewId="/common/pageTemplates/JhsPageTemplate.jspx">
+          <f:attribute name="showMessagesInline" value="true"/>
+          <f:attribute name="showMenu1" value="false"/>
+          <f:attribute name="showMenu2" value="false"/>
+          <f:facet name="pageContent">
+            <af:panelHeader id="ph" text="Please Login">
+              <af:outputText id="ot" value=""
+                             rendered="#{LoginBean.authenticationFailed}"/>
+              <af:panelFormLayout id="pfl" labelAlignment="start">
+                <f:facet name="footer">
+                  <af:commandButton id="login"
+                                    action="#{LoginBean.authenticateUser}"
+                                    text="Login"/>
+                </f:facet>
+                <af:inputText label="Username" id="username"
+                              clientComponent="true"
+                              value="#{LoginBean.username}" required="true"/>
+                <af:inputText label="Password" id="password"
+                              value="#{LoginBean.password}" secret="true"
+                              required="true"/>
+              </af:panelFormLayout>
+            </af:panelHeader>
+          </f:facet>
+        </af:pageTemplate>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>
+  

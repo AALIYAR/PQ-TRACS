@@ -1,0 +1,860 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="s13TopLc"
+                             partialTriggers=" s13fbb s13SaveButton0 s13CancelButton0 s13SaveButton1 s13CancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text=" #{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'] ? nls['EDIT_TITLE_TITLESUBTA: #{bindings.s13LongTitle.inputValue}'] : nls['VIEW_TITLE_TITLESUBTA: #{bindings.s13LongTitle.inputValue}']} ">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="s13fbb" layout="horizontal"
+                                       rendered="#{ bindings.TitleSubTabIterator.currentRow!=null  and bindings.TitleSubTabIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateTitleSubTab and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="s13First s13Previous s13Next s13Last">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstTitleSubTab.execute}"
+                                             id="s13First" partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.TitleSubTabIterator.rangeStart+bindings.TitleSubTabIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.TitleSubTabIterator.rangeStart+bindings.TitleSubTabIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousTitleSubTab.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="s13Previous"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.TitleSubTabIterator.rangeStart+bindings.TitleSubTabIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.TitleSubTabIterator.rangeStart+bindings.TitleSubTabIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.TitleSubTabIterator.rangeStart+bindings.TitleSubTabIterator.currentRowIndexInRange+1} / #{bindings.TitleSubTabIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextTitleSubTab.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="s13Next" partialSubmit="true"
+                                             rendered="#{bindings.TitleSubTabIterator.rangeStart+bindings.TitleSubTabIterator.currentRowIndexInRange+1 lt bindings.TitleSubTabIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.TitleSubTabIterator.rangeStart+bindings.TitleSubTabIterator.currentRowIndexInRange+1 lt bindings.TitleSubTabIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastTitleSubTab.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="s13Last" partialSubmit="true"
+                                             rendered="#{bindings.TitleSubTabIterator.rangeStart+bindings.TitleSubTabIterator.currentRowIndexInRange+1 lt bindings.TitleSubTabIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.TitleSubTabIterator.rangeStart+bindings.TitleSubTabIterator.currentRowIndexInRange+1 lt bindings.TitleSubTabIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0"></af:group>
+                  <af:group id="gr1">
+                    <af:popup id="confirmDeletePopup0"
+                              binding="#{pageFlowScope.TitleSubTabTable.confirmDeletePopup}">
+                      <af:dialog modal="true" type="okCancel"
+                                 title="Confirm Delete"
+                                 dialogListener="#{pageFlowScope.TitleSubTabTable.handleOK}">
+                        <af:outputText value="Are you sure you want to delete the selected rows?"/>
+                      </af:dialog>
+                    </af:popup>
+                    <af:commandButton id="s13MDB"
+                                      textAndAccessKey="Delete Selected"
+                                      rendered="false">
+                      <af:showPopupBehavior popupId="confirmDeletePopup0"
+                                            align="beforeStart"/>
+                    </af:commandButton>
+                    <af:popup id="noSelectionPopup"
+                              binding="#{pageFlowScope.TitleSubTabTable.noSelectionPopup}">
+                      <af:dialog modal="true" type="cancel"
+                                 title="Select Titles First">
+                        <af:outputText value="You must select at least one row."/>
+                      </af:dialog>
+                    </af:popup>
+                    <af:popup id="addNotePopup"
+                              binding="#{pageFlowScope.TitleSubTabTable.addNotePopup}">
+                      <af:dialog modal="true" type="okCancel" title="Enter Note"
+                                 dialogListener="#{pageFlowScope.TitleSubTabTable.handleAddNoteOK}">
+                        <af:selectOneChoice value="#{pageFlowScope.TitleSubTabTable.newNoteType}"
+                                            label="Title Note" required="false"
+                                            shortDesc="#{bindings.TitleNoteTypeLookup.hints.tooltip}"
+                                            id="noteTypeSelect">
+                          <f:selectItems value="#{bindings.TitleNoteTypeLookup.items}"
+                                         id="noteTypeItems"/>
+                        </af:selectOneChoice>
+                        <af:inputText id="noteToAdd" label="Note"
+                                      converter="oracle.genericDomain" rows="10"
+                                      columns="80"
+                                      value="#{pageFlowScope.TitleSubTabTable.newNote}"/>
+                        <af:outputText value="This note will be applied to the following catalog number(s): #{pageFlowScope.TitleSubTabTable.catalogList}"/>
+                      </af:dialog>
+                    </af:popup>
+                    <af:commandButton id="s13AddNotes"
+                                      textAndAccessKey="Add Note"
+                                      actionListener="#{pageFlowScope.TitleSubTabTable.addNotes}"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="s13Print"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveTitleSubTab.execute}"
+                                      rendered="#{(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="s13SaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="s13CancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.TitleSubTabIterator.findMode!='true'}"
+                       id="s13Sw" defaultFacet="hasRows"
+                       facetName="#{( bindings.TitleSubTabIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="s13NoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="s13FC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="4"
+                                    id="s13FI">
+                  <af:panelLabelAndMessage label="#{bindings.s13CatalogNumber.hints.label}"
+                                           showRequired="#{bindings.s13CatalogNumber.hints.mandatory}"
+                                           id="s13CatalogNumberPlam">
+                    <af:inputText id="s13CatalogNumber"
+                                  showRequired="#{bindings.s13CatalogNumber.hints.mandatory}"
+                                  columns="#{bindings.s13CatalogNumber.hints.displayWidth}"
+                                  maximumLength="40" readOnly="true"
+                                  value="#{pageFlowScope.s13CatalogNumberLovItem.lovFieldValue}"
+                                  autoSubmit="true"
+                                  valueChangeListener="#{pageFlowScope.s13CatalogNumberLovItem.validateWithLov}"
+                                  binding="#{pageFlowScope.s13CatalogNumberLovItem.lovField}"
+                                  simple="true">
+                      <f:validator binding="#{bindings.s13CatalogNumber.validator}"/>
+                    </af:inputText>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl0" valign="top"
+                                           layout="horizontal">
+                        <af:commandLink immediate="true" partialSubmit="true"
+                                        rendered="#{!(true)}" id="cl0"
+                                        actionListener="#{pageFlowScope.s13CatalogNumberLovItem.lovIconClicked}">
+                          <af:image source="/jheadstart/images/lov.png"
+                                    id="s13CatalogNumberIcon"
+                                    clientComponent="true"/>
+                        </af:commandLink>
+                        <af:commandButton text="hidden" id="cb2"
+                                          rendered="false"
+                                          action="#{pageFlowScope.s13CatalogNumberLovItem.validationAction}"
+                                          partialSubmit="true" immediate="true"
+                                          binding="#{pageFlowScope.s13CatalogNumberLovItem.validationButton}"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:inputText id="s13TargetTrackingNo"
+                                value="#{bindings.s13TargetTrackingNo.inputValue}"
+                                label="#{bindings.s13TargetTrackingNo.hints.label}"
+                                required="#{bindings.s13TargetTrackingNo.hints.mandatory}"
+                                rows="#{bindings.s13TargetTrackingNo.hints.displayHeight}"
+                                columns="#{bindings.s13TargetTrackingNo.hints.displayWidth}"
+                                maximumLength="38"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                shortDesc="#{bindings.s13TargetTrackingNo.hints.tooltip}">
+                    <f:validator binding="#{bindings.s13TargetTrackingNo.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s13TargetTrackingNo.format}"/>
+                  </af:inputText>
+                  <af:inputText id="s13LongTitleNpr"
+                                value="#{bindings.s13LongTitle.inputValue}"
+                                label="#{bindings.s13LongTitle.hints.label}"
+                                required="#{bindings.s13LongTitle.hints.mandatory}"
+                                rows="#{bindings.s13LongTitle.hints.displayHeight}"
+                                columns="30" maximumLength="4000"
+                                readOnly="true"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}"
+                                shortDesc="#{bindings.s13LongTitle.hints.tooltip}">
+                    <f:validator binding="#{bindings.s13LongTitle.validator}"/>
+                  </af:inputText>
+                  <af:panelLabelAndMessage id="s13LongTitlePlm"
+                                           label="#{bindings.s13LongTitle.hints.label}"
+                                           shortDesc="#{bindings.s13LongTitle.hints.tooltip}"
+                                           rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:commandLink id="s13LongTitle"
+                                    text="#{bindings.s13LongTitle.attributeValue}"
+                                    shortDesc="#{bindings.s13LongTitle.hints.tooltip}"
+                                    action="LaunchTab">
+                      <af:setActionListener from="Titles"
+                                            to="#{jhsDynTabLauncher.taskFlowName}"/>
+                      <af:setActionListener from="TTL#{bindings.s13TitleId.inputValue}"
+                                            to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                      <af:setActionListener from="Title #{bindings.s13CatalogNumber.inputValue}"
+                                            to="#{jhsDynTabLauncher.label}"/>
+                      <af:setActionListener from="#{bindings.s13TitleId.inputValue}"
+                                            to="#{jhsDynTabLauncher.parameters.rowKeyValueTitles}"/>
+                      <af:setActionListener from="#{jhsDynTabLauncher}"
+                                            to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                    </af:commandLink>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl1" valign="top"
+                                           layout="horizontal"></af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:inputText id="s13ShortTitle"
+                                value="#{bindings.s13ShortTitle.inputValue}"
+                                label="#{bindings.s13ShortTitle.hints.label}"
+                                required="#{bindings.s13ShortTitle.hints.mandatory}"
+                                rows="#{bindings.s13ShortTitle.hints.displayHeight}"
+                                columns="30" maximumLength="30" readOnly="true"
+                                shortDesc="#{bindings.s13ShortTitle.hints.tooltip}">
+                    <f:validator binding="#{bindings.s13ShortTitle.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s13ContentOwner"
+                                value="#{bindings.s13ContentOwner.inputValue}"
+                                label="#{bindings.s13ContentOwner.hints.label}"
+                                required="#{bindings.s13ContentOwner.hints.mandatory}"
+                                rows="#{bindings.s13ContentOwner.hints.displayHeight}"
+                                columns="#{bindings.s13ContentOwner.hints.displayWidth}"
+                                maximumLength="400" readOnly="true">
+                    <f:validator binding="#{bindings.s13ContentOwner.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s13ContentOwnerCount"
+                                value="#{bindings.s13ContentOwnerCount.inputValue}"
+                                label="#{bindings.s13ContentOwnerCount.hints.label}"
+                                required="#{bindings.s13ContentOwnerCount.hints.mandatory}"
+                                rows="#{bindings.s13ContentOwnerCount.hints.displayHeight}"
+                                columns="#{bindings.s13ContentOwnerCount.hints.displayWidth}"
+                                readOnly="true"
+                                shortDesc="#{bindings.s13ContentOwnerCount.hints.tooltip}">
+                    <f:validator binding="#{bindings.s13ContentOwnerCount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s13ContentOwnerCount.format}"/>
+                  </af:inputText>
+                  <af:inputText id="s13PublicationStartYear"
+                                value="#{bindings.s13PublicationStartYear.inputValue}"
+                                label="#{bindings.s13PublicationStartYear.hints.label}"
+                                required="#{bindings.s13PublicationStartYear.hints.mandatory}"
+                                rows="#{bindings.s13PublicationStartYear.hints.displayHeight}"
+                                columns="#{bindings.s13PublicationStartYear.hints.displayWidth}"
+                                maximumLength="4" readOnly="true">
+                    <f:validator binding="#{bindings.s13PublicationStartYear.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s13PublicationEndYear"
+                                value="#{bindings.s13PublicationEndYear.inputValue}"
+                                label="#{bindings.s13PublicationEndYear.hints.label}"
+                                required="#{bindings.s13PublicationEndYear.hints.mandatory}"
+                                rows="#{bindings.s13PublicationEndYear.hints.displayHeight}"
+                                columns="#{bindings.s13PublicationEndYear.hints.displayWidth}"
+                                maximumLength="4" readOnly="true">
+                    <f:validator binding="#{bindings.s13PublicationEndYear.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s13EfD"
+                                value="#{bindings.s13EffectiveDate.inputValue}"
+                                label="#{bindings.s13EffectiveDate.hints.label}"
+                                required="#{bindings.s13EffectiveDate.hints.mandatory}"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputDate id="s13ExD"
+                                value="#{bindings.s13ExpiresDate.inputValue}"
+                                label="#{bindings.s13ExpiresDate.hints.label}"
+                                required="#{bindings.s13ExpiresDate.hints.mandatory}"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                disabled="true">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:selectOneChoice id="s13St"
+                                      value="#{bindings.s13Status.inputValue}"
+                                      label="#{bindings.s13Status.hints.label}"
+                                      required="#{bindings.s13Status.hints.mandatory}"
+                                      readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{s13StatusDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{bindings.s13Status.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="s13SSt"
+                                      value="#{bindings.s13SubStatus.inputValue}"
+                                      label="#{bindings.s13SubStatus.hints.label}"
+                                      required="#{bindings.s13SubStatus.hints.mandatory}"
+                                      readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}">
+                    <f:selectItems value="#{bindings.s13SubStatus.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputDate id="s13BFD"
+                                value="#{bindings.s13BackfileFromDate.inputValue}"
+                                label="#{bindings.s13BackfileFromDate.hints.label}"
+                                required="#{bindings.s13BackfileFromDate.hints.mandatory}"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputDate id="s13BTD"
+                                value="#{bindings.s13BackfileToDate.inputValue}"
+                                label="#{bindings.s13BackfileToDate.hints.label}"
+                                required="#{bindings.s13BackfileToDate.hints.mandatory}"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:selectBooleanCheckbox id="s13BVE"
+                                            value="#{bindings.s13BackfileViaEfeedFlag.inputValue}"
+                                            label="#{bindings.s13BackfileViaEfeedFlag.hints.label}"
+                                            readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"></af:selectBooleanCheckbox>
+                  <af:inputDate id="s13EDA"
+                                value="#{bindings.s13EfeedDateAvailable.inputValue}"
+                                label="#{bindings.s13EfeedDateAvailable.hints.label}"
+                                required="#{bindings.s13EfeedDateAvailable.hints.mandatory}"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:selectBooleanCheckbox id="s13EfF"
+                                            value="#{bindings.s13EfeedFlag.inputValue}"
+                                            label="#{bindings.s13EfeedFlag.hints.label}"
+                                            readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"></af:selectBooleanCheckbox>
+                  <af:inputText id="s13EPC"
+                                value="#{bindings.s13EfeedProtocolChangeDays.inputValue}"
+                                label="#{bindings.s13EfeedProtocolChangeDays.hints.label}"
+                                required="#{bindings.s13EfeedProtocolChangeDays.hints.mandatory}"
+                                rows="#{bindings.s13EfeedProtocolChangeDays.hints.displayHeight}"
+                                columns="#{bindings.s13EfeedProtocolChangeDays.hints.displayWidth}"
+                                maximumLength="38"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}">
+                    <f:validator binding="#{bindings.s13EfeedProtocolChangeDays.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s13EfeedProtocolChangeDays.format}"/>
+                  </af:inputText>
+                  <af:selectBooleanCheckbox id="s13ExF"
+                                            value="#{bindings.s13ExceptionFlag.inputValue}"
+                                            label="#{bindings.s13ExceptionFlag.hints.label}"
+                                            readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"></af:selectBooleanCheckbox>
+                  <af:selectOneChoice id="s13Exc"
+                                      value="#{bindings.s13Exclusivity.inputValue}"
+                                      label="#{bindings.s13Exclusivity.hints.label}"
+                                      required="#{bindings.s13Exclusivity.hints.mandatory}"
+                                      readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}">
+                    <f:selectItems value="#{bindings.s13Exclusivity.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="s13PrimaryClassification"
+                                value="#{bindings.s13PrimaryClassification.inputValue}"
+                                label="#{bindings.s13PrimaryClassification.hints.label}"
+                                required="#{bindings.s13PrimaryClassification.hints.mandatory}"
+                                rows="#{bindings.s13PrimaryClassification.hints.displayHeight}"
+                                columns="#{bindings.s13PrimaryClassification.hints.displayWidth}"
+                                maximumLength="100" readOnly="true"
+                                shortDesc="#{bindings.s13PrimaryClassification.hints.tooltip}">
+                    <f:validator binding="#{bindings.s13PrimaryClassification.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s13RD"
+                                value="#{bindings.s13RemovalDate.inputValue}"
+                                label="#{bindings.s13RemovalDate.hints.label}"
+                                required="#{bindings.s13RemovalDate.hints.mandatory}"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:selectOneChoice id="s13RTR"
+                                      value="#{bindings.s13RightsToBeRetained.inputValue}"
+                                      label="#{bindings.s13RightsToBeRetained.hints.label}"
+                                      required="#{bindings.s13RightsToBeRetained.hints.mandatory}"
+                                      readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}">
+                    <f:selectItems value="#{bindings.s13RightsToBeRetained.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="s13VYS"
+                                value="#{bindings.s13VolumeYearStart.inputValue}"
+                                label="#{bindings.s13VolumeYearStart.hints.label}"
+                                required="#{bindings.s13VolumeYearStart.hints.mandatory}"
+                                rows="#{bindings.s13VolumeYearStart.hints.displayHeight}"
+                                columns="#{bindings.s13VolumeYearStart.hints.displayWidth}"
+                                maximumLength="100"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}">
+                    <f:validator binding="#{bindings.s13VolumeYearStart.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s13VYE"
+                                value="#{bindings.s13VolumeYearEnd.inputValue}"
+                                label="#{bindings.s13VolumeYearEnd.hints.label}"
+                                required="#{bindings.s13VolumeYearEnd.hints.mandatory}"
+                                rows="#{bindings.s13VolumeYearEnd.hints.displayHeight}"
+                                columns="#{bindings.s13VolumeYearEnd.hints.displayWidth}"
+                                maximumLength="100"
+                                readOnly="#{!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}">
+                    <f:validator binding="#{bindings.s13VolumeYearEnd.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s13CB"
+                                value="#{bindings.s13CreatedBy.inputValue}"
+                                label="#{bindings.s13CreatedBy.hints.label}"
+                                required="#{bindings.s13CreatedBy.hints.mandatory}"
+                                rows="#{bindings.s13CreatedBy.hints.displayHeight}"
+                                columns="#{bindings.s13CreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s13CreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s13CD"
+                                value="#{bindings.s13CreatedDate.inputValue}"
+                                label="#{bindings.s13CreatedDate.hints.label}"
+                                required="#{bindings.s13CreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="s13LUB"
+                                value="#{bindings.s13LastUpdatedBy.inputValue}"
+                                label="#{bindings.s13LastUpdatedBy.hints.label}"
+                                required="#{bindings.s13LastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.s13LastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.s13LastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s13LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s13LUD"
+                                value="#{bindings.s13LastUpdatedDate.inputValue}"
+                                label="#{bindings.s13LastUpdatedDate.hints.label}"
+                                required="#{bindings.s13LastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveTitleSubTab.execute}"
+                                            rendered="#{(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) and (!pageFlowScope.hideSaveButton)}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="s13SaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="s13CancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_TITLESCONTRACTRIGHT']}"
+                               partialTriggers=" s13TopLc s130DeleteDialog qsAreas130SearchOptions s130PC:s130delrmTM s130PC:s130Tab:s130delrm s130PC:s130Tab:s130delrl"
+                               id="s130TopLcSdi"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                               disabled="#{!jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+              <af:panelGroupLayout layout="vertical" id="s130TopLc"
+                                   partialTriggers=" s13TopLc s130DeleteDialog qsAreas130SearchOptions s130PC:s130delrmTM s130PC:s130Tab:s130delrm s130PC:s130Tab:s130delrl"
+                                   rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g1">
+                  <af:panelGroupLayout id="modelSearchAreas130"
+                                       rendered="#{!pageFlowScope.createModes.CreateTitlesContractRight and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreas130SearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.TitlesContractRightIteratorJContractTitleContractRightViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.TitlesContractRightIteratorJContractTitleContractRightViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.TitlesContractRightIteratorJContractTitleContractRightViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl2">
+                  <af:panelCollection id="s130PC" featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="s130tbb"
+                                    rendered="#{ bindings.TitlesContractRightIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstTitlesContractRight.execute}"
+                                                id="s130First"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousTitlesContractRight.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="s130Previous"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextTitlesContractRight.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="s130Next"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastTitlesContractRight.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="s130Last"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="s130delrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true">
+                          <af:showPopupBehavior popupId="::s130DeletePopup"/>
+                        </af:commandMenuItem>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi0">
+                          <af:exportCollectionActionListener exportedId="s130Tab"
+                                                             type="excelHTML"
+                                                             filename="TitlesContractRight.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl1"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="s130Tab"
+                                                             type="excelHTML"
+                                                             filename="TitlesContractRight.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print" id="s130Print"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.TitlesContractRightIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="s130Tab" contentDelivery="immediate"
+                              value="#{bindings.TitlesContractRightTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.TitlesContractRightTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.TitlesContractRightTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.TitlesContractRightTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.TitlesContractRightTable.rangeSize}"
+                              autoHeightRows="#{bindings.TitlesContractRightTable.estimatedRowCount lt 5 ? 5 : bindings.TitlesContractRightTable.estimatedRowCount lt bindings.TitlesContractRightTable.rangeSize ? bindings.TitlesContractRightTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.TitlesContractRightTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.TitlesContractRightIteratorJContractTitleContractRightViewCriteriaQuery.processQuery}"
+                              binding="#{pageFlowScope.TitlesContractRightTable.table}"
+                              partialTriggers=":::qsAreas130SearchOptions :::s130PC ::s130First ::s130Previous ::s130Next ::s130Last"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_TITLESCONTRACTRIGHT']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="s130TablePopup" childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="s130delrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true">
+                              <af:showPopupBehavior popupId=":::s130DeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="s130ActionColumn" width="20" align="center"
+                                 headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl3">
+                          <af:commandImageLink id="s130delrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::s130DeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="s130RNoCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="RuleNumber"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.TitlesContractRightTable.hints.RuleNumber.label}"
+                                          id="ol0"/>
+                        </f:facet>
+                        <af:inputText id="s130RNo"
+                                      value="#{row.bindings.RuleNumber.inputValue}"
+                                      label="#{bindings.TitlesContractRightTable.hints.RuleNumber.label}"
+                                      required="#{bindings.TitlesContractRightTable.hints.RuleNumber.mandatory}"
+                                      rows="#{bindings.TitlesContractRightTable.hints.RuleNumber.displayHeight}"
+                                      columns="#{bindings.TitlesContractRightTable.hints.RuleNumber.displayWidth}"
+                                      maximumLength="20" readOnly="true">
+                          <f:validator binding="#{row.bindings.RuleNumber.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="s130PTyCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="PermissionType"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.TitlesContractRightTable.hints.PermissionType.label}"
+                                          id="ol1"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s130PTy"
+                                            value="#{row.bindings.PermissionType.inputValue}"
+                                            label="#{bindings.TitlesContractRightTable.hints.PermissionType.label}"
+                                            required="#{bindings.TitlesContractRightTable.hints.PermissionType.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.PermissionType.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s130RRTCol" sortable="true" noWrap="true"
+                                 width="240"
+                                 sortProperty="RightOrRestrictionType"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.TitlesContractRightTable.hints.RightOrRestrictionType.label}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s130RRT"
+                                            value="#{row.bindings.RightOrRestrictionType.inputValue}"
+                                            label="#{bindings.TitlesContractRightTable.hints.RightOrRestrictionType.label}"
+                                            required="#{bindings.TitlesContractRightTable.hints.RightOrRestrictionType.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.RightOrRestrictionType.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s130IOECol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="IncludesOrExcludes"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.TitlesContractRightTable.hints.IncludesOrExcludes.label}"
+                                          id="ol3"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s130IOE"
+                                            value="#{row.bindings.IncludesOrExcludes.inputValue}"
+                                            label="#{bindings.TitlesContractRightTable.hints.IncludesOrExcludes.label}"
+                                            required="#{bindings.TitlesContractRightTable.hints.IncludesOrExcludes.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.IncludesOrExcludes.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="s130SRFCol" sortable="true" noWrap="true"
+                                 width="100" sortProperty="SalesRestrictionFlag"
+                                 align="center" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.TitlesContractRightTable.hints.SalesRestrictionFlag.label}"
+                                          id="ol4"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="s130SRF"
+                                                  label="#{bindings.TitlesContractRightTable.hints.SalesRestrictionFlag.label}"
+                                                  value="#{s130SalesRestrictionFlagcheckboxInTable.value}"
+                                                  readOnly="true"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="s130CFCol" sortable="true" noWrap="true"
+                                 width="100" sortProperty="ComplexFlag"
+                                 align="center" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.TitlesContractRightTable.hints.ComplexFlag.label}"
+                                          id="ol5"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="s130CF"
+                                                  label="#{bindings.TitlesContractRightTable.hints.ComplexFlag.label}"
+                                                  value="#{s130ComplexFlagcheckboxInTable.value}"
+                                                  readOnly="true"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="s130StCol" sortable="true" noWrap="true"
+                                 width="120" sortProperty="Status"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.TitlesContractRightTable.hints.Status.label}"
+                                          id="ol6"/>
+                        </f:facet>
+                        <af:selectOneChoice id="s130St"
+                                            value="#{row.bindings.Status.inputValue}"
+                                            label="#{bindings.TitlesContractRightTable.hints.Status.label}"
+                                            required="#{bindings.TitlesContractRightTable.hints.Status.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.Status.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                      <f:facet name="detailStamp">
+                        <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                        <af:panelGroupLayout id="pgl4"
+                                             rendered="#{bindings.TitlesContractRightIterator.estimatedRowCount>0}"
+                                             layout="scroll">
+                          <f:facet name="separator">
+                            <af:spacer width="10" height="10" id="sp4"/>
+                          </f:facet>
+                          <af:panelFormLayout rows="1" maxColumns="4"
+                                              labelAlignment="start" id="pfl0">
+                            <af:selectBooleanCheckbox id="s130TF"
+                                                      value="#{s130TranslationFlagcheckboxInTable.value}"
+                                                      label="#{bindings.s130TranslationFlag.hints.label}"
+                                                      readOnly="true"></af:selectBooleanCheckbox>
+                            <af:selectBooleanCheckbox id="s130RFR"
+                                                      value="#{s130ResellerFyiRequiredFlagcheckboxInTable.value}"
+                                                      label="#{bindings.s130ResellerFyiRequiredFlag.hints.label}"
+                                                      readOnly="true"></af:selectBooleanCheckbox>
+                            <af:selectBooleanCheckbox id="s130WAR"
+                                                      value="#{s130WrittenApprovalRequiredFlagcheckboxInTable.value}"
+                                                      label="#{bindings.s130WrittenApprovalRequiredFlag.hints.label}"
+                                                      readOnly="true"></af:selectBooleanCheckbox>
+                            <af:inputDate id="s130ESD"
+                                          value="#{row.bindings.EffectiveStartDate.inputValue}"
+                                          label="#{bindings.s130EffectiveStartDate.hints.label}"
+                                          required="#{bindings.s130EffectiveStartDate.hints.mandatory}"
+                                          readOnly="true">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                            <af:inputDate id="s130EED"
+                                          value="#{row.bindings.EffectiveEndDate.inputValue}"
+                                          label="#{bindings.s130EffectiveEndDate.hints.label}"
+                                          required="#{bindings.s130EffectiveEndDate.hints.mandatory}"
+                                          readOnly="true">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                            <af:inputDate id="s130PSD"
+                                          value="#{row.bindings.PublicationStartDate.inputValue}"
+                                          label="#{bindings.s130PublicationStartDate.hints.label}"
+                                          required="#{bindings.s130PublicationStartDate.hints.mandatory}"
+                                          readOnly="true">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                            <af:inputDate id="s130PED"
+                                          value="#{row.bindings.PublicationEndDate.inputValue}"
+                                          label="#{bindings.s130PublicationEndDate.hints.label}"
+                                          required="#{bindings.s130PublicationEndDate.hints.mandatory}"
+                                          readOnly="true">
+                              <af:convertDateTime pattern="#{nls.datepattern}"/>
+                            </af:inputDate>
+                            <af:inputText id="s130ED"
+                                          value="#{row.bindings.EmbargoDays.inputValue}"
+                                          label="#{bindings.s130EmbargoDays.hints.label}"
+                                          required="#{bindings.s130EmbargoDays.hints.mandatory}"
+                                          rows="#{bindings.TitlesContractRightTable.hints.EmbargoDays.displayHeight}"
+                                          columns="#{bindings.TitlesContractRightTable.hints.EmbargoDays.displayWidth}"
+                                          maximumLength="38" readOnly="true">
+                              <f:validator binding="#{row.bindings.EmbargoDays.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.TitlesContractRightTable.hints.EmbargoDays.format}"/>
+                            </af:inputText>
+                            <af:inputText id="s130RED"
+                                          value="#{row.bindings.ReverseEmbargoDays.inputValue}"
+                                          label="#{bindings.s130ReverseEmbargoDays.hints.label}"
+                                          required="#{bindings.s130ReverseEmbargoDays.hints.mandatory}"
+                                          rows="#{bindings.TitlesContractRightTable.hints.ReverseEmbargoDays.displayHeight}"
+                                          columns="#{bindings.TitlesContractRightTable.hints.ReverseEmbargoDays.displayWidth}"
+                                          maximumLength="38" readOnly="true">
+                              <f:validator binding="#{row.bindings.ReverseEmbargoDays.validator}"/>
+                              <af:convertNumber groupingUsed="false"
+                                                pattern="#{bindings.TitlesContractRightTable.hints.ReverseEmbargoDays.format}"/>
+                            </af:inputText>
+                            <af:inputText id="s130CRD"
+                                          value="#{row.bindings.ComplexRuleDescription.inputValue}"
+                                          label="#{bindings.s130ComplexRuleDescription.hints.label}"
+                                          required="#{bindings.s130ComplexRuleDescription.hints.mandatory}"
+                                          rows="#{bindings.TitlesContractRightTable.hints.ComplexRuleDescription.displayHeight}"
+                                          columns="#{bindings.TitlesContractRightTable.hints.ComplexRuleDescription.displayWidth}"
+                                          maximumLength="4000" readOnly="true">
+                              <f:validator binding="#{row.bindings.ComplexRuleDescription.validator}"/>
+                            </af:inputText>
+                          </af:panelFormLayout>
+                        </af:panelGroupLayout>
+                        <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                      </f:facet>
+                       
+                      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="jhsLovPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher"
+                  binding="#{pageFlowScope.jhsLovPopup.component}">
+          <af:dialog modal="true" title="#{pageFlowScope.LovItemBean.lovTitle}"
+                     type="none" id="dialog0" resize="on"
+                     stretchChildren="first"
+                     contentWidth="#{pageFlowScope.LovItemBean.lovWidth}"
+                     contentHeight="#{pageFlowScope.LovItemBean.lovHeight}">
+            <af:region value="#{bindings.LovTaskFlow.regionModel}"
+                       id="region0"/>
+            <f:facet name="buttonBar">
+              <af:group id="g0">
+                <af:commandButton textAndAccessKey="#{nls['OK_BUTTON_LABEL']}"
+                                  id="cb0" partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.handleLovSelection}"/>
+                <af:commandButton textAndAccessKey="#{nls['CANCEL']}" id="cb1"
+                                  partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.cancelLov}"/>
+              </af:group>
+            </f:facet>
+          </af:dialog>
+          <af:clientListener method="popupClosedListener" type="popupClosed"/>
+          <af:serverListener type="serverPopupClosed"
+                             method="#{pageFlowScope.LovItemBean.cancelLov}"/>
+        </af:popup>
+        <af:popup id="s130DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s130DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_TITLESCONTRACTRIGH:#{pageFlowScope.TitlesContractRightTable.currentRowAttributeValues.RuleNumber}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteTitlesContractRight.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

@@ -1,0 +1,522 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="StandardContractTopLc"
+                             partialTriggers=" StandardContractCancelButton0 asAreaStandardContractSearchOptions qsAreaStandardContractSearchOptions"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{nls['TABLE_TITLE_STANDARDCONTRACT']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreateStandardContract.execute}"
+                                      action="CreateStandardContract"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_STANDARDCONTRACT']}"
+                                      rendered="#{(true) }"
+                                      id="StandardContractNewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel"
+                                      id="StandardContractCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaStandardContract"
+                                 rendered="#{!pageFlowScope.createModes.CreateStandardContract and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaStandardContractSearchOptions:qsButtonStandardContract qsAreaStandardContractSearchOptions:asButtonStandardContract ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaStandardContractSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.StandardContractIteratorContractTemplateViewCriteriaQuery.queryDescriptor}"
+                        model="#{bindings.StandardContractIteratorContractTemplateViewCriteriaQuery.queryModel}"
+                        queryListener="#{bindings.StandardContractIteratorContractTemplateViewCriteriaQuery.processQuery}"
+                        queryOperationListener="#{bindings.StandardContractIteratorContractTemplateViewCriteriaQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchStandardContract.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true"
+                                    id="qsButtonStandardContract"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchStandardContract.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaStandardContractSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.StandardContractIteratorContractTemplateViewCriteriaQuery.queryDescriptor}"
+                             model="#{bindings.StandardContractIteratorContractTemplateViewCriteriaQuery.queryModel}"
+                             queryListener="#{bindings.StandardContractIteratorContractTemplateViewCriteriaQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchStandardContract.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonStandardContract"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchStandardContract.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="StandardContractPC" featuresOff=" "
+                                inlineStyle=" width:1200px; ">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="StandardContractDetails"></af:commandMenuItem>
+                    <af:group id="StandardContracttbb"
+                              rendered="#{ bindings.StandardContractIterator.currentRow!=null }">
+                      <af:commandMenuItem actionListener="#{bindings.FirstStandardContract.execute}"
+                                          id="StandardContractFirst"
+                                          partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousStandardContract.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="StandardContractPrevious"
+                                          partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextStandardContract.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="StandardContractNext"
+                                          partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastStandardContract.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="StandardContractLast"
+                                          partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandToolbarButton text="Print"
+                                           id="StandardContractPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.StandardContractIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="StandardContractTab" contentDelivery="immediate"
+                        value="#{bindings.StandardContractTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.StandardContractTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.StandardContractTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.StandardContractTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.StandardContractTable.rangeSize}"
+                        autoHeightRows="#{bindings.StandardContractTable.estimatedRowCount lt 5 ? 5 : bindings.StandardContractTable.estimatedRowCount lt bindings.StandardContractTable.rangeSize ? bindings.StandardContractTable.estimatedRowCount : 0 }"
+                        fetchSize="#{bindings.StandardContractTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.StandardContractIteratorContractTemplateViewCriteriaQuery.processQuery}"
+                        filterModel="#{bindings.StandardContractIteratorContractTemplateViewCriteriaQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.StandardContractTable.table}"
+                        partialTriggers=":::qsAreaStandardContractSearchOptions :::asAreaStandardContractSearchOptions :::StandardContractPC ::StandardContractFirst ::StandardContractPrevious ::StandardContractNext ::StandardContractLast"
+                        width="1200px"
+                        summary="#{nls['TABLE_TITLE_STANDARDCONTRACT']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="StandardContractTablePopup"
+                            childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="StandardContractDetails"></af:commandMenuItem>
+                      </af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="StandardContractTemplateNameCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="TemplateName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.TemplateName.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="cl0"
+                                value="#{row.bindings.TemplateName.inputValue}"
+                                label="#{bindings.StandardContractTable.hints.TemplateName.label}"
+                                required="true"
+                                rows="#{bindings.StandardContractTable.hints.TemplateName.displayHeight}"
+                                columns="#{bindings.StandardContractTable.hints.TemplateName.displayWidth}"
+                                maximumLength="100" readOnly="true"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.TemplateName.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="cl1"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}"
+                                  action="StandardContractDetails"
+                                  text="#{row.TemplateName}"></af:commandLink>
+                </af:column>
+                <af:column id="StandardContractFormCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="Form" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.Form.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractForm"
+                                      value="#{row.bindings.Form.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.Form.label}"
+                                      required="#{bindings.StandardContractTable.hints.Form.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{row.bindings.Form.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractStatusCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="Status" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.Status.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractStatus"
+                                      value="#{row.bindings.Status.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.Status.label}"
+                                      required="false" readOnly="true">
+                    <f:selectItems value="#{row.bindings.Status.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractTypeCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="Type" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.Type.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractType"
+                                      value="#{row.bindings.Type.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.Type.label}"
+                                      required="#{bindings.StandardContractTable.hints.Type.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{row.bindings.Type.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractDivisionCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="Division" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.Division.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractDivision"
+                                      value="#{row.bindings.Division.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.Division.label}"
+                                      required="#{bindings.StandardContractTable.hints.Division.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{row.bindings.Division.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractTermLengthCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="TermLength" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.TermLength.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractTermLength"
+                                      value="#{row.bindings.TermLength.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.TermLength.label}"
+                                      required="#{bindings.StandardContractTable.hints.TermLength.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{row.bindings.TermLength.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractCancellationNoticeTermCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="120" sortProperty="CancellationNoticeTerm"
+                           align="right" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.CancellationNoticeTerm.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractCancellationNoticeTerm"
+                                      value="#{row.bindings.CancellationNoticeTerm.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.CancellationNoticeTerm.label}"
+                                      required="#{bindings.StandardContractTable.hints.CancellationNoticeTerm.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{row.bindings.CancellationNoticeTerm.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractAutoRenewFlagCol" noWrap="true"
+                           width="100" align="center" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.AutoRenewsFlag.label}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="StandardContractAutoRenewFlag"
+                                            label="#{bindings.StandardContractTable.hints.AutoRenewsFlag.label}"
+                                            value="#{StandardContractAutoRenewFlagcheckboxInTable.value}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="StandardContractAutoRenewTermMonthsCol"
+                           noWrap="true" width="120" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.AutoRenewTermMonths.label}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractAutoRenewTermMonths"
+                                      value="#{row.bindings.AutoRenewTermMonths.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.AutoRenewTermMonths.label}"
+                                      required="false" readOnly="true">
+                    <f:selectItems value="#{row.bindings.AutoRenewTermMonths.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractRightsToBeRetainedCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="120" sortProperty="RightsToBeRetained"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.RightsToBeRetained.label}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractRightsToBeRetained"
+                                      value="#{row.bindings.RightsToBeRetained.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.RightsToBeRetained.label}"
+                                      required="#{bindings.StandardContractTable.hints.RightsToBeRetained.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{row.bindings.RightsToBeRetained.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractExclusivityCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="Exclusivity" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.Exclusivity.label}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractExclusivity"
+                                      value="#{row.bindings.Exclusivity.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.Exclusivity.label}"
+                                      required="#{bindings.StandardContractTable.hints.Exclusivity.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{row.bindings.Exclusivity.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractContentMasterOwnerCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="120" sortProperty="ContentMasterOwner"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.ContentMasterOwner.label}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractContentMasterOwner"
+                                      value="#{row.bindings.ContentMasterOwner.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.ContentMasterOwner.label}"
+                                      required="#{bindings.StandardContractTable.hints.ContentMasterOwner.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{row.bindings.ContentMasterOwner.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractAutoAddCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="AutoAdd" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.AutoAdd.label}"
+                                    id="ol12"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractAutoAdd"
+                                      value="#{row.bindings.AutoAdd.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.AutoAdd.label}"
+                                      required="#{bindings.StandardContractTable.hints.AutoAdd.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.StandardContractTable.hints.AutoAdd.tooltip}">
+                    <f:selectItems value="#{row.bindings.AutoAdd.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractAssignmentCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="Assignment" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.Assignment.label}"
+                                    id="ol13"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractAssignment"
+                                      value="#{row.bindings.Assignment.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.Assignment.label}"
+                                      required="#{bindings.StandardContractTable.hints.Assignment.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.StandardContractTable.hints.Assignment.tooltip}">
+                    <f:selectItems value="#{row.bindings.Assignment.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractRoyaltyBearingCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="120" sortProperty="RoyaltyBearing"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.RoyaltyBearing.label}"
+                                    id="ol14"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractRoyaltyBearing"
+                                      value="#{row.bindings.RoyaltyBearing.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.RoyaltyBearing.label}"
+                                      required="#{bindings.StandardContractTable.hints.RoyaltyBearing.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.StandardContractTable.hints.RoyaltyBearing.tooltip}">
+                    <f:selectItems value="#{row.bindings.RoyaltyBearing.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractFairTreatmentClauseCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="120" sortProperty="FairTreatmentClause"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.FairTreatmentClause.label}"
+                                    id="ol15"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractFairTreatmentClause"
+                                      value="#{row.bindings.FairTreatmentClause.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.FairTreatmentClause.label}"
+                                      required="#{bindings.StandardContractTable.hints.FairTreatmentClause.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.StandardContractTable.hints.FairTreatmentClause.tooltip}">
+                    <f:selectItems value="#{row.bindings.FairTreatmentClause.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractIssueEditionCoverageCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="120" sortProperty="IssueEditionCoverage"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.IssueEditionCoverage.label}"
+                                    id="ol16"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractIssueEditionCoverage"
+                                      value="#{row.bindings.IssueEditionCoverage.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.IssueEditionCoverage.label}"
+                                      required="#{bindings.StandardContractTable.hints.IssueEditionCoverage.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.StandardContractTable.hints.IssueEditionCoverage.tooltip}">
+                    <f:selectItems value="#{row.bindings.IssueEditionCoverage.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractCompleteContentSetCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="120" sortProperty="CompleteContentSet"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.CompleteContentSet.label}"
+                                    id="ol17"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractCompleteContentSet"
+                                      value="#{row.bindings.CompleteContentSet.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.CompleteContentSet.label}"
+                                      required="#{bindings.StandardContractTable.hints.CompleteContentSet.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.StandardContractTable.hints.CompleteContentSet.tooltip}">
+                    <f:selectItems value="#{row.bindings.CompleteContentSet.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractWarrantyAndIndemnificationCol"
+                           sortable="true" filterable="true" noWrap="true"
+                           width="120" sortProperty="WarrantyAndIndemnification"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.WarrantyAndIndemnification.label}"
+                                    id="ol18"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractWarrantyAndIndemnification"
+                                      value="#{row.bindings.WarrantyAndIndemnification.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.WarrantyAndIndemnification.label}"
+                                      required="#{bindings.StandardContractTable.hints.WarrantyAndIndemnification.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.StandardContractTable.hints.WarrantyAndIndemnification.tooltip}">
+                    <f:selectItems value="#{row.bindings.WarrantyAndIndemnification.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractGovernanceCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="Governance" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.Governance.label}"
+                                    id="ol19"/>
+                  </f:facet>
+                  <af:selectOneChoice id="StandardContractGovernance"
+                                      value="#{row.bindings.Governance.inputValue}"
+                                      label="#{bindings.StandardContractTable.hints.Governance.label}"
+                                      required="#{bindings.StandardContractTable.hints.Governance.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.StandardContractTable.hints.Governance.tooltip}">
+                    <f:selectItems value="#{row.bindings.Governance.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="StandardContractActiveFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ActiveFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.StandardContractTable.hints.ActiveFlag.label}"
+                                    id="ol20"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="StandardContractActiveFlag"
+                                            label="#{bindings.StandardContractTable.hints.ActiveFlag.label}"
+                                            value="#{StandardContractActiveFlagcheckboxInTable.value}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="SubContentTypeLookup"
+   Version="11.1.1.59.23"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   ComponentClass="com.pq.tracs.model.lookups.SubContentTypeLookupImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+      <Attr Name="_isExpertMode" Value="true" />
+   </DesignTime>
+   <Variable
+      Name="parent_code_value"
+      Kind="where"
+      Type="java.lang.String" >
+   </Variable>
+   <SQLQuery><![CDATA[
+SELECT   tlc.internal_value, tlc.display_value
+    FROM trax_lookup_code tlc, trax_lookup_code_set tlcs, trax_lookup_code parentcode
+   WHERE tlc.lookup_code_set_id = tlcs.ID
+     AND tlcs.parent_lookup_code_id = parentcode.id
+     AND tlcs.code_set = 'Sub Content Type'
+     AND parentcode.internal_value = :parent_code_value
+ORDER BY UPPER(display_value)
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="InternalValue"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="INTERNAL_VALUE"
+      Expression="INTERNAL_VALUE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DisplayValue"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DISPLAY_VALUE"
+      Expression="DISPLAY_VALUE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+   </ViewAttribute>
+</ViewObject>

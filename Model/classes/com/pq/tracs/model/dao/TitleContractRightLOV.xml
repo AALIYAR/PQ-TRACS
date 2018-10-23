@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="TitleContractRightLOV"
+   Version="11.1.1.59.23"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   ComponentClass="com.pq.tracs.model.dao.TracsView"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|VarAccess" />
+      <Attr Name="_isExpertMode" Value="true" />
+      <Attr Name="_objectSuperClassName" Value="com.pq.tracs.model.dao.TracsView" />
+   </DesignTime>
+   <Variable
+      Name="RIGHT_TYPE"
+      Kind="where"
+      Type="java.lang.String" >
+   </Variable>
+   <Variable
+      Name="TITLE_ID"
+      Kind="where"
+      Type="java.lang.String" >
+   </Variable>
+   <SQLQuery><![CDATA[
+SELECT trax_title_contract_right.ID, trax_contract_right.rule_number
+  FROM trax_contract_right, trax_title_contract_right
+ WHERE trax_title_contract_right.contract_right_id = trax_contract_right.ID
+   AND (trax_contract_right.right_type = :RIGHT_TYPE or trax_contract_right.right_type IS NOT NULL)
+   AND trax_title_contract_right.title_id = :TITLE_ID
+ORDER BY trax_contract_right.rule_number
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="Id"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="ID"
+      Expression="ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RuleNumber"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="RULE_NUMBER"
+      Expression="RULE_NUMBER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+   </ViewAttribute>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Id" />
+   </AttrArray>
+</ViewObject>

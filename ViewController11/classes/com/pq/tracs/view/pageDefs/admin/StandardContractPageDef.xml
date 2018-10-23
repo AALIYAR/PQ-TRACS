@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="StandardContractPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'ADMIN'}"/>
+  </parameters>
+  <executables>
+    <iterator id="StandardContractIterator" Binds="ContractTemplateView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="StandardContractIteratorContractTemplateViewCriteriaQuery"
+                  Binds="StandardContractIterator"
+                  Criteria="ContractTemplateViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="TemplateName"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContractTemplateRightsIterator" Binds="ContractRightView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContractTemplateRightsIteratorContractRightViewCriteriaQuery"
+                  Binds="ContractTemplateRightsIterator"
+                  Criteria="ContractRightViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="PermissionType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContractTmplRightCatsIterator"
+              Binds="ContractRightCategoryView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContractTmplRightCatsIteratorQuery"
+                  Binds="ContractTmplRightCatsIterator"
+                  Criteria="__ImplicitViewCriteria__"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CategoryId"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ContractTemplateRatesIterator" Binds="RoyaltyRateView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="10"/>
+    <iterator id="ContractTemplateGuaranteesIterator"
+              Binds="ContractGuaranteeView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContractTemplateGuaranteesIteratorContractGuaranteeViewCriteriaQuery"
+                  Binds="ContractTemplateGuaranteesIterator"
+                  Criteria="ContractGuaranteeViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="DeliveryFormat"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <taskFlow id="LovTaskFlow"
+              taskFlowId="#{pageFlowScope.jhsLovTaskFlowManager.currentTaskFlowId}"
+              activation="deferred"
+              parametersMap="#{pageFlowScope.jhsLovTaskFlowManager.currentParamMap}"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings>
+    <attributeValues id="StandardContractTemplateName"
+                     IterBinding="StandardContractIterator">
+      <AttrNames>
+        <Item Value="TemplateName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractForm" Uses="LOV_Form" StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractStatus" Uses="LOV_Status" StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractType" Uses="LOV_Type" StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractDivision" Uses="LOV_Division" StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractTermLength" Uses="LOV_TermLength"
+          StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractCancellationNoticeTerm"
+          Uses="LOV_CancellationNoticeTerm" StaticList="false"/>
+    <button id="StandardContractAutoRenewFlag"
+            IterBinding="StandardContractIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="AutoRenewsFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractAutoRenewTermMonths"
+          Uses="LOV_AutoRenewTermMonths" StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractRightsToBeRetained"
+          Uses="LOV_RightsToBeRetained" StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractExclusivity" Uses="LOV_Exclusivity"
+          StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractContentMasterOwner"
+          Uses="LOV_ContentMasterOwner" StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractAutoAdd" Uses="LOV_AutoAdd" StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractAssignment" Uses="LOV_Assignment"
+          StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractRoyaltyBearing" Uses="LOV_RoyaltyBearing"
+          StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractFairTreatmentClause"
+          Uses="LOV_FairTreatmentClause" StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractIssueEditionCoverage"
+          Uses="LOV_IssueEditionCoverage" StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractCompleteContentSet"
+          Uses="LOV_CompleteContentSet" StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractWarrantyAndIndemnification"
+          Uses="LOV_WarrantyAndIndemnification" StaticList="false"/>
+    <list IterBinding="StandardContractIterator"
+          id="StandardContractGovernance" Uses="LOV_Governance"
+          StaticList="false"/>
+    <button id="StandardContractActiveFlag"
+            IterBinding="StandardContractIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="StandardContractIsTemplateFlag"
+                     IterBinding="StandardContractIterator">
+      <AttrNames>
+        <Item Value="IsTemplateFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="StandardContractCreatedBy"
+                     IterBinding="StandardContractIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="StandardContractCreatedDate"
+                     IterBinding="StandardContractIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="StandardContractLastUpdatedBy"
+                     IterBinding="StandardContractIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="StandardContractLastUpdatedDate"
+                     IterBinding="StandardContractIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="StandardContractTable" IterBinding="StandardContractIterator">
+      <nodeDefinition Name="StandardContract"
+                      DefName="com.pq.tracs.model.dao.ContractTemplateView">
+        <AttrNames>
+          <Item Value="TemplateName"/>
+          <Item Value="Form"/>
+          <Item Value="Status"/>
+          <Item Value="Type"/>
+          <Item Value="Division"/>
+          <Item Value="TermLength"/>
+          <Item Value="CancellationNoticeTerm"/>
+          <Item Value="AutoRenewsFlag"/>
+          <Item Value="AutoRenewTermMonths"/>
+          <Item Value="RightsToBeRetained"/>
+          <Item Value="Exclusivity"/>
+          <Item Value="ContentMasterOwner"/>
+          <Item Value="AutoAdd"/>
+          <Item Value="Assignment"/>
+          <Item Value="RoyaltyBearing"/>
+          <Item Value="FairTreatmentClause"/>
+          <Item Value="IssueEditionCoverage"/>
+          <Item Value="CompleteContentSet"/>
+          <Item Value="WarrantyAndIndemnification"/>
+          <Item Value="Governance"/>
+          <Item Value="ActiveFlag"/>
+          <Item Value="IsTemplateFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstStandardContract" IterBinding="StandardContractIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousStandardContract" IterBinding="StandardContractIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextStandardContract" IterBinding="StandardContractIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastStandardContract" IterBinding="StandardContractIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyStandardContract"
+            IterBinding="StandardContractIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrStandardContract}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateStandardContract" IterBinding="StandardContractIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteStandardContract" IterBinding="StandardContractIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="ContractTemplateRightsRightType"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="RightType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRightsRightTemplateId"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="RightTemplateId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRightsTemplateName"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="TemplateName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContractTemplateRightsIterator"
+          id="ContractTemplateRightsPermissionType" Uses="LOV_PermissionType"
+          StaticList="false"/>
+    <list IterBinding="ContractTemplateRightsIterator"
+          id="ContractTemplateRightsPermissionSubType"
+          Uses="LOV_PermissionSubType" StaticList="false"/>
+    <list IterBinding="ContractTemplateRightsIterator"
+          id="ContractTemplateRightsStatus" Uses="LOV_Status"
+          StaticList="false"/>
+    <list IterBinding="ContractTemplateRightsIterator"
+          id="ContractTemplateRightsRightOrRestrictionType"
+          Uses="LOV_RightOrRestrictionType" StaticList="false"/>
+    <button id="ContractTemplateRightsSalesRestrictionFlag"
+            IterBinding="ContractTemplateRightsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="SalesRestrictionFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="ContractTemplateRightsIterator"
+          id="ContractTemplateRightsIncludesOrExcludes"
+          Uses="LOV_IncludesOrExcludes" StaticList="false"/>
+    <button id="ContractTemplateRightsTranslationFlag"
+            IterBinding="ContractTemplateRightsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="TranslationFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="ContractTemplateRightsResellerFyiRequiredFlag"
+            IterBinding="ContractTemplateRightsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ResellerFyiRequiredFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="ContractTemplateRightsWrittenApprovalRequiredFlag"
+            IterBinding="ContractTemplateRightsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="WrittenApprovalRequiredFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="ContractTemplateRightsCreatedBy"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRightsCreatedDate"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRightsLastUpdatedBy"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRightsLastUpdatedDate"
+                     IterBinding="ContractTemplateRightsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContractTemplateRightsTable"
+          IterBinding="ContractTemplateRightsIterator">
+      <nodeDefinition Name="ContractTemplateRights"
+                      DefName="com.pq.tracs.model.dao.ContractRightView">
+        <AttrNames>
+          <Item Value="RightType"/>
+          <Item Value="RightTemplateId"/>
+          <Item Value="TemplateName"/>
+          <Item Value="PermissionType"/>
+          <Item Value="PermissionSubType"/>
+          <Item Value="Status"/>
+          <Item Value="RightOrRestrictionType"/>
+          <Item Value="SalesRestrictionFlag"/>
+          <Item Value="IncludesOrExcludes"/>
+          <Item Value="TranslationFlag"/>
+          <Item Value="ResellerFyiRequiredFlag"/>
+          <Item Value="WrittenApprovalRequiredFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContractTemplateRights}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContractTemplateRights"
+            IterBinding="ContractTemplateRightsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="ContractTmplRightCatsIterator"
+          id="ContractTmplRightCatsCategoryId" Uses="LOV_CategoryId"
+          StaticList="false"/>
+    <list IterBinding="ContractTmplRightCatsIterator"
+          id="ContractTmplRightCatsValue" Uses="LOV_Value" StaticList="false"/>
+    <attributeValues id="ContractTmplRightCatsFullOrPartial"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="FullOrPartial"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTmplRightCatsPermitFlag"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="PermitFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTmplRightCatsCreatedBy"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTmplRightCatsCreatedDate"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTmplRightCatsLastUpdatedBy"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTmplRightCatsLastUpdatedDate"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTmplRightCatsFullOrPartialFlag"
+                     IterBinding="ContractTmplRightCatsIterator">
+      <AttrNames>
+        <Item Value="FullOrPartialFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContractTmplRightCatsTable"
+          IterBinding="ContractTmplRightCatsIterator">
+      <nodeDefinition Name="ContractTmplRightCats"
+                      DefName="com.pq.tracs.model.dao.ContractRightCategoryView">
+        <AttrNames>
+          <Item Value="CategoryId"/>
+          <Item Value="Value"/>
+          <Item Value="FullOrPartial"/>
+          <Item Value="PermitFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="FullOrPartialFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContractTmplRightCats}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContractTmplRightCats"
+            IterBinding="ContractTmplRightCatsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="ContractTemplateRatesIterator"
+          id="ContractTemplateRatesMedia" Uses="LOV_Media" StaticList="false"/>
+    <list IterBinding="ContractTemplateRatesIterator"
+          id="ContractTemplateRatesRateType" Uses="LOV_RateType"
+          StaticList="false"/>
+    <attributeValues id="ContractTemplateRatesRoyaltyRate1"
+                     IterBinding="ContractTemplateRatesIterator">
+      <AttrNames>
+        <Item Value="RoyaltyRate1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRatesCreatedBy"
+                     IterBinding="ContractTemplateRatesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRatesCreatedDate"
+                     IterBinding="ContractTemplateRatesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRatesLastUpdatedBy"
+                     IterBinding="ContractTemplateRatesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateRatesLastUpdatedDate"
+                     IterBinding="ContractTemplateRatesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContractTemplateRatesTable"
+          IterBinding="ContractTemplateRatesIterator">
+      <nodeDefinition Name="ContractTemplateRates"
+                      DefName="com.pq.tracs.model.dao.RoyaltyRateView">
+        <AttrNames>
+          <Item Value="Media"/>
+          <Item Value="RateType"/>
+          <Item Value="RoyaltyRate1"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContractTemplateRates"
+            IterBinding="ContractTemplateRatesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContractTemplateRates"
+            IterBinding="ContractTemplateRatesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContractTemplateRates"
+            IterBinding="ContractTemplateRatesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContractTemplateRates"
+            IterBinding="ContractTemplateRatesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchContractTemplateRates"
+                  IterBinding="ContractTemplateRatesIterator"
+                  DataControl="TracsAdminServiceDataControl"
+                  InstanceName="TracsAdminServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsAdminServiceDataControl.methodResults.TracsAdminServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchContractTemplateRates.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchContractTemplateRates.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchContractTemplateRates.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyContractTemplateRates"
+            IterBinding="ContractTemplateRatesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContractTemplateRates}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContractTemplateRates"
+            IterBinding="ContractTemplateRatesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContractTemplateRates"
+            IterBinding="ContractTemplateRatesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="ContractTemplateGuaranteesIterator"
+          id="ContractTemplateGuaranteesCurrency" Uses="LOV_Currency"
+          StaticList="false"/>
+    <attributeValues id="ContractTemplateGuaranteesAmount"
+                     IterBinding="ContractTemplateGuaranteesIterator">
+      <AttrNames>
+        <Item Value="Amount"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContractTemplateGuaranteesIterator"
+          id="ContractTemplateGuaranteesMedia" Uses="LOV_Media"
+          StaticList="false"/>
+    <list IterBinding="ContractTemplateGuaranteesIterator"
+          id="ContractTemplateGuaranteesDeliveryFormat"
+          Uses="LOV_DeliveryFormat" StaticList="false"/>
+    <list IterBinding="ContractTemplateGuaranteesIterator"
+          id="ContractTemplateGuaranteesProductCode" Uses="LOV_ProductCode"
+          StaticList="false"/>
+    <list IterBinding="ContractTemplateGuaranteesIterator"
+          id="ContractTemplateGuaranteesInventoryDivision"
+          Uses="LOV_InventoryDivision" StaticList="false"/>
+    <attributeValues id="ContractTemplateGuaranteesCreatedBy"
+                     IterBinding="ContractTemplateGuaranteesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateGuaranteesCreatedDate"
+                     IterBinding="ContractTemplateGuaranteesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateGuaranteesLastUpdatedBy"
+                     IterBinding="ContractTemplateGuaranteesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractTemplateGuaranteesLastUpdatedDate"
+                     IterBinding="ContractTemplateGuaranteesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContractTemplateGuaranteesTable"
+          IterBinding="ContractTemplateGuaranteesIterator">
+      <nodeDefinition Name="ContractTemplateGuarantees"
+                      DefName="com.pq.tracs.model.dao.ContractGuaranteeView">
+        <AttrNames>
+          <Item Value="Currency"/>
+          <Item Value="Amount"/>
+          <Item Value="Media"/>
+          <Item Value="DeliveryFormat"/>
+          <Item Value="ProductCode"/>
+          <Item Value="InventoryDivision"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContractTemplateGuarantees"
+            IterBinding="ContractTemplateGuaranteesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContractTemplateGuarantees"
+            IterBinding="ContractTemplateGuaranteesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContractTemplateGuarantees"
+            IterBinding="ContractTemplateGuaranteesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContractTemplateGuarantees"
+            IterBinding="ContractTemplateGuaranteesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContractTemplateGuarantees"
+            IterBinding="ContractTemplateGuaranteesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContractTemplateGuarantees}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContractTemplateGuarantees"
+            IterBinding="ContractTemplateGuaranteesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContractTemplateGuarantees"
+            IterBinding="ContractTemplateGuaranteesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

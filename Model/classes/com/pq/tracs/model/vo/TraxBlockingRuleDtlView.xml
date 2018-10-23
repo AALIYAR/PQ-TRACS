@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="TraxBlockingRuleDtlView"
+  Version="11.1.1.59.23"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Partial"
+  UseGlueCode="false"
+  ComponentClass="com.pq.tracs.model.dao.TracsView"
+  RowClass="com.pq.tracs.model.vo.TraxBlockingRuleDtlViewRowImpl"
+  FetchMode="FETCH_AS_NEEDED"
+  FetchSize="15"
+  RangeSize="10">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Variable
+    Name="MyRuleTypeBindVariable"
+    Kind="where"
+    Type="java.lang.String"/>
+  <ViewAccessor
+    Name="SubCategoryValueLookup"
+    ViewObjectName="com.pq.tracs.model.lookups.SubCategoryValueLookup">
+    <ParameterMap>
+      <PIMap Variable="CAT_VALUE">
+        <TransientExpression><![CDATA[BlockingRuleValue]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <SQLQuery>
+    <![CDATA[SELECT TraxBlockingRuleDtl.ID, 
+       TraxBlockingRuleDtl.BLOCKING_RULE_HDR_ID, 
+       TraxBlockingRuleDtl.RELATED_LINE_ID, 
+       TraxBlockingRuleDtl.BLOCKING_RULE_TYPE, 
+       TraxBlockingRuleDtl.BLOCKING_RULE_VALUE, 
+       TraxBlockingRuleDtl.BLOCKED_FLAG,
+       decode( (select count(*) from trax_blocking_rule_dtl where   RELATED_LINE_ID=TraxBlockingRuleDtl.ID) ,0, 'N' ,'Y') CONTAIN_CHILDS,
+       TraxBlockingRuleDtl.EXCLUDE_FLAG, 
+       TraxBlockingRuleDtl.CREATED_BY, 
+       TraxBlockingRuleDtl.CREATED_DATE, 
+       TraxBlockingRuleDtl.LAST_UPDATED_BY, 
+       TraxBlockingRuleDtl.LAST_UPDATED_DATE,
+decode(TraxBlockingRuleDtl.BLOCKING_RULE_TYPE
+                ,'SubMarket'
+                ,(select lov_id from trax_category_sub_value where value=TraxBlockingRuleDtl.BLOCKING_RULE_VALUE and tcv_id=(select id from trax_category_value where value = (select blocking_rule_value from trax_blocking_rule_dtl where id= TraxBlockingRuleDtl.Related_line_id ) ))
+                ,(select lov_id from trax_category_value where value=TraxBlockingRuleDtl.BLOCKING_RULE_VALUE and category_id = 
+                        (select id from trax_category where name = decode(TraxBlockingRuleDtl.BLOCKING_RULE_TYPE,'Market','Market Type',TraxBlockingRuleDtl.BLOCKING_RULE_TYPE) ))                
+              ) lov_id
+FROM TRACS.TRAX_BLOCKING_RULE_DTL TraxBlockingRuleDtl
+WHERE TraxBlockingRuleDtl.BLOCKING_RULE_TYPE = :MyRuleTypeBindVariable]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="TraxBlockingRuleDtl"
+    Entity="com.pq.tracs.model.eo.TraxBlockingRuleDtl"/>
+  <ViewAttribute
+    Name="Id"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxBlockingRuleDtl"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="BlockingRuleHdrId"
+    PrecisionRule="true"
+    EntityAttrName="BlockingRuleHdrId"
+    EntityUsage="TraxBlockingRuleDtl"
+    AliasName="BLOCKING_RULE_HDR_ID"/>
+  <ViewAttribute
+    Name="RelatedLineId"
+    PrecisionRule="true"
+    EntityAttrName="RelatedLineId"
+    EntityUsage="TraxBlockingRuleDtl"
+    AliasName="RELATED_LINE_ID"/>
+  <ViewAttribute
+    Name="BlockingRuleType"
+    PrecisionRule="true"
+    EntityAttrName="BlockingRuleType"
+    EntityUsage="TraxBlockingRuleDtl"
+    AliasName="BLOCKING_RULE_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxBlockingRuleDtlView.BlockingRuleType_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BlockingRuleValue"
+    PrecisionRule="true"
+    EntityAttrName="BlockingRuleValue"
+    EntityUsage="TraxBlockingRuleDtl"
+    AliasName="BLOCKING_RULE_VALUE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxBlockingRuleDtlView.BlockingRuleValue_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BlockedFlag"
+    PrecisionRule="true"
+    EntityAttrName="BlockedFlag"
+    EntityUsage="TraxBlockingRuleDtl"
+    AliasName="BLOCKED_FLAG"/>
+  <ViewAttribute
+    Name="ContainChilds"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CONTAIN_CHILDS"
+    Expression="CONTAIN_CHILDS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxBlockingRuleDtlView.ContainChilds_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ExcludeFlag"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ExcludeFlag"
+    EntityUsage="TraxBlockingRuleDtl"
+    AliasName="EXCLUDE_FLAG"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="TraxBlockingRuleDtl"
+    AliasName="CREATED_BY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="CreatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="CreatedDate"
+    EntityUsage="TraxBlockingRuleDtl"
+    AliasName="CREATED_DATE"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="TraxBlockingRuleDtl"
+    AliasName="LAST_UPDATED_BY"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="LastUpdatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="TraxBlockingRuleDtl"
+    AliasName="LAST_UPDATED_DATE"
+    IsUpdateable="false"/>
+  <ViewAttribute
+    Name="LovId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="LOV_ID"
+    Expression="LOV_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="20"/>
+        <LABEL
+          ResId="com.pq.tracs.model.vo.TraxBlockingRuleDtlView.LovId_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewLinkAccessor
+    Name="TraxBlockingRuleDtlView_2"
+    ViewLink="com.pq.tracs.model.vl.BrDtlToRelatedBrDtlViewLink"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

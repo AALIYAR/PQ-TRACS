@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="OvrRightsPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare" value="#{'OVRsPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <invokeAction id="applyBindParamsOvrRightsInvoke"
+                  Binds="applyBindParamsOvrRights" Refresh="always"/>
+    <iterator id="OvrRightsIterator" Binds="TraxTitleRecordRightView4"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrRightsIteratorTraxTitleRecordRightViewCriteriaQuery"
+                  Binds="OvrRightsIterator"
+                  Criteria="TraxTitleRecordRightViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="RuleNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="RightsTitleRecordRightCategoryIterator"
+              Binds="TraxTitleRecRightCategoryView4"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="RightsTitleRecordRightCategoryIteratorTraxTitleRecRightCategoryViewCriteriaQuery"
+                  Binds="RightsTitleRecordRightCategoryIterator"
+                  Criteria="TraxTitleRecRightCategoryViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CategoryId"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <invokeAction id="applyBindParamsGenerationMethodLookupInvoke"
+                  Binds="applyBindParamsGenerationMethodLookup"
+                  Refresh="always"/>
+    <iterator id="GenerationMethodLookupIterator" Binds="GenerationMethodLookup"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+  </executables>
+  <bindings>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsOvrRights"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="TraxTitleRecordRightView4"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args" NDValue="#{OvrRightsQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <attributeValues id="s32RightTemplateId" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="RightTemplateId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OvrRightsIterator" id="s32TemplateName"
+          Uses="LOV_TemplateName" StaticList="false"/>
+    <attributeValues id="s32RuleNumber" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="RuleNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32RightType" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="RightType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32PublicationStartDate"
+                     IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="PublicationStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32PublicationEndDate" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="PublicationEndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32EmbargoDays" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="EmbargoDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32ReverseEmbargoDays" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="ReverseEmbargoDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32Methods" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="Methods"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s32CompleteFlag" IterBinding="OvrRightsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="CompleteFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="OvrRightsIterator" id="s32GenerationMethod"
+          Uses="LOV_GenerationMethod" StaticList="false"/>
+    <attributeValues id="s32CreatedBy" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32CreatedDate" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32LastUpdatedBy" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32LastUpdatedDate" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrRightsTable" IterBinding="OvrRightsIterator">
+      <nodeDefinition Name="OvrRights"
+                      DefName="com.pq.tracs.model.dao.TraxTitleRecordRightView">
+        <AttrNames>
+          <Item Value="RightTemplateId"/>
+          <Item Value="TemplateName"/>
+          <Item Value="RuleNumber"/>
+          <Item Value="RightType"/>
+          <Item Value="PublicationStartDate"/>
+          <Item Value="PublicationEndDate"/>
+          <Item Value="EmbargoDays"/>
+          <Item Value="ReverseEmbargoDays"/>
+          <Item Value="Methods"/>
+          <Item Value="CompleteFlag"/>
+          <Item Value="GenerationMethod"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrRights}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="RightsTitleRecordRightCategoryIterator"
+          id="s320Category" Uses="LOV_CategoryId" StaticList="false"/>
+    <list IterBinding="RightsTitleRecordRightCategoryIterator"
+          id="s320Value" Uses="LOV_Value" StaticList="false"/>
+    <button id="s320PermitFlag"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PermitFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s320CreatedBy"
+                     IterBinding="RightsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s320CreatedDate"
+                     IterBinding="RightsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s320LastUpdatedBy"
+                     IterBinding="RightsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s320LastUpdatedDate"
+                     IterBinding="RightsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsGenerationMethodLookup"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="GenerationMethodLookup"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{GenerationMethodLookupQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+    </methodAction>
+    <table id="GenerationMethodLookup"
+           IterBinding="GenerationMethodLookupIterator">
+      <AttrNames>
+        <Item Value="DisplayValue"/>
+        <Item Value="InternalValue"/>
+      </AttrNames>
+    </table>
+    <attributeValues id="s320GenerationMethod"
+                     IterBinding="RightsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="GenerationMethod"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="RightsTitleRecordRightCategoryTable"
+          IterBinding="RightsTitleRecordRightCategoryIterator">
+      <nodeDefinition Name="RightsTitleRecordRightCategory"
+                      DefName="com.pq.tracs.model.dao.TraxTitleRecRightCategoryView">
+        <AttrNames>
+          <Item Value="CategoryId"/>
+          <Item Value="Value"/>
+          <Item Value="PermitFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="GenerationMethod"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrRightsTitleRecordRightCategory}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

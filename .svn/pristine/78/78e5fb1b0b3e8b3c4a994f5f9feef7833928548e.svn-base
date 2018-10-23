@@ -1,0 +1,477 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplate.jspx">
+    <f:facet name="pageContent">
+      <af:panelStretchLayout topHeight="auto" id="PublisherUrlTopLc"
+                             partialTriggers=" PublisherUrlDeleteDialog PublisherUrlSaveButton0 PublisherUrlCancelButton0 PublisherUrlPC:PublisherUrlArm PublisherUrlPC:PublisherUrldelrmTM PublisherUrlPC:PublisherUrlArl PublisherUrlPC:PublisherUrlTab:PublisherUrldelrm PublisherUrlPC:PublisherUrlTab:PublisherUrldelrl"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+        <f:facet name="top">
+          <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (default/pageComponent/groupContent.vm) -->
+          <af:group id="g0">
+            <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_PUBLISHERURL']}">
+              <f:facet name="toolbar">
+                <af:toolbox id="tbox0">
+                  <af:toolbar id="tbar0">
+                    <af:group id="gr0"></af:group>
+                    <af:group id="gr1"></af:group>
+                    <af:group id="gr2">
+                      <af:commandButton action="#{SavePublisherUrl.execute}"
+                                        rendered="#{(((jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                        textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                        id="PublisherUrlSaveButton0"
+                                        partialSubmit="true"></af:commandButton>
+                      <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                        immediate="true" partialSubmit="true"
+                                        rendered="#{!pageFlowScope.hideCancelButton}"
+                                        actionListener="#{jhsRollback.execute}"
+                                        action="Cancel"
+                                        id="PublisherUrlCancelButton0"></af:commandButton>
+                    </af:group>
+                  </af:toolbar>
+                </af:toolbox>
+              </f:facet>
+              <f:facet name="context"></f:facet>
+              <af:subform id="PublisherUrlSbf"
+                          rendered="#{!pageFlowScope.createModes.CreatePublisherUrl and !pageFlowScope.hideSearchArea}"
+                          defaultCommand="PublisherUrlQuickSearchButton">
+                <af:panelGroupLayout id="searchAreaPublisherUrl"
+                                     partialTriggers="">
+                  <f:attribute name="JhsIgnoreChanges" value="true"/>
+                  <af:panelGroupLayout id="qsAreaPublisherUrl"
+                                       rendered="#{pageFlowScope.searchPublisherUrl.quickSearchMode}"
+                                       layout="horizontal">
+                    <af:selectOneChoice id="qsSelectPublisherUrl"
+                                        label="#{nls['FILTER_BY']}"
+                                        value="#{pageFlowScope.searchPublisherUrl.searchItem}"
+                                        autoSubmit="true" immediate="true"
+                                        valueChangeListener="#{pageFlowScope.searchPublisherUrl.searchItemChanged}">
+                      <af:selectItem label="#{bindings.PublisherUrlTable.hints.DisplayValue.label}"
+                                     value="PublisherUrlDisplayValue" id="si0"/>
+                      <af:selectItem label="#{bindings.PublisherUrlTable.hints.InternalValue.label}"
+                                     value="PublisherUrlInternalValue"
+                                     id="si1"/>
+                      <af:selectItem label="#{bindings.PublisherUrlTable.hints.OrderBy1.label}"
+                                     value="PublisherUrlOrderBy1" id="si2"/>
+                      <af:selectItem label="#{bindings.PublisherUrlTable.hints.Description.label}"
+                                     value="PublisherUrlDescription" id="si3"/>
+                      <af:selectItem label="#{bindings.PublisherUrlTable.hints.CreatedBy.label}"
+                                     value="PublisherUrlCreatedBy" id="si4"/>
+                      <af:selectItem label="#{bindings.PublisherUrlTable.hints.CreatedbySearch.label}"
+                                     value="PublisherUrlCreatedbySearch"
+                                     id="si5"/>
+                      <af:selectItem label="#{bindings.PublisherUrlTable.hints.LastUpdatedBy.label}"
+                                     value="PublisherUrlLastUpdatedBy"
+                                     id="si6"/>
+                      <af:selectItem label="#{bindings.PublisherUrlTable.hints.LastUpdatedbySearch.label}"
+                                     value="PublisherUrlLastUpdatedbySearch"
+                                     id="si7"/>
+                    </af:selectOneChoice>
+                    <af:spacer width="4" id="qsAreaPublisherUrlSpacer1"/>
+                    <af:panelGroupLayout partialTriggers="qsSelectPublisherUrl"
+                                         id="qsAreaPublisherUrlpanelGroupLayout">
+                      <af:switcher facetName="#{pageFlowScope.searchPublisherUrl.searchItem}"
+                                   id="qsAreaPublisherUrlSwitcher">
+                        <f:facet name="PublisherUrlDisplayValue">
+                          <af:inputText id="QuickSearchPublisherUrlDisplayValue"
+                                        value="#{pageFlowScope.searchPublisherUrl.searchText}"
+                                        label="#{bindings.PublisherUrlTable.hints.DisplayValue.label}"
+                                        simple="true"
+                                        columns="#{bindings.PublisherUrlTable.hints.DisplayValue.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="PublisherUrlInternalValue">
+                          <af:inputText id="QuickSearchPublisherUrlInternalValue"
+                                        value="#{pageFlowScope.searchPublisherUrl.searchText}"
+                                        label="#{bindings.PublisherUrlTable.hints.InternalValue.label}"
+                                        simple="true"
+                                        columns="#{bindings.PublisherUrlTable.hints.InternalValue.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="PublisherUrlOrderBy1">
+                          <af:inputText id="QuickSearchPublisherUrlOrderBy1"
+                                        value="#{pageFlowScope.searchPublisherUrl.searchText}"
+                                        label="#{bindings.PublisherUrlTable.hints.OrderBy1.label}"
+                                        simple="true"
+                                        columns="#{bindings.PublisherUrlTable.hints.OrderBy1.displayWidth}"
+                                        maximumLength="4000">
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.PublisherUrlTable.hints.OrderBy1.format}"/>
+                          </af:inputText>
+                        </f:facet>
+                        <f:facet name="PublisherUrlDescription">
+                          <af:inputText id="QuickSearchPublisherUrlDescription"
+                                        value="#{pageFlowScope.searchPublisherUrl.searchText}"
+                                        label="#{bindings.PublisherUrlTable.hints.Description.label}"
+                                        simple="true"
+                                        columns="#{bindings.PublisherUrlTable.hints.Description.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="PublisherUrlCreatedBy">
+                          <af:inputText id="QuickSearchPublisherUrlCreatedBy"
+                                        value="#{pageFlowScope.searchPublisherUrl.searchText}"
+                                        label="#{bindings.PublisherUrlTable.hints.CreatedBy.label}"
+                                        simple="true"
+                                        columns="#{bindings.PublisherUrlTable.hints.CreatedBy.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="PublisherUrlCreatedbySearch">
+                          <af:inputDate id="QuickSearchPublisherUrlCreatedbySearch"
+                                        value="#{pageFlowScope.searchPublisherUrl.searchText}"
+                                        label="#{bindings.PublisherUrlTable.hints.CreatedbySearch.label}"
+                                        shortDesc="#{bindings.PublisherUrlTable.hints.CreatedbySearch.tooltip}"
+                                        simple="true">
+                            <af:convertDateTime pattern="#{nls.datepattern}"/>
+                          </af:inputDate>
+                        </f:facet>
+                        <f:facet name="PublisherUrlLastUpdatedBy">
+                          <af:inputText id="QuickSearchPublisherUrlLastUpdatedBy"
+                                        value="#{pageFlowScope.searchPublisherUrl.searchText}"
+                                        label="#{bindings.PublisherUrlTable.hints.LastUpdatedBy.label}"
+                                        simple="true"
+                                        columns="#{bindings.PublisherUrlTable.hints.LastUpdatedBy.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="PublisherUrlLastUpdatedbySearch">
+                          <af:inputDate id="QuickSearchPublisherUrlLastUpdatedbySearch"
+                                        value="#{pageFlowScope.searchPublisherUrl.searchText}"
+                                        label="#{bindings.PublisherUrlTable.hints.LastUpdatedbySearch.label}"
+                                        shortDesc="#{bindings.PublisherUrlTable.hints.LastUpdatedbySearch.tooltip}"
+                                        simple="true">
+                            <af:convertDateTime pattern="#{nls.datepattern}"/>
+                          </af:inputDate>
+                        </f:facet>
+                      </af:switcher>
+                    </af:panelGroupLayout>
+                    <af:spacer width="4" id="qsAreaPublisherUrlSpacer2"/>
+                    <af:commandImageLink action="#{pageFlowScope.searchPublisherUrl.quickSearch}"
+                                         shortDesc="#{nls['FILTER_BY']}"
+                                         icon="/jheadstart/images/go_ena.png"
+                                         id="PublisherUrlQuickSearchButton"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:subform>
+            </af:panelHeader>
+            <af:spacer width="10" height="10" id="sp0"/>
+          </af:group>
+          <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+        </f:facet>
+        <f:facet name="center">
+          <af:panelStretchLayout topHeight="0" id="psl0">
+            <f:facet name="top"></f:facet>
+            <f:facet name="center">
+              <af:panelCollection id="PublisherUrlPC" featuresOff=" "
+                                  styleClass="AFStretchWidth">
+                <f:facet name="menus">
+                  <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                           id="menu0">
+                    <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                             id="menu1">
+                      <af:group id="PublisherUrltbb"
+                                rendered="#{ (bindings.PublisherUrlIterator.viewObject!=null and bindings.PublisherUrlIterator.viewObject.currentRow!=null)}">
+                        <af:commandMenuItem actionListener="#{bindings.FirstPublisherUrl.execute}"
+                                            id="PublisherUrlFirst"
+                                            partialSubmit="true"
+                                            icon="/afr/shuttleleftall_ena.png"
+                                            textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.PreviousPublisherUrl.execute}"
+                                            icon="/afr/shuttleleft_ena.png"
+                                            textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                            id="PublisherUrlPrevious"
+                                            partialSubmit="true"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.NextPublisherUrl.execute}"
+                                            icon="/afr/shuttleright_ena.png"
+                                            textAndAccessKey="#{nls['NEXT_ROW']}"
+                                            id="PublisherUrlNext"
+                                            partialSubmit="true"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.LastPublisherUrl.execute}"
+                                            icon="/afr/shuttlerightall_ena.png"
+                                            textAndAccessKey="#{nls['LAST_ROW']}"
+                                            id="PublisherUrlLast"
+                                            partialSubmit="true"></af:commandMenuItem>
+                      </af:group>
+                    </af:menu>
+                    <af:commandMenuItem id="PublisherUrlArm"
+                                        textAndAccessKey="#{nls['ADD_ROW']}"
+                                        immediate="false"
+                                        icon="/jheadstart/images/addRow.png"
+                                        partialSubmit="true"
+                                        actionListener="#{pageFlowScope.PublisherUrlTable.addRow}"
+                                        rendered="#{(true) and (jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn'])}"></af:commandMenuItem>
+                    <af:commandMenuItem id="PublisherUrldelrmTM"
+                                        textAndAccessKey="#{nls['DELETE_ROW']}"
+                                        icon="/jheadstart/images/deleteRow.png"
+                                        partialSubmit="true" immediate="true"
+                                        rendered="#{jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn']}">
+                      <af:showPopupBehavior popupId="::PublisherUrlDeletePopup"/>
+                    </af:commandMenuItem>
+                  </af:menu>
+                </f:facet>
+                <f:facet name="toolbar">
+                  <af:toolbar id="tbar1">
+                    <!-- Also create CreatePublisherUrl bean so we can start table group in create mode as well -->
+                    <af:commandImageLink id="PublisherUrlArl" immediate="false"
+                                         rendered="#{(true) and (jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn'])}"
+                                         partialSubmit="true"
+                                         actionListener="#{pageFlowScope.PublisherUrlTable.addRow}"
+                                         shortDesc="#{nls['ADD_ROW']}"
+                                         icon="/jheadstart/images/addRow.png"/>
+                    <af:commandToolbarButton text="Print" id="PublisherUrlPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="statusbar">
+                  <af:toolbar>
+                    <af:outputText value="#{bindings.PublisherUrlIterator.estimatedRowCount} rows found"/>
+                  </af:toolbar>
+                </f:facet>
+                <af:table id="PublisherUrlTab" contentDelivery="immediate"
+                          value="#{bindings.PublisherUrlTable.collectionModel}"
+                          columnStretching="blank" rowBandingInterval="0"
+                          editingMode="editAll" columnSelection="multiple"
+                          contextMenuSelect="true" rowSelection="single"
+                          selectionListener="#{pageFlowScope.PublisherUrlTable.makeCurrent}"
+                          selectedRowKeys="#{pageFlowScope.PublisherUrlTable.selectedRow}"
+                          rowDisclosureListener="#{pageFlowScope.PublisherUrlTable.discloseRow}"
+                          var="row" varStatus="status"
+                          fetchSize="#{bindings.PublisherUrlTable.rangeSize}"
+                          emptyText="#{nls['NO_ROWS_FOUND']}"
+                          binding="#{pageFlowScope.PublisherUrlTable.table}"
+                          partialTriggers=" :::PublisherUrlPC ::PublisherUrlFirst ::PublisherUrlPrevious ::PublisherUrlNext ::PublisherUrlLast"
+                          styleClass="AFStretchWidth"
+                          summary="#{nls['TABLE_TITLE_PUBLISHERURL']}">
+                  <f:facet name="contextMenu">
+                    <af:popup id="PublisherUrlTablePopup"
+                              childCreation="deferred">
+                      <af:menu id="menu2">
+                        <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3"></af:menu>
+                        <af:commandMenuItem id="PublisherUrldelrm"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn']}">
+                          <af:showPopupBehavior popupId=":::PublisherUrlDeletePopup"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </af:popup>
+                  </f:facet>
+                  <af:column id="PublisherUrlActionColumn" frozen="true"
+                             width="20" align="center" headerText=" ">
+                    <af:panelGroupLayout layout="horizontal" id="pgl0">
+                      <af:commandImageLink id="PublisherUrldelrl"
+                                           partialSubmit="true" immediate="true"
+                                           rendered="#{jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn']}"
+                                           shortDesc="#{nls['DELETE_ROW']}"
+                                           icon="/jheadstart/images/deleteRow.png">
+                        <af:showPopupBehavior popupId=":::PublisherUrlDeletePopup"/>
+                      </af:commandImageLink>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column id="PublisherUrlDisplayValueCol" sortable="true"
+                             noWrap="true" width="240"
+                             sortProperty="DisplayValue" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.PublisherUrlTable.hints.DisplayValue.label}"
+                                      showRequired="true" id="ol0"/>
+                    </f:facet>
+                    <af:inputText id="PublisherUrlDisplayValue"
+                                  value="#{row.bindings.DisplayValue.inputValue}"
+                                  label="#{bindings.PublisherUrlTable.hints.DisplayValue.label}"
+                                  required="true"
+                                  rows="#{bindings.PublisherUrlTable.hints.DisplayValue.displayHeight}"
+                                  columns="#{bindings.PublisherUrlTable.hints.DisplayValue.displayWidth}"
+                                  maximumLength="100"
+                                  readOnly="#{((pageFlowScope.PublisherUrlTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublisherUrlTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn'])))}">
+                      <f:validator binding="#{row.bindings.DisplayValue.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="PublisherUrlInternalValueCol" sortable="true"
+                             noWrap="true" width="240"
+                             sortProperty="InternalValue" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.PublisherUrlTable.hints.InternalValue.label}"
+                                      showRequired="true" id="ol1"/>
+                    </f:facet>
+                    <af:inputText id="PublisherUrlInternalValue"
+                                  value="#{row.bindings.InternalValue.inputValue}"
+                                  label="#{bindings.PublisherUrlTable.hints.InternalValue.label}"
+                                  required="true"
+                                  rows="#{bindings.PublisherUrlTable.hints.InternalValue.displayHeight}"
+                                  columns="#{bindings.PublisherUrlTable.hints.InternalValue.displayWidth}"
+                                  maximumLength="100"
+                                  readOnly="#{(((pageFlowScope.PublisherUrlTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublisherUrlTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn'])))) or (!(pageFlowScope.PublisherUrlTable.newRow))}">
+                      <f:validator binding="#{row.bindings.InternalValue.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="PublisherUrlOrderBy1Col" sortable="true"
+                             noWrap="true" width="100" sortProperty="OrderBy1"
+                             align="right" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.PublisherUrlTable.hints.OrderBy1.label}"
+                                      showRequired="#{bindings.PublisherUrlTable.hints.OrderBy1.mandatory}"
+                                      id="ol2"/>
+                    </f:facet>
+                    <af:inputText id="PublisherUrlOrderBy1"
+                                  value="#{row.bindings.OrderBy1.inputValue}"
+                                  label="#{bindings.PublisherUrlTable.hints.OrderBy1.label}"
+                                  required="#{bindings.PublisherUrlTable.hints.OrderBy1.mandatory}"
+                                  rows="#{bindings.PublisherUrlTable.hints.OrderBy1.displayHeight}"
+                                  columns="#{bindings.PublisherUrlTable.hints.OrderBy1.displayWidth}"
+                                  maximumLength="38"
+                                  readOnly="#{((pageFlowScope.PublisherUrlTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublisherUrlTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn'])))}">
+                      <f:validator binding="#{row.bindings.OrderBy1.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.PublisherUrlTable.hints.OrderBy1.format}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="PublisherUrlDescriptionCol" sortable="true"
+                             noWrap="true" width="240"
+                             sortProperty="Description" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.PublisherUrlTable.hints.Description.label}"
+                                      showRequired="#{bindings.PublisherUrlTable.hints.Description.mandatory}"
+                                      id="ol3"/>
+                    </f:facet>
+                    <af:inputText id="PublisherUrlDescription"
+                                  value="#{row.bindings.Description.inputValue}"
+                                  label="#{bindings.PublisherUrlTable.hints.Description.label}"
+                                  required="#{bindings.PublisherUrlTable.hints.Description.mandatory}"
+                                  rows="#{bindings.PublisherUrlTable.hints.Description.displayHeight}"
+                                  columns="#{bindings.PublisherUrlTable.hints.Description.displayWidth}"
+                                  maximumLength="400"
+                                  readOnly="#{((pageFlowScope.PublisherUrlTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublisherUrlTable.newRow) and (!(jhsUserRoles['RM, ADMIN, OVR, AllButTitl, AllButAdmn'])))}">
+                      <f:validator binding="#{row.bindings.Description.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="PublisherUrlCreatedByCol" sortable="true"
+                             noWrap="true" width="120" sortProperty="CreatedBy"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.PublisherUrlTable.hints.CreatedBy.label}"
+                                      id="ol4"/>
+                    </f:facet>
+                    <af:inputText id="PublisherUrlCreatedBy"
+                                  value="#{row.bindings.CreatedBy.inputValue}"
+                                  label="#{bindings.PublisherUrlTable.hints.CreatedBy.label}"
+                                  required="#{bindings.PublisherUrlTable.hints.CreatedBy.mandatory}"
+                                  rows="#{bindings.PublisherUrlTable.hints.CreatedBy.displayHeight}"
+                                  columns="#{bindings.PublisherUrlTable.hints.CreatedBy.displayWidth}"
+                                  maximumLength="40" readOnly="true">
+                      <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="PublisherUrlCreatedbySearchCol" sortable="true"
+                             noWrap="true" width="100"
+                             sortProperty="CreatedbySearch" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.PublisherUrlTable.hints.CreatedbySearch.label}"
+                                      id="ol5"/>
+                    </f:facet>
+                    <af:inputDate id="PublisherUrlCreatedbySearch"
+                                  value="#{row.bindings.CreatedbySearch.inputValue}"
+                                  label="#{bindings.PublisherUrlTable.hints.CreatedbySearch.label}"
+                                  required="#{bindings.PublisherUrlTable.hints.CreatedbySearch.mandatory}"
+                                  readOnly="true"
+                                  shortDesc="#{bindings.PublisherUrlTable.hints.CreatedbySearch.tooltip}">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </af:column>
+                  <af:column id="PublisherUrlLastUpdatedByCol" sortable="true"
+                             noWrap="true" width="120"
+                             sortProperty="LastUpdatedBy" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.PublisherUrlTable.hints.LastUpdatedBy.label}"
+                                      id="ol6"/>
+                    </f:facet>
+                    <af:inputText id="PublisherUrlLastUpdatedBy"
+                                  value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                  label="#{bindings.PublisherUrlTable.hints.LastUpdatedBy.label}"
+                                  required="#{bindings.PublisherUrlTable.hints.LastUpdatedBy.mandatory}"
+                                  rows="#{bindings.PublisherUrlTable.hints.LastUpdatedBy.displayHeight}"
+                                  columns="#{bindings.PublisherUrlTable.hints.LastUpdatedBy.displayWidth}"
+                                  maximumLength="40" readOnly="true">
+                      <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="PublisherUrlLastUpdatedbySearchCol"
+                             sortable="true" noWrap="true" width="100"
+                             sortProperty="LastUpdatedbySearch"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.PublisherUrlTable.hints.LastUpdatedbySearch.label}"
+                                      id="ol7"/>
+                    </f:facet>
+                    <af:inputDate id="PublisherUrlLastUpdatedbySearch"
+                                  value="#{row.bindings.LastUpdatedbySearch.inputValue}"
+                                  label="#{bindings.PublisherUrlTable.hints.LastUpdatedbySearch.label}"
+                                  required="#{bindings.PublisherUrlTable.hints.LastUpdatedbySearch.mandatory}"
+                                  readOnly="true"
+                                  shortDesc="#{bindings.PublisherUrlTable.hints.LastUpdatedbySearch.tooltip}">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </af:column>
+                  <af:column id="PublisherUrlLookupCodeSetIdCol" sortable="true"
+                             noWrap="true" width="228"
+                             sortProperty="LookupCodeSetId" align="right"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.PublisherUrlTable.hints.LookupCodeSetId.label}"
+                                      showRequired="false" id="ol8"/>
+                    </f:facet>
+                    <af:inputText rendered="false"
+                                  id="PublisherUrlLookupCodeSetId"
+                                  value="#{row.bindings.LookupCodeSetId.inputValue}"/>
+                  </af:column>
+                  <af:column id="PublisherUrlCodeSetCol" sortable="true"
+                             noWrap="true" width="120" sortProperty="CodeSet"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.PublisherUrlTable.hints.CodeSet.label}"
+                                      showRequired="false" id="ol9"/>
+                    </f:facet>
+                    <af:inputText rendered="false" id="PublisherUrlCodeSet"
+                                  value="#{row.bindings.CodeSet.inputValue}"/>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="PublisherUrlDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="PublisherUrlDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_PUBLISHERUR:#{pageFlowScope.PublisherUrlTable.currentRowAttributeValues.DisplayValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeletePublisherUrl.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

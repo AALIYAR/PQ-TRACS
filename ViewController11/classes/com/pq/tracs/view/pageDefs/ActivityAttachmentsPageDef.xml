@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="ActivityAttachmentsPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare"
+               value="#{'ActivitiesTabPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="ActivityAttachmentsIterator"
+              Binds="TraxActivityAttachmentView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ActivityAttachmentsIteratorTraxActivityAttachmentViewCriteriaQuery"
+                  Binds="ActivityAttachmentsIterator"
+                  Criteria="TraxActivityAttachmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttachmentType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="s54Name" IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54AttachmentType"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="AttachmentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54Attachment"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54AttachmentDL"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54Description"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54FileSize" IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="FileSize"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54CreatedBy"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54CreatedDate"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54LastUpdatedBy"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54LastUpdatedDate"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ActivityAttachmentsTable"
+          IterBinding="ActivityAttachmentsIterator">
+      <nodeDefinition Name="ActivityAttachments"
+                      DefName="com.pq.tracs.model.vo.TraxActivityAttachmentView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="AttachmentType"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Description"/>
+          <Item Value="FileSize"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator" RequiresUpdateModel="true"
+            Action="next"/>
+    <action id="LastActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator" RequiresUpdateModel="true"
+            Action="last"/>
+    <action id="SetCurrentRowWithKeyActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrActivityAttachments}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="DeleteActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

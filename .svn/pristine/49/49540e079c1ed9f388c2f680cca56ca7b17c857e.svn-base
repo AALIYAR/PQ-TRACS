@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="RoyaltyRatePageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare" value="#{'ContractTabPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="RoyaltyRateIterator" Binds="RoyaltyRateView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="RoyaltyRateIteratorRoyaltyRateViewCriteriaQuery"
+                  Binds="RoyaltyRateIterator" Criteria="RoyaltyRateViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="RateType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="RoyaltyRateExceptionIterator"
+              Binds="RoyaltyRateExceptionView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="RoyaltyRateExceptionIteratorRoyaltyRateExceptionViewCriteriaQuery"
+                  Binds="RoyaltyRateExceptionIterator"
+                  Criteria="RoyaltyRateExceptionViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Description"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="RoyaltyRateTitleIterator"
+              Binds="ContractRoyaltyRateTitleView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="RoyaltyRateTitleIteratorContractRoyaltyRateTitleViewCriteriaQuery"
+                  Binds="RoyaltyRateTitleIterator"
+                  Criteria="ContractRoyaltyRateTitleViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="LongTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryRoyaltyRateTitleInvoke"
+                  Binds="ExecuteQueryRoyaltyRateTitle" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <taskFlow id="LovTaskFlow"
+              taskFlowId="#{pageFlowScope.jhsLovTaskFlowManager.currentTaskFlowId}"
+              activation="deferred"
+              parametersMap="#{pageFlowScope.jhsLovTaskFlowManager.currentParamMap}"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings>
+    <list IterBinding="RoyaltyRateIterator" id="s16Media" Uses="LOV_Media"
+          StaticList="false"/>
+    <list IterBinding="RoyaltyRateIterator" id="s16RateType"
+          Uses="LOV_RateType" StaticList="false"/>
+    <attributeValues id="s16RoyaltyRate1" IterBinding="RoyaltyRateIterator">
+      <AttrNames>
+        <Item Value="RoyaltyRate1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s16EffectiveStartDate"
+                     IterBinding="RoyaltyRateIterator">
+      <AttrNames>
+        <Item Value="EffectiveStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s16EffectiveEndDate" IterBinding="RoyaltyRateIterator">
+      <AttrNames>
+        <Item Value="EffectiveEndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s16ExceptionFlag" IterBinding="RoyaltyRateIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ExceptionFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s16CreatedBy" IterBinding="RoyaltyRateIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s16CreatedDate" IterBinding="RoyaltyRateIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s16LastUpdatedBy" IterBinding="RoyaltyRateIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s16LastUpdatedDate" IterBinding="RoyaltyRateIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="RoyaltyRateTable" IterBinding="RoyaltyRateIterator">
+      <nodeDefinition Name="RoyaltyRate"
+                      DefName="com.pq.tracs.model.dao.RoyaltyRateView">
+        <AttrNames>
+          <Item Value="Media"/>
+          <Item Value="RateType"/>
+          <Item Value="RoyaltyRate1"/>
+          <Item Value="EffectiveStartDate"/>
+          <Item Value="EffectiveEndDate"/>
+          <Item Value="ExceptionFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstRoyaltyRate" IterBinding="RoyaltyRateIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousRoyaltyRate" IterBinding="RoyaltyRateIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextRoyaltyRate" IterBinding="RoyaltyRateIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastRoyaltyRate" IterBinding="RoyaltyRateIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyRoyaltyRate"
+            IterBinding="RoyaltyRateIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrRoyaltyRate}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateRoyaltyRate" IterBinding="RoyaltyRateIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteRoyaltyRate" IterBinding="RoyaltyRateIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="RoyaltyRateExceptionDescription"
+                     IterBinding="RoyaltyRateExceptionIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RoyaltyRateExceptionCreatedBy"
+                     IterBinding="RoyaltyRateExceptionIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RoyaltyRateExceptionCreatedDate"
+                     IterBinding="RoyaltyRateExceptionIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RoyaltyRateExceptionLastUpdatedBy"
+                     IterBinding="RoyaltyRateExceptionIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RoyaltyRateExceptionLastUpdatedDate"
+                     IterBinding="RoyaltyRateExceptionIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="RoyaltyRateExceptionTable"
+          IterBinding="RoyaltyRateExceptionIterator">
+      <nodeDefinition Name="RoyaltyRateException"
+                      DefName="com.pq.tracs.model.dao.RoyaltyRateExceptionView">
+        <AttrNames>
+          <Item Value="Description"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstRoyaltyRateException"
+            IterBinding="RoyaltyRateExceptionIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousRoyaltyRateException"
+            IterBinding="RoyaltyRateExceptionIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextRoyaltyRateException"
+            IterBinding="RoyaltyRateExceptionIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastRoyaltyRateException"
+            IterBinding="RoyaltyRateExceptionIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyRoyaltyRateException"
+            IterBinding="RoyaltyRateExceptionIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrRoyaltyRateException}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateRoyaltyRateException"
+            IterBinding="RoyaltyRateExceptionIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteRoyaltyRateException"
+            IterBinding="RoyaltyRateExceptionIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryRoyaltyRateTitle"
+            IterBinding="RoyaltyRateTitleIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues id="RoyaltyRateTitleRoyaltyRateId"
+                     IterBinding="RoyaltyRateTitleIterator">
+      <AttrNames>
+        <Item Value="RoyaltyRateId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RoyaltyRateTitleTitleId"
+                     IterBinding="RoyaltyRateTitleIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RoyaltyRateTitleCatalogNumber"
+                     IterBinding="RoyaltyRateTitleIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RoyaltyRateTitleLongTitle"
+                     IterBinding="RoyaltyRateTitleIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="RoyaltyRateTitleIterator"
+          id="RoyaltyRateTitleProductLine" Uses="LOV_ProductLine"
+          StaticList="false"/>
+    <attributeValues id="RoyaltyRateTitleShortTitle"
+                     IterBinding="RoyaltyRateTitleIterator">
+      <AttrNames>
+        <Item Value="ShortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RoyaltyRateTitlePublicationStartYear"
+                     IterBinding="RoyaltyRateTitleIterator">
+      <AttrNames>
+        <Item Value="PublicationStartYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="RoyaltyRateTitlePublicationEndYear"
+                     IterBinding="RoyaltyRateTitleIterator">
+      <AttrNames>
+        <Item Value="PublicationEndYear"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="RoyaltyRateTitleIterator"
+          id="RoyaltyRateTitleFilmAvailability" Uses="LOV_FilmAvailability"
+          StaticList="false"/>
+    <list IterBinding="RoyaltyRateTitleIterator"
+          id="RoyaltyRateTitleBibliographicStatus"
+          Uses="LOV_BibliographicStatus" StaticList="false"/>
+    <attributeValues id="RoyaltyRateTitleExercisingRights"
+                     IterBinding="RoyaltyRateTitleIterator">
+      <AttrNames>
+        <Item Value="ExercisingRights"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="RoyaltyRateTitleIterator"
+          id="RoyaltyRateTitlePrimaryPmClass" Uses="LOV_PrimaryPmClass"
+          StaticList="false"/>
+    <attributeValues id="RoyaltyRateTitleStatus"
+                     IterBinding="RoyaltyRateTitleIterator">
+      <AttrNames>
+        <Item Value="Status"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="RoyaltyRateTitleTable" IterBinding="RoyaltyRateTitleIterator">
+      <nodeDefinition Name="RoyaltyRateTitle"
+                      DefName="com.pq.tracs.model.dao.ContractRoyaltyRateTitleView">
+        <AttrNames>
+          <Item Value="RoyaltyRateId"/>
+          <Item Value="TitleId"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="ProductLine"/>
+          <Item Value="ShortTitle"/>
+          <Item Value="PublicationStartYear"/>
+          <Item Value="PublicationEndYear"/>
+          <Item Value="FilmAvailability"/>
+          <Item Value="BibliographicStatus"/>
+          <Item Value="ExercisingRights"/>
+          <Item Value="PrimaryPmClass"/>
+          <Item Value="Status"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstRoyaltyRateTitle" IterBinding="RoyaltyRateTitleIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousRoyaltyRateTitle" IterBinding="RoyaltyRateTitleIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextRoyaltyRateTitle" IterBinding="RoyaltyRateTitleIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastRoyaltyRateTitle" IterBinding="RoyaltyRateTitleIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyRoyaltyRateTitle"
+            IterBinding="RoyaltyRateTitleIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrRoyaltyRateTitle}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateRoyaltyRateTitle" IterBinding="RoyaltyRateTitleIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteRoyaltyRateTitle" IterBinding="RoyaltyRateTitleIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

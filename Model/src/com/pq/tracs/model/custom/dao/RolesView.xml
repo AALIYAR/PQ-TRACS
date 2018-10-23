@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="RolesView"
+   Version="11.1.1.59.23"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="com.pq.tracs.model.custom.dao.RolesViewRowImpl"
+   ComponentClass="com.pq.tracs.model.custom.dao.RolesViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <SQLQuery><![CDATA[
+SELECT jr.ID, jr.short_name, jr.NAME,jurg.usr_id,(select username from jhs_users where id = jurg.usr_id) user_name
+  FROM jhs_roles jr, jhs_user_role_grants jurg
+ WHERE jr.ID = jurg.rle_id 
+ ORDER BY jr.NAME
+   ]]></SQLQuery>
+   <ViewAttribute
+      Name="Id"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="ID"
+      Expression="ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ShortName"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="10"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SHORT_NAME"
+      Expression="SHORT_NAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.custom.dao.RolesView.ShortName_LABEL"/>
+            <DISPLAYWIDTH
+               Value="30"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Name"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="NAME"
+      Expression="NAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <DISPLAYWIDTH
+               Value="30"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="UsrId"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="USR_ID"
+      Expression="USR_ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.custom.dao.RolesView.UsrId_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="UserName"
+      IsPersistent="false"
+      Precision="240"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="USER_NAME"
+      Expression="USER_NAME"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="240" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.custom.dao.RolesView.UserName_LABEL"/>
+            <DISPLAYWIDTH
+               Value="30"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="RolesViewCriteria"
+      ViewObjectName="com.pq.tracs.model.custom.dao.RolesView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow163"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="RolesViewCriteria_vcrow163_ShortName"
+            ViewAttribute="ShortName"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Value=""
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="RolesViewCriteria_vcrow163_Name"
+            ViewAttribute="Name"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Value=""
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="RolesViewCriteria_vcrow163_UserName"
+            ViewAttribute="UserName"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Value=""
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ViewLinkAccessor
+      Name="GroupPermissionsView"
+      ViewLink="com.pq.tracs.model.custom.dao.RolesToPermissionsVL"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

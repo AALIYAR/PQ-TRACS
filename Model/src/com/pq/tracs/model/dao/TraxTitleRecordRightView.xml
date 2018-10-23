@@ -1,0 +1,512 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="TraxTitleRecordRightView"
+   Version="11.1.1.61.92"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="com.pq.tracs.model.dao.TraxTitleRecordRightViewRowImpl"
+   ComponentClass="com.pq.tracs.model.dao.TraxTitleRecordRightViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+      <Attr Name="_isExpertMode" Value="true" />
+      <Attr Name="_objectSuperClassName" Value="com.pq.tracs.model.dao.TracsView" />
+      <Attr Name="_isCodegen" Value="true" />
+   </DesignTime>
+   <Variable
+      Name="rightTypeValue"
+      Kind="where"
+      Type="java.lang.String" >
+   </Variable>
+   <ViewAccessor
+      Name="GenerationMethodLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Generation Method']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="DeliveryRightTemplateLOV"
+      ViewObjectName="com.pq.tracs.model.lookups.DeliveryRightTemplateROView">
+      <ParameterMap>
+         <PIMap Variable="right_type">
+            <TransientExpression><![CDATA[RightType]]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_GenerationMethod"
+      ListVOName="GenerationMethodLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="GenerationMethod"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_TemplateName"
+      ListVOName="DeliveryRightTemplateLOV"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="TemplateName"/>
+      </AttrArray>
+      <AttrArray Name="DerivedAttrNames">
+         <Item Value="RightTemplateId"/>
+         <Item Value="RightType"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="Name"/>
+         <Item Value="Id"/>
+         <Item Value="RightType"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="Name"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <SQLQuery><![CDATA[SELECT TraxTitleRecordRight.ID, 
+       TraxTitleRecordRight.TITLE_RECORD_ID, 
+       TraxTitleRecordRight.RULE_NUMBER, 
+       TraxTitleRecordRight.TRANSLATION_FLAG, 
+       TraxTitleRecordRight.PUBLICATION_START_DATE, 
+       TraxTitleRecordRight.PUBLICATION_END_DATE, 
+       TraxTitleRecordRight.EMBARGO_DAYS, 
+       TraxTitleRecordRight.REVERSE_EMBARGO_DAYS, 
+    replace(rtrim (xmlagg (xmlelement (e, rc1.value || '/' || rc2.value || ', ')).extract ('//text()'), ', '), '&amp;', '&') methods,
+       TraxTitleRecordRight.COMPLETE_FLAG,
+       TraxTitleRecordRight.GENERATION_METHOD,
+       TraxTitleRecordRight.CREATED_BY, 
+       TraxTitleRecordRight.CREATED_DATE, 
+       TraxTitleRecordRight.LAST_UPDATED_BY, 
+       TraxTitleRecordRight.LAST_UPDATED_DATE, 
+       TraxTitleRecordRight.RIGHT_TYPE, 
+       TraxTitleRecordRight.RIGHT_TEMPLATE_ID,
+(SELECT  tt.NAME  FROM TRAX_RIGHT_TEMPLATE  tt where tt.id=TraxTitleRecordRight.RIGHT_TEMPLATE_ID AND ROWNUM=1) template_name,
+    replace(rtrim (xmlagg (xmlelement (e, rc1.value || '/' || rc3.value || ', ')).extract ('//text()'), ', '), '&amp;', '&') restrictions
+FROM TRAX_TITLE_RECORD_RIGHT TraxTitleRecordRight
+    left outer join trax_title_rec_right_category rc1
+        on TraxTitleRecordRight.id = rc1.TITLE_RECORD_RIGHT_ID
+        and rc1.CATEGORY_ID = 1
+    left outer join trax_title_rec_right_category rc2 
+        on TraxTitleRecordRight.id = rc2.TITLE_RECORD_RIGHT_ID
+        and rc2.CATEGORY_ID = 2
+    left outer join trax_title_rec_right_category rc3
+        on TraxTitleRecordRight.id = rc3.TITLE_RECORD_RIGHT_ID
+        and rc3.CATEGORY_ID = 3
+group by TraxTitleRecordRight.ID, 
+       TraxTitleRecordRight.TITLE_RECORD_ID, 
+       TraxTitleRecordRight.RULE_NUMBER, 
+       TraxTitleRecordRight.TRANSLATION_FLAG, 
+       TraxTitleRecordRight.PUBLICATION_START_DATE, 
+       TraxTitleRecordRight.PUBLICATION_END_DATE, 
+       TraxTitleRecordRight.EMBARGO_DAYS, 
+       TraxTitleRecordRight.REVERSE_EMBARGO_DAYS, 
+       TraxTitleRecordRight.CREATED_BY, 
+       TraxTitleRecordRight.CREATED_DATE, 
+       TraxTitleRecordRight.LAST_UPDATED_BY, 
+       TraxTitleRecordRight.LAST_UPDATED_DATE, 
+       TraxTitleRecordRight.RIGHT_TYPE, 
+       TraxTitleRecordRight.RIGHT_TEMPLATE_ID,
+       TraxTitleRecordRight.COMPLETE_FLAG,
+       TraxTitleRecordRight.GENERATION_METHOD
+order by TraxTitleRecordRight.RULE_NUMBER, TraxTitleRecordRight.PUBLICATION_START_DATE, TraxTitleRecordRight.PUBLICATION_END_DATE, TraxTitleRecordRight.EMBARGO_DAYS, TraxTitleRecordRight.REVERSE_EMBARGO_DAYS]]></SQLQuery>
+   <EntityUsage
+      Name="TraxTitleRecordRight"
+      Entity="com.pq.tracs.model.bo.TitleRecordRight" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      EntityAttrName="Id"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TitleRecordId"
+      EntityAttrName="TitleRecordId"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="TITLE_RECORD_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RuleNumber"
+      IsUnique="true"
+      EntityAttrName="RuleNumber"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="RULE_NUMBER" >
+      <Properties>
+         <SchemaBasedProperties>
+            <DISPLAYWIDTH
+               Value="25"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TranslationFlag"
+      IsNotNull="true"
+      EntityAttrName="TranslationFlag"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="TRANSLATION_FLAG" />
+   <ViewAttribute
+      Name="PublicationStartDate"
+      EntityAttrName="PublicationStartDate"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="PUBLICATION_START_DATE" />
+   <ViewAttribute
+      Name="PublicationEndDate"
+      EntityAttrName="PublicationEndDate"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="PUBLICATION_END_DATE" />
+   <ViewAttribute
+      Name="EmbargoDays"
+      EntityAttrName="EmbargoDays"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="EMBARGO_DAYS" />
+   <ViewAttribute
+      Name="ReverseEmbargoDays"
+      EntityAttrName="ReverseEmbargoDays"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="REVERSE_EMBARGO_DAYS" />
+   <ViewAttribute
+      Name="Methods"
+      IsPersistent="false"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="METHODS"
+      Expression="METHODS"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TraxTitleRecordRightView.Methods_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CompleteFlag"
+      IsNotNull="true"
+      EntityAttrName="CompleteFlag"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="COMPLETE_FLAG"/>
+   <ViewAttribute
+      Name="GenerationMethod"
+      IsUpdateable="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      EntityAttrName="GenerationMethod"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="GENERATION_METHOD"
+      LOVName="LOV_GenerationMethod">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="CREATED_BY" />
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      EntityAttrName="CreatedDate"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="CREATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.TraxTitleRecordRightView.CreatedDate_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="LAST_UPDATED_BY" />
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="LAST_UPDATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.TraxTitleRecordRightView.LastUpdatedDate_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RightType"
+      IsNotNull="true"
+      EntityAttrName="RightType"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="RIGHT_TYPE" />
+   <ViewAttribute
+      Name="RightTemplateId"
+      EntityAttrName="RightTemplateId"
+      EntityUsage="TraxTitleRecordRight"
+      AliasName="RIGHT_TEMPLATE_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TemplateName"
+      IsUpdateable="while_insert"
+      IsPersistent="false"
+      Precision="2000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TEMPLATE_NAME"
+      Expression="TEMPLATE_NAME"
+      SQLType="VARCHAR"
+      LOVName="LOV_TemplateName">
+      <Properties>
+         <SchemaBasedProperties>
+            <DISPLAYWIDTH
+               Value="30"/>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TraxTitleRecordRightView.TemplateName_LABEL"/>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Restrictions"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="RESTRICTIONS"
+      Expression="RESTRICTIONS"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.TraxTitleRecordRightView.Restrictions_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="TraxTitleRecordRightViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.TraxTitleRecordRightView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow127"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="TraxTitleRecordRightViewCriteria_vcrow127_RuleNumber"
+            ViewAttribute="RuleNumber"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxTitleRecordRightViewCriteria_vcrow127_PublicationStartDate"
+            ViewAttribute="PublicationStartDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxTitleRecordRightViewCriteria_vcrow127_PublicationEndDate"
+            ViewAttribute="PublicationEndDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxTitleRecordRightViewCriteria_vcrow127_EmbargoDays"
+            ViewAttribute="EmbargoDays"
+            Conjunction="AND"
+            Required="Optional"
+            Operator="="/>
+         <ViewCriteriaItem
+            Name="TraxTitleRecordRightViewCriteria_vcrow127_ReverseEmbargoDays"
+            ViewAttribute="ReverseEmbargoDays"
+            Conjunction="AND"
+            Required="Optional"
+            Operator="="/>
+         <ViewCriteriaItem
+            Name="TraxTitleRecordRightViewCriteria_vcrow127_Methods"
+            ViewAttribute="Methods"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxTitleRecordRightViewCriteria_vcrow127_CompleteFlag"
+            ViewAttribute="CompleteFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxTitleRecordRightViewCriteria_vcrow127_GenerationMethod"
+            ViewAttribute="GenerationMethod"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="TraxTitleRecordRightViewCriteria_vcrow127_CreatedBy"
+            ViewAttribute="CreatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxTitleRecordRightViewCriteria_vcrow127_CreatedDate"
+            ViewAttribute="CreatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxTitleRecordRightViewCriteria_vcrow127_LastUpdatedBy"
+            ViewAttribute="LastUpdatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TraxTitleRecordRightViewCriteria_vcrow127_LastUpdatedDate"
+            ViewAttribute="LastUpdatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ViewCriteria
+      Name="TraxOVRDeliveryRightVC"
+      ViewObjectName="com.pq.tracs.model.dao.TraxTitleRecordRightView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow342"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="RightType"
+            ViewAttribute="RightType"
+            Operator="="
+            Conjunction="AND"
+            Value=":rightTypeValue"
+            UpperColumns="0"
+            GenerateIsNullClauseForBindVars="false"
+            IsBindVarValue="true"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ViewCriteria
+      Name="TraxOVRRestrictionVC"
+      ViewObjectName="com.pq.tracs.model.dao.TraxTitleRecordRightView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow343"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="RightType"
+            ViewAttribute="RightType"
+            Operator="="
+            Conjunction="AND"
+            Value=":rightTypeValue"
+            UpperColumns="0"
+            GenerateIsNullClauseForBindVars="false"
+            IsBindVarValue="true"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ViewLinkAccessor
+      Name="TraxTitleRecRightCategoryView"
+      ViewLink="com.pq.tracs.model.dao.TraxTitleRecRightCategoFkLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="RightTitleRecordView"
+      ViewLink="com.pq.tracs.model.dao.TitleRecTitleRecRightViewLink"
+      Type="oracle.jbo.Row"
+      Reversed="true"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

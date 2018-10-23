@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="ContractGuaranteePageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare" value="#{'ContractTabPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="ContractGuaranteeIterator" Binds="ContractGuaranteeView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContractGuaranteeIteratorContractGuaranteeViewCriteriaQuery"
+                  Binds="ContractGuaranteeIterator"
+                  Criteria="ContractGuaranteeViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="DeliveryFormat"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryContractGuaranteeInvoke"
+                  Binds="ExecuteQueryContractGuarantee" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="ContractGuaranteeTitleIterator"
+              Binds="ContractGuaranteeTitleView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContractGuaranteeTitleIteratorContractGuaranteeTitleViewCriteriaQuery"
+                  Binds="ContractGuaranteeTitleIterator"
+                  Criteria="ContractGuaranteeTitleViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="LongTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryContractGuaranteeTitleInvoke"
+                  Binds="ExecuteQueryContractGuaranteeTitle"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator Binds="ContractGuaranteeCurrencyLookup" RangeSize="25"
+              DataControl="TracsServiceDataControl"
+              id="ContractGuaranteeCurrencyLookupIterator"/>
+    <iterator Binds="ContractGuaranteeMediaCodeLookup" RangeSize="25"
+              DataControl="TracsServiceDataControl"
+              id="ContractGuaranteeMediaCodeLookupIterator"/>
+    <iterator Binds="ContractGuaranteeDeliveryFormatLookup" RangeSize="25"
+              DataControl="TracsServiceDataControl"
+              id="ContractGuaranteeDeliveryFormatLookupIterator"/>
+    <iterator Binds="ContractGuaranteeProductCodeLookup" RangeSize="25"
+              DataControl="TracsServiceDataControl"
+              id="ContractGuaranteeProductCodeLookupIterator"/>
+    <iterator Binds="ContractGuaranteeInventoryDivisionLookup" RangeSize="25"
+              DataControl="TracsServiceDataControl"
+              id="ContractGuaranteeInventoryDivisionLookupIterator"/>
+    <taskFlow id="LovTaskFlow"
+              taskFlowId="#{pageFlowScope.jhsLovTaskFlowManager.currentTaskFlowId}"
+              activation="deferred"
+              parametersMap="#{pageFlowScope.jhsLovTaskFlowManager.currentParamMap}"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings>
+    <action id="ExecuteQueryContractGuarantee"
+            IterBinding="ContractGuaranteeIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <list IterBinding="ContractGuaranteeIterator" id="s17Currency"
+          Uses="LOV_Currency" StaticList="false"/>
+    <attributeValues id="s17Amount" IterBinding="ContractGuaranteeIterator">
+      <AttrNames>
+        <Item Value="Amount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s17EffectiveStartDate"
+                     IterBinding="ContractGuaranteeIterator">
+      <AttrNames>
+        <Item Value="EffectiveStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s17EffectiveEndDate"
+                     IterBinding="ContractGuaranteeIterator">
+      <AttrNames>
+        <Item Value="EffectiveEndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContractGuaranteeIterator" id="s17Media"
+          Uses="LOV_Media" StaticList="false"/>
+    <list IterBinding="ContractGuaranteeIterator" id="s17DeliveryFormat"
+          Uses="LOV_DeliveryFormat" StaticList="false"/>
+    <list IterBinding="ContractGuaranteeIterator" id="s17ProductCode"
+          Uses="LOV_ProductCode" StaticList="false"/>
+    <list IterBinding="ContractGuaranteeIterator" id="s17InventoryDivision"
+          Uses="LOV_InventoryDivision" StaticList="false"/>
+    <attributeValues id="s17Comments" IterBinding="ContractGuaranteeIterator">
+      <AttrNames>
+        <Item Value="Comments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s17CreatedBy" IterBinding="ContractGuaranteeIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s17CreatedDate"
+                     IterBinding="ContractGuaranteeIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s17LastUpdatedBy"
+                     IterBinding="ContractGuaranteeIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s17LastUpdatedDate"
+                     IterBinding="ContractGuaranteeIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContractGuaranteeTable" IterBinding="ContractGuaranteeIterator">
+      <nodeDefinition Name="ContractGuarantee"
+                      DefName="com.pq.tracs.model.dao.ContractGuaranteeView">
+        <AttrNames>
+          <Item Value="Currency"/>
+          <Item Value="Amount"/>
+          <Item Value="EffectiveStartDate"/>
+          <Item Value="EffectiveEndDate"/>
+          <Item Value="Media"/>
+          <Item Value="DeliveryFormat"/>
+          <Item Value="ProductCode"/>
+          <Item Value="InventoryDivision"/>
+          <Item Value="Comments"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContractGuarantee" IterBinding="ContractGuaranteeIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContractGuarantee"
+            IterBinding="ContractGuaranteeIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextContractGuarantee" IterBinding="ContractGuaranteeIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContractGuarantee" IterBinding="ContractGuaranteeIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContractGuarantee"
+            IterBinding="ContractGuaranteeIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContractGuarantee}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContractGuarantee" IterBinding="ContractGuaranteeIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContractGuarantee" IterBinding="ContractGuaranteeIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryContractGuaranteeTitle"
+            IterBinding="ContractGuaranteeTitleIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="s170TitleId"
+                     IterBinding="ContractGuaranteeTitleIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s170ContractGuaranteeId"
+                     IterBinding="ContractGuaranteeTitleIterator">
+      <AttrNames>
+        <Item Value="ContractGuaranteeId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s170CatalogNumber"
+                     IterBinding="ContractGuaranteeTitleIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s170LongTitle"
+                     IterBinding="ContractGuaranteeTitleIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContractGuaranteeTitleIterator"
+          id="s170ProductLine" Uses="LOV_ProductLine" StaticList="false"/>
+    <attributeValues id="s170PublicationStartYear"
+                     IterBinding="ContractGuaranteeTitleIterator">
+      <AttrNames>
+        <Item Value="PublicationStartYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s170PublicationEndYear"
+                     IterBinding="ContractGuaranteeTitleIterator">
+      <AttrNames>
+        <Item Value="PublicationEndYear"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContractGuaranteeTitleIterator"
+          id="s170FilmAvailability" Uses="LOV_FilmAvailability"
+          StaticList="false"/>
+    <list IterBinding="ContractGuaranteeTitleIterator"
+          id="s170BibliographicStatus" Uses="LOV_BibliographicStatus"
+          StaticList="false"/>
+    <attributeValues id="s170ExercisingRights"
+                     IterBinding="ContractGuaranteeTitleIterator">
+      <AttrNames>
+        <Item Value="ExercisingRights"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ContractGuaranteeTitleIterator"
+          id="s170PrimaryPmClass" Uses="LOV_PrimaryPmClass" StaticList="false"/>
+    <attributeValues id="s170Status"
+                     IterBinding="ContractGuaranteeTitleIterator">
+      <AttrNames>
+        <Item Value="Status"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContractGuaranteeTitleTable"
+          IterBinding="ContractGuaranteeTitleIterator">
+      <nodeDefinition Name="ContractGuaranteeTitle"
+                      DefName="com.pq.tracs.model.dao.ContractGuaranteeTitleView">
+        <AttrNames>
+          <Item Value="TitleId"/>
+          <Item Value="ContractGuaranteeId"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="ProductLine"/>
+          <Item Value="PublicationStartYear"/>
+          <Item Value="PublicationEndYear"/>
+          <Item Value="FilmAvailability"/>
+          <Item Value="BibliographicStatus"/>
+          <Item Value="ExercisingRights"/>
+          <Item Value="PrimaryPmClass"/>
+          <Item Value="Status"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContractGuaranteeTitle"
+            IterBinding="ContractGuaranteeTitleIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContractGuaranteeTitle"
+            IterBinding="ContractGuaranteeTitleIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContractGuaranteeTitle"
+            IterBinding="ContractGuaranteeTitleIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContractGuaranteeTitle"
+            IterBinding="ContractGuaranteeTitleIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContractGuaranteeTitle"
+            IterBinding="ContractGuaranteeTitleIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContractGuaranteeTitle}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContractGuaranteeTitle"
+            IterBinding="ContractGuaranteeTitleIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContractGuaranteeTitle"
+            IterBinding="ContractGuaranteeTitleIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+    <list IterBinding="ContractGuaranteeCurrencyLookupIterator"
+          ListOperMode="navigation"
+          ListIter="ContractGuaranteeCurrencyLookupIterator"
+          id="ContractGuaranteeCurrencyLookup" DTSupportsMRU="true">
+      <AttrNames>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="ContractGuaranteeMediaCodeLookupIterator"
+          ListOperMode="navigation"
+          ListIter="ContractGuaranteeMediaCodeLookupIterator"
+          id="ContractGuaranteeMediaCodeLookup" DTSupportsMRU="true">
+      <AttrNames>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="ContractGuaranteeDeliveryFormatLookupIterator"
+          ListOperMode="navigation"
+          ListIter="ContractGuaranteeDeliveryFormatLookupIterator"
+          id="ContractGuaranteeDeliveryFormatLookup" DTSupportsMRU="true">
+      <AttrNames>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="ContractGuaranteeProductCodeLookupIterator"
+          ListOperMode="navigation"
+          ListIter="ContractGuaranteeProductCodeLookupIterator"
+          id="ContractGuaranteeProductCodeLookup" DTSupportsMRU="true">
+      <AttrNames>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </list>
+    <list IterBinding="ContractGuaranteeInventoryDivisionLookupIterator"
+          ListOperMode="navigation"
+          ListIter="ContractGuaranteeInventoryDivisionLookupIterator"
+          id="ContractGuaranteeInventoryDivisionLookup" DTSupportsMRU="true">
+      <AttrNames>
+        <Item Value="DisplayValue"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="PublishersPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="PublishersIterator" Binds="PublisherView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="PublishersIteratorPublisherViewCriteriaAdvQuery"
+                  Binds="PublishersIterator" Criteria="PublisherViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="Name"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="PublisherAddressesIterator" Binds="PublisherAddressView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="PublisherAddressesIteratorPublisherAddressViewCriteriaQuery"
+                  Binds="PublisherAddressesIterator"
+                  Criteria="PublisherAddressViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="StreetAddress"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryPublisherAddressesInvoke"
+                  Binds="ExecuteQueryPublisherAddresses" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="PublisherOVRsIterator" Binds="OvrPublisherROView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="PublisherOVRsIteratorOvrPublisherROViewCriteriaQuery"
+                  Binds="PublisherOVRsIterator"
+                  Criteria="OvrPublisherROViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="PmTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="PublisherVPIDIterator" Binds="PublisherVPIdView"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="PublisherVPIDIteratorPublisherAddressViewCriteriaQuery"
+                  Binds="PublisherVPIDIterator"
+                  Criteria="PublisherAddressViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="StreetAddress"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryPublisherVPIDInvoke"
+                  Binds="ExecuteQueryPublisherVPID" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="VPIDTitleRecordsIterator" Binds="PublisherVpIdOvrView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="VPIDTitleRecordsIteratorPublisherVpIdOvrViewCriteriaQuery"
+                  Binds="VPIDTitleRecordsIterator"
+                  Criteria="PublisherVpIdOvrViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="PmTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryVPIDTitleRecordsInvoke"
+                  Binds="ExecuteQueryVPIDTitleRecords" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+  </executables>
+  <bindings>
+    <attributeValues id="PubName" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubPublisherId" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="PubId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubSortName" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="SortName"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="PublishersIterator"
+                  id="PubUrl" Uses="LOV_Url"/>
+    <attributeValues id="PubNotes" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubOrgId" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="OrgId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubMsId" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="MsId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubContentOwnerID" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerID"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="PublishersIterator"
+                  id="PubContentOwnerName" Uses="LOV_ContentOwnerName"/>
+    <attributeValues id="PubContentOwnerSite" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerSite"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubContentOwnerNo" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubCreatedBy" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubCreatedDate" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubCreatedDateSearch" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="CreatedDateSearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubLastUpdatedBy" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubLastUpdatedDate" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubLastUpdatedDateSearch"
+                     IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDateSearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubId" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubUrl2" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="Url2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PubContentOwnerName2" IterBinding="PublishersIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerName2"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="PublishersTable" IterBinding="PublishersIterator">
+      <nodeDefinition Name="Publishers"
+                      DefName="com.pq.tracs.model.dao.PublisherView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="PubId"/>
+          <Item Value="SortName"/>
+          <Item Value="Url"/>
+          <Item Value="Notes"/>
+          <Item Value="OrgId"/>
+          <Item Value="MsId"/>
+          <Item Value="ContentOwnerID"/>
+          <Item Value="ContentOwnerName"/>
+          <Item Value="ContentOwnerSite"/>
+          <Item Value="ContentOwnerNo"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="CreatedDateSearch"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="LastUpdatedDateSearch"/>
+          <Item Value="Id"/>
+          <Item Value="Url2"/>
+          <Item Value="ContentOwnerName2"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstPublishers" IterBinding="PublishersIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousPublishers" IterBinding="PublishersIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextPublishers" IterBinding="PublishersIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastPublishers" IterBinding="PublishersIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyPublishers" IterBinding="PublishersIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrPublishers}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreatePublishers" IterBinding="PublishersIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeletePublishers" IterBinding="PublishersIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryPublisherAddresses"
+            IterBinding="PublisherAddressesIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues id="s60VpId" IterBinding="PublisherAddressesIterator">
+      <AttrNames>
+        <Item Value="VpId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s60StreetAddress"
+                     IterBinding="PublisherAddressesIterator">
+      <AttrNames>
+        <Item Value="StreetAddress"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s60StreetAddress2"
+                     IterBinding="PublisherAddressesIterator">
+      <AttrNames>
+        <Item Value="StreetAddress2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s60City" IterBinding="PublisherAddressesIterator">
+      <AttrNames>
+        <Item Value="City"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s60StateOrProvince"
+                     IterBinding="PublisherAddressesIterator">
+      <AttrNames>
+        <Item Value="StateOrProvince"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s60ZipOrPostalCode"
+                     IterBinding="PublisherAddressesIterator">
+      <AttrNames>
+        <Item Value="ZipOrPostalCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s60ZipPlusFour"
+                     IterBinding="PublisherAddressesIterator">
+      <AttrNames>
+        <Item Value="ZipPlusFour"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="PublisherAddressesIterator"
+          id="s60Country" Uses="LOV_Country" StaticList="false"/>
+    <button id="s60DefaultFlag" IterBinding="PublisherAddressesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="DefaultFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s60CreatedBy" IterBinding="PublisherAddressesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s60CreatedDate"
+                     IterBinding="PublisherAddressesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s60LastUpdatedBy"
+                     IterBinding="PublisherAddressesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s60LastUpdatedDate"
+                     IterBinding="PublisherAddressesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="PublisherAddressesTable" IterBinding="PublisherAddressesIterator">
+      <nodeDefinition Name="PublisherAddresses"
+                      DefName="com.pq.tracs.model.dao.PublisherAddressView">
+        <AttrNames>
+          <Item Value="VpId"/>
+          <Item Value="StreetAddress"/>
+          <Item Value="StreetAddress2"/>
+          <Item Value="City"/>
+          <Item Value="StateOrProvince"/>
+          <Item Value="ZipOrPostalCode"/>
+          <Item Value="ZipPlusFour"/>
+          <Item Value="Country"/>
+          <Item Value="DefaultFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstPublisherAddresses"
+            IterBinding="PublisherAddressesIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousPublisherAddresses"
+            IterBinding="PublisherAddressesIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextPublisherAddresses" IterBinding="PublisherAddressesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastPublisherAddresses" IterBinding="PublisherAddressesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyPublisherAddresses"
+            IterBinding="PublisherAddressesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrPublisherAddresses}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreatePublisherAddresses"
+            IterBinding="PublisherAddressesIterator" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="DeletePublisherAddresses"
+            IterBinding="PublisherAddressesIterator" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <attributeValues id="s61TitleRecordId" IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="TitleRecordId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s61OvrId" IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s61OvrIdLink" IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s61PmTitle" IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="PmTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s61Address" IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="Address"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s61EndDate" IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="EndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s61Url" IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="Url"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s61Notes" IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s61CblId" IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="CblId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="PublisherOVRsIterator" id="s61ContentSource"
+          Uses="LOV_ContentSource" StaticList="false"/>
+    <attributeValues id="s61CreatedBy" IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s61CreatedDate" IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s61LastUpdatedBy" IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s61LastUpdatedDate"
+                     IterBinding="PublisherOVRsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="PublisherOVRsTable" IterBinding="PublisherOVRsIterator">
+      <nodeDefinition Name="PublisherOVRs"
+                      DefName="com.pq.tracs.model.ro.OvrPublisherROView">
+        <AttrNames>
+          <Item Value="TitleRecordId"/>
+          <Item Value="OvrId"/>
+          <Item Value="OvrId"/>
+          <Item Value="OvrId"/>
+          <Item Value="OvrId"/>
+          <Item Value="PmTitle"/>
+          <Item Value="Address"/>
+          <Item Value="EndDate"/>
+          <Item Value="Url"/>
+          <Item Value="Notes"/>
+          <Item Value="CblId"/>
+          <Item Value="ContentSource"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstPublisherOVRs" IterBinding="PublisherOVRsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousPublisherOVRs" IterBinding="PublisherOVRsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextPublisherOVRs" IterBinding="PublisherOVRsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastPublisherOVRs" IterBinding="PublisherOVRsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyPublisherOVRs"
+            IterBinding="PublisherOVRsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrPublisherOVRs}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryPublisherVPID" IterBinding="PublisherVPIDIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="PublisherVPIDVpId" IterBinding="PublisherVPIDIterator">
+      <AttrNames>
+        <Item Value="VpId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherVPIDStreetAddress"
+                     IterBinding="PublisherVPIDIterator">
+      <AttrNames>
+        <Item Value="StreetAddress"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherVPIDStreetAddress2"
+                     IterBinding="PublisherVPIDIterator">
+      <AttrNames>
+        <Item Value="StreetAddress2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherVPIDCity" IterBinding="PublisherVPIDIterator">
+      <AttrNames>
+        <Item Value="City"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherVPIDStateOrProvince"
+                     IterBinding="PublisherVPIDIterator">
+      <AttrNames>
+        <Item Value="StateOrProvince"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherVPIDZipOrPostalCode"
+                     IterBinding="PublisherVPIDIterator">
+      <AttrNames>
+        <Item Value="ZipOrPostalCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherVPIDZipPlusFour"
+                     IterBinding="PublisherVPIDIterator">
+      <AttrNames>
+        <Item Value="ZipPlusFour"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="PublisherVPIDIterator" id="PublisherVPIDCountry"
+          Uses="LOV_Country" StaticList="false"/>
+    <button id="PublisherVPIDDefaultFlag" IterBinding="PublisherVPIDIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="DefaultFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="PublisherVPIDCreatedBy"
+                     IterBinding="PublisherVPIDIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherVPIDCreatedDate"
+                     IterBinding="PublisherVPIDIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherVPIDLastUpdatedBy"
+                     IterBinding="PublisherVPIDIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="PublisherVPIDLastUpdatedDate"
+                     IterBinding="PublisherVPIDIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="PublisherVPIDTable" IterBinding="PublisherVPIDIterator">
+      <nodeDefinition Name="PublisherVPID"
+                      DefName="com.pq.tracs.model.dao.PublisherAddressView">
+        <AttrNames>
+          <Item Value="VpId"/>
+          <Item Value="StreetAddress"/>
+          <Item Value="StreetAddress2"/>
+          <Item Value="City"/>
+          <Item Value="StateOrProvince"/>
+          <Item Value="ZipOrPostalCode"/>
+          <Item Value="ZipPlusFour"/>
+          <Item Value="Country"/>
+          <Item Value="DefaultFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstPublisherVPID" IterBinding="PublisherVPIDIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousPublisherVPID" IterBinding="PublisherVPIDIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextPublisherVPID" IterBinding="PublisherVPIDIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastPublisherVPID" IterBinding="PublisherVPIDIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyPublisherVPID"
+            IterBinding="PublisherVPIDIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrPublisherVPID}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryVPIDTitleRecords"
+            IterBinding="VPIDTitleRecordsIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues id="vptrTitleRecordId"
+                     IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="TitleRecordId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrPublisherId"
+                     IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="PublisherId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrPublisherAddressId"
+                     IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="PublisherAddressId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrOvrID" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrOvrIDLink" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="VPIDTitleRecordsIterator" id="vptrContentSource"
+          Uses="LOV_ContentSource" StaticList="false"/>
+    <attributeValues id="vptrPmid" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="Pmid"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrPmTitle" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="PmTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrSubTitle" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="SubTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrEdition" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="Edition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrQualifier" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="Qualifier"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrPartNumber" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="PartNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrPartName" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="PartName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="VPIDTitleRecordsIterator" id="vptrPrimarySourceType"
+          Uses="LOV_PrimarySourceType" StaticList="false"/>
+    <list IterBinding="VPIDTitleRecordsIterator" id="vptrVaultName"
+          Uses="LOV_VaultName" StaticList="false"/>
+    <list IterBinding="VPIDTitleRecordsIterator" id="vptrPmType"
+          Uses="LOV_PmType" StaticList="false"/>
+    <attributeValues id="vptrJournalCode"
+                     IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="JournalCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrCblId" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="CblId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrTitleId" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrCatalogNumber"
+                     IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrSortTitle" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="SortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="vptrVpId" IterBinding="VPIDTitleRecordsIterator">
+      <AttrNames>
+        <Item Value="VpId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="VPIDTitleRecordsTable" IterBinding="VPIDTitleRecordsIterator">
+      <nodeDefinition Name="VPIDTitleRecords"
+                      DefName="com.pq.tracs.model.dao.PublisherVpIdOvrView">
+        <AttrNames>
+          <Item Value="TitleRecordId"/>
+          <Item Value="PublisherId"/>
+          <Item Value="PublisherAddressId"/>
+          <Item Value="OvrId"/>
+          <Item Value="OvrId"/>
+          <Item Value="OvrId"/>
+          <Item Value="OvrId"/>
+          <Item Value="ContentSource"/>
+          <Item Value="Pmid"/>
+          <Item Value="PmTitle"/>
+          <Item Value="SubTitle"/>
+          <Item Value="Edition"/>
+          <Item Value="Qualifier"/>
+          <Item Value="PartNumber"/>
+          <Item Value="PartName"/>
+          <Item Value="PrimarySourceType"/>
+          <Item Value="VaultName"/>
+          <Item Value="PmType"/>
+          <Item Value="JournalCode"/>
+          <Item Value="CblId"/>
+          <Item Value="TitleId"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="SortTitle"/>
+          <Item Value="VpId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstVPIDTitleRecords" IterBinding="VPIDTitleRecordsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousVPIDTitleRecords" IterBinding="VPIDTitleRecordsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextVPIDTitleRecords" IterBinding="VPIDTitleRecordsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastVPIDTitleRecords" IterBinding="VPIDTitleRecordsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyVPIDTitleRecords"
+            IterBinding="VPIDTitleRecordsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrVPIDTitleRecords}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

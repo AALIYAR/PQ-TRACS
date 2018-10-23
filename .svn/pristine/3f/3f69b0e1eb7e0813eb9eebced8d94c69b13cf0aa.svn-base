@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.61.92" id="WelcomePageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <variableIterator id="variables">
+      <variable Name="WelcomeTitleNTCCmdVar" Type="String"/>
+      <variable Name="WelcomePublisherNTCCmdVar" Type="String"/>
+      <variable Name="WelcomeRightsNTCCmdVar" Type="String"/>
+      <variable Name="WelcomeRMDashboardVar" Type="String"/>
+    </variableIterator>
+  </executables>
+  <bindings>
+    <attributeValues id="WelcomeTitleNTCCmd" IterBinding="variables">
+      <AttrNames>
+        <Item Value="WelcomeTitleNTCCmdVar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="WelcomePublisherNTCCmd" IterBinding="variables">
+      <AttrNames>
+        <Item Value="WelcomePublisherNTCCmdVar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="WelcomeRightsNTCCmd" IterBinding="variables">
+      <AttrNames>
+        <Item Value="WelcomeRightsNTCCmdVar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="WelcomeRMDashboard" IterBinding="variables">
+      <AttrNames>
+        <Item Value="WelcomeRMDashboardVar"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

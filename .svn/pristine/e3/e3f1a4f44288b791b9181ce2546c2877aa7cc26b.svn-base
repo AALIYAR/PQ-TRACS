@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="PublishersTaskFlow">
+    <template-reference>
+      <document id="__0">/WEB-INF/jhs-fragment-taskflow-template.xml</document>
+      <id id="__1">jhs-fragment-taskflow-template</id>
+    </template-reference>
+    <default-activity id="__2">StartPublishers</default-activity>
+    <input-parameter-definition id="__3">
+      <name id="__4">createPublishers</name>
+      <value id="__5">#{pageFlowScope.createPublishers}</value>
+      <class id="__6">java.lang.Object</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__7">
+      <name id="__8">rowKeyStrPublishers</name>
+      <value id="__9">#{pageFlowScope.rowKeyStrPublishers}</value>
+      <class id="__10">java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__11">
+      <name id="__12">rowKeyValuePublishers</name>
+      <value id="__13">#{pageFlowScope.rowKeyValuePublishers}</value>
+      <class id="__14">java.lang.Object</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__15">
+      <name id="__16">rowKeyPublishers</name>
+      <value id="__17">#{pageFlowScope.rowKeyPublishers}</value>
+      <class id="__18">oracle.jbo.Key</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__19">
+      <name id="__20">altKeyNamePublishers</name>
+      <value id="__21">#{pageFlowScope.altKeyNamePublishers}</value>
+      <class id="__22">java.lang.String</class>
+    </input-parameter-definition>
+    <managed-bean id="__23">
+      <managed-bean-name id="__24">jhsTaskFlowManager</managed-bean-name>
+      <managed-bean-class id="__25">oracle.jheadstart.controller.jsf.bean.TaskFlowManager</managed-bean-class>
+      <managed-bean-scope id="__26">pageFlow</managed-bean-scope>
+      <managed-property id="__27">
+        <property-name id="__28">initializeParentContextEntries</property-name>
+        <map-entries id="__29">
+          <map-entry id="__30">
+            <key id="__31">jhsCurrentGroupName</key>
+            <value id="__32">Publishers</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__33">
+      <managed-bean-name id="__34">PublisherAddressesDefaultValues</managed-bean-name>
+      <managed-bean-class id="__35">oracle.jheadstart.controller.jsf.bean.DefaultValuesBean</managed-bean-class>
+      <managed-bean-scope id="__36">pageFlow</managed-bean-scope>
+      <managed-property id="__37">
+        <property-name id="__38">iteratorBinding</property-name>
+        <value id="__39">#{data.PublishersPageDef.PublisherAddressesIterator}</value>
+      </managed-property>
+      <managed-property id="__40">
+        <property-name id="__41">defaultValues</property-name>
+        <map-entries id="__42">
+          <map-entry id="__43">
+            <key id="__44">DefaultFlag</key>
+            <value id="__45">N</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__46">
+        <property-name id="__47">actionResult</property-name>
+        <value id="__48">CreatePublisherAddresses</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__49">
+      <managed-bean-name id="__50">PublisherVPIDDefaultValues</managed-bean-name>
+      <managed-bean-class id="__51">oracle.jheadstart.controller.jsf.bean.DefaultValuesBean</managed-bean-class>
+      <managed-bean-scope id="__52">pageFlow</managed-bean-scope>
+      <managed-property id="__53">
+        <property-name id="__54">iteratorBinding</property-name>
+        <value id="__55">#{data.PublishersPageDef.PublisherVPIDIterator}</value>
+      </managed-property>
+      <managed-property id="__56">
+        <property-name id="__57">defaultValues</property-name>
+        <map-entries id="__58">
+          <map-entry id="__59">
+            <key id="__60">DefaultFlag</key>
+            <value id="__61">N</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__62">
+        <property-name id="__63">actionResult</property-name>
+        <value id="__64">CreatePublisherVPID</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__65">
+      <managed-bean-name id="__66">CreatePublishers</managed-bean-name>
+      <managed-bean-class id="__67">oracle.jheadstart.controller.jsf.bean.CreateRowBean</managed-bean-class>
+      <managed-bean-scope id="__68">request</managed-bean-scope>
+      <managed-property id="__69">
+        <property-name id="__70">createBinding</property-name>
+        <value id="__71">#{bindings.CreatePublishers}</value>
+      </managed-property>
+      <managed-property id="__72">
+        <property-name id="__73">successOutcome</property-name>
+        <value id="__74">deepLinkPage</value>
+      </managed-property>
+      <managed-property id="__75">
+        <property-name id="__76">failureOutcome</property-name>
+        <value id="__77">firstPage</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__78">
+      <managed-bean-name id="__79">SavePublishers</managed-bean-name>
+      <managed-bean-class id="__80">oracle.jheadstart.controller.jsf.bean.CommitBean</managed-bean-class>
+      <managed-bean-scope id="__81">request</managed-bean-scope>
+      <managed-property id="__82">
+        <property-name id="__83">commitBinding</property-name>
+        <value id="__84">#{bindings.Commit}</value>
+      </managed-property>
+      <managed-property id="__85">
+        <property-name id="__86">successOutcome</property-name>
+        <value id="__87">Commit</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__88">
+      <managed-bean-name id="__89">jhsRollback</managed-bean-name>
+      <managed-bean-class id="__90">oracle.jheadstart.controller.jsf.bean.RollbackBean</managed-bean-class>
+      <managed-bean-scope id="__91">request</managed-bean-scope>
+      <managed-property id="__92">
+        <property-name id="__93">rollbackBinding</property-name>
+        <value id="__94">#{bindings.Rollback}</value>
+      </managed-property>
+      <managed-property id="__95">
+        <property-name id="__96">successOutcome</property-name>
+        <value id="__97">Cancel</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__98">
+      <managed-bean-name id="__99">searchPublishers</managed-bean-name>
+      <managed-bean-class id="__100">com.pq.tracs.view.beans.TracsSearchBean</managed-bean-class>
+      <managed-bean-scope id="__101">pageFlow</managed-bean-scope>
+      <managed-property id="__102">
+        <property-name id="__103">bindings</property-name>
+        <value id="__104">#{'#{bindings}'}</value>
+      </managed-property>
+      <managed-property id="__105">
+        <property-name id="__106">searchBinding</property-name>
+        <value id="__107">#{'#{bindings.advancedSearchPublishers}'}</value>
+      </managed-property>
+      <managed-property id="__108">
+        <property-name id="__109">searchItem</property-name>
+        <value id="__110">PubName</value>
+      </managed-property>
+      <managed-property id="__111">
+        <property-name id="__112">dataCollection</property-name>
+        <value id="__113">PublisherView1</value>
+      </managed-property>
+      <managed-property id="__114">
+        <property-name id="__115">operators</property-name>
+        <map-entries id="__116">
+          <map-entry id="__117">
+            <key id="__118">PubPublisherId_From</key>
+            <value id="__119">greaterThanOrEqual</value>
+          </map-entry>
+          <map-entry id="__120">
+            <key id="__121">PubPublisherId_To</key>
+            <value id="__122">lessThanOrEqual</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__123">
+        <property-name id="__124">itemAttributes</property-name>
+        <map-entries id="__125">
+          <map-entry id="__126">
+            <key id="__127">PubName</key>
+            <value id="__128">Name</value>
+          </map-entry>
+          <map-entry id="__129">
+            <key id="__130">PubPublisherId</key>
+            <value id="__131">PubId</value>
+          </map-entry>
+          <map-entry id="__132">
+            <key id="__133">PubSortName</key>
+            <value id="__134">SortName</value>
+          </map-entry>
+          <map-entry id="__135">
+            <key id="__136">PubUrl</key>
+            <value id="__137">Url</value>
+          </map-entry>
+          <map-entry id="__138">
+            <key id="__139">PubNotes</key>
+            <value id="__140">Notes</value>
+          </map-entry>
+          <map-entry id="__141">
+            <key id="__142">PubOrgId</key>
+            <value id="__143">OrgId</value>
+          </map-entry>
+          <map-entry id="__144">
+            <key id="__145">PubMsId</key>
+            <value id="__146">MsId</value>
+          </map-entry>
+          <map-entry id="__147">
+            <key id="__148">PubContentOwnerID</key>
+            <value id="__149">ContentOwnerID</value>
+          </map-entry>
+          <map-entry id="__150">
+            <key id="__151">PubContentOwnerName</key>
+            <value id="__152">ContentOwnerName</value>
+          </map-entry>
+          <map-entry id="__153">
+            <key id="__154">PubContentOwnerSite</key>
+            <value id="__155">ContentOwnerSite</value>
+          </map-entry>
+          <map-entry id="__156">
+            <key id="__157">PubContentOwnerNo</key>
+            <value id="__158">ContentOwnerNo</value>
+          </map-entry>
+          <map-entry id="__159">
+            <key id="__160">PubCreatedBy</key>
+            <value id="__161">CreatedBy</value>
+          </map-entry>
+          <map-entry id="__162">
+            <key id="__163">PubCreatedDateSearch</key>
+            <value id="__164">CreatedDateSearch</value>
+          </map-entry>
+          <map-entry id="__165">
+            <key id="__166">PubLastUpdatedBy</key>
+            <value id="__167">LastUpdatedBy</value>
+          </map-entry>
+          <map-entry id="__168">
+            <key id="__169">PubLastUpdatedDateSearch</key>
+            <value id="__170">LastUpdatedDateSearch</value>
+          </map-entry>
+          <map-entry id="__171">
+            <key id="__172">PubId</key>
+            <value id="__173">Id</value>
+          </map-entry>
+          <map-entry id="__174">
+            <key id="__175">PubUrl2</key>
+            <value id="__176">Url2</value>
+          </map-entry>
+          <map-entry id="__177">
+            <key id="__178">PubContentOwnerName2</key>
+            <value id="__179">ContentOwnerName2</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__180">
+      <managed-bean-name id="__181">PublishersTable</managed-bean-name>
+      <managed-bean-class id="__182">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__183">pageFlow</managed-bean-scope>
+      <managed-property id="__184">
+        <property-name id="__185">name</property-name>
+        <value id="__186">PublishersTable</value>
+      </managed-property>
+      <managed-property id="__187">
+        <property-name id="__188">rangeBindingExpr</property-name>
+        <value id="__189">#{'#{bindings.PublishersTable}'}</value>
+      </managed-property>
+      <managed-property id="__190">
+        <property-name id="__191">createNewRowAtTop</property-name>
+        <value id="__192">true</value>
+      </managed-property>
+      <managed-property id="__193">
+        <property-name id="__194">focusItemId</property-name>
+        <value id="__195">PubName</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__196">
+      <managed-bean-name id="__197">DeletePublishers</managed-bean-name>
+      <managed-bean-class id="__198">oracle.jheadstart.controller.jsf.bean.DeleteRowBean</managed-bean-class>
+      <managed-bean-scope id="__199">request</managed-bean-scope>
+      <managed-property id="__200">
+        <property-name id="__201">deleteBinding</property-name>
+        <value id="__202">#{bindings.DeletePublishers}</value>
+      </managed-property>
+      <managed-property id="__203">
+        <property-name id="__204">commitBean</property-name>
+        <value id="__205">#{jhsCommit}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__206">
+      <managed-bean-name id="__207">PubNameDependsOnItem</managed-bean-name>
+      <managed-bean-class id="__208">oracle.jheadstart.controller.jsf.bean.DependsOnItemBean</managed-bean-class>
+      <managed-bean-scope id="__209">application</managed-bean-scope>
+      <managed-property id="__210">
+        <property-name id="__211">itemsToClear</property-name>
+        <list-entries id="__212">
+          <value id="__213">PubSortName</value>
+        </list-entries>
+      </managed-property>
+      <managed-property id="__214">
+        <property-name id="__215">componentsToRefresh</property-name>
+        <list-entries id="__216">
+          <value id="__217">PubSortName</value>
+        </list-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__218">
+      <managed-bean-name id="__219">PubContentOwnerNameDependsOnItem</managed-bean-name>
+      <managed-bean-class id="__220">oracle.jheadstart.controller.jsf.bean.DependsOnItemBean</managed-bean-class>
+      <managed-bean-scope id="__221">application</managed-bean-scope>
+      <managed-property id="__222">
+        <property-name id="__223">itemsToClear</property-name>
+        <list-entries id="__224"></list-entries>
+      </managed-property>
+      <managed-property id="__225">
+        <property-name id="__226">componentsToRefresh</property-name>
+        <list-entries id="__227">
+          <value id="__228">PubContentOwnerSite</value>
+          <value id="__229">PubContentOwnerNo</value>
+        </list-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__230">
+      <managed-bean-name id="__231">PublisherAddressesTable</managed-bean-name>
+      <managed-bean-class id="__232">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__233">pageFlow</managed-bean-scope>
+      <managed-property id="__234">
+        <property-name id="__235">name</property-name>
+        <value id="__236">PublisherAddressesTable</value>
+      </managed-property>
+      <managed-property id="__237">
+        <property-name id="__238">rangeBindingExpr</property-name>
+        <value id="__239">#{'#{bindings.PublisherAddressesTable}'}</value>
+      </managed-property>
+      <managed-property id="__240">
+        <property-name id="__241">createNewRowAtTop</property-name>
+        <value id="__242">true</value>
+      </managed-property>
+      <managed-property id="__243">
+        <property-name id="__244">defaultValuesBean</property-name>
+        <value id="__245">#{pageFlowScope.PublisherAddressesDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__246">
+        <property-name id="__247">focusItemId</property-name>
+        <value id="__248">s60VpId</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__249">
+      <managed-bean-name id="__250">DeletePublisherAddresses</managed-bean-name>
+      <managed-bean-class id="__251">oracle.jheadstart.controller.jsf.bean.DeleteRowBean</managed-bean-class>
+      <managed-bean-scope id="__252">request</managed-bean-scope>
+      <managed-property id="__253">
+        <property-name id="__254">deleteBinding</property-name>
+        <value id="__255">#{bindings.DeletePublisherAddresses}</value>
+      </managed-property>
+      <managed-property id="__256">
+        <property-name id="__257">commitBean</property-name>
+        <value id="__258">#{jhsCommit}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__259">
+      <managed-bean-name id="__260">CreatePublisherAddresses</managed-bean-name>
+      <managed-bean-class id="__261">oracle.jheadstart.controller.jsf.bean.CreateRowBean</managed-bean-class>
+      <managed-bean-scope id="__262">request</managed-bean-scope>
+      <managed-property id="__263">
+        <property-name id="__264">createBinding</property-name>
+        <value id="__265">#{bindings.CreatePublisherAddresses}</value>
+      </managed-property>
+      <managed-property id="__266">
+        <property-name id="__267">defaultValuesBean</property-name>
+        <value id="__268">#{pageFlowScope.PublisherAddressesDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__269">
+        <property-name id="__270">successOutcome</property-name>
+        <value id="__271">deepLinkPage</value>
+      </managed-property>
+      <managed-property id="__272">
+        <property-name id="__273">failureOutcome</property-name>
+        <value id="__274">firstPage</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__275">
+      <managed-bean-name id="__276">s60DefaultFlagcheckboxInTable</managed-bean-name>
+      <managed-bean-class id="__277">oracle.jheadstart.controller.jsf.bean.CheckboxInTableBean</managed-bean-class>
+      <managed-bean-scope id="__278">request</managed-bean-scope>
+      <managed-property id="__279">
+        <property-name id="__280">binding</property-name>
+        <value id="__281">#{bindings.s60DefaultFlag}</value>
+      </managed-property>
+      <managed-property id="__282">
+        <property-name id="__283">tableBean</property-name>
+        <value id="__284">#{pageFlowScope.PublisherAddressesTable}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__285">
+      <managed-bean-name id="__286">PublisherOVRsTable</managed-bean-name>
+      <managed-bean-class id="__287">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__288">pageFlow</managed-bean-scope>
+      <managed-property id="__289">
+        <property-name id="__290">name</property-name>
+        <value id="__291">PublisherOVRsTable</value>
+      </managed-property>
+      <managed-property id="__292">
+        <property-name id="__293">rangeBindingExpr</property-name>
+        <value id="__294">#{'#{bindings.PublisherOVRsTable}'}</value>
+      </managed-property>
+      <managed-property id="__295">
+        <property-name id="__296">createNewRowAtTop</property-name>
+        <value id="__297">true</value>
+      </managed-property>
+      <managed-property id="__298">
+        <property-name id="__299">focusItemId</property-name>
+        <value id="__300">s61OvrIdLink</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__301">
+      <managed-bean-name id="__302">PublisherVPIDTable</managed-bean-name>
+      <managed-bean-class id="__303">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__304">pageFlow</managed-bean-scope>
+      <managed-property id="__305">
+        <property-name id="__306">name</property-name>
+        <value id="__307">PublisherVPIDTable</value>
+      </managed-property>
+      <managed-property id="__308">
+        <property-name id="__309">rangeBindingExpr</property-name>
+        <value id="__310">#{'#{bindings.PublisherVPIDTable}'}</value>
+      </managed-property>
+      <managed-property id="__311">
+        <property-name id="__312">createNewRowAtTop</property-name>
+        <value id="__313">true</value>
+      </managed-property>
+      <managed-property id="__314">
+        <property-name id="__315">setCurrentRowOnDetailDisclosure</property-name>
+        <value id="__316">true</value>
+      </managed-property>
+      <managed-property id="__317">
+        <property-name id="__318">defaultValuesBean</property-name>
+        <value id="__319">#{pageFlowScope.PublisherVPIDDefaultValues}</value>
+      </managed-property>
+      <managed-property id="__320">
+        <property-name id="__321">focusItemId</property-name>
+        <value id="__322">PublisherVPIDVpId</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__323">
+      <managed-bean-name id="__324">PublisherVPIDDefaultFlagcheckboxInTable</managed-bean-name>
+      <managed-bean-class id="__325">oracle.jheadstart.controller.jsf.bean.CheckboxInTableBean</managed-bean-class>
+      <managed-bean-scope id="__326">request</managed-bean-scope>
+      <managed-property id="__327">
+        <property-name id="__328">binding</property-name>
+        <value id="__329">#{bindings.PublisherVPIDDefaultFlag}</value>
+      </managed-property>
+      <managed-property id="__330">
+        <property-name id="__331">tableBean</property-name>
+        <value id="__332">#{pageFlowScope.PublisherVPIDTable}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__333">
+      <managed-bean-name id="__334">VPIDTitleRecordsTable</managed-bean-name>
+      <managed-bean-class id="__335">com.pq.tracs.view.beans.TitleCreateOvrBean</managed-bean-class>
+      <managed-bean-scope id="__336">pageFlow</managed-bean-scope>
+      <managed-property id="__337">
+        <property-name id="__338">name</property-name>
+        <value id="__339">VPIDTitleRecordsTable</value>
+      </managed-property>
+      <managed-property id="__340">
+        <property-name id="__341">rangeBindingExpr</property-name>
+        <value id="__342">#{'#{bindings.VPIDTitleRecordsTable}'}</value>
+      </managed-property>
+      <managed-property id="__343">
+        <property-name id="__344">createNewRowAtTop</property-name>
+        <value id="__345">true</value>
+      </managed-property>
+      <managed-property id="__346">
+        <property-name id="__347">focusItemId</property-name>
+        <value id="__348">vptrOvrIDLink</value>
+      </managed-property>
+    </managed-bean>
+    <router id="StartPublishers">
+      <case id="__349">
+        <expression id="__350">#{pageFlowScope.createPublishers!=null}</expression>
+        <outcome id="__351">createPublishers</outcome>
+      </case>
+      <case id="__352">
+        <expression id="__353">#{pageFlowScope.rowKeyStrPublishers!=null or
+                               pageFlowScope.rowKeyValuePublishers!=null or
+                               pageFlowScope.rowKeyPublishers!=null}</expression>
+        <outcome id="__354">SetCurrentRowPublishers</outcome>
+      </case>
+      <case id="__355">
+        <expression id="__356">#{pageFlowScope.isDeepLink!=null and
+                               pageFlowScope.isDeepLink}</expression>
+        <outcome id="__357">deepLinkPage</outcome>
+      </case>
+      <default-outcome id="__358">firstPage</default-outcome>
+    </router>
+    <method-call id="CreatePublishers">
+      <method id="__359">#{CreatePublishers.execute}</method>
+      <!-- execute condition param -->
+      <parameter>
+        <class id="__360">java.lang.Object</class>
+        <value id="__361">#{pageFlowScope.createPublishers}</value>
+      </parameter>
+      <outcome id="__362">
+        <to-string/>
+      </outcome>
+    </method-call>
+    <method-call id="SetCurrentRowPublishers">
+      <method id="__363">#{jhsSetCurrentRow.execute}</method>
+      <!-- iterator param -->
+      <parameter>
+        <class id="__364">oracle.adf.model.binding.DCIteratorBinding</class>
+        <value id="__365">#{bindings.PublishersIterator}</value>
+      </parameter>
+      <!-- rowKeyStr param -->
+      <parameter>
+        <class id="__366">java.lang.String</class>
+        <value id="__367">#{pageFlowScope.rowKeyStrPublishers}</value>
+      </parameter>
+      <!-- rowKeyValue param -->
+      <parameter>
+        <class id="__368">java.lang.Object</class>
+        <value id="__369">#{pageFlowScope.rowKeyValuePublishers}</value>
+      </parameter>
+      <!-- rowKey param -->
+      <parameter>
+        <class id="__370">oracle.jbo.Key</class>
+        <value id="__371">#{pageFlowScope.rowKeyPublishers}</value>
+      </parameter>
+      <!-- altKeyName param -->
+      <parameter>
+        <class id="__372">java.lang.String</class>
+        <value id="__373">#{pageFlowScope.altKeyNamePublishers}</value>
+      </parameter>
+      <outcome id="__374">
+        <fixed-outcome id="__375">deepLinkPage</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-return id="CancelPublishersReturn">
+      <outcome id="__376">
+        <name id="__377">CancelPublishers</name>
+      </outcome>
+    </task-flow-return>
+    <task-flow-return id="DonePublishersReturn">
+      <outcome id="__378">
+        <name id="__379">DonePublishers</name>
+      </outcome>
+    </task-flow-return>
+    <view id="PublishersTable">
+      <page id="__380">/pages/PublishersTable.jsff</page>
+    </view>
+    <view id="Publishers">
+      <page id="__381">/pages/Publishers.jsff</page>
+    </view>
+    <control-flow-rule id="__382">
+      <from-activity-id id="__383">*</from-activity-id>
+      <control-flow-case id="__384">
+        <from-outcome id="__385">SetCurrentRowPublishers</from-outcome>
+        <to-activity-id id="__386">SetCurrentRowPublishers</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__387">
+        <from-outcome id="__388">firstPage</from-outcome>
+        <to-activity-id id="__389">PublishersTable</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__390">
+        <from-outcome id="__391">deepLinkPage</from-outcome>
+        <to-activity-id id="__392">Publishers</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__393">
+        <from-outcome id="__394">PublishersTableBreadcrumb</from-outcome>
+        <to-activity-id id="__395">PublishersTable</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__396">
+        <from-outcome id="__397">PublishersBreadcrumb</from-outcome>
+        <to-activity-id id="__398">Publishers</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__399">
+        <from-outcome id="__400">Cancel</from-outcome>
+        <to-activity-id id="__401">StartPublishers</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__402">
+        <from-outcome id="__403">CancelPublishersReturn</from-outcome>
+        <to-activity-id id="__404">CancelPublishersReturn</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__405">
+        <from-outcome id="__406">DonePublishersReturn</from-outcome>
+        <to-activity-id id="__407">DonePublishersReturn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__408">
+      <from-activity-id id="__409">PublishersTable</from-activity-id>
+      <control-flow-case id="__410">
+        <from-outcome id="__411">CreatePub</from-outcome>
+        <to-activity-id id="__412">Publishers</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__413">
+        <from-outcome id="__414">PublishersDetails</from-outcome>
+        <to-activity-id id="__415">Publishers</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__416">
+      <from-activity-id id="__417">*</from-activity-id>
+      <control-flow-case id="__418">
+        <from-outcome id="__419">createPublishers</from-outcome>
+        <to-activity-id id="__420">CreatePublishers</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+  <!-- This bean must be defined outside the task-flow-definition element
+       because it needs to be available in the pageFlowScope of the unbounded
+       task-flow not in the pageFlowScope of the bounded task flow itself. -->
+  <managed-bean id="__421">
+    <managed-bean-name id="__422">PublishersTaskFlowConfig</managed-bean-name>
+    <managed-bean-class id="__423">oracle.jheadstart.controller.jsf.bean.TaskFlowConfigBean</managed-bean-class>
+    <managed-bean-scope id="__424">pageFlow</managed-bean-scope>
+    <managed-property id="__425">
+      <property-name id="__426">params</property-name>
+      <property-class id="__427">java.util.Map</property-class>
+      <map-entries id="__428">
+        <map-entry id="__429">
+          <key id="__430">parentContext</key>
+          <value id="__431">#{pageFlowScope.parentContext}</value>
+        </map-entry>
+      </map-entries>
+    </managed-property>
+    <managed-property id="__432">
+      <property-name id="__433">name</property-name>
+      <value id="__434">Publishers</value>
+    </managed-property>
+    <managed-property id="__435">
+      <property-name id="__436">taskFlowId</property-name>
+      <value id="__437">/WEB-INF/adfc-config-Publishers.xml#PublishersTaskFlow</value>
+    </managed-property>
+    <managed-property id="__438">
+      <property-name id="__439">tabUniqueIdentifier</property-name>
+      <value id="__440">Publishers</value>
+    </managed-property>
+    <managed-property id="__441">
+      <property-name id="__442">label</property-name>
+      <value id="__443">Publishers</value>
+    </managed-property>
+  </managed-bean>
+</adfc-config>

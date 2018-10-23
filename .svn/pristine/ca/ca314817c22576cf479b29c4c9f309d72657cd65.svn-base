@@ -1,0 +1,839 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="NewGroupTopLc"
+                             partialTriggers=" NewGroupDeleteDialog NewGroupfbb NewGroupNewButton NewGroupDelB NewGroupSaveButton0 NewGroupCancelButton0 NewGroupSaveButton1 NewGroupCancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateNewGroup ? nls['INSERT_TITLE_NEWGROUP'] :  nls['EDIT_TITLE_NEWGROU: #{bindings.NewGroupOvrId.inputValue}'] }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="NewGroupfbb" layout="horizontal"
+                                       rendered="#{ bindings.NewGroupIterator.currentRow!=null  and bindings.NewGroupIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateNewGroup and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="NewGroupFirst NewGroupPrevious NewGroupNext NewGroupLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstNewGroup.execute}"
+                                             id="NewGroupFirst"
+                                             partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.NewGroupIterator.rangeStart+bindings.NewGroupIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.NewGroupIterator.rangeStart+bindings.NewGroupIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousNewGroup.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="NewGroupPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.NewGroupIterator.rangeStart+bindings.NewGroupIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.NewGroupIterator.rangeStart+bindings.NewGroupIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.NewGroupIterator.rangeStart+bindings.NewGroupIterator.currentRowIndexInRange+1} / #{bindings.NewGroupIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextNewGroup.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="NewGroupNext"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.NewGroupIterator.rangeStart+bindings.NewGroupIterator.currentRowIndexInRange+1 lt bindings.NewGroupIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.NewGroupIterator.rangeStart+bindings.NewGroupIterator.currentRowIndexInRange+1 lt bindings.NewGroupIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastNewGroup.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="NewGroupLast"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.NewGroupIterator.rangeStart+bindings.NewGroupIterator.currentRowIndexInRange+1 lt bindings.NewGroupIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.NewGroupIterator.rangeStart+bindings.NewGroupIterator.currentRowIndexInRange+1 lt bindings.NewGroupIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateNewGroup.execute}"
+                                             action="CreateNewGroup"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_NEWGROUP']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateNewGroup and (true) }"
+                                             id="NewGroupNewButton"></af:commandToolbarButton>
+                    <af:commandToolbarButton action="DeleteNewGroup"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_NEWGROUP']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateNewGroup and  bindings.NewGroupIterator.currentRow!=null   }"
+                                             immediate="true" id="NewGroupDelB">
+                      <af:showPopupBehavior popupId="NewGroupDeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="NewGroupPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveNewGroup.execute}"
+                                      rendered="#{!pageFlowScope.hideSaveButton}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="NewGroupSaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel"
+                                      id="NewGroupCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.NewGroupIterator.findMode!='true'}"
+                       id="NewGroupSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.NewGroupIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp"
+                                  id="NewGroupNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="NewGroupFC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="start"
+                                    maxColumns="1" id="NewGroupFI">
+                  <af:inputText id="NewGroupId"
+                                value="#{bindings.NewGroupId.inputValue}"
+                                label="#{bindings.NewGroupId.hints.label}"
+                                required="#{bindings.NewGroupId.hints.mandatory}"
+                                rows="#{bindings.NewGroupId.hints.displayHeight}"
+                                columns="#{bindings.NewGroupId.hints.displayWidth}"
+                                maximumLength="38"
+                                shortDesc="#{bindings.NewGroupId.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupId.format}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupTitleId"
+                                value="#{bindings.NewGroupTitleId.inputValue}"
+                                label="#{bindings.NewGroupTitleId.hints.label}"
+                                required="#{bindings.NewGroupTitleId.hints.mandatory}"
+                                rows="#{bindings.NewGroupTitleId.hints.displayHeight}"
+                                columns="#{bindings.NewGroupTitleId.hints.displayWidth}"
+                                maximumLength="38"
+                                shortDesc="#{bindings.NewGroupTitleId.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupTitleId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupTitleId.format}"/>
+                  </af:inputText>
+                  <af:inputListOfValues id="NewGroupCatalogNumber"
+                                        popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.NewGroupCatalogNumber.hints.label}"
+                                        searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.NewGroupCatalogNumber.hints.label}"
+                                        value="#{bindings.NewGroupCatalogNumber.inputValue}"
+                                        label="#{bindings.NewGroupCatalogNumber.hints.label}"
+                                        required="#{bindings.NewGroupCatalogNumber.hints.mandatory}"
+                                        columns="#{bindings.NewGroupCatalogNumber.hints.displayWidth}"
+                                        maximumLength="40" readOnly="true"
+                                        shortDesc="#{bindings.NewGroupCatalogNumber.hints.tooltip}"
+                                        model="#{bindings.NewGroupCatalogNumber.listOfValuesModel}">
+                    <f:validator binding="#{bindings.NewGroupCatalogNumber.validator}"/>
+                  </af:inputListOfValues>
+                  <af:inputText id="NewGroupCatalogNumber1"
+                                value="#{bindings.NewGroupCatalogNumber1.inputValue}"
+                                label="#{bindings.NewGroupCatalogNumber1.hints.label}"
+                                required="#{bindings.NewGroupCatalogNumber1.hints.mandatory}"
+                                rows="#{bindings.NewGroupCatalogNumber1.hints.displayHeight}"
+                                columns="#{bindings.NewGroupCatalogNumber1.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                shortDesc="#{bindings.NewGroupCatalogNumber1.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupCatalogNumber1.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupOvrId"
+                                value="#{bindings.NewGroupOvrId.inputValue}"
+                                label="#{bindings.NewGroupOvrId.hints.label}"
+                                required="#{bindings.NewGroupOvrId.hints.mandatory}"
+                                rows="#{bindings.NewGroupOvrId.hints.displayHeight}"
+                                columns="#{bindings.NewGroupOvrId.hints.displayWidth}"
+                                maximumLength="38"
+                                shortDesc="#{bindings.NewGroupOvrId.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupOvrId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupOvrId.format}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="NewGroupContentSource"
+                                      value="#{bindings.NewGroupContentSource.inputValue}"
+                                      label="#{bindings.NewGroupContentSource.hints.label}"
+                                      required="#{bindings.NewGroupContentSource.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupContentSource.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupContentSource.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="NewGroupPmid"
+                                value="#{bindings.NewGroupPmid.inputValue}"
+                                label="#{bindings.NewGroupPmid.hints.label}"
+                                required="#{bindings.NewGroupPmid.hints.mandatory}"
+                                rows="#{bindings.NewGroupPmid.hints.displayHeight}"
+                                columns="#{bindings.NewGroupPmid.hints.displayWidth}"
+                                maximumLength="40"
+                                shortDesc="#{bindings.NewGroupPmid.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupPmid.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupPmTitle"
+                                value="#{bindings.NewGroupPmTitle.inputValue}"
+                                label="#{bindings.NewGroupPmTitle.hints.label}"
+                                required="#{bindings.NewGroupPmTitle.hints.mandatory}"
+                                rows="#{bindings.NewGroupPmTitle.hints.displayHeight}"
+                                columns="#{bindings.NewGroupPmTitle.hints.displayWidth}"
+                                maximumLength="1000"
+                                shortDesc="#{bindings.NewGroupPmTitle.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupPmTitle.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupSubTitle"
+                                value="#{bindings.NewGroupSubTitle.inputValue}"
+                                label="#{bindings.NewGroupSubTitle.hints.label}"
+                                required="#{bindings.NewGroupSubTitle.hints.mandatory}"
+                                rows="#{bindings.NewGroupSubTitle.hints.displayHeight}"
+                                columns="#{bindings.NewGroupSubTitle.hints.displayWidth}"
+                                maximumLength="1000"
+                                shortDesc="#{bindings.NewGroupSubTitle.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupSubTitle.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupSortTitle"
+                                value="#{bindings.NewGroupSortTitle.inputValue}"
+                                label="#{bindings.NewGroupSortTitle.hints.label}"
+                                required="#{bindings.NewGroupSortTitle.hints.mandatory}"
+                                rows="#{bindings.NewGroupSortTitle.hints.displayHeight}"
+                                columns="#{bindings.NewGroupSortTitle.hints.displayWidth}"
+                                maximumLength="1000"
+                                shortDesc="#{bindings.NewGroupSortTitle.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupSortTitle.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupEdition"
+                                value="#{bindings.NewGroupEdition.inputValue}"
+                                label="#{bindings.NewGroupEdition.hints.label}"
+                                required="#{bindings.NewGroupEdition.hints.mandatory}"
+                                rows="#{bindings.NewGroupEdition.hints.displayHeight}"
+                                columns="#{bindings.NewGroupEdition.hints.displayWidth}"
+                                maximumLength="400"
+                                shortDesc="#{bindings.NewGroupEdition.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupEdition.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupQualifier"
+                                value="#{bindings.NewGroupQualifier.inputValue}"
+                                label="#{bindings.NewGroupQualifier.hints.label}"
+                                required="#{bindings.NewGroupQualifier.hints.mandatory}"
+                                rows="#{bindings.NewGroupQualifier.hints.displayHeight}"
+                                columns="#{bindings.NewGroupQualifier.hints.displayWidth}"
+                                maximumLength="400"
+                                shortDesc="#{bindings.NewGroupQualifier.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupQualifier.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupPartNumber"
+                                value="#{bindings.NewGroupPartNumber.inputValue}"
+                                label="#{bindings.NewGroupPartNumber.hints.label}"
+                                required="#{bindings.NewGroupPartNumber.hints.mandatory}"
+                                rows="#{bindings.NewGroupPartNumber.hints.displayHeight}"
+                                columns="#{bindings.NewGroupPartNumber.hints.displayWidth}"
+                                maximumLength="80"
+                                shortDesc="#{bindings.NewGroupPartNumber.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupPartNumber.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupPartName"
+                                value="#{bindings.NewGroupPartName.inputValue}"
+                                label="#{bindings.NewGroupPartName.hints.label}"
+                                required="#{bindings.NewGroupPartName.hints.mandatory}"
+                                rows="#{bindings.NewGroupPartName.hints.displayHeight}"
+                                columns="#{bindings.NewGroupPartName.hints.displayWidth}"
+                                maximumLength="200"
+                                shortDesc="#{bindings.NewGroupPartName.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupPartName.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupName"
+                                value="#{bindings.NewGroupName.inputValue}"
+                                label="#{bindings.NewGroupName.hints.label}"
+                                required="#{bindings.NewGroupName.hints.mandatory}"
+                                rows="#{bindings.NewGroupName.hints.displayHeight}"
+                                columns="#{bindings.NewGroupName.hints.displayWidth}"
+                                maximumLength="500"
+                                shortDesc="#{bindings.NewGroupName.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupName.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="NewGroupPrimarySourceType"
+                                      value="#{bindings.NewGroupPrimarySourceType.inputValue}"
+                                      label="#{bindings.NewGroupPrimarySourceType.hints.label}"
+                                      required="#{bindings.NewGroupPrimarySourceType.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupPrimarySourceType.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupPrimarySourceType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="NewGroupSecondarySourceType"
+                                      value="#{bindings.NewGroupSecondarySourceType.inputValue}"
+                                      label="#{bindings.NewGroupSecondarySourceType.hints.label}"
+                                      required="#{bindings.NewGroupSecondarySourceType.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupSecondarySourceType.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupSecondarySourceType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="NewGroupSourceType"
+                                      value="#{bindings.NewGroupSourceType.inputValue}"
+                                      label="#{bindings.NewGroupSourceType.hints.label}"
+                                      required="#{bindings.NewGroupSourceType.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupSourceType.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupSourceType.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="NewGroupBlockByPubFlag"
+                                value="#{bindings.NewGroupBlockByPubFlag.inputValue}"
+                                label="#{bindings.NewGroupBlockByPubFlag.hints.label}"
+                                required="#{bindings.NewGroupBlockByPubFlag.hints.mandatory}"
+                                rows="#{bindings.NewGroupBlockByPubFlag.hints.displayHeight}"
+                                columns="#{bindings.NewGroupBlockByPubFlag.hints.displayWidth}"
+                                maximumLength="1"
+                                shortDesc="#{bindings.NewGroupBlockByPubFlag.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupBlockByPubFlag.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupTranslationFlag"
+                                value="#{bindings.NewGroupTranslationFlag.inputValue}"
+                                label="#{bindings.NewGroupTranslationFlag.hints.label}"
+                                required="#{bindings.NewGroupTranslationFlag.hints.mandatory}"
+                                rows="#{bindings.NewGroupTranslationFlag.hints.displayHeight}"
+                                columns="#{bindings.NewGroupTranslationFlag.hints.displayWidth}"
+                                maximumLength="1"
+                                shortDesc="#{bindings.NewGroupTranslationFlag.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupTranslationFlag.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupPubSearchAlertFlag"
+                                value="#{bindings.NewGroupPubSearchAlertFlag.inputValue}"
+                                label="#{bindings.NewGroupPubSearchAlertFlag.hints.label}"
+                                required="#{bindings.NewGroupPubSearchAlertFlag.hints.mandatory}"
+                                rows="#{bindings.NewGroupPubSearchAlertFlag.hints.displayHeight}"
+                                columns="#{bindings.NewGroupPubSearchAlertFlag.hints.displayWidth}"
+                                maximumLength="1"
+                                shortDesc="#{bindings.NewGroupPubSearchAlertFlag.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupPubSearchAlertFlag.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="NewGroupVaultName"
+                                      value="#{bindings.NewGroupVaultName.inputValue}"
+                                      label="#{bindings.NewGroupVaultName.hints.label}"
+                                      required="#{bindings.NewGroupVaultName.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupVaultName.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupVaultName.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="NewGroupPmType"
+                                      value="#{bindings.NewGroupPmType.inputValue}"
+                                      label="#{bindings.NewGroupPmType.hints.label}"
+                                      required="#{bindings.NewGroupPmType.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupPmType.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupPmType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="NewGroupPmGroups"
+                                      value="#{bindings.NewGroupPmGroups.inputValue}"
+                                      label="#{bindings.NewGroupPmGroups.hints.label}"
+                                      required="#{bindings.NewGroupPmGroups.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupPmGroups.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupPmGroups.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="NewGroupPmFamily"
+                                      value="#{bindings.NewGroupPmFamily.inputValue}"
+                                      label="#{bindings.NewGroupPmFamily.hints.label}"
+                                      required="#{bindings.NewGroupPmFamily.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupPmFamily.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupPmFamily.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="NewGroupManufacturingProcess"
+                                      value="#{bindings.NewGroupManufacturingProcess.inputValue}"
+                                      label="#{bindings.NewGroupManufacturingProcess.hints.label}"
+                                      required="#{bindings.NewGroupManufacturingProcess.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupManufacturingProcess.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupManufacturingProcess.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="NewGroupJournalCode"
+                                value="#{bindings.NewGroupJournalCode.inputValue}"
+                                label="#{bindings.NewGroupJournalCode.hints.label}"
+                                required="#{bindings.NewGroupJournalCode.hints.mandatory}"
+                                rows="#{bindings.NewGroupJournalCode.hints.displayHeight}"
+                                columns="#{bindings.NewGroupJournalCode.hints.displayWidth}"
+                                maximumLength="40"
+                                shortDesc="#{bindings.NewGroupJournalCode.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupJournalCode.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupJcodecount"
+                                value="#{bindings.NewGroupJcodecount.inputValue}"
+                                label="#{bindings.NewGroupJcodecount.hints.label}"
+                                required="#{bindings.NewGroupJcodecount.hints.mandatory}"
+                                rows="#{bindings.NewGroupJcodecount.hints.displayHeight}"
+                                columns="#{bindings.NewGroupJcodecount.hints.displayWidth}"
+                                shortDesc="#{bindings.NewGroupJcodecount.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupJcodecount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupJcodecount.format}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="NewGroupImageStorage"
+                                      value="#{bindings.NewGroupImageStorage.inputValue}"
+                                      label="#{bindings.NewGroupImageStorage.hints.label}"
+                                      required="#{bindings.NewGroupImageStorage.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupImageStorage.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupImageStorage.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="NewGroupAsciiStorage"
+                                      value="#{bindings.NewGroupAsciiStorage.inputValue}"
+                                      label="#{bindings.NewGroupAsciiStorage.hints.label}"
+                                      required="#{bindings.NewGroupAsciiStorage.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupAsciiStorage.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupAsciiStorage.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="NewGroupDocUsageRoyaltiesFlag"
+                                value="#{bindings.NewGroupDocUsageRoyaltiesFlag.inputValue}"
+                                label="#{bindings.NewGroupDocUsageRoyaltiesFlag.hints.label}"
+                                required="#{bindings.NewGroupDocUsageRoyaltiesFlag.hints.mandatory}"
+                                rows="#{bindings.NewGroupDocUsageRoyaltiesFlag.hints.displayHeight}"
+                                columns="#{bindings.NewGroupDocUsageRoyaltiesFlag.hints.displayWidth}"
+                                maximumLength="1"
+                                shortDesc="#{bindings.NewGroupDocUsageRoyaltiesFlag.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupDocUsageRoyaltiesFlag.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="NewGroupCoverImageType"
+                                      value="#{bindings.NewGroupCoverImageType.inputValue}"
+                                      label="#{bindings.NewGroupCoverImageType.hints.label}"
+                                      required="#{bindings.NewGroupCoverImageType.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupCoverImageType.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupCoverImageType.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputListOfValues id="NewGroupAltrightsovrid"
+                                        popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.NewGroupAltrightsovrid.hints.label}"
+                                        searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.NewGroupAltrightsovrid.hints.label}"
+                                        value="#{bindings.NewGroupAltrightsovrid.inputValue}"
+                                        label="#{bindings.NewGroupAltrightsovrid.hints.label}"
+                                        required="#{bindings.NewGroupAltrightsovrid.hints.mandatory}"
+                                        columns="#{bindings.NewGroupAltrightsovrid.hints.displayWidth}"
+                                        maximumLength="38"
+                                        shortDesc="#{bindings.NewGroupAltrightsovrid.hints.tooltip}"
+                                        model="#{bindings.NewGroupAltrightsovrid.listOfValuesModel}">
+                    <f:validator binding="#{bindings.NewGroupAltrightsovrid.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupAltrightsovrid.format}"/>
+                  </af:inputListOfValues>
+                  <af:inputText id="NewGroupAltrightsovri2"
+                                value="#{bindings.NewGroupAltrightsovri2.inputValue}"
+                                label="#{bindings.NewGroupAltrightsovri2.hints.label}"
+                                required="#{bindings.NewGroupAltrightsovri2.hints.mandatory}"
+                                rows="#{bindings.NewGroupAltrightsovri2.hints.displayHeight}"
+                                columns="#{bindings.NewGroupAltrightsovri2.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.NewGroupAltrightsovri2.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupAltrightsovri2.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupAltrightsovri2.format}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupAltrightsflag"
+                                value="#{bindings.NewGroupAltrightsflag.inputValue}"
+                                label="#{bindings.NewGroupAltrightsflag.hints.label}"
+                                required="#{bindings.NewGroupAltrightsflag.hints.mandatory}"
+                                rows="#{bindings.NewGroupAltrightsflag.hints.displayHeight}"
+                                columns="#{bindings.NewGroupAltrightsflag.hints.displayWidth}"
+                                maximumLength="1"
+                                shortDesc="#{bindings.NewGroupAltrightsflag.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupAltrightsflag.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupCblId"
+                                value="#{bindings.NewGroupCblId.inputValue}"
+                                label="#{bindings.NewGroupCblId.hints.label}"
+                                required="#{bindings.NewGroupCblId.hints.mandatory}"
+                                rows="#{bindings.NewGroupCblId.hints.displayHeight}"
+                                columns="#{bindings.NewGroupCblId.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.NewGroupCblId.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupCblId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupCblId.format}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="NewGroupCountryOfPublication"
+                                      value="#{bindings.NewGroupCountryOfPublication.inputValue}"
+                                      label="#{bindings.NewGroupCountryOfPublication.hints.label}"
+                                      required="#{bindings.NewGroupCountryOfPublication.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupCountryOfPublication.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupCountryOfPublication.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="NewGroupOkForExportFlag"
+                                value="#{bindings.NewGroupOkForExportFlag.inputValue}"
+                                label="#{bindings.NewGroupOkForExportFlag.hints.label}"
+                                required="#{bindings.NewGroupOkForExportFlag.hints.mandatory}"
+                                rows="#{bindings.NewGroupOkForExportFlag.hints.displayHeight}"
+                                columns="#{bindings.NewGroupOkForExportFlag.hints.displayWidth}"
+                                maximumLength="1"
+                                shortDesc="#{bindings.NewGroupOkForExportFlag.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupOkForExportFlag.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="NewGroupGenerationMethod"
+                                      value="#{bindings.NewGroupGenerationMethod.inputValue}"
+                                      label="#{bindings.NewGroupGenerationMethod.hints.label}"
+                                      required="#{bindings.NewGroupGenerationMethod.hints.mandatory}"
+                                      readOnly="#{!(pageFlowScope.createModes.CreateNewGroup)}"
+                                      shortDesc="#{bindings.NewGroupGenerationMethod.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupGenerationMethod.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="NewGroupCreatedBy"
+                                value="#{bindings.NewGroupCreatedBy.inputValue}"
+                                label="#{bindings.NewGroupCreatedBy.hints.label}"
+                                required="#{bindings.NewGroupCreatedBy.hints.mandatory}"
+                                rows="#{bindings.NewGroupCreatedBy.hints.displayHeight}"
+                                columns="#{bindings.NewGroupCreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                shortDesc="#{bindings.NewGroupCreatedBy.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupCreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="NewGroupCreatedDate"
+                                value="#{bindings.NewGroupCreatedDate.inputValue}"
+                                label="#{bindings.NewGroupCreatedDate.hints.label}"
+                                required="#{bindings.NewGroupCreatedDate.hints.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.NewGroupCreatedDate.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputDate id="NewGroupCreatedBySearch"
+                                value="#{bindings.NewGroupCreatedBySearch.inputValue}"
+                                label="#{bindings.NewGroupCreatedBySearch.hints.label}"
+                                required="#{bindings.NewGroupCreatedBySearch.hints.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.NewGroupCreatedBySearch.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="NewGroupLastUpdatedBy"
+                                value="#{bindings.NewGroupLastUpdatedBy.inputValue}"
+                                label="#{bindings.NewGroupLastUpdatedBy.hints.label}"
+                                required="#{bindings.NewGroupLastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.NewGroupLastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.NewGroupLastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40"
+                                shortDesc="#{bindings.NewGroupLastUpdatedBy.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupLastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="NewGroupLastUpdatedDate"
+                                value="#{bindings.NewGroupLastUpdatedDate.inputValue}"
+                                label="#{bindings.NewGroupLastUpdatedDate.hints.label}"
+                                required="#{bindings.NewGroupLastUpdatedDate.hints.mandatory}"
+                                shortDesc="#{bindings.NewGroupLastUpdatedDate.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputDate id="NewGroupLastUpdateBySearch"
+                                value="#{bindings.NewGroupLastUpdateBySearch.inputValue}"
+                                label="#{bindings.NewGroupLastUpdateBySearch.hints.label}"
+                                required="#{bindings.NewGroupLastUpdateBySearch.hints.mandatory}"
+                                shortDesc="#{bindings.NewGroupLastUpdateBySearch.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="NewGroupLegacyPartNumber"
+                                value="#{bindings.NewGroupLegacyPartNumber.inputValue}"
+                                label="#{bindings.NewGroupLegacyPartNumber.hints.label}"
+                                required="#{bindings.NewGroupLegacyPartNumber.hints.mandatory}"
+                                rows="#{bindings.NewGroupLegacyPartNumber.hints.displayHeight}"
+                                columns="#{bindings.NewGroupLegacyPartNumber.hints.displayWidth}"
+                                maximumLength="40"
+                                shortDesc="#{bindings.NewGroupLegacyPartNumber.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupLegacyPartNumber.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupAcronym"
+                                value="#{bindings.NewGroupAcronym.inputValue}"
+                                label="#{bindings.NewGroupAcronym.hints.label}"
+                                required="#{bindings.NewGroupAcronym.hints.mandatory}"
+                                rows="#{bindings.NewGroupAcronym.hints.displayHeight}"
+                                columns="#{bindings.NewGroupAcronym.hints.displayWidth}"
+                                maximumLength="4000"
+                                shortDesc="#{bindings.NewGroupAcronym.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupAcronym.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupPmClass"
+                                value="#{bindings.NewGroupPmClass.inputValue}"
+                                label="#{bindings.NewGroupPmClass.hints.label}"
+                                required="#{bindings.NewGroupPmClass.hints.mandatory}"
+                                rows="#{bindings.NewGroupPmClass.hints.displayHeight}"
+                                columns="#{bindings.NewGroupPmClass.hints.displayWidth}"
+                                maximumLength="40"
+                                shortDesc="#{bindings.NewGroupPmClass.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupPmClass.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupCoverImageLocationId"
+                                value="#{bindings.NewGroupCoverImageLocationId.inputValue}"
+                                label="#{bindings.NewGroupCoverImageLocationId.hints.label}"
+                                required="#{bindings.NewGroupCoverImageLocationId.hints.mandatory}"
+                                rows="#{bindings.NewGroupCoverImageLocationId.hints.displayHeight}"
+                                columns="#{bindings.NewGroupCoverImageLocationId.hints.displayWidth}"
+                                maximumLength="38"
+                                shortDesc="#{bindings.NewGroupCoverImageLocationId.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupCoverImageLocationId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupCoverImageLocationId.format}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupId1"
+                                value="#{bindings.NewGroupId1.inputValue}"
+                                label="#{bindings.NewGroupId1.hints.label}"
+                                required="#{bindings.NewGroupId1.hints.mandatory}"
+                                rows="#{bindings.NewGroupId1.hints.displayHeight}"
+                                columns="#{bindings.NewGroupId1.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.NewGroupId1.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupId1.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupId1.format}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupContentOwnerId"
+                                value="#{bindings.NewGroupContentOwnerId.inputValue}"
+                                label="#{bindings.NewGroupContentOwnerId.hints.label}"
+                                required="#{bindings.NewGroupContentOwnerId.hints.mandatory}"
+                                rows="#{bindings.NewGroupContentOwnerId.hints.displayHeight}"
+                                columns="#{bindings.NewGroupContentOwnerId.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.NewGroupContentOwnerId.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupContentOwnerId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupContentOwnerId.format}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupLongTitle"
+                                value="#{bindings.NewGroupLongTitle.inputValue}"
+                                label="#{bindings.NewGroupLongTitle.hints.label}"
+                                required="#{bindings.NewGroupLongTitle.hints.mandatory}"
+                                rows="#{bindings.NewGroupLongTitle.hints.displayHeight}"
+                                columns="#{bindings.NewGroupLongTitle.hints.displayWidth}"
+                                maximumLength="4000" readOnly="true"
+                                shortDesc="#{bindings.NewGroupLongTitle.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupLongTitle.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupCatalogRoot"
+                                value="#{bindings.NewGroupCatalogRoot.inputValue}"
+                                label="#{bindings.NewGroupCatalogRoot.hints.label}"
+                                required="#{bindings.NewGroupCatalogRoot.hints.mandatory}"
+                                rows="#{bindings.NewGroupCatalogRoot.hints.displayHeight}"
+                                columns="#{bindings.NewGroupCatalogRoot.hints.displayWidth}"
+                                maximumLength="20"
+                                shortDesc="#{bindings.NewGroupCatalogRoot.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupCatalogRoot.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupCatalogSuffix"
+                                value="#{bindings.NewGroupCatalogSuffix.inputValue}"
+                                label="#{bindings.NewGroupCatalogSuffix.hints.label}"
+                                required="#{bindings.NewGroupCatalogSuffix.hints.mandatory}"
+                                rows="#{bindings.NewGroupCatalogSuffix.hints.displayHeight}"
+                                columns="#{bindings.NewGroupCatalogSuffix.hints.displayWidth}"
+                                maximumLength="20"
+                                shortDesc="#{bindings.NewGroupCatalogSuffix.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupCatalogSuffix.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupShortTitle"
+                                value="#{bindings.NewGroupShortTitle.inputValue}"
+                                label="#{bindings.NewGroupShortTitle.hints.label}"
+                                required="#{bindings.NewGroupShortTitle.hints.mandatory}"
+                                rows="#{bindings.NewGroupShortTitle.hints.displayHeight}"
+                                columns="#{bindings.NewGroupShortTitle.hints.displayWidth}"
+                                maximumLength="30"
+                                shortDesc="#{bindings.NewGroupShortTitle.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupShortTitle.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupId2"
+                                value="#{bindings.NewGroupId2.inputValue}"
+                                label="#{bindings.NewGroupId2.hints.label}"
+                                required="#{bindings.NewGroupId2.hints.mandatory}"
+                                rows="#{bindings.NewGroupId2.hints.displayHeight}"
+                                columns="#{bindings.NewGroupId2.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.NewGroupId2.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupId2.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupId2.format}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupId3"
+                                value="#{bindings.NewGroupId3.inputValue}"
+                                label="#{bindings.NewGroupId3.hints.label}"
+                                required="#{bindings.NewGroupId3.hints.mandatory}"
+                                rows="#{bindings.NewGroupId3.hints.displayHeight}"
+                                columns="#{bindings.NewGroupId3.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.NewGroupId3.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupId3.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupId3.format}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupAltRightsTitleRecordId"
+                                value="#{bindings.NewGroupAltRightsTitleRecordId.inputValue}"
+                                label="#{bindings.NewGroupAltRightsTitleRecordId.hints.label}"
+                                required="#{bindings.NewGroupAltRightsTitleRecordId.hints.mandatory}"
+                                rows="#{bindings.NewGroupAltRightsTitleRecordId.hints.displayHeight}"
+                                columns="#{bindings.NewGroupAltRightsTitleRecordId.hints.displayWidth}"
+                                maximumLength="38"
+                                shortDesc="#{bindings.NewGroupAltRightsTitleRecordId.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupAltRightsTitleRecordId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupAltRightsTitleRecordId.format}"/>
+                  </af:inputText>
+                  <af:inputText id="NewGroupOvrid1"
+                                value="#{bindings.NewGroupOvrid1.inputValue}"
+                                label="#{bindings.NewGroupOvrid1.hints.label}"
+                                required="#{bindings.NewGroupOvrid1.hints.mandatory}"
+                                rows="#{bindings.NewGroupOvrid1.hints.displayHeight}"
+                                columns="#{bindings.NewGroupOvrid1.hints.displayWidth}"
+                                maximumLength="38"
+                                shortDesc="#{bindings.NewGroupOvrid1.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupOvrid1.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupOvrid1.format}"/>
+                  </af:inputText>
+                  <af:inputListOfValues id="NewGroupCoverImageLocation"
+                                        popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.NewGroupCoverImageLocation.hints.label}"
+                                        searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.NewGroupCoverImageLocation.hints.label}"
+                                        value="#{bindings.NewGroupCoverImageLocation.inputValue}"
+                                        label="#{bindings.NewGroupCoverImageLocation.hints.label}"
+                                        required="#{bindings.NewGroupCoverImageLocation.hints.mandatory}"
+                                        columns="#{bindings.NewGroupCoverImageLocation.hints.displayWidth}"
+                                        maximumLength="38"
+                                        shortDesc="#{bindings.NewGroupCoverImageLocation.hints.tooltip}"
+                                        model="#{bindings.NewGroupCoverImageLocation.listOfValuesModel}">
+                    <f:validator binding="#{bindings.NewGroupCoverImageLocation.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.NewGroupCoverImageLocation.format}"/>
+                  </af:inputListOfValues>
+                  <af:selectOneChoice id="NewGroupAutogenRuleSet"
+                                      value="#{bindings.NewGroupAutogenRuleSet.inputValue}"
+                                      label="#{bindings.NewGroupAutogenRuleSet.hints.label}"
+                                      required="#{bindings.NewGroupAutogenRuleSet.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupAutogenRuleSet.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupAutogenRuleSet.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="NewGroupDoNotUse"
+                                value="#{bindings.NewGroupDoNotUse.inputValue}"
+                                label="#{bindings.NewGroupDoNotUse.hints.label}"
+                                required="#{bindings.NewGroupDoNotUse.hints.mandatory}"
+                                rows="#{bindings.NewGroupDoNotUse.hints.displayHeight}"
+                                columns="#{bindings.NewGroupDoNotUse.hints.displayWidth}"
+                                maximumLength="1"
+                                shortDesc="#{bindings.NewGroupDoNotUse.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupDoNotUse.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="NewGroupContentModel"
+                                      value="#{bindings.NewGroupContentModel.inputValue}"
+                                      label="#{bindings.NewGroupContentModel.hints.label}"
+                                      required="#{bindings.NewGroupContentModel.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupContentModel.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupContentModel.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputDate id="NewGroupLastUpdatedDate1_1"
+                                value="#{bindings.NewGroupLastUpdatedDate1_1.inputValue}"
+                                label="#{bindings.NewGroupLastUpdatedDate1_1.hints.label}"
+                                required="#{bindings.NewGroupLastUpdatedDate1_1.hints.mandatory}"
+                                shortDesc="#{bindings.NewGroupLastUpdatedDate1_1.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="NewGroupSwitchLovAttr"
+                                value="#{bindings.NewGroupSwitchLovAttr.inputValue}"
+                                label="#{bindings.NewGroupSwitchLovAttr.hints.label}"
+                                required="#{bindings.NewGroupSwitchLovAttr.hints.mandatory}"
+                                rows="#{bindings.NewGroupSwitchLovAttr.hints.displayHeight}"
+                                columns="#{bindings.NewGroupSwitchLovAttr.hints.displayWidth}"
+                                readOnly="true"
+                                shortDesc="#{bindings.NewGroupSwitchLovAttr.hints.tooltip}">
+                    <f:validator binding="#{bindings.NewGroupSwitchLovAttr.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="NewGroupLastUpdatedDate2_1"
+                                value="#{bindings.NewGroupLastUpdatedDate2_1.inputValue}"
+                                label="#{bindings.NewGroupLastUpdatedDate2_1.hints.label}"
+                                required="#{bindings.NewGroupLastUpdatedDate2_1.hints.mandatory}"
+                                shortDesc="#{bindings.NewGroupLastUpdatedDate2_1.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputDate id="NewGroupLastUpdatedDate3_1"
+                                value="#{bindings.NewGroupLastUpdatedDate3_1.inputValue}"
+                                label="#{bindings.NewGroupLastUpdatedDate3_1.hints.label}"
+                                required="#{bindings.NewGroupLastUpdatedDate3_1.hints.mandatory}"
+                                shortDesc="#{bindings.NewGroupLastUpdatedDate3_1.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputDate id="NewGroupLastUpdatedDate1"
+                                value="#{bindings.NewGroupLastUpdatedDate1.inputValue}"
+                                label="#{bindings.NewGroupLastUpdatedDate1.hints.label}"
+                                required="#{bindings.NewGroupLastUpdatedDate1.hints.mandatory}"
+                                shortDesc="#{bindings.NewGroupLastUpdatedDate1.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:selectOneChoice id="NewGroupContentSourceCutover"
+                                      value="#{bindings.NewGroupContentSourceCutover.inputValue}"
+                                      label="#{bindings.NewGroupContentSourceCutover.hints.label}"
+                                      required="#{bindings.NewGroupContentSourceCutover.hints.mandatory}"
+                                      shortDesc="#{bindings.NewGroupContentSourceCutover.hints.tooltip}">
+                    <f:selectItems value="#{bindings.NewGroupContentSourceCutover.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputDate id="NewGroupLastUpdatedDate2"
+                                value="#{bindings.NewGroupLastUpdatedDate2.inputValue}"
+                                label="#{bindings.NewGroupLastUpdatedDate2.hints.label}"
+                                required="#{bindings.NewGroupLastUpdatedDate2.hints.mandatory}"
+                                shortDesc="#{bindings.NewGroupLastUpdatedDate2.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveNewGroup.execute}"
+                                            rendered="#{!pageFlowScope.hideSaveButton}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="NewGroupSaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="NewGroupCancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="NewGroupDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="NewGroupDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_NEWGROU: #{bindings.NewGroupOvrId.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteNewGroup.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

@@ -1,0 +1,610 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="PubTopLc"
+                             partialTriggers=" PubDeleteDialog PubSaveButton0 PubCancelButton0 asAreaPubSearchOptions qsAreaPubSearchOptions PubPC:PubArm PubPC:PubdelrmTM PubPC:PubArl PubPC:PubTab:Pubdelrm PubPC:PubTab:Pubdelrl"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_PUBLISHERS']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreatePublishers.execute}"
+                                      action="CreatePub"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_PUBLISHERS']}"
+                                      rendered="#{(true) and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                      id="PubNewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton action="#{SavePublishers.execute}"
+                                      rendered="#{(((jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['ADMIN'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="PubSaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="PubCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaPub"
+                                 rendered="#{!pageFlowScope.createModes.CreatePublishers and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaPubSearchOptions:qsButtonPub qsAreaPubSearchOptions:asButtonPub ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaPubSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.PublishersIteratorPublisherViewCriteriaAdvQuery.queryDescriptor}"
+                        model="#{bindings.PublishersIteratorPublisherViewCriteriaAdvQuery.queryModel}"
+                        queryListener="#{bindings.PublishersIteratorPublisherViewCriteriaAdvQuery.processQuery}"
+                        queryOperationListener="#{bindings.PublishersIteratorPublisherViewCriteriaAdvQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchPublishers.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonPub"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchPublishers.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaPubSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.PublishersIteratorPublisherViewCriteriaAdvQuery.queryDescriptor}"
+                             model="#{bindings.PublishersIteratorPublisherViewCriteriaAdvQuery.queryModel}"
+                             queryListener="#{bindings.PublishersIteratorPublisherViewCriteriaAdvQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchPublishers.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonPub"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchPublishers.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="PubPC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="PublishersDetails"></af:commandMenuItem>
+                    <af:group id="Pubtbb"
+                              rendered="#{ (bindings.PublishersIterator.viewObject!=null and bindings.PublishersIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstPublishers.execute}"
+                                          id="PubFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousPublishers.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="PubPrevious" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextPublishers.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="PubNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastPublishers.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="PubLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem id="PubArm"
+                                      textAndAccessKey="#{nls['ADD_ROW']}"
+                                      immediate="false"
+                                      icon="/jheadstart/images/addRow.png"
+                                      partialSubmit="true"
+                                      actionListener="#{pageFlowScope.PublishersTable.addRow}"
+                                      rendered="#{(true) and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"></af:commandMenuItem>
+                  <af:commandMenuItem id="PubdelrmTM"
+                                      textAndAccessKey="#{nls['DELETE_ROW']}"
+                                      icon="/jheadstart/images/deleteRow.png"
+                                      partialSubmit="true" immediate="true"
+                                      rendered="#{jhsUserRoles['ADMIN']}">
+                    <af:showPopupBehavior popupId="::PubDeletePopup"/>
+                  </af:commandMenuItem>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="PubTab"
+                                                       type="excelHTML"
+                                                       filename="Publishers.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <!-- Also create CreatePublishers bean so we can start table group in create mode as well -->
+                  <af:commandImageLink id="PubArl" immediate="false"
+                                       rendered="#{(true) and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                       partialSubmit="true"
+                                       actionListener="#{pageFlowScope.PublishersTable.addRow}"
+                                       shortDesc="#{nls['ADD_ROW']}"
+                                       icon="/jheadstart/images/addRow.png"/>
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="PubTab"
+                                                       type="excelHTML"
+                                                       filename="Publishers.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="PubPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.PublishersIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="PubTab" contentDelivery="immediate"
+                        value="#{bindings.PublishersTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.PublishersTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.PublishersTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.PublishersTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.PublishersTable.rangeSize}"
+                        autoHeightRows="#{bindings.PublishersTable.estimatedRowCount lt 5 ? 5 : bindings.PublishersTable.estimatedRowCount lt bindings.PublishersTable.rangeSize ? bindings.PublishersTable.estimatedRowCount : 0 }"
+                        fetchSize="#{bindings.PublishersTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.PublishersIteratorPublisherViewCriteriaAdvQuery.processQuery}"
+                        filterModel="#{bindings.PublishersIteratorPublisherViewCriteriaAdvQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.PublishersTable.table}"
+                        partialTriggers=":::qsAreaPubSearchOptions :::asAreaPubSearchOptions :::PubPC ::PubFirst ::PubPrevious ::PubNext ::PubLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_PUBLISHERS']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="PubTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="PublishersDetails"></af:commandMenuItem>
+                      </af:menu>
+                      <af:commandMenuItem id="Pubdelrm"
+                                          textAndAccessKey="#{nls['DELETE_ROW']}"
+                                          icon="/jheadstart/images/deleteRow.png"
+                                          partialSubmit="true" immediate="true"
+                                          rendered="#{jhsUserRoles['ADMIN']}">
+                        <af:showPopupBehavior popupId=":::PubDeletePopup"/>
+                      </af:commandMenuItem>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="PubActionColumn" frozen="true" width="40"
+                           align="center" headerText=" ">
+                  <af:panelGroupLayout layout="horizontal" id="pgl1">
+                    <af:commandLink action="PublishersDetails" id="PubGtd">
+                      <af:image shortDesc="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                source="/jheadstart/images/editRow.png"
+                                id="im0"/>
+                    </af:commandLink>
+                    <af:commandImageLink id="Pubdelrl" partialSubmit="true"
+                                         immediate="true"
+                                         rendered="#{jhsUserRoles['ADMIN']}"
+                                         shortDesc="#{nls['DELETE_ROW']}"
+                                         icon="/jheadstart/images/deleteRow.png">
+                      <af:showPopupBehavior popupId=":::PubDeletePopup"/>
+                    </af:commandImageLink>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column id="PubNameCol" sortable="true" filterable="true"
+                           noWrap="true" width="240" sortProperty="Name"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.Name.label}"
+                                    showRequired="#{bindings.PublishersTable.hints.Name.mandatory}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="PubName"
+                                value="#{row.bindings.Name.inputValue}"
+                                label="#{bindings.PublishersTable.hints.Name.label}"
+                                required="#{bindings.PublishersTable.hints.Name.mandatory}"
+                                rows="#{bindings.PublishersTable.hints.Name.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.Name.displayWidth}"
+                                maximumLength="500"
+                                readOnly="#{((pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                autoSubmit="true"
+                                valueChangeListener="#{PubNameDependsOnItem.updateModelValue}">
+                    <f:validator binding="#{row.bindings.Name.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PubPublisherIdCol" sortable="true"
+                           filterable="true" noWrap="true" width="228"
+                           sortProperty="PubId" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.PubId.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="PubPublisherId"
+                                value="#{row.bindings.PubId.inputValue}"
+                                label="#{bindings.PublishersTable.hints.PubId.label}"
+                                required="false"
+                                rows="#{bindings.PublishersTable.hints.PubId.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.PubId.displayWidth}"
+                                maximumLength="10" readOnly="true">
+                    <f:validator binding="#{row.bindings.PubId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.PublishersTable.hints.PubId.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PubSortNameCol" sortable="true" filterable="true"
+                           noWrap="true" width="240" sortProperty="SortName"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.SortName.label}"
+                                    showRequired="false" id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="PubSortName"
+                                value="#{row.bindings.SortName.inputValue}"
+                                label="#{bindings.PublishersTable.hints.SortName.label}"
+                                required="false"
+                                rows="#{bindings.PublishersTable.hints.SortName.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.SortName.displayWidth}"
+                                maximumLength="500"
+                                readOnly="#{((pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{row.bindings.SortName.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PubUrlCol" sortable="true" filterable="true"
+                           noWrap="true" width="240" sortProperty="Url"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.Url.label}"
+                                    showRequired="#{bindings.PublishersTable.hints.Url.mandatory}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputListOfValues id="PubUrl"
+                                        value="#{row.bindings.Url.inputValue}"
+                                        label="#{bindings.PublishersTable.hints.Url.label}"
+                                        popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.PublishersTable.hints.Url.label}"
+                                        searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.PublishersTable.hints.Url.label}"
+                                        required="#{bindings.PublishersTable.hints.Url.mandatory}"
+                                        columns="#{bindings.PublishersTable.hints.Url.displayWidth}"
+                                        maximumLength="255"
+                                        readOnly="#{((pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                        autoSubmit="true"
+                                        model="#{row.bindings.Url.listOfValuesModel}">
+                    <f:validator binding="#{row.bindings.Url.validator}"/>
+                  </af:inputListOfValues>
+                </af:column>
+                <af:column id="PubNotesCol" sortable="true" filterable="true"
+                           noWrap="true" width="240" sortProperty="Notes"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.Notes.label}"
+                                    showRequired="#{bindings.PublishersTable.hints.Notes.mandatory}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:inputText id="PubNotes"
+                                value="#{row.bindings.Notes.inputValue}"
+                                label="#{bindings.PublishersTable.hints.Notes.label}"
+                                required="#{bindings.PublishersTable.hints.Notes.mandatory}"
+                                rows="#{bindings.PublishersTable.hints.Notes.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.Notes.displayWidth}"
+                                maximumLength="4000"
+                                readOnly="#{((pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{row.bindings.Notes.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PubOrgIdCol" sortable="true" filterable="true"
+                           noWrap="true" width="228" sortProperty="OrgId"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.OrgId.label}"
+                                    showRequired="false" id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="PubOrgId"
+                                value="#{row.bindings.OrgId.inputValue}"
+                                label="#{bindings.PublishersTable.hints.OrgId.label}"
+                                required="false"
+                                rows="#{bindings.PublishersTable.hints.OrgId.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.OrgId.displayWidth}"
+                                maximumLength="10"
+                                readOnly="#{((pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{row.bindings.OrgId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.PublishersTable.hints.OrgId.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PubMsIdCol" sortable="true" filterable="true"
+                           noWrap="true" width="228" sortProperty="MsId"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.MsId.label}"
+                                    showRequired="false" id="ol6"/>
+                  </f:facet>
+                  <af:inputText id="PubMsId"
+                                value="#{row.bindings.MsId.inputValue}"
+                                label="#{bindings.PublishersTable.hints.MsId.label}"
+                                required="false"
+                                rows="#{bindings.PublishersTable.hints.MsId.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.MsId.displayWidth}"
+                                maximumLength="10"
+                                readOnly="#{((pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{row.bindings.MsId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.PublishersTable.hints.MsId.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PubContentOwnerNameCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="ContentOwnerName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.ContentOwnerName.label}"
+                                    showRequired="#{bindings.PublishersTable.hints.ContentOwnerName.mandatory}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:inputListOfValues id="PubContentOwnerName"
+                                        value="#{row.bindings.ContentOwnerName.inputValue}"
+                                        label="#{bindings.PublishersTable.hints.ContentOwnerName.label}"
+                                        popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.PublishersTable.hints.ContentOwnerName.label}"
+                                        searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.PublishersTable.hints.ContentOwnerName.label}"
+                                        required="#{bindings.PublishersTable.hints.ContentOwnerName.mandatory}"
+                                        columns="#{bindings.PublishersTable.hints.ContentOwnerName.displayWidth}"
+                                        maximumLength="400"
+                                        readOnly="#{((pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                        shortDesc="#{bindings.PublishersTable.hints.ContentOwnerName.tooltip}"
+                                        autoSubmit="true"
+                                        valueChangeListener="#{PubContentOwnerNameDependsOnItem.updateModelValue}"
+                                        model="#{row.bindings.ContentOwnerName.listOfValuesModel}">
+                    <f:validator binding="#{row.bindings.ContentOwnerName.validator}"/>
+                  </af:inputListOfValues>
+                </af:column>
+                <af:column id="PubContentOwnerSiteCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="ContentOwnerSite" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.ContentOwnerSite.label}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:inputText id="PubContentOwnerSite"
+                                value="#{row.bindings.ContentOwnerSite.inputValue}"
+                                label="#{bindings.PublishersTable.hints.ContentOwnerSite.label}"
+                                required="#{bindings.PublishersTable.hints.ContentOwnerSite.mandatory}"
+                                rows="#{bindings.PublishersTable.hints.ContentOwnerSite.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.ContentOwnerSite.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                shortDesc="#{bindings.PublishersTable.hints.ContentOwnerSite.tooltip}">
+                    <f:validator binding="#{row.bindings.ContentOwnerSite.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PubContentOwnerNoCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ContentOwnerNo" align="right"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.ContentOwnerNo.label}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:inputText id="cl1"
+                                value="#{row.bindings.ContentOwnerNo.inputValue}"
+                                label="#{bindings.PublishersTable.hints.ContentOwnerNo.label}"
+                                required="#{bindings.PublishersTable.hints.ContentOwnerNo.mandatory}"
+                                rows="#{bindings.PublishersTable.hints.ContentOwnerNo.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.ContentOwnerNo.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.PublishersTable.hints.ContentOwnerNo.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.ContentOwnerNo.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.PublishersTable.hints.ContentOwnerNo.format}"/>
+                  </af:inputText>
+                  <af:commandLink id="PubContentOwnerNo"
+                                  text="#{row.bindings.ContentOwnerNo.attributeValue}"
+                                  shortDesc="#{bindings.PublishersTable.hints.ContentOwnerNo.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="ContentOwner"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.PubContentOwnerID.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="Content Owner #{bindings.PubContentOwnerNo.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.PubContentOwnerID.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueContentOwner}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="PubCreatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="CreatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.CreatedBy.label}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:inputText id="PubCreatedBy"
+                                value="#{row.bindings.CreatedBy.inputValue}"
+                                label="#{bindings.PublishersTable.hints.CreatedBy.label}"
+                                required="#{bindings.PublishersTable.hints.CreatedBy.mandatory}"
+                                rows="#{bindings.PublishersTable.hints.CreatedBy.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.CreatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true">
+                    <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PubCreatedDateSearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedDateSearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.CreatedDateSearch.label}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedDateSearch}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="PubCreatedDateSearch"
+                                value="#{row.bindings.CreatedDateSearch.inputValue}"
+                                label="#{bindings.PublishersTable.hints.CreatedDateSearch.label}"
+                                required="#{bindings.PublishersTable.hints.CreatedDateSearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.PublishersTable.hints.CreatedDateSearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="PubLastUpdatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="LastUpdatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.LastUpdatedBy.label}"
+                                    id="ol12"/>
+                  </f:facet>
+                  <af:inputText id="PubLastUpdatedBy"
+                                value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                label="#{bindings.PublishersTable.hints.LastUpdatedBy.label}"
+                                required="#{bindings.PublishersTable.hints.LastUpdatedBy.mandatory}"
+                                rows="#{bindings.PublishersTable.hints.LastUpdatedBy.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.LastUpdatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true">
+                    <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PubLastUpdatedDateSearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LastUpdatedDateSearch"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.LastUpdatedDateSearch.label}"
+                                    id="ol13"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdatedDateSearch}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="PubLastUpdatedDateSearch"
+                                value="#{row.bindings.LastUpdatedDateSearch.inputValue}"
+                                label="#{bindings.PublishersTable.hints.LastUpdatedDateSearch.label}"
+                                required="#{bindings.PublishersTable.hints.LastUpdatedDateSearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.PublishersTable.hints.LastUpdatedDateSearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="PubIdCol" sortable="true" filterable="true"
+                           noWrap="true" width="228" sortProperty="Id"
+                           align="right" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.Id.label}"
+                                    showRequired="#{bindings.PublishersTable.hints.Id.mandatory}"
+                                    id="ol14"/>
+                  </f:facet>
+                  <af:inputText id="PubId" value="#{row.bindings.Id.inputValue}"
+                                label="#{bindings.PublishersTable.hints.Id.label}"
+                                required="#{bindings.PublishersTable.hints.Id.mandatory}"
+                                rows="#{bindings.PublishersTable.hints.Id.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.Id.displayWidth}"
+                                maximumLength="38"
+                                readOnly="#{((pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.PublishersTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                shortDesc="#{bindings.PublishersTable.hints.Id.tooltip}">
+                    <f:validator binding="#{row.bindings.Id.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.PublishersTable.hints.Id.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PubUrl2Col" sortable="true" filterable="true"
+                           noWrap="true" width="240" sortProperty="Url2"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.Url2.label}"
+                                    id="ol15"/>
+                  </f:facet>
+                  <af:inputText id="PubUrl2"
+                                value="#{row.bindings.Url2.inputValue}"
+                                label="#{bindings.PublishersTable.hints.Url2.label}"
+                                required="#{bindings.PublishersTable.hints.Url2.mandatory}"
+                                rows="#{bindings.PublishersTable.hints.Url2.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.Url2.displayWidth}"
+                                maximumLength="255" readOnly="true"
+                                shortDesc="#{bindings.PublishersTable.hints.Url2.tooltip}">
+                    <f:validator binding="#{row.bindings.Url2.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="PubContentOwnerName2Col" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="ContentOwnerName2" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.PublishersTable.hints.ContentOwnerName2.label}"
+                                    id="ol16"/>
+                  </f:facet>
+                  <af:inputText id="PubContentOwnerName2"
+                                value="#{row.bindings.ContentOwnerName2.inputValue}"
+                                label="#{bindings.PublishersTable.hints.ContentOwnerName2.label}"
+                                required="#{bindings.PublishersTable.hints.ContentOwnerName2.mandatory}"
+                                rows="#{bindings.PublishersTable.hints.ContentOwnerName2.displayHeight}"
+                                columns="#{bindings.PublishersTable.hints.ContentOwnerName2.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                shortDesc="#{bindings.PublishersTable.hints.ContentOwnerName2.tooltip}">
+                    <f:validator binding="#{row.bindings.ContentOwnerName2.validator}"/>
+                  </af:inputText>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="PubDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="PubDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_PUBLISHER:#{pageFlowScope.PublishersTable.currentRowAttributeValues.Name}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeletePublishers.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

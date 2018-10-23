@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="UlrichsTitleLookupView"
+  Version="11.1.1.61.92"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  ComponentClass="com.pq.tracs.model.dao.TracsView"
+  PageIterMode="Partial"
+  UseGlueCode="false"
+  FetchMode="FETCH_AS_NEEDED"
+  MaxFetchSize="500"
+  FetchSize="25"
+  RangeSize="20">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.pq.tracs.model.lookups.UlrichsTitleLookupView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <SQLQuery>
+    <![CDATA[SELECT TraxUlrichsTitle.ID, 
+       TraxUlrichsTitle.ULRICHS_SERIAL_ID, 
+       TraxUlrichsTitle.TITLE, 
+       TraxUlrichsPublisher.PUBLISHER, 
+       TraxUlrichsTitle.LAST_UPDATED_DATE, 
+       TraxUlrichsPublisher.ID AS ID1, 
+       TraxUlrichsPublisher.LAST_UPDATED_DATE AS LAST_UPDATED_DATE1,
+       TraxUlrichsClassification.TYPE,
+       TraxUlrichsClassification.CLASSIFICATION AS ISSN
+FROM TRAX_ULRICHS_TITLE TraxUlrichsTitle
+LEFT OUTER JOIN TRAX_ULRICHS_PUBLISHER TraxUlrichsPublisher ON (TraxUlrichsTitle.ID = TraxUlrichsPublisher.ULRICHS_TITLE_ID)
+LEFT OUTER JOIN TRAX_ULRICHS_CLASSIFICATION TraxUlrichsClassification
+            ON TraxUlrichsTitle.ID = TraxUlrichsClassification.ULRICHS_TITLE_ID
+              AND TraxUlrichsClassification.Type= 'ISSN']]>
+  </SQLQuery>
+  <EntityUsage
+    Name="TraxUlrichsTitle"
+    Entity="com.pq.tracs.model.eo.TraxUlrichsTitle"/>
+  <EntityUsage
+    Name="TraxUlrichsPublisher"
+    Entity="com.pq.tracs.model.eo.TraxUlrichsPublisher"
+    Association="com.pq.tracs.model.ao.UlrichsTitleToUlrichsPublisherFkAssoc"
+    AssociationEnd="com.pq.tracs.model.ao.UlrichsTitleToUlrichsPublisherFkAssoc.TraxUlrichsPublisher"
+    SourceUsage="com.pq.tracs.model.lookups.UlrichsTitleLookupView.TraxUlrichsTitle"
+    ReadOnly="true"
+    Reference="true"
+    DeleteParticipant="false"
+    JoinType="LEFT OUTER JOIN">
+    <DesignTime>
+      <AttrArray Name="_srcAttributes">
+        <Item Value="com.pq.tracs.model.eo.TraxUlrichsTitle.Id"/>
+      </AttrArray>
+      <AttrArray Name="_dstAttributes">
+        <Item
+          Value="com.pq.tracs.model.eo.TraxUlrichsPublisher.UlrichsTitleId"/>
+      </AttrArray>
+    </DesignTime>
+  </EntityUsage>
+  <ViewAttribute
+    Name="Id"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxUlrichsTitle"
+    AliasName="ID"/>
+  <ViewAttribute
+    Name="UlrichsSerialId"
+    PrecisionRule="true"
+    EntityAttrName="UlrichsSerialId"
+    EntityUsage="TraxUlrichsTitle"
+    AliasName="ULRICHS_SERIAL_ID"/>
+  <ViewAttribute
+    Name="Title"
+    PrecisionRule="true"
+    EntityAttrName="Title"
+    EntityUsage="TraxUlrichsTitle"
+    AliasName="TITLE"/>
+  <ViewAttribute
+    Name="Publisher"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Publisher"
+    EntityUsage="TraxUlrichsPublisher"
+    AliasName="PUBLISHER"/>
+  <ViewAttribute
+    Name="LastUpdatedDate"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="TraxUlrichsTitle"
+    AliasName="LAST_UPDATED_DATE"/>
+  <ViewAttribute
+    Name="Id1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="Id"
+    EntityUsage="TraxUlrichsPublisher"
+    AliasName="ID1"/>
+  <ViewAttribute
+    Name="LastUpdatedDate1"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedDate"
+    EntityUsage="TraxUlrichsPublisher"
+    AliasName="LAST_UPDATED_DATE1"/>
+  <ViewAttribute
+    Name="Type"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="40"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="TYPE"
+    Expression="TYPE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="40"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Issn"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="100"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ISSN"
+    Expression="ISSN"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.lookups.UlrichsTitleLookupView.Issn_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewCriteria
+    Name="UlrichsTitleLookupViewCriteria"
+    ViewObjectName="com.pq.tracs.model.lookups.UlrichsTitleLookupView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow258"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="UlrichsSerialId"
+        ViewAttribute="UlrichsSerialId"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="Title"
+        ViewAttribute="Title"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="Publisher"
+        ViewAttribute="Publisher"
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="LastUpdatedDate"
+        ViewAttribute="LastUpdatedDate"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="Issn"
+        ViewAttribute="Issn"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="Id"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="CatalogTaskFlow">
+    <template-reference>
+      <document id="__0">/WEB-INF/jhs-fragment-taskflow-template.xml</document>
+      <id id="__1">jhs-fragment-taskflow-template</id>
+    </template-reference>
+    <default-activity id="__2">StartCatalog</default-activity>
+    <input-parameter-definition id="__3">
+      <name id="__4">createCatalog</name>
+      <value id="__5">#{pageFlowScope.createCatalog}</value>
+      <class id="__6">java.lang.Object</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__7">
+      <name id="__8">rowKeyStrCatalog</name>
+      <value id="__9">#{pageFlowScope.rowKeyStrCatalog}</value>
+      <class id="__10">java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__11">
+      <name id="__12">rowKeyValueCatalog</name>
+      <value id="__13">#{pageFlowScope.rowKeyValueCatalog}</value>
+      <class id="__14">java.lang.Object</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__15">
+      <name id="__16">rowKeyCatalog</name>
+      <value id="__17">#{pageFlowScope.rowKeyCatalog}</value>
+      <class id="__18">oracle.jbo.Key</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__19">
+      <name id="__20">altKeyNameCatalog</name>
+      <value id="__21">#{pageFlowScope.altKeyNameCatalog}</value>
+      <class id="__22">java.lang.String</class>
+    </input-parameter-definition>
+    <managed-bean id="__23">
+      <managed-bean-name id="__24">jhsTaskFlowManager</managed-bean-name>
+      <managed-bean-class id="__25">oracle.jheadstart.controller.jsf.bean.TaskFlowManager</managed-bean-class>
+      <managed-bean-scope id="__26">pageFlow</managed-bean-scope>
+      <managed-property id="__27">
+        <property-name id="__28">initializeParentContextEntries</property-name>
+        <map-entries id="__29">
+          <map-entry id="__30">
+            <key id="__31">jhsCurrentGroupName</key>
+            <value id="__32">Catalog</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__33">
+      <managed-bean-name id="__34">CreateCatalog</managed-bean-name>
+      <managed-bean-class id="__35">oracle.jheadstart.controller.jsf.bean.CreateRowBean</managed-bean-class>
+      <managed-bean-scope id="__36">request</managed-bean-scope>
+      <managed-property id="__37">
+        <property-name id="__38">createBinding</property-name>
+        <value id="__39">#{bindings.CreateCatalog}</value>
+      </managed-property>
+      <managed-property id="__40">
+        <property-name id="__41">successOutcome</property-name>
+        <value id="__42">deepLinkPage</value>
+      </managed-property>
+      <managed-property id="__43">
+        <property-name id="__44">failureOutcome</property-name>
+        <value id="__45">firstPage</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__46">
+      <managed-bean-name id="__47">SaveCatalog</managed-bean-name>
+      <managed-bean-class id="__48">oracle.jheadstart.controller.jsf.bean.CommitBean</managed-bean-class>
+      <managed-bean-scope id="__49">request</managed-bean-scope>
+      <managed-property id="__50">
+        <property-name id="__51">commitBinding</property-name>
+        <value id="__52">#{bindings.Commit}</value>
+      </managed-property>
+      <managed-property id="__53">
+        <property-name id="__54">successOutcome</property-name>
+        <value id="__55">Commit</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__56">
+      <managed-bean-name id="__57">jhsRollback</managed-bean-name>
+      <managed-bean-class id="__58">oracle.jheadstart.controller.jsf.bean.RollbackBean</managed-bean-class>
+      <managed-bean-scope id="__59">request</managed-bean-scope>
+      <managed-property id="__60">
+        <property-name id="__61">rollbackBinding</property-name>
+        <value id="__62">#{bindings.Rollback}</value>
+      </managed-property>
+      <managed-property id="__63">
+        <property-name id="__64">successOutcome</property-name>
+        <value id="__65">Cancel</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__66">
+      <managed-bean-name id="__67">searchCatalog</managed-bean-name>
+      <managed-bean-class id="__68">com.pq.tracs.view.beans.TracsSearchBean</managed-bean-class>
+      <managed-bean-scope id="__69">pageFlow</managed-bean-scope>
+      <managed-property id="__70">
+        <property-name id="__71">bindings</property-name>
+        <value id="__72">#{'#{bindings}'}</value>
+      </managed-property>
+      <managed-property id="__73">
+        <property-name id="__74">searchBinding</property-name>
+        <value id="__75">#{'#{bindings.advancedSearchCatalog}'}</value>
+      </managed-property>
+      <managed-property id="__76">
+        <property-name id="__77">searchItem</property-name>
+        <value id="__78">CatalogContentOwner</value>
+      </managed-property>
+      <managed-property id="__79">
+        <property-name id="__80">dataCollection</property-name>
+        <value id="__81">CatalogNumberSequenceView1</value>
+      </managed-property>
+      <managed-property id="__82">
+        <property-name id="__83">operators</property-name>
+        <map-entries id="__84"></map-entries>
+      </managed-property>
+      <managed-property id="__85">
+        <property-name id="__86">itemAttributes</property-name>
+        <map-entries id="__87">
+          <map-entry id="__88">
+            <key id="__89">CatalogDescription</key>
+            <value id="__90">Description</value>
+          </map-entry>
+          <map-entry id="__91">
+            <key id="__92">CatalogCatalogRootMinimum</key>
+            <value id="__93">CatalogRootMinimum</value>
+          </map-entry>
+          <map-entry id="__94">
+            <key id="__95">CatalogCatalogRootMaximum</key>
+            <value id="__96">CatalogRootMaximum</value>
+          </map-entry>
+          <map-entry id="__97">
+            <key id="__98">CatalogCatalogRootNextval</key>
+            <value id="__99">CatalogRootNextval</value>
+          </map-entry>
+          <map-entry id="__100">
+            <key id="__101">CatalogCatalogSuffixStart</key>
+            <value id="__102">CatalogSuffixStart</value>
+          </map-entry>
+          <map-entry id="__103">
+            <key id="__104">CatalogProductLine</key>
+            <value id="__105">ProductLine</value>
+          </map-entry>
+          <map-entry id="__106">
+            <key id="__107">CatalogContentOwner</key>
+            <value id="__108">ContentOwner</value>
+          </map-entry>
+          <map-entry id="__109">
+            <key id="__110">CatalogCreatedBy</key>
+            <value id="__111">CreatedBy</value>
+          </map-entry>
+          <map-entry id="__112">
+            <key id="__113">CatalogCreatedDate</key>
+            <value id="__114">CreatedDate</value>
+          </map-entry>
+          <map-entry id="__115">
+            <key id="__116">CatalogLastUpdatedBy</key>
+            <value id="__117">LastUpdatedBy</value>
+          </map-entry>
+          <map-entry id="__118">
+            <key id="__119">CatalogLastUpdatedDate</key>
+            <value id="__120">LastUpdatedDate</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__121">
+      <managed-bean-name id="__122">CatalogTable</managed-bean-name>
+      <managed-bean-class id="__123">oracle.jheadstart.controller.jsf.bean.TableBean</managed-bean-class>
+      <managed-bean-scope id="__124">pageFlow</managed-bean-scope>
+      <managed-property id="__125">
+        <property-name id="__126">name</property-name>
+        <value id="__127">CatalogTable</value>
+      </managed-property>
+      <managed-property id="__128">
+        <property-name id="__129">rangeBindingExpr</property-name>
+        <value id="__130">#{'#{bindings.CatalogTable}'}</value>
+      </managed-property>
+      <managed-property id="__131">
+        <property-name id="__132">createNewRowAtTop</property-name>
+        <value id="__133">true</value>
+      </managed-property>
+      <managed-property id="__134">
+        <property-name id="__135">focusItemId</property-name>
+        <value id="__136">CatalogDescription</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__137">
+      <managed-bean-name id="__138">DeleteCatalog</managed-bean-name>
+      <managed-bean-class id="__139">oracle.jheadstart.controller.jsf.bean.DeleteRowBean</managed-bean-class>
+      <managed-bean-scope id="__140">request</managed-bean-scope>
+      <managed-property id="__141">
+        <property-name id="__142">deleteBinding</property-name>
+        <value id="__143">#{bindings.DeleteCatalog}</value>
+      </managed-property>
+      <managed-property id="__144">
+        <property-name id="__145">commitBean</property-name>
+        <value id="__146">#{jhsCommit}</value>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__147">
+      <managed-bean-name id="__148">CatalogContentOwnerLovItemInTable</managed-bean-name>
+      <managed-bean-class id="__149">com.pq.tracs.view.beans.TracsLovItemBean</managed-bean-class>
+      <managed-bean-scope id="__150">pageFlow</managed-bean-scope>
+      <managed-property id="__151">
+        <property-name id="__152">iterBindingExpr</property-name>
+        <value id="__153">#{'#{bindings.CatalogIterator}'}</value>
+      </managed-property>
+      <managed-property id="__154">
+        <property-name id="__155">lovFieldBindingExpr</property-name>
+        <value id="__156">#{'#{row.bindings.ContentOwner}'}</value>
+      </managed-property>
+      <managed-property id="__157">
+        <property-name id="__158">copyToModel</property-name>
+        <value id="__159">true</value>
+      </managed-property>
+      <managed-property id="__160">
+        <property-name id="__161">tableBean</property-name>
+        <value id="__162">#{pageFlowScope.CatalogTable}</value>
+      </managed-property>
+      <managed-property id="__163">
+        <property-name id="__164">lovSearchItem</property-name>
+        <value id="__165">ContentOwnerAdminLOVName</value>
+      </managed-property>
+      <managed-property id="__166">
+        <property-name id="__167">lovTitleExpr</property-name>
+        <value id="__168">#{"#{nls['SEARCH_AND_SELECT']}
+                          #{bindings.CatalogTable.hints.ContentOwner.label}"}</value>
+      </managed-property>
+      <managed-property id="__169">
+        <property-name id="__170">lovWidth</property-name>
+        <value id="__171">668</value>
+      </managed-property>
+      <managed-property id="__172">
+        <property-name id="__173">lovTaskFlowIdString</property-name>
+        <value id="__174">/adminservice/beanconfig/adfc-config-ContentOwnerAdminLOV.xml#ContentOwnerAdminLOVTaskFlow</value>
+      </managed-property>
+      <managed-property id="__175">
+        <property-name id="__176">lovParams</property-name>
+        <map-entries id="__177"></map-entries>
+      </managed-property>
+      <managed-property id="__178">
+        <property-name id="__179">returnItemValues</property-name>
+        <map-entries id="__180">
+          <map-entry id="__181">
+            <key id="__182">Id</key>
+            <value id="__183">CatalogContentOwnerId</value>
+          </map-entry>
+          <map-entry id="__184">
+            <key id="__185">Name</key>
+            <value id="__186">CatalogContentOwner</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__187">
+        <property-name id="__188">returnAttributeValues</property-name>
+        <map-entries id="__189">
+          <map-entry id="__190">
+            <key id="__191">Id</key>
+            <value id="__192">ContentOwnerId</value>
+          </map-entry>
+          <map-entry id="__193">
+            <key id="__194">Name</key>
+            <value id="__195">ContentOwner</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__196">
+        <property-name id="__197">itemsToClear</property-name>
+        <list-entries id="__198"></list-entries>
+      </managed-property>
+    </managed-bean>
+    <managed-bean id="__199">
+      <managed-bean-name id="__200">CatalogContentOwnerLovItem</managed-bean-name>
+      <managed-bean-class id="__201">oracle.jheadstart.controller.jsf.bean.LovItemBean</managed-bean-class>
+      <managed-bean-scope id="__202">pageFlow</managed-bean-scope>
+      <managed-property id="__203">
+        <property-name id="__204">iterBindingExpr</property-name>
+        <value id="__205">#{'#{bindings.CatalogIterator}'}</value>
+      </managed-property>
+      <managed-property id="__206">
+        <property-name id="__207">lovFieldBindingExpr</property-name>
+        <value id="__208">#{'#{bindings.CatalogContentOwner}'}</value>
+      </managed-property>
+      <managed-property id="__209">
+        <property-name id="__210">copyToModel</property-name>
+        <value id="__211">true</value>
+      </managed-property>
+      <managed-property id="__212">
+        <property-name id="__213">lovSearchItem</property-name>
+        <value id="__214">ContentOwnerAdminLOVName</value>
+      </managed-property>
+      <managed-property id="__215">
+        <property-name id="__216">lovTitleExpr</property-name>
+        <value id="__217">#{"#{nls['SEARCH_AND_SELECT']}
+                          #{bindings.CatalogTable.hints.ContentOwner.label}"}</value>
+      </managed-property>
+      <managed-property id="__218">
+        <property-name id="__219">lovWidth</property-name>
+        <value id="__220">668</value>
+      </managed-property>
+      <managed-property id="__221">
+        <property-name id="__222">lovTaskFlowIdString</property-name>
+        <value id="__223">/adminservice/beanconfig/adfc-config-ContentOwnerAdminLOV.xml#ContentOwnerAdminLOVTaskFlow</value>
+      </managed-property>
+      <managed-property id="__224">
+        <property-name id="__225">lovParams</property-name>
+        <map-entries id="__226"></map-entries>
+      </managed-property>
+      <managed-property id="__227">
+        <property-name id="__228">returnItemValues</property-name>
+        <map-entries id="__229">
+          <map-entry id="__230">
+            <key id="__231">Id</key>
+            <value id="__232">CatalogContentOwnerId</value>
+          </map-entry>
+          <map-entry id="__233">
+            <key id="__234">Name</key>
+            <value id="__235">CatalogContentOwner</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__236">
+        <property-name id="__237">returnAttributeValues</property-name>
+        <map-entries id="__238">
+          <map-entry id="__239">
+            <key id="__240">Id</key>
+            <value id="__241">ContentOwnerId</value>
+          </map-entry>
+          <map-entry id="__242">
+            <key id="__243">Name</key>
+            <value id="__244">ContentOwner</value>
+          </map-entry>
+        </map-entries>
+      </managed-property>
+      <managed-property id="__245">
+        <property-name id="__246">itemsToClear</property-name>
+        <list-entries id="__247"></list-entries>
+      </managed-property>
+      <managed-property id="__248">
+        <property-name id="__249">componentsToRefresh</property-name>
+        <list-entries id="__250"></list-entries>
+      </managed-property>
+    </managed-bean>
+    <router id="StartCatalog">
+      <case id="__251">
+        <expression id="__252">#{pageFlowScope.createCatalog!=null}</expression>
+        <outcome id="__253">createCatalog</outcome>
+      </case>
+      <case id="__254">
+        <expression id="__255">#{pageFlowScope.rowKeyStrCatalog!=null or
+                               pageFlowScope.rowKeyValueCatalog!=null or
+                               pageFlowScope.rowKeyCatalog!=null}</expression>
+        <outcome id="__256">SetCurrentRowCatalog</outcome>
+      </case>
+      <case id="__257">
+        <expression id="__258">#{pageFlowScope.isDeepLink!=null and
+                               pageFlowScope.isDeepLink}</expression>
+        <outcome id="__259">deepLinkPage</outcome>
+      </case>
+      <default-outcome id="__260">firstPage</default-outcome>
+    </router>
+    <method-call id="CreateCatalog">
+      <method id="__261">#{CreateCatalog.execute}</method>
+      <!-- execute condition param -->
+      <parameter>
+        <class id="__262">java.lang.Object</class>
+        <value id="__263">#{pageFlowScope.createCatalog}</value>
+      </parameter>
+      <outcome id="__264">
+        <to-string/>
+      </outcome>
+    </method-call>
+    <method-call id="SetCurrentRowCatalog">
+      <method id="__265">#{jhsSetCurrentRow.execute}</method>
+      <!-- iterator param -->
+      <parameter>
+        <class id="__266">oracle.adf.model.binding.DCIteratorBinding</class>
+        <value id="__267">#{bindings.CatalogIterator}</value>
+      </parameter>
+      <!-- rowKeyStr param -->
+      <parameter>
+        <class id="__268">java.lang.String</class>
+        <value id="__269">#{pageFlowScope.rowKeyStrCatalog}</value>
+      </parameter>
+      <!-- rowKeyValue param -->
+      <parameter>
+        <class id="__270">java.lang.Object</class>
+        <value id="__271">#{pageFlowScope.rowKeyValueCatalog}</value>
+      </parameter>
+      <!-- rowKey param -->
+      <parameter>
+        <class id="__272">oracle.jbo.Key</class>
+        <value id="__273">#{pageFlowScope.rowKeyCatalog}</value>
+      </parameter>
+      <!-- altKeyName param -->
+      <parameter>
+        <class id="__274">java.lang.String</class>
+        <value id="__275">#{pageFlowScope.altKeyNameCatalog}</value>
+      </parameter>
+      <outcome id="__276">
+        <fixed-outcome id="__277">deepLinkPage</fixed-outcome>
+      </outcome>
+    </method-call>
+    <task-flow-return id="CancelCatalogReturn">
+      <outcome id="__278">
+        <name id="__279">CancelCatalog</name>
+      </outcome>
+    </task-flow-return>
+    <task-flow-return id="DoneCatalogReturn">
+      <outcome id="__280">
+        <name id="__281">DoneCatalog</name>
+      </outcome>
+    </task-flow-return>
+    <view id="CatalogTable">
+      <page id="__282">/adminservice/pages/CatalogTable.jsff</page>
+    </view>
+    <view id="Catalog">
+      <page id="__283">/adminservice/pages/Catalog.jsff</page>
+    </view>
+    <control-flow-rule id="__284">
+      <from-activity-id id="__285">*</from-activity-id>
+      <control-flow-case id="__286">
+        <from-outcome id="__287">SetCurrentRowCatalog</from-outcome>
+        <to-activity-id id="__288">SetCurrentRowCatalog</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__289">
+        <from-outcome id="__290">firstPage</from-outcome>
+        <to-activity-id id="__291">CatalogTable</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__292">
+        <from-outcome id="__293">deepLinkPage</from-outcome>
+        <to-activity-id id="__294">Catalog</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__295">
+        <from-outcome id="__296">CatalogTableBreadcrumb</from-outcome>
+        <to-activity-id id="__297">CatalogTable</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__298">
+        <from-outcome id="__299">CatalogBreadcrumb</from-outcome>
+        <to-activity-id id="__300">Catalog</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__301">
+        <from-outcome id="__302">Cancel</from-outcome>
+        <to-activity-id id="__303">StartCatalog</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__304">
+        <from-outcome id="__305">CancelCatalogReturn</from-outcome>
+        <to-activity-id id="__306">CancelCatalogReturn</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__307">
+        <from-outcome id="__308">DoneCatalogReturn</from-outcome>
+        <to-activity-id id="__309">DoneCatalogReturn</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__310">
+      <from-activity-id id="__311">CatalogTable</from-activity-id>
+      <control-flow-case id="__312">
+        <from-outcome id="__313">CreateCatalog</from-outcome>
+        <to-activity-id id="__314">Catalog</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__315">
+        <from-outcome id="__316">CatalogDetails</from-outcome>
+        <to-activity-id id="__317">Catalog</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__318">
+      <from-activity-id id="__319">*</from-activity-id>
+      <control-flow-case id="__320">
+        <from-outcome id="__321">createCatalog</from-outcome>
+        <to-activity-id id="__322">CreateCatalog</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+  <!-- This bean must be defined outside the task-flow-definition element
+       because it needs to be available in the pageFlowScope of the unbounded
+       task-flow not in the pageFlowScope of the bounded task flow itself. -->
+  <managed-bean id="__323">
+    <managed-bean-name id="__324">CatalogTaskFlowConfig</managed-bean-name>
+    <managed-bean-class id="__325">oracle.jheadstart.controller.jsf.bean.TaskFlowConfigBean</managed-bean-class>
+    <managed-bean-scope id="__326">pageFlow</managed-bean-scope>
+    <managed-property id="__327">
+      <property-name id="__328">params</property-name>
+      <property-class id="__329">java.util.Map</property-class>
+      <map-entries id="__330">
+        <map-entry id="__331">
+          <key id="__332">parentContext</key>
+          <value id="__333">#{pageFlowScope.parentContext}</value>
+        </map-entry>
+      </map-entries>
+    </managed-property>
+    <managed-property id="__334">
+      <property-name id="__335">name</property-name>
+      <value id="__336">Catalog</value>
+    </managed-property>
+    <managed-property id="__337">
+      <property-name id="__338">taskFlowId</property-name>
+      <value id="__339">/adminservice/beanconfig/adfc-config-Catalog.xml#CatalogTaskFlow</value>
+    </managed-property>
+    <managed-property id="__340">
+      <property-name id="__341">tabUniqueIdentifier</property-name>
+      <value id="__342">Catalog</value>
+    </managed-property>
+    <managed-property id="__343">
+      <property-name id="__344">label</property-name>
+      <value id="__345">Catalogs</value>
+    </managed-property>
+  </managed-bean>
+</adfc-config>

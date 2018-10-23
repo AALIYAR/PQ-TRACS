@@ -1,0 +1,63 @@
+## revision_history
+## 19-nov-2011   Steven Davelaar
+## 2.3           Added call to JHS_PHASE_LISTENER
+## 04-feb-2011   Steven Davelaar
+## 2.2           replaced hardcoded JSP version number with JSP_VERSION macro
+##               Change encoding to pageEncoding
+## 01-nov-2010   Steven Davelaar
+## 2.1           Added call to keyboard server listener
+## 10-jul-2010   Steven Davelaar
+## 2.1           Do not use JhsDynamicTabsPageTemplate when set at application level
+##               Hide menu tabs when already shown in menu global area
+## 23-jun-2009   Paco van der Linden
+## 2.0           Restructured layout according to stretching best-practices.
+## 09-sep-2008   Steven Davelaar
+## 1.1           R11 upgrade
+## 17-jun-2007   Steven Davelaar
+## 1.0           Initial creation
+<?xml version='1.0' #PAGE_ENCODING_PROP()?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" #JSP_VERSION()
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html">
+  <jsp:directive.page contentType="text/html;charset=${JHS.pageEncoding}"/>
+  <f:view #JHS_PHASE_LISTENER()>
+    <af:document title="#HOME_PAGE_TITLE()" id="#NEW_ID("doc")">
+      <f:facet name="metaContainer">
+        <trh:script source="/jheadstart/jhs11.js" id="#NEW_ID("script")"></trh:script>
+      </f:facet>
+      <af:form id="dataForm">
+
+${JHS.engine.resetNamingContainerContext()}
+
+        ## do not use dynamic tabs template for this page
+        <af:pageTemplate id="pt" #if (${JHS.application.useJhsDynamicTabsPageTemplate}) viewId="/common/pageTemplates/JhsPageTemplate.jspx" #else viewId="${JHS.application.pageTemplate}" #end>
+##        <af:pageTemplate id="pt" viewId="${JHS.application.pageTemplate}" #if (${JHS.application.useDynamicTabs}) value="#{bindings.jhsPageTemplateBinding}" #end>
+          <f:attribute name="showMessagesInline" value="${JHS.application.showMessagesInline}"/>
+          #if (${JHS.application.runtimeCustomizationMenuAllowed})
+##            <f:attribute name="headerImage1" value="#{jhsDynamicMenu.currentModule.uisHeaderImage1}"/>
+##            <f:attribute name="headerImage2" value="#{jhsDynamicMenu.currentModule.uisHeaderImage2}"/>
+          #else
+            #if (${JHS.application.startMenuLevel}!='0')
+              ## top-level menu entries already shown in menu global
+              <f:attribute name="showMenu1" value="false"/>
+            #else
+              <f:attribute name="menuModel" value="#{RootMenu}"/>
+              <f:attribute name="menuStartLevel" value="0"/>
+            #end
+          #end
+
+          <f:facet name="pageContent">
+           <af:panelHeader text="#HOME_PAGE_HEADER()" id="#NEW_ID("ph")">
+           </af:panelHeader>
+          </f:facet>
+
+        </af:pageTemplate>
+      </af:form>
+      #KEYBOARD_SERVER_LISTENER()
+    </af:document>
+  </f:view>
+</jsp:root>
+
+

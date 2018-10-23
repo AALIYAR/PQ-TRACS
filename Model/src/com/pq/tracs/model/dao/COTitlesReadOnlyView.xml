@@ -1,0 +1,1378 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="COTitlesReadOnlyView"
+   Version="11.1.1.61.92"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   ComponentClass="com.pq.tracs.model.dao.TracsView"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_objectSuperClassName"
+         Value="com.pq.tracs.model.dao.TracsView"/>
+   </DesignTime>
+   <ViewAccessor
+      Name="BibliographicStatusLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Bibliographic Status']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="FilmAvailabilityLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Film Availability']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="PMClassLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['PM Class']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="ProductLineLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Product Line']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_ProductLine"
+      ListVOName="ProductLineLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="ProductLine"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_FilmAvailability"
+      ListVOName="FilmAvailabilityLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="FilmAvailability"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_BibliographicStatus"
+      ListVOName="BibliographicStatusLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="BibliographicStatus"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_PrimaryPmClass"
+      ListVOName="PMClassLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="PrimaryPmClass"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <SQLQuery><![CDATA[SELECT Title.ID, 
+       CoTitle.CONTENT_OWNER_ID, 
+       Title.LONG_TITLE, 
+       Title.TARGET_TRACKING_NO,
+       Title.CATALOG_NUMBER, 
+       Title.PRODUCT_LINE,
+       Title.PUBLICATION_START_YEAR, 
+       Title.PUBLICATION_END_YEAR,
+       Title.FILM_AVAILABILITY, 
+       Title.BIBLIOGRAPHIC_STATUS,
+       Title.EXERCISING_RIGHTS, 
+       Title.PRIMARY_PM_CLASS,   
+       Title.CATALOG_PREFIX, 
+       Title.CATALOG_ROOT, 
+       Title.CATALOG_SUFFIX, 
+       Title.AUTHOR, 
+       Title.CURRENT_CATALOG_NUMBER, 
+       Title.CURRENT_CATALOG_PREFIX, 
+       Title.CURRENT_CATALOG_ROOT, 
+       Title.CURRENT_CATALOG_SUFFIX, 
+       Title.SHORT_TITLE, 
+       Title.TITLE_DESCRIPTION, 
+       Title.SECONDARY_CATALOG_NUMBER, 
+       Title.ORIGINAL_PUBLISHING_CO, 
+       Title.ORIGINAL_PLACE_OF_PUBLICATION, 
+       Title.ORIGINAL_DATES_OF_PUBLICATION, 
+       Title.PLACE_OF_PUBLICATION_CODE, 
+       Title.LANGUAGE_NOTE, 
+       Title.NON_FILING_INDICATOR, 
+       Title.EDITION_STATEMENT, 
+       Title.ALPHA_RECORD_DATES, 
+       Title.PUB_YEAR_VOLUME_FORMATTED, 
+       Title.PUB_YEAR_VOLUME_UNFORMATTED, 
+       Title.CATALOGING_SOURCE_URL, 
+       Title.SERIAL_SUB_TYPE, 
+       Title.PUBLICATION_FREQUENCY, 
+       Title.CATALOG_PUBLICATION_CITY, 
+       Title.CATALOG_INDICATOR, 
+       Title.CHECK_IN_REQUIREMENTS, 
+       Title.ROUTING, 
+       Title.SPECIAL_COPYRIGHT, 
+       Title.COMP_SUB_ACCOUNT_NUMBER, 
+       Title.PAID_SUB_ACCOUNT_NUMBER, 
+       Title.CREATED_BY, 
+       Title.CREATED_DATE, 
+       Title.LAST_UPDATED_BY, 
+       Title.LAST_UPDATED_DATE, 
+       Title.SECONDARY_PM_CLASS,(SELECT 
+       cl.CLASSIFICATION_NUMBER FROM TRAX_CLASSIFICATION cl where cl.TITLE_ID = Title.ID AND PRIMARY_FLAG ='Y' AND ROWNUM=1) primary_classification,
+       (select name from TRAX_CONTENT_OWNER a where a.id=Title.CONTENT_OWNER_ID) Content_owner,
+       CoTitle.OWNER_TYPE,
+       CoTitle.PRIMARY_FLAG
+FROM TRAX_CONTENT_OWNER_TITLE CoTitle 
+        INNER JOIN TRAX_TITLE Title 
+        ON CoTitle.TITLE_ID = Title.ID
+ORDER BY LONG_TITLE]]></SQLQuery>
+   <ViewAttribute
+      Name="Id"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="ID"
+      Expression="ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContentOwnerId"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="CONTENT_OWNER_ID"
+      Expression="CONTENT_OWNER_ID"
+      SQLType="NUMERIC" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="22" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LongTitle"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="LONG_TITLE"
+      Expression="LONG_TITLE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.LongTitle_LABEL"/>
+            <DISPLAYWIDTH
+               Value="30"/>
+            <DISPLAYHEIGHT
+               Value="1"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TargetTrackingNo"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="38"
+      Scale="0"
+      Type="oracle.jbo.domain.Number"
+      ColumnType="NUMBER"
+      AliasName="TARGET_TRACKING_NO"
+      Expression="TARGET_TRACKING_NO"
+      SQLType="NUMERIC">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="39"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.TargetTrackingNo_LABEL"/>
+            <DISPLAYWIDTH
+               Value="10"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CatalogNumber"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CATALOG_NUMBER"
+      Expression="CATALOG_NUMBER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CatalogNumber_LABEL"/>
+            <DISPLAYWIDTH
+               Value="30"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ProductLine"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PRODUCT_LINE"
+      Expression="PRODUCT_LINE"
+      SQLType="VARCHAR"
+      LOVName="LOV_ProductLine">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.ProductLine_LABEL"/>
+            <CONTROLTYPE
+               Value="choice"/>
+            <DISPLAYWIDTH
+               Value="30"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PublicationStartYear"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="4"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PUBLICATION_START_YEAR"
+      Expression="PUBLICATION_START_YEAR"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.PublicationStartYear_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PublicationEndYear"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="4"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PUBLICATION_END_YEAR"
+      Expression="PUBLICATION_END_YEAR"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.PublicationEndYear_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="FilmAvailability"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="FILM_AVAILABILITY"
+      Expression="FILM_AVAILABILITY"
+      SQLType="VARCHAR"
+      LOVName="LOV_FilmAvailability">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.FilmAvailability_LABEL"/>
+            <DISPLAYWIDTH
+               Value="20"/>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="BibliographicStatus"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="BIBLIOGRAPHIC_STATUS"
+      Expression="BIBLIOGRAPHIC_STATUS"
+      SQLType="VARCHAR"
+      LOVName="LOV_BibliographicStatus">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.BibliographicStatus_LABEL"/>
+            <CONTROLTYPE
+               Value="choice"/>
+            <DISPLAYWIDTH
+               Value="20"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ExercisingRights"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="EXERCISING_RIGHTS"
+      Expression="EXERCISING_RIGHTS"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.ExercisingRights_LABEL"/>
+            <DISPLAYWIDTH
+               Value="30"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PrimaryPmClass"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PRIMARY_PM_CLASS"
+      Expression="PRIMARY_PM_CLASS"
+      SQLType="VARCHAR"
+      LOVName="LOV_PrimaryPmClass">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.PrimaryPmClass_LABEL"/>
+            <CONTROLTYPE
+               Value="choice"/>
+            <DISPLAYWIDTH
+               Value="20"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CatalogPrefix"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CATALOG_PREFIX"
+      Expression="CATALOG_PREFIX"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CatalogPrefix_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CatalogRoot"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CATALOG_ROOT"
+      Expression="CATALOG_ROOT"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CatalogRoot_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CatalogSuffix"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CATALOG_SUFFIX"
+      Expression="CATALOG_SUFFIX"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CatalogSuffix_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Author"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="AUTHOR"
+      Expression="AUTHOR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <DISPLAYWIDTH
+               Value="30"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CurrentCatalogNumber"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CURRENT_CATALOG_NUMBER"
+      Expression="CURRENT_CATALOG_NUMBER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CurrentCatalogNumber_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CurrentCatalogPrefix"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CURRENT_CATALOG_PREFIX"
+      Expression="CURRENT_CATALOG_PREFIX"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CurrentCatalogPrefix_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CurrentCatalogRoot"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CURRENT_CATALOG_ROOT"
+      Expression="CURRENT_CATALOG_ROOT"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CurrentCatalogRoot_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CurrentCatalogSuffix"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CURRENT_CATALOG_SUFFIX"
+      Expression="CURRENT_CATALOG_SUFFIX"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CurrentCatalogSuffix_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ShortTitle"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="30"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SHORT_TITLE"
+      Expression="SHORT_TITLE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.ShortTitle_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TitleDescription"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TITLE_DESCRIPTION"
+      Expression="TITLE_DESCRIPTION"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.TitleDescription_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SecondaryCatalogNumber"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SECONDARY_CATALOG_NUMBER"
+      Expression="SECONDARY_CATALOG_NUMBER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.SecondaryCatalogNumber_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OriginalPublishingCo"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ORIGINAL_PUBLISHING_CO"
+      Expression="ORIGINAL_PUBLISHING_CO"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.OriginalPublishingCo_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OriginalPlaceOfPublication"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ORIGINAL_PLACE_OF_PUBLICATION"
+      Expression="ORIGINAL_PLACE_OF_PUBLICATION"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.OriginalPlaceOfPublication_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OriginalDatesOfPublication"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="60"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ORIGINAL_DATES_OF_PUBLICATION"
+      Expression="ORIGINAL_DATES_OF_PUBLICATION"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="60" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.OriginalDatesOfPublication_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PlaceOfPublicationCode"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="5"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PLACE_OF_PUBLICATION_CODE"
+      Expression="PLACE_OF_PUBLICATION_CODE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="5" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.PlaceOfPublicationCode_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LanguageNote"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="4000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="LANGUAGE_NOTE"
+      Expression="LANGUAGE_NOTE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="4000" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.LanguageNote_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="NonFilingIndicator"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="10"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="NON_FILING_INDICATOR"
+      Expression="NON_FILING_INDICATOR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="10" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.NonFilingIndicator_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EditionStatement"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="EDITION_STATEMENT"
+      Expression="EDITION_STATEMENT"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.EditionStatement_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="AlphaRecordDates"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ALPHA_RECORD_DATES"
+      Expression="ALPHA_RECORD_DATES"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.AlphaRecordDates_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PubYearVolumeFormatted"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PUB_YEAR_VOLUME_FORMATTED"
+      Expression="PUB_YEAR_VOLUME_FORMATTED"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.PubYearVolumeFormatted_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PubYearVolumeUnformatted"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PUB_YEAR_VOLUME_UNFORMATTED"
+      Expression="PUB_YEAR_VOLUME_UNFORMATTED"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.PubYearVolumeUnformatted_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CatalogingSourceUrl"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CATALOGING_SOURCE_URL"
+      Expression="CATALOGING_SOURCE_URL"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CatalogingSourceUrl_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SerialSubType"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SERIAL_SUB_TYPE"
+      Expression="SERIAL_SUB_TYPE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.SerialSubType_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PublicationFrequency"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PUBLICATION_FREQUENCY"
+      Expression="PUBLICATION_FREQUENCY"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.PublicationFrequency_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CatalogPublicationCity"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CATALOG_PUBLICATION_CITY"
+      Expression="CATALOG_PUBLICATION_CITY"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CatalogPublicationCity_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CatalogIndicator"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CATALOG_INDICATOR"
+      Expression="CATALOG_INDICATOR"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CatalogIndicator_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CheckInRequirements"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CHECK_IN_REQUIREMENTS"
+      Expression="CHECK_IN_REQUIREMENTS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CheckInRequirements_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Routing"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="ROUTING"
+      Expression="ROUTING"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SpecialCopyright"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="200"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SPECIAL_COPYRIGHT"
+      Expression="SPECIAL_COPYRIGHT"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="200" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.SpecialCopyright_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CompSubAccountNumber"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="20"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="COMP_SUB_ACCOUNT_NUMBER"
+      Expression="COMP_SUB_ACCOUNT_NUMBER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="20" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CompSubAccountNumber_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PaidSubAccountNumber"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PAID_SUB_ACCOUNT_NUMBER"
+      Expression="PAID_SUB_ACCOUNT_NUMBER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.PaidSubAccountNumber_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CREATED_BY"
+      Expression="CREATED_BY"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CreatedBy_LABEL"/>
+            <DISPLAYWIDTH
+               Value="15"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="CREATED_DATE"
+      Expression="CREATED_DATE"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CreatedDate_LABEL"/>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CreatedDate_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.CreatedDate_FMT_FORMAT"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="LAST_UPDATED_BY"
+      Expression="LAST_UPDATED_BY"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.LastUpdatedBy_LABEL"/>
+            <DISPLAYWIDTH
+               Value="15"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      Type="oracle.jbo.domain.Date"
+      ColumnType="DATE"
+      AliasName="LAST_UPDATED_DATE"
+      Expression="LAST_UPDATED_DATE"
+      SQLType="DATE" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="7" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.LastUpdatedDate_FMT_FORMATTER"/>
+            <FMT_FORMAT
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.LastUpdatedDate_FMT_FORMAT"/>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.LastUpdatedDate_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SecondaryPmClass"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="SECONDARY_PM_CLASS"
+      Expression="SECONDARY_PM_CLASS"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.SecondaryPmClass_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PrimaryClassification"
+      IsUpdateable="false"
+      IsPersistent="false"
+      Precision="100"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="PRIMARY_CLASSIFICATION"
+      Expression="PRIMARY_CLASSIFICATION"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="100" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.PrimaryClassification_LABEL"/>
+            <DISPLAYWIDTH
+               Value="15"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContentOwner"
+      IsPersistent="false"
+      Precision="400"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="CONTENT_OWNER"
+      Expression="CONTENT_OWNER"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="400" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.ContentOwner_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="OwnerType"
+      IsUpdateable="false"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="40"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="OWNER_TYPE"
+      Expression="OWNER_TYPE"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="40"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.OwnerType_LABEL"/>
+            <DISPLAYWIDTH
+               Value="20"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PrimaryFlag"
+      IsUpdateable="false"
+      IsPersistent="false"
+      IsNotNull="true"
+      PrecisionRule="true"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="CHAR"
+      AliasName="PRIMARY_FLAG"
+      Expression="PRIMARY_FLAG"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.COTitlesReadOnlyView.PrimaryFlag_LABEL"/>
+            <DISPLAYWIDTH
+               Value="5"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="COTitlesReadOnlyViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.COTitlesReadOnlyView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow54"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="LongTitle"
+            ViewAttribute="LongTitle"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="TargetTrackingNo"
+            ViewAttribute="TargetTrackingNo"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="COTitlesReadOnlyViewCriteria_vcrow54_CatalogNumber"
+            ViewAttribute="CatalogNumber"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="COTitlesReadOnlyViewCriteria_vcrow54_ProductLine"
+            ViewAttribute="ProductLine"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="COTitlesReadOnlyViewCriteria_vcrow54_PublicationStartYear"
+            ViewAttribute="PublicationStartYear"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="COTitlesReadOnlyViewCriteria_vcrow54_PublicationEndYear"
+            ViewAttribute="PublicationEndYear"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="COTitlesReadOnlyViewCriteria_vcrow54_FilmAvailability"
+            ViewAttribute="FilmAvailability"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="COTitlesReadOnlyViewCriteria_vcrow54_BibliographicStatus"
+            ViewAttribute="BibliographicStatus"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="COTitlesReadOnlyViewCriteria_vcrow54_ExercisingRights"
+            ViewAttribute="ExercisingRights"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="COTitlesReadOnlyViewCriteria_vcrow54_PrimaryPmClass"
+            ViewAttribute="PrimaryPmClass"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"
+            UpperColumns="0"/>
+         <ViewCriteriaItem
+            Name="PrimaryClassification"
+            ViewAttribute="PrimaryClassification"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="OwnerType"
+            ViewAttribute="OwnerType"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="PrimaryFlag"
+            ViewAttribute="PrimaryFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <AttrArray Name="KeyAttributes">
+      <Item Value="Id" />
+   </AttrArray>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

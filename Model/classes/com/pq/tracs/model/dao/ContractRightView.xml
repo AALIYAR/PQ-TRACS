@@ -1,0 +1,659 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="ContractRightView"
+   Version="11.1.1.61.92"
+   OrderBy="RULE_NUMBER"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="com.pq.tracs.model.dao.ContractRightViewRowImpl"
+   ComponentClass="com.pq.tracs.model.dao.ContractRightViewImpl"
+   FetchMode="FETCH_AS_NEEDED"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchSize="15"
+   RangeSize="10">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_objectSuperClassName"
+         Value="com.pq.tracs.model.dao.TracsView"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <ViewAccessor
+      Name="RightIncludesOrExcludesLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Right Includes or Excludes']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="RightOrRestrictionTypeLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Right or Restriction Type']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="RightPermissionTypeLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Right Permission Type']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="RightStatusLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Right Status']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="RightPermissionSubTypeLookup2"
+      ViewObjectName="com.pq.tracs.model.lookups.PermissionSubTypeLookup">
+      <ParameterMap>
+         <PIMap Variable="parent_code_value">
+            <TransientExpression><![CDATA[PermissionType]]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="ContractRightTemplateROView1"
+      ViewObjectName="com.pq.tracs.model.lookups.ContractRightTemplateROView"
+      RowLevelBinds="true">
+      <ViewCriteriaUsage
+         Name="ContractRightTemplateROViewCriteria"
+         FullName="com.pq.tracs.model.lookups.ContractRightTemplateROView.ContractRightTemplateROViewCriteria"/>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_PermissionType"
+      ListVOName="RightPermissionTypeLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="PermissionType"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_PermissionSubType"
+      ListVOName="RightPermissionSubTypeLookup2"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="PermissionSubType"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_Status"
+      ListVOName="RightStatusLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="Status"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_RightOrRestrictionType"
+      ListVOName="RightOrRestrictionTypeLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="RightOrRestrictionType"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_IncludesOrExcludes"
+      ListVOName="RightIncludesOrExcludesLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="IncludesOrExcludes"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_TemplateName2"
+      ListVOName="ContractRightTemplateROView1"
+      ListRangeSize="-1"
+      NullValueFlag="none"
+      NullValueId="LOV_TemplateName2_LOVUIHints_NullValueId"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="TemplateName2"/>
+      </AttrArray>
+      <AttrArray Name="DerivedAttrNames">
+         <Item Value="RightType"/>
+         <Item Value="RightTemplateId"/>
+         <Item Value="PermissionType"/>
+         <Item Value="PermissionSubType"/>
+         <Item Value="RightOrRestrictionType"/>
+         <Item Value="SalesRestrictionFlag"/>
+         <Item Value="ComplexFlag"/>
+         <Item Value="EmbargoDays"/>
+         <Item Value="ComplexRuleDescription"/>
+         <Item Value="IncludesOrExcludes"/>
+         <Item Value="ResellerFyiRequiredFlag"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="Name"/>
+         <Item Value="RightType"/>
+         <Item Value="Id"/>
+         <Item Value="PermissionType"/>
+         <Item Value="PermissionSubType"/>
+         <Item Value="RightRestrictionType"/>
+         <Item Value="SalesRestrictionFlag"/>
+         <Item Value="ComplexFlag"/>
+         <Item Value="EmbargoDays"/>
+         <Item Value="ComplexNote"/>
+         <Item Value="IncludesOrExcludes"/>
+         <Item Value="ResellerFyiRequiredFlag"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="Name"/>
+         <Item Value="PermissionType"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <SQLQuery><![CDATA[SELECT ContractRight.ID, 
+       ContractRight.CONTRACT_ID, 
+       ContractRight.RULE_NUMBER, 
+       ContractRight.PERMISSION_TYPE, 
+       ContractRight.RIGHT_OR_RESTRICTION_TYPE,  
+       ContractRight.INCLUDES_OR_EXCLUDES, 
+       ContractRight.SALES_RESTRICTION_FLAG, 
+       ContractRight.COMPLEX_FLAG, 
+       ContractRight.TRANSLATION_FLAG, 
+       ContractRight.RESELLER_FYI_REQUIRED_FLAG, 
+       ContractRight.WRITTEN_APPROVAL_REQUIRED_FLAG, 
+       ContractRight.STATUS, 
+       ContractRight.EFFECTIVE_START_DATE, 
+       ContractRight.EFFECTIVE_END_DATE, 
+       ContractRight.EMBARGO_DAYS, 
+       ContractRight.REVERSE_EMBARGO_DAYS, 
+       ContractRight.COMPLEX_RULE_DESCRIPTION, 
+       ContractRight.CREATED_BY, 
+       ContractRight.CREATED_DATE, 
+       ContractRight.LAST_UPDATED_BY, 
+       ContractRight.LAST_UPDATED_DATE, 
+       ContractRight.PUBLICATION_START_DATE, 
+       ContractRight.PUBLICATION_END_DATE, 
+       ContractRight.RIGHT_TEMPLATE_ID, 
+       ContractRight.RIGHT_TYPE, 
+       ContractRight.PERMISSION_SUB_TYPE,
+(SELECT  tt.NAME  FROM TRAX_RIGHT_TEMPLATE  tt where tt.id=ContractRight.RIGHT_TEMPLATE_ID AND ROWNUM=1) template_name,
+(SELECT  tt.NAME  FROM TRAX_RIGHT_TEMPLATE  tt where tt.id=ContractRight.RIGHT_TEMPLATE_ID AND ROWNUM=1) template_name_2
+FROM TRAX_CONTRACT_RIGHT ContractRight]]></SQLQuery>
+   <EntityUsage
+      Name="ContractRight"
+      Entity="com.pq.tracs.model.bo.ContractRight" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      EntityAttrName="Id"
+      EntityUsage="ContractRight"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContractId"
+      IsNotNull="true"
+      EntityAttrName="ContractId"
+      EntityUsage="ContractRight"
+      AliasName="CONTRACT_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RuleNumber"
+      IsUnique="true"
+      EntityAttrName="RuleNumber"
+      EntityUsage="ContractRight"
+      AliasName="RULE_NUMBER" />
+   <ViewAttribute
+      Name="PermissionType"
+      EntityAttrName="PermissionType"
+      EntityUsage="ContractRight"
+      AliasName="PERMISSION_TYPE"
+      LOVName="LOV_PermissionType">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RightOrRestrictionType"
+      EntityAttrName="RightOrRestrictionType"
+      EntityUsage="ContractRight"
+      AliasName="RIGHT_OR_RESTRICTION_TYPE"
+      LOVName="LOV_RightOrRestrictionType">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="IncludesOrExcludes"
+      EntityAttrName="IncludesOrExcludes"
+      EntityUsage="ContractRight"
+      AliasName="INCLUDES_OR_EXCLUDES"
+      LOVName="LOV_IncludesOrExcludes">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="SalesRestrictionFlag"
+      EntityAttrName="SalesRestrictionFlag"
+      EntityUsage="ContractRight"
+      AliasName="SALES_RESTRICTION_FLAG"/>
+   <ViewAttribute
+      Name="ComplexFlag"
+      EntityAttrName="ComplexFlag"
+      EntityUsage="ContractRight"
+      AliasName="COMPLEX_FLAG"/>
+   <ViewAttribute
+      Name="TranslationFlag"
+      EntityAttrName="TranslationFlag"
+      EntityUsage="ContractRight"
+      AliasName="TRANSLATION_FLAG"/>
+   <ViewAttribute
+      Name="ResellerFyiRequiredFlag"
+      EntityAttrName="ResellerFyiRequiredFlag"
+      EntityUsage="ContractRight"
+      AliasName="RESELLER_FYI_REQUIRED_FLAG"/>
+   <ViewAttribute
+      Name="WrittenApprovalRequiredFlag"
+      EntityAttrName="WrittenApprovalRequiredFlag"
+      EntityUsage="ContractRight"
+      AliasName="WRITTEN_APPROVAL_REQUIRED_FLAG"/>
+   <ViewAttribute
+      Name="Status"
+      EntityAttrName="Status"
+      EntityUsage="ContractRight"
+      AliasName="STATUS"
+      LOVName="LOV_Status">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EffectiveStartDate"
+      EntityAttrName="EffectiveStartDate"
+      EntityUsage="ContractRight"
+      AliasName="EFFECTIVE_START_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.ContractRightView.EffectiveStartDate_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EffectiveEndDate"
+      EntityAttrName="EffectiveEndDate"
+      EntityUsage="ContractRight"
+      AliasName="EFFECTIVE_END_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.ContractRightView.EffectiveEndDate_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="EmbargoDays"
+      EntityAttrName="EmbargoDays"
+      EntityUsage="ContractRight"
+      AliasName="EMBARGO_DAYS">
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.ContractRightView.EmbargoDays_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ReverseEmbargoDays"
+      EntityAttrName="ReverseEmbargoDays"
+      EntityUsage="ContractRight"
+      AliasName="REVERSE_EMBARGO_DAYS"/>
+   <ViewAttribute
+      Name="ComplexRuleDescription"
+      EntityAttrName="ComplexRuleDescription"
+      EntityUsage="ContractRight"
+      AliasName="COMPLEX_RULE_DESCRIPTION" />
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="ContractRight"
+      AliasName="CREATED_BY" />
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      EntityAttrName="CreatedDate"
+      EntityUsage="ContractRight"
+      AliasName="CREATED_DATE" />
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="ContractRight"
+      AliasName="LAST_UPDATED_BY" />
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      IsUpdateable="false"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="ContractRight"
+      AliasName="LAST_UPDATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.ContractRightView.LastUpdatedDate_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="PublicationStartDate"
+      EntityAttrName="PublicationStartDate"
+      EntityUsage="ContractRight"
+      AliasName="PUBLICATION_START_DATE" />
+   <ViewAttribute
+      Name="PublicationEndDate"
+      EntityAttrName="PublicationEndDate"
+      EntityUsage="ContractRight"
+      AliasName="PUBLICATION_END_DATE" />
+   <ViewAttribute
+      Name="RightTemplateId"
+      EntityAttrName="RightTemplateId"
+      EntityUsage="ContractRight"
+      AliasName="RIGHT_TEMPLATE_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RightType"
+      IsUnique="true"
+      EntityAttrName="RightType"
+      EntityUsage="ContractRight"
+      AliasName="RIGHT_TYPE" />
+   <ViewAttribute
+      Name="PermissionSubType"
+      EntityAttrName="PermissionSubType"
+      EntityUsage="ContractRight"
+      AliasName="PERMISSION_SUB_TYPE"
+      LOVName="LOV_PermissionSubType">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TemplateName"
+      IsPersistent="false"
+      Precision="2000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TEMPLATE_NAME"
+      Expression="TEMPLATE_NAME"
+      SQLType="VARCHAR">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.ContractRightView.TemplateName_LABEL"/>
+            <DISPLAYWIDTH
+               Value="30"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="TemplateName2"
+      IsUpdateable="while_insert"
+      IsPersistent="false"
+      PrecisionRule="true"
+      Precision="2000"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="TEMPLATE_NAME_2"
+      Expression="TEMPLATE_NAME_2"
+      SQLType="VARCHAR"
+      LOVName="LOV_TemplateName2">
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="2000"/>
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.ContractRightView.TemplateName2_LABEL"/>
+            <DISPLAYWIDTH
+               Value="30"/>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="ContractRightViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.ContractRightView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow135"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_RuleNumber"
+            ViewAttribute="RuleNumber"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_PermissionType"
+            ViewAttribute="PermissionType"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_RightOrRestrictionType"
+            ViewAttribute="RightOrRestrictionType"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_IncludesOrExcludes"
+            ViewAttribute="IncludesOrExcludes"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_SalesRestrictionFlag"
+            ViewAttribute="SalesRestrictionFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_ComplexFlag"
+            ViewAttribute="ComplexFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_TranslationFlag"
+            ViewAttribute="TranslationFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_ResellerFyiRequiredFlag"
+            ViewAttribute="ResellerFyiRequiredFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_WrittenApprovalRequiredFlag"
+            ViewAttribute="WrittenApprovalRequiredFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_Status"
+            ViewAttribute="Status"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_EffectiveStartDate"
+            ViewAttribute="EffectiveStartDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_EffectiveEndDate"
+            ViewAttribute="EffectiveEndDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_EmbargoDays"
+            ViewAttribute="EmbargoDays"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_ReverseEmbargoDays"
+            ViewAttribute="ReverseEmbargoDays"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_ComplexRuleDescription"
+            ViewAttribute="ComplexRuleDescription"
+            Operator="STARTSWITH"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_CreatedBy"
+            ViewAttribute="CreatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_CreatedDate"
+            ViewAttribute="CreatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_LastUpdatedBy"
+            ViewAttribute="LastUpdatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="ContractRightViewCriteria_vcrow135_LastUpdatedDate"
+            ViewAttribute="LastUpdatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ViewLinkAccessor
+      Name="ContractRightCategoryView"
+      ViewLink="com.pq.tracs.model.dao.ContractRightToCategoryViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="JContractRightTitlesView"
+      ViewLink="com.pq.tracs.model.dao.JContractRightTitlesViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="TraxJuContractRightView"
+      ViewLink="com.pq.tracs.model.vl.ContractRightToJournalViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false"/>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

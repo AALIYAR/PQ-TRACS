@@ -1,0 +1,961 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="s16TopLc"
+                             partialTriggers=" s16DeleteDialog s16fbb s16NewButton s16DelB s16SaveButton0 s16CancelButton0 s16SaveButton1 s16CancelButton1"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateRoyaltyRate ? nls['INSERT_TITLE_ROYALTYRATE'] :  (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'] ? nls['EDIT_TITLE_ROYALTYRAT: #{bindings.s16RateType.inputValue}'] : nls['VIEW_TITLE_ROYALTYRAT: #{bindings.s16RateType.inputValue}'])  }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="s16fbb" layout="horizontal"
+                                       rendered="#{ bindings.RoyaltyRateIterator.currentRow!=null  and bindings.RoyaltyRateIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateRoyaltyRate and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="s16First s16Previous s16Next s16Last">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstRoyaltyRate.execute}"
+                                             id="s16First" partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.RoyaltyRateIterator.rangeStart+bindings.RoyaltyRateIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.RoyaltyRateIterator.rangeStart+bindings.RoyaltyRateIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousRoyaltyRate.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="s16Previous"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.RoyaltyRateIterator.rangeStart+bindings.RoyaltyRateIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.RoyaltyRateIterator.rangeStart+bindings.RoyaltyRateIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.RoyaltyRateIterator.rangeStart+bindings.RoyaltyRateIterator.currentRowIndexInRange+1} / #{bindings.RoyaltyRateIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextRoyaltyRate.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="s16Next" partialSubmit="true"
+                                             rendered="#{bindings.RoyaltyRateIterator.rangeStart+bindings.RoyaltyRateIterator.currentRowIndexInRange+1 lt bindings.RoyaltyRateIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.RoyaltyRateIterator.rangeStart+bindings.RoyaltyRateIterator.currentRowIndexInRange+1 lt bindings.RoyaltyRateIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastRoyaltyRate.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="s16Last" partialSubmit="true"
+                                             rendered="#{bindings.RoyaltyRateIterator.rangeStart+bindings.RoyaltyRateIterator.currentRowIndexInRange+1 lt bindings.RoyaltyRateIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.RoyaltyRateIterator.rangeStart+bindings.RoyaltyRateIterator.currentRowIndexInRange+1 lt bindings.RoyaltyRateIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateRoyaltyRate.execute}"
+                                             action="Creates16"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_ROYALTYRATE']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateRoyaltyRate and (true) and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             id="s16NewButton"></af:commandToolbarButton>
+                    <af:commandToolbarButton action="DeleteRoyaltyRate"
+                                             partialSubmit="true"
+                                             icon="/jheadstart/images/deleteRow.png"
+                                             shortDesc="#{nls['DELETE_BUTTON_LABEL_ROYALTYRATE']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateRoyaltyRate and  bindings.RoyaltyRateIterator.currentRow!=null   and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             immediate="true" id="s16DelB">
+                      <af:showPopupBehavior popupId="s16DeletePopup"/>
+                    </af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="s16Print"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveRoyaltyRate.execute}"
+                                      rendered="#{((((((((jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="s16SaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="s16CancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.RoyaltyRateIterator.findMode!='true'}"
+                       id="s16Sw" defaultFacet="hasRows"
+                       facetName="#{( bindings.RoyaltyRateIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="s16NoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="s16FC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="3"
+                                    id="s16FI">
+                  <af:selectOneChoice id="s16Md"
+                                      value="#{bindings.s16Media.inputValue}"
+                                      label="#{bindings.s16Media.hints.label}"
+                                      required="#{bindings.s16Media.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateRoyaltyRate) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateRoyaltyRate) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:selectItems value="#{bindings.s16Media.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="s16RTy"
+                                      value="#{bindings.s16RateType.inputValue}"
+                                      label="#{bindings.s16RateType.hints.label}"
+                                      required="#{bindings.s16RateType.hints.mandatory}"
+                                      readOnly="#{((pageFlowScope.createModes.CreateRoyaltyRate) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateRoyaltyRate) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{s16RateTypeDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{bindings.s16RateType.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputText id="s16RR"
+                                value="#{bindings.s16RoyaltyRate1.inputValue}"
+                                label="#{bindings.s16RoyaltyRate1.hints.label}"
+                                required="#{bindings.s16RoyaltyRate1.hints.mandatory}"
+                                rows="#{bindings.s16RoyaltyRate1.hints.displayHeight}"
+                                columns="#{bindings.s16RoyaltyRate1.hints.displayWidth}"
+                                maximumLength="9"
+                                readOnly="#{((pageFlowScope.createModes.CreateRoyaltyRate) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateRoyaltyRate) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <f:validator binding="#{bindings.s16RoyaltyRate1.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s16RoyaltyRate1.format}"/>
+                  </af:inputText>
+                  <af:inputDate id="s16ESD"
+                                value="#{bindings.s16EffectiveStartDate.inputValue}"
+                                label="#{bindings.s16EffectiveStartDate.hints.label}"
+                                required="#{bindings.s16EffectiveStartDate.hints.mandatory}"
+                                readOnly="#{((pageFlowScope.createModes.CreateRoyaltyRate) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateRoyaltyRate) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputDate id="s16EED"
+                                value="#{bindings.s16EffectiveEndDate.inputValue}"
+                                label="#{bindings.s16EffectiveEndDate.hints.label}"
+                                required="#{bindings.s16EffectiveEndDate.hints.mandatory}"
+                                readOnly="#{((pageFlowScope.createModes.CreateRoyaltyRate) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateRoyaltyRate) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:selectBooleanCheckbox id="s16ExF"
+                                            value="#{bindings.s16ExceptionFlag.inputValue}"
+                                            label="#{bindings.s16ExceptionFlag.hints.label}"
+                                            readOnly="#{((pageFlowScope.createModes.CreateRoyaltyRate) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateRoyaltyRate) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"></af:selectBooleanCheckbox>
+                  <af:inputText id="s16CB"
+                                value="#{bindings.s16CreatedBy.inputValue}"
+                                label="#{bindings.s16CreatedBy.hints.label}"
+                                required="#{bindings.s16CreatedBy.hints.mandatory}"
+                                rows="#{bindings.s16CreatedBy.hints.displayHeight}"
+                                columns="#{bindings.s16CreatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s16CreatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s16CD"
+                                value="#{bindings.s16CreatedDate.inputValue}"
+                                label="#{bindings.s16CreatedDate.hints.label}"
+                                required="#{bindings.s16CreatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="s16LUB"
+                                value="#{bindings.s16LastUpdatedBy.inputValue}"
+                                label="#{bindings.s16LastUpdatedBy.hints.label}"
+                                required="#{bindings.s16LastUpdatedBy.hints.mandatory}"
+                                rows="#{bindings.s16LastUpdatedBy.hints.displayHeight}"
+                                columns="#{bindings.s16LastUpdatedBy.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                disabled="true">
+                    <f:validator binding="#{bindings.s16LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="s16LUD"
+                                value="#{bindings.s16LastUpdatedDate.inputValue}"
+                                label="#{bindings.s16LastUpdatedDate.hints.label}"
+                                required="#{bindings.s16LastUpdatedDate.hints.mandatory}"
+                                readOnly="true" disabled="true">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph1" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr3">
+                          <af:commandButton action="#{SaveRoyaltyRate.execute}"
+                                            rendered="#{((((((((jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="s16SaveButton1"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="s16CancelButton1"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_ROYALTYRATEEXCEPTION']}"
+                               partialTriggers=" s16TopLc RoyaltyRateExceptionDeleteDialog qsAreaRoyaltyRateExceptionSearchOptions RoyaltyRateExceptionPC:RoyaltyRateExceptionArm RoyaltyRateExceptionPC:RoyaltyRateExceptiondelrmTM RoyaltyRateExceptionPC:RoyaltyRateExceptionArl RoyaltyRateExceptionPC:RoyaltyRateExceptionTab:RoyaltyRateExceptiondelrm RoyaltyRateExceptionPC:RoyaltyRateExceptionTab:RoyaltyRateExceptiondelrl"
+                               id="RoyaltyRateExceptionTopLcSdi"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                               disabled="#{!jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+              <af:panelGroupLayout layout="vertical"
+                                   id="RoyaltyRateExceptionTopLc"
+                                   partialTriggers=" s16TopLc RoyaltyRateExceptionDeleteDialog qsAreaRoyaltyRateExceptionSearchOptions RoyaltyRateExceptionPC:RoyaltyRateExceptionArm RoyaltyRateExceptionPC:RoyaltyRateExceptiondelrmTM RoyaltyRateExceptionPC:RoyaltyRateExceptionArl RoyaltyRateExceptionPC:RoyaltyRateExceptionTab:RoyaltyRateExceptiondelrm RoyaltyRateExceptionPC:RoyaltyRateExceptionTab:RoyaltyRateExceptiondelrl"
+                                   rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0">
+                  <af:panelGroupLayout id="modelSearchAreaRoyaltyRateException"
+                                       rendered="#{!pageFlowScope.createModes.CreateRoyaltyRateException and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreaRoyaltyRateExceptionSearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.RoyaltyRateExceptionIteratorRoyaltyRateExceptionViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.RoyaltyRateExceptionIteratorRoyaltyRateExceptionViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.RoyaltyRateExceptionIteratorRoyaltyRateExceptionViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl0">
+                  <af:panelCollection id="RoyaltyRateExceptionPC"
+                                      featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="RoyaltyRateExceptiontbb"
+                                    rendered="#{ bindings.RoyaltyRateExceptionIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstRoyaltyRateException.execute}"
+                                                id="RoyaltyRateExceptionFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousRoyaltyRateException.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="RoyaltyRateExceptionPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextRoyaltyRateException.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="RoyaltyRateExceptionNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastRoyaltyRateException.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="RoyaltyRateExceptionLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="RoyaltyRateExceptionArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.RoyaltyRateExceptionTable.addRow}"
+                                            rendered="#{ bindings.RoyaltyRateIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="RoyaltyRateExceptiondelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                          <af:showPopupBehavior popupId="::RoyaltyRateExceptionDeletePopup"/>
+                        </af:commandMenuItem>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi0">
+                          <af:exportCollectionActionListener exportedId="RoyaltyRateExceptionTab"
+                                                             type="excelHTML"
+                                                             filename="RoyaltyRateException.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                        <!-- Also create CreateRoyaltyRateException bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="RoyaltyRateExceptionArl"
+                                             immediate="false"
+                                             rendered="#{ bindings.RoyaltyRateIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.RoyaltyRateExceptionTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl0"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="RoyaltyRateExceptionTab"
+                                                             type="excelHTML"
+                                                             filename="RoyaltyRateException.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print"
+                                                 id="RoyaltyRateExceptionPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.RoyaltyRateExceptionIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="RoyaltyRateExceptionTab"
+                              contentDelivery="immediate"
+                              value="#{bindings.RoyaltyRateExceptionTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.RoyaltyRateExceptionTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.RoyaltyRateExceptionTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.RoyaltyRateExceptionTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.RoyaltyRateExceptionTable.rangeSize}"
+                              autoHeightRows="#{bindings.RoyaltyRateExceptionTable.estimatedRowCount lt 5 ? 5 : bindings.RoyaltyRateExceptionTable.estimatedRowCount lt bindings.RoyaltyRateExceptionTable.rangeSize ? bindings.RoyaltyRateExceptionTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.RoyaltyRateExceptionTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.RoyaltyRateExceptionIteratorRoyaltyRateExceptionViewCriteriaQuery.processQuery}"
+                              binding="#{pageFlowScope.RoyaltyRateExceptionTable.table}"
+                              partialTriggers=":::qsAreaRoyaltyRateExceptionSearchOptions :::RoyaltyRateExceptionPC ::RoyaltyRateExceptionFirst ::RoyaltyRateExceptionPrevious ::RoyaltyRateExceptionNext ::RoyaltyRateExceptionLast"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_ROYALTYRATEEXCEPTION']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="RoyaltyRateExceptionTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="RoyaltyRateExceptiondelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                              <af:showPopupBehavior popupId=":::RoyaltyRateExceptionDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="RoyaltyRateExceptionActionColumn"
+                                 width="20" align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl1">
+                          <af:commandImageLink id="RoyaltyRateExceptiondelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::RoyaltyRateExceptionDeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="RoyaltyRateExceptionDescriptionCol"
+                                 sortable="true" noWrap="true" width="420"
+                                 sortProperty="Description" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateExceptionTable.hints.Description.label}"
+                                          showRequired="#{bindings.RoyaltyRateExceptionTable.hints.Description.mandatory}"
+                                          id="ol0"/>
+                        </f:facet>
+                        <af:inputText id="RoyaltyRateExceptionDescription"
+                                      value="#{row.bindings.Description.inputValue}"
+                                      label="#{bindings.RoyaltyRateExceptionTable.hints.Description.label}"
+                                      required="#{bindings.RoyaltyRateExceptionTable.hints.Description.mandatory}"
+                                      rows="#{bindings.RoyaltyRateExceptionTable.hints.Description.displayHeight}"
+                                      columns="#{bindings.RoyaltyRateExceptionTable.hints.Description.displayWidth}"
+                                      maximumLength="4000"
+                                      readOnly="#{((pageFlowScope.RoyaltyRateExceptionTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.RoyaltyRateExceptionTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}">
+                          <f:validator binding="#{row.bindings.Description.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="RoyaltyRateExceptionCreatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="CreatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateExceptionTable.hints.CreatedBy.label}"
+                                          id="ol1"/>
+                        </f:facet>
+                        <af:inputText id="RoyaltyRateExceptionCreatedBy"
+                                      value="#{row.bindings.CreatedBy.inputValue}"
+                                      label="#{bindings.RoyaltyRateExceptionTable.hints.CreatedBy.label}"
+                                      required="#{bindings.RoyaltyRateExceptionTable.hints.CreatedBy.mandatory}"
+                                      rows="#{bindings.RoyaltyRateExceptionTable.hints.CreatedBy.displayHeight}"
+                                      columns="#{bindings.RoyaltyRateExceptionTable.hints.CreatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      disabled="true">
+                          <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="RoyaltyRateExceptionCreatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="CreatedDate" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateExceptionTable.hints.CreatedDate.label}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:inputDate id="RoyaltyRateExceptionCreatedDate"
+                                      value="#{row.bindings.CreatedDate.inputValue}"
+                                      label="#{bindings.RoyaltyRateExceptionTable.hints.CreatedDate.label}"
+                                      required="#{bindings.RoyaltyRateExceptionTable.hints.CreatedDate.mandatory}"
+                                      readOnly="true" disabled="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                      <af:column id="RoyaltyRateExceptionLastUpdatedByCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="LastUpdatedBy" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateExceptionTable.hints.LastUpdatedBy.label}"
+                                          id="ol3"/>
+                        </f:facet>
+                        <af:inputText id="RoyaltyRateExceptionLastUpdatedBy"
+                                      value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                      label="#{bindings.RoyaltyRateExceptionTable.hints.LastUpdatedBy.label}"
+                                      required="#{bindings.RoyaltyRateExceptionTable.hints.LastUpdatedBy.mandatory}"
+                                      rows="#{bindings.RoyaltyRateExceptionTable.hints.LastUpdatedBy.displayHeight}"
+                                      columns="#{bindings.RoyaltyRateExceptionTable.hints.LastUpdatedBy.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      disabled="true">
+                          <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="RoyaltyRateExceptionLastUpdatedDateCol"
+                                 sortable="true" noWrap="true" width="100"
+                                 sortProperty="LastUpdatedDate"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateExceptionTable.hints.LastUpdatedDate.label}"
+                                          id="ol4"/>
+                        </f:facet>
+                        <af:inputDate id="RoyaltyRateExceptionLastUpdatedDate"
+                                      value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                      label="#{bindings.RoyaltyRateExceptionTable.hints.LastUpdatedDate.label}"
+                                      required="#{bindings.RoyaltyRateExceptionTable.hints.LastUpdatedDate.mandatory}"
+                                      readOnly="true" disabled="true">
+                          <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                        </af:inputDate>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_ROYALTYRATETITLE']}"
+                               partialTriggers=" s16TopLc RoyaltyRateTitleDeleteDialog qsAreaRoyaltyRateTitleSearchOptions RoyaltyRateTitlePC:RoyaltyRateTitleArm RoyaltyRateTitlePC:RoyaltyRateTitledelrmTM RoyaltyRateTitlePC:RoyaltyRateTitleArl RoyaltyRateTitlePC:RoyaltyRateTitleTab:RoyaltyRateTitledelrm RoyaltyRateTitlePC:RoyaltyRateTitleTab:RoyaltyRateTitledelrl"
+                               id="RoyaltyRateTitleTopLcSdi"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                               disabled="#{!jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+              <af:panelGroupLayout layout="vertical" id="RoyaltyRateTitleTopLc"
+                                   partialTriggers=" s16TopLc RoyaltyRateTitleDeleteDialog qsAreaRoyaltyRateTitleSearchOptions RoyaltyRateTitlePC:RoyaltyRateTitleArm RoyaltyRateTitlePC:RoyaltyRateTitledelrmTM RoyaltyRateTitlePC:RoyaltyRateTitleArl RoyaltyRateTitlePC:RoyaltyRateTitleTab:RoyaltyRateTitledelrm RoyaltyRateTitlePC:RoyaltyRateTitleTab:RoyaltyRateTitledelrl"
+                                   rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp4"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g1">
+                  <af:panelGroupLayout id="modelSearchAreaRoyaltyRateTitle"
+                                       rendered="#{!pageFlowScope.createModes.CreateRoyaltyRateTitle and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreaRoyaltyRateTitleSearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.RoyaltyRateTitleIteratorContractRoyaltyRateTitleViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.RoyaltyRateTitleIteratorContractRoyaltyRateTitleViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.RoyaltyRateTitleIteratorContractRoyaltyRateTitleViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl2">
+                  <af:panelCollection id="RoyaltyRateTitlePC" featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu4">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu5">
+                          <af:group id="RoyaltyRateTitletbb"
+                                    rendered="#{ bindings.RoyaltyRateTitleIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstRoyaltyRateTitle.execute}"
+                                                id="RoyaltyRateTitleFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousRoyaltyRateTitle.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="RoyaltyRateTitlePrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextRoyaltyRateTitle.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="RoyaltyRateTitleNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastRoyaltyRateTitle.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="RoyaltyRateTitleLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="RoyaltyRateTitleArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.RoyaltyRateTitleTable.addRow}"
+                                            rendered="#{ bindings.RoyaltyRateIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="RoyaltyRateTitledelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                          <af:showPopupBehavior popupId="::RoyaltyRateTitleDeletePopup"/>
+                        </af:commandMenuItem>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi1">
+                          <af:exportCollectionActionListener exportedId="RoyaltyRateTitleTab"
+                                                             type="excelHTML"
+                                                             filename="RoyaltyRateTitle.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar2">
+                        <!-- Also create CreateRoyaltyRateTitle bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="RoyaltyRateTitleArl"
+                                             immediate="false"
+                                             rendered="#{ bindings.RoyaltyRateIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.RoyaltyRateTitleTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl1"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="RoyaltyRateTitleTab"
+                                                             type="excelHTML"
+                                                             filename="RoyaltyRateTitle.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print"
+                                                 id="RoyaltyRateTitlePrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                        <af:popup id="confirmDeletePopup0"
+                                  binding="#{pageFlowScope.RoyaltyRateTitleTable.confirmDeletePopup}">
+                          <af:dialog modal="true" type="okCancel"
+                                     title="Confirm Delete"
+                                     dialogListener="#{pageFlowScope.RoyaltyRateTitleTable.handleOK}">
+                            <af:outputText value="Are you sure you want to delete the selected rows?"/>
+                          </af:dialog>
+                        </af:popup>
+                        <af:commandButton id="RoyaltyRateTitleMultiDeleteButton"
+                                          textAndAccessKey="Delete Selected">
+                          <af:showPopupBehavior popupId="confirmDeletePopup0"
+                                                align="beforeStart"/>
+                        </af:commandButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.RoyaltyRateTitleIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="RoyaltyRateTitleTab"
+                              contentDelivery="immediate"
+                              value="#{bindings.RoyaltyRateTitleTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true"
+                              selectionListener="#{bindings.RoyaltyRateTitleTable.collectionModel.makeCurrent}"
+                              rowSelection="multiple"
+                              rowDisclosureListener="#{pageFlowScope.RoyaltyRateTitleTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.RoyaltyRateTitleTable.rangeSize}"
+                              autoHeightRows="#{bindings.RoyaltyRateTitleTable.estimatedRowCount lt 5 ? 5 : bindings.RoyaltyRateTitleTable.estimatedRowCount lt bindings.RoyaltyRateTitleTable.rangeSize ? bindings.RoyaltyRateTitleTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.RoyaltyRateTitleTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.RoyaltyRateTitleIteratorContractRoyaltyRateTitleViewCriteriaQuery.processQuery}"
+                              binding="#{pageFlowScope.RoyaltyRateTitleTable.table}"
+                              partialTriggers=":::qsAreaRoyaltyRateTitleSearchOptions :::RoyaltyRateTitlePC ::RoyaltyRateTitleFirst ::RoyaltyRateTitlePrevious ::RoyaltyRateTitleNext ::RoyaltyRateTitleLast"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_ROYALTYRATETITLE']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="RoyaltyRateTitleTablePopup"
+                                  childCreation="deferred">
+                          <af:menu id="menu6">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu7"></af:menu>
+                            <af:commandMenuItem id="RoyaltyRateTitledelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                              <af:showPopupBehavior popupId=":::RoyaltyRateTitleDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="RoyaltyRateTitleActionColumn" frozen="true"
+                                 width="20" align="center" headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl3">
+                          <af:commandImageLink id="RoyaltyRateTitledelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::RoyaltyRateTitleDeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="RoyaltyRateTitleCatalogNumberCol"
+                                 sortable="true" noWrap="true" width="110"
+                                 sortProperty="CatalogNumber" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateTitleTable.hints.CatalogNumber.label}"
+                                          showRequired="#{bindings.RoyaltyRateTitleTable.hints.CatalogNumber.mandatory}"
+                                          id="ol5"/>
+                        </f:facet>
+                        <af:panelGroupLayout id="RoyaltyRateTitleCatalogNumberPgl"
+                                             layout="horizontal">
+                          <af:inputText id="RoyaltyRateTitleCatalogNumber"
+                                        label="#{bindings.RoyaltyRateTitleTable.hints.CatalogNumber.label}"
+                                        readOnly="#{(((pageFlowScope.RoyaltyRateTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.RoyaltyRateTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))) or (!(pageFlowScope.RoyaltyRateTitleTable.newRow))}"
+                                        columns="#{bindings.RoyaltyRateTitleTable.hints.CatalogNumber.displayWidth}"
+                                        maximumLength="40"
+                                        value="#{row.bindings.CatalogNumber.inputValue}"
+                                        autoSubmit="true"
+                                        valueChangeListener="#{pageFlowScope.RoyaltyRateTitleCatalogNumberLovItemInTable.validateWithLov}"
+                                        binding="#{pageFlowScope.RoyaltyRateTitleCatalogNumberLovItemInTable.lovField}"
+                                        simple="true">
+                            <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                          </af:inputText>
+                          <af:commandLink immediate="true" partialSubmit="true"
+                                          rendered="#{!((((pageFlowScope.RoyaltyRateTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.RoyaltyRateTitleTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))) or (!(pageFlowScope.RoyaltyRateTitleTable.newRow)))}"
+                                          id="cl2"
+                                          actionListener="#{pageFlowScope.RoyaltyRateTitleCatalogNumberLovItemInTable.lovIconClicked}">
+                            <af:image source="/jheadstart/images/lov.png"
+                                      id="RoyaltyRateTitleCatalogNumberIcon"
+                                      clientComponent="true"
+                                      shortDesc="CatalogNumber"/>
+                          </af:commandLink>
+                          <af:commandButton text="hidden" id="cb2"
+                                            rendered="false"
+                                            action="#{pageFlowScope.RoyaltyRateTitleCatalogNumberLovItemInTable.validationAction}"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            binding="#{pageFlowScope.RoyaltyRateTitleCatalogNumberLovItemInTable.validationButton}"/>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="RoyaltyRateTitleLongTitleCol"
+                                 sortable="true" noWrap="true" width="180"
+                                 sortProperty="LongTitle" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateTitleTable.hints.LongTitle.label}"
+                                          id="ol6"/>
+                        </f:facet>
+                        <af:inputText id="RoyaltyRateTitleLongTitle"
+                                      value="#{row.bindings.LongTitle.inputValue}"
+                                      label="#{bindings.RoyaltyRateTitleTable.hints.LongTitle.label}"
+                                      required="#{bindings.RoyaltyRateTitleTable.hints.LongTitle.mandatory}"
+                                      rows="#{bindings.RoyaltyRateTitleTable.hints.LongTitle.displayHeight}"
+                                      columns="30" maximumLength="4000"
+                                      readOnly="true">
+                          <f:validator binding="#{row.bindings.LongTitle.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="RoyaltyRateTitleProductLineCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="ProductLine" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateTitleTable.hints.ProductLine.label}"
+                                          id="ol7"/>
+                        </f:facet>
+                        <af:selectOneChoice id="RoyaltyRateTitleProductLine"
+                                            value="#{row.bindings.ProductLine.inputValue}"
+                                            label="#{bindings.RoyaltyRateTitleTable.hints.ProductLine.label}"
+                                            required="#{bindings.RoyaltyRateTitleTable.hints.ProductLine.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.ProductLine.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="RoyaltyRateTitleShortTitleCol"
+                                 sortable="true" noWrap="true" width="180"
+                                 sortProperty="ShortTitle" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateTitleTable.hints.ShortTitle.label}"
+                                          id="ol8"/>
+                        </f:facet>
+                        <af:inputText id="RoyaltyRateTitleShortTitle"
+                                      value="#{row.bindings.ShortTitle.inputValue}"
+                                      label="#{bindings.RoyaltyRateTitleTable.hints.ShortTitle.label}"
+                                      required="#{bindings.RoyaltyRateTitleTable.hints.ShortTitle.mandatory}"
+                                      rows="#{bindings.RoyaltyRateTitleTable.hints.ShortTitle.displayHeight}"
+                                      columns="30" maximumLength="30"
+                                      readOnly="true">
+                          <f:validator binding="#{row.bindings.ShortTitle.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="RoyaltyRateTitlePublicationStartYearCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="PublicationStartYear"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateTitleTable.hints.PublicationStartYear.label}"
+                                          id="ol9"/>
+                        </f:facet>
+                        <af:inputText id="RoyaltyRateTitlePublicationStartYear"
+                                      value="#{row.bindings.PublicationStartYear.inputValue}"
+                                      label="#{bindings.RoyaltyRateTitleTable.hints.PublicationStartYear.label}"
+                                      required="#{bindings.RoyaltyRateTitleTable.hints.PublicationStartYear.mandatory}"
+                                      rows="#{bindings.RoyaltyRateTitleTable.hints.PublicationStartYear.displayHeight}"
+                                      columns="#{bindings.RoyaltyRateTitleTable.hints.PublicationStartYear.displayWidth}"
+                                      maximumLength="4" readOnly="true">
+                          <f:validator binding="#{row.bindings.PublicationStartYear.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="RoyaltyRateTitlePublicationEndYearCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="PublicationEndYear"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateTitleTable.hints.PublicationEndYear.label}"
+                                          id="ol10"/>
+                        </f:facet>
+                        <af:inputText id="RoyaltyRateTitlePublicationEndYear"
+                                      value="#{row.bindings.PublicationEndYear.inputValue}"
+                                      label="#{bindings.RoyaltyRateTitleTable.hints.PublicationEndYear.label}"
+                                      required="#{bindings.RoyaltyRateTitleTable.hints.PublicationEndYear.mandatory}"
+                                      rows="#{bindings.RoyaltyRateTitleTable.hints.PublicationEndYear.displayHeight}"
+                                      columns="#{bindings.RoyaltyRateTitleTable.hints.PublicationEndYear.displayWidth}"
+                                      maximumLength="4" readOnly="true">
+                          <f:validator binding="#{row.bindings.PublicationEndYear.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="RoyaltyRateTitleFilmAvailabilityCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="FilmAvailability"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateTitleTable.hints.FilmAvailability.label}"
+                                          id="ol11"/>
+                        </f:facet>
+                        <af:selectOneChoice id="RoyaltyRateTitleFilmAvailability"
+                                            value="#{row.bindings.FilmAvailability.inputValue}"
+                                            label="#{bindings.RoyaltyRateTitleTable.hints.FilmAvailability.label}"
+                                            required="#{bindings.RoyaltyRateTitleTable.hints.FilmAvailability.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.FilmAvailability.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="RoyaltyRateTitleBibliographicStatusCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="BibliographicStatus"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateTitleTable.hints.BibliographicStatus.label}"
+                                          id="ol12"/>
+                        </f:facet>
+                        <af:selectOneChoice id="RoyaltyRateTitleBibliographicStatus"
+                                            value="#{row.bindings.BibliographicStatus.inputValue}"
+                                            label="#{bindings.RoyaltyRateTitleTable.hints.BibliographicStatus.label}"
+                                            required="#{bindings.RoyaltyRateTitleTable.hints.BibliographicStatus.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.BibliographicStatus.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="RoyaltyRateTitleExercisingRightsCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="ExercisingRights"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateTitleTable.hints.ExercisingRights.label}"
+                                          id="ol13"/>
+                        </f:facet>
+                        <af:inputText id="RoyaltyRateTitleExercisingRights"
+                                      value="#{row.bindings.ExercisingRights.inputValue}"
+                                      label="#{bindings.RoyaltyRateTitleTable.hints.ExercisingRights.label}"
+                                      required="#{bindings.RoyaltyRateTitleTable.hints.ExercisingRights.mandatory}"
+                                      rows="#{bindings.RoyaltyRateTitleTable.hints.ExercisingRights.displayHeight}"
+                                      columns="#{bindings.RoyaltyRateTitleTable.hints.ExercisingRights.displayWidth}"
+                                      maximumLength="40" readOnly="true">
+                          <f:validator binding="#{row.bindings.ExercisingRights.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                      <af:column id="RoyaltyRateTitlePrimaryPmClassCol"
+                                 sortable="true" noWrap="true" width="120"
+                                 sortProperty="PrimaryPmClass" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateTitleTable.hints.PrimaryPmClass.label}"
+                                          id="ol14"/>
+                        </f:facet>
+                        <af:selectOneChoice id="RoyaltyRateTitlePrimaryPmClass"
+                                            value="#{row.bindings.PrimaryPmClass.inputValue}"
+                                            label="#{bindings.RoyaltyRateTitleTable.hints.PrimaryPmClass.label}"
+                                            required="#{bindings.RoyaltyRateTitleTable.hints.PrimaryPmClass.mandatory}"
+                                            readOnly="true">
+                          <f:selectItems value="#{row.bindings.PrimaryPmClass.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="RoyaltyRateTitleStatusCol" sortable="true"
+                                 noWrap="true" width="120" sortProperty="Status"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RoyaltyRateTitleTable.hints.Status.label}"
+                                          id="ol15"/>
+                        </f:facet>
+                        <af:inputText id="RoyaltyRateTitleStatus"
+                                      value="#{row.bindings.Status.inputValue}"
+                                      label="#{bindings.RoyaltyRateTitleTable.hints.Status.label}"
+                                      required="#{bindings.RoyaltyRateTitleTable.hints.Status.mandatory}"
+                                      rows="#{bindings.RoyaltyRateTitleTable.hints.Status.displayHeight}"
+                                      columns="#{bindings.RoyaltyRateTitleTable.hints.Status.displayWidth}"
+                                      maximumLength="40" readOnly="true"
+                                      shortDesc="#{bindings.RoyaltyRateTitleTable.hints.Status.tooltip}">
+                          <f:validator binding="#{row.bindings.Status.validator}"/>
+                        </af:inputText>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="s16DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="s16DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_ROYALTYRAT: #{bindings.s16RateType.inputValue}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteRoyaltyRate.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="RoyaltyRateExceptionDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="RoyaltyRateExceptionDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_ROYALTYRATEEXCEPTIO:#{pageFlowScope.RoyaltyRateExceptionTable.currentRowAttributeValues.Description}']} "
+                           id="ot1"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteRoyaltyRateException.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="RoyaltyRateTitleDeletePopup"
+                  contentDelivery="lazyUncached" childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="RoyaltyRateTitleDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_ROYALTYRATETITL:#{pageFlowScope.RoyaltyRateTitleTable.currentRowAttributeValues.CatalogNumber}']} "
+                           id="ot4"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteRoyaltyRateTitle.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="jhsLovPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher"
+                  binding="#{pageFlowScope.jhsLovPopup.component}">
+          <af:dialog modal="true" title="#{pageFlowScope.LovItemBean.lovTitle}"
+                     type="none" id="dialog0" resize="on"
+                     stretchChildren="first"
+                     contentWidth="#{pageFlowScope.LovItemBean.lovWidth}"
+                     contentHeight="#{pageFlowScope.LovItemBean.lovHeight}">
+            <af:region value="#{bindings.LovTaskFlow.regionModel}"
+                       id="region0"/>
+            <f:facet name="buttonBar">
+              <af:group id="g2">
+                <af:commandButton textAndAccessKey="#{nls['OK_BUTTON_LABEL']}"
+                                  id="cb0" partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.handleLovSelection}"/>
+                <af:commandButton textAndAccessKey="#{nls['CANCEL']}" id="cb1"
+                                  partialSubmit="true"
+                                  actionListener="#{pageFlowScope.LovItemBean.cancelLov}"/>
+              </af:group>
+            </f:facet>
+          </af:dialog>
+          <af:clientListener method="popupClosedListener" type="popupClosed"/>
+          <af:serverListener type="serverPopupClosed"
+                             method="#{pageFlowScope.LovItemBean.cancelLov}"/>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

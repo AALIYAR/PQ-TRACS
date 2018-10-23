@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="InProcessOpportunitiesCADashboardView"
+  Version="11.1.1.61.92"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  FetchMode="FETCH_AS_NEEDED"
+  FetchSize="25"
+  MaxFetchSize="500"
+  PageIterMode="Partial"
+  UseGlueCode="false"
+  ComponentClass="com.pq.tracs.model.dao.TracsView"
+  RangeSize="20">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="uname"
+    Kind="where"
+    Type="java.lang.String"/>
+  <ViewAccessor
+    Name="NegotiationStageLookup"
+    ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+    <ParameterMap>
+      <PIMap Variable="code_set">
+        <TransientExpression><![CDATA['Negotiation Stage']]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ListBinding
+    Name="LOV_CurrentStatus"
+    ListVOName="NegotiationStageLookup"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CurrentStatus"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="InternalValue"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DisplayValue"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <SQLQuery>
+    <![CDATA[select po.ID, 
+       po.NAME Opportunity_Name, 
+       po.OPPORTUNITY_NO,        
+       po.CURRENT_STATUS, 
+       tco.NAME Account_Name, 
+       po.CREATED_DATE,
+       ju.DISPLAY_NAME AS ACCOUNT_MANAGER, 
+       pam.ID as AM_ID,
+       (select count(distinct TraxTitleCat.ID) 
+            from TRAX_TITLE TraxTitleCat
+                inner join prm_targeted_product_title tptcat
+                    inner join prm_opportunity_target potcat
+                        on tptcat.id = potcat.PRM_TARGETED_PRODUCT_TITLE_ID
+                    on TraxTitleCat.id = tptcat.TITLE_ID
+            where potcat.PRM_OPPORTUNITY_ID = po.ID
+            and TraxTitleCat.catalog_number is not null) AS CATALOGUED_COUNT,
+       (select count(distinct TraxTitleNoCat.ID) 
+            from TRAX_TITLE TraxTitleNoCat
+                inner join prm_targeted_product_title tptnocat
+                    inner join prm_opportunity_target potnocat
+                        on tptnocat.id = potnocat.PRM_TARGETED_PRODUCT_TITLE_ID
+                    on TraxTitleNoCat.id = tptnocat.TITLE_ID
+            where potnocat.PRM_OPPORTUNITY_ID = po.ID
+            and TraxTitleNoCat.catalog_number is null) AS UNCATALOGUED_COUNT,
+       PrmOpportunityStatus.STATUS_DATE AS SIGNED_DATE,
+       po.CURRENT_PRE_STATUS,
+       PO.CURRENT_CATALOGING_STATUS,
+       PO.CURRENT_AGREEMENT_STATUS,
+       (select DECODE(count(poad.id), 0, 'N', 'Y')
+       from PRM_OPPORTUNITY_AGREEMENT_DATA poad
+       where poad.PRM_OPPORTUNITY_ID = po.id
+       AND poad.CONTRACT_ID IS NULL) AS AGREEMENT_DATA_FLAG,
+       jus.ID AS USER_ID,
+       jus.USERNAME,
+       po.OPPORTUNITY_TYPE
+from prm_opportunity po
+    INNER JOIN trax_content_owner tco
+        ON po.CONTENT_OWNER_ID = tco.ID
+    LEFT OUTER JOIN PRM_OPPORTUNITY_ALLIANCE_MGR poam
+        INNER JOIN PRM_ALLIANCE_MANAGER pam
+            INNER JOIN JHS_USERS ju
+                ON pam.JHS_USERS_ID = ju.ID
+            ON poam.PRM_ALLIANCE_MANAGER_ID = pam.ID
+        ON po.ID = poam.PRM_OPPORTUNITY_ID
+        AND poam.END_DATE IS NULL
+    LEFT OUTER JOIN PRM_OPPORTUNITY_STATUS PrmOpportunityStatus
+        ON po.ID = PrmOpportunityStatus.PRM_OPPORTUNITY_ID
+        AND PrmOpportunityStatus.STATUS_CODE = '08'
+    INNER JOIN JHS_USERS jus
+        ON jus.username = :uname
+WHERE (po.current_pre_status in ('New', 'In Process')
+    OR po.current_cataloging_status in ('New', 'In Process')
+    OR po.current_agreement_status in ('New', 'In Process'))
+AND NOT (po.current_pre_status = 'New'
+    AND po.current_cataloging_status = 'New'
+    AND po.current_agreement_status = 'New')]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="Id"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ID"
+    Expression="ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OpportunityName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="200"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="OPPORTUNITY_NAME"
+    Expression="OPPORTUNITY_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="200"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.OpportunityName_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OpportunityNo"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="OPPORTUNITY_NO"
+    Expression="OPPORTUNITY_NO"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.OpportunityNo_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CurrentStatus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CURRENT_STATUS"
+    Expression="CURRENT_STATUS"
+    SQLType="VARCHAR"
+    LOVName="LOV_CurrentStatus">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.CurrentStatus_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="400"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ACCOUNT_NAME"
+    Expression="ACCOUNT_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="400"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.AccountName_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreatedDate"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="CREATED_DATE"
+    Expression="CREATED_DATE"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.CreatedDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AccountManager"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ACCOUNT_MANAGER"
+    Expression="ACCOUNT_MANAGER"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.AccountManager_LABEL"/>
+        <DISPLAYWIDTH
+          Value="30"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AmId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="AM_ID"
+    Expression="AM_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CataloguedCount"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="CATALOGUED_COUNT"
+    Expression="CATALOGUED_COUNT"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.CataloguedCount_LABEL"/>
+        <DISPLAYWIDTH
+          Value="15"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UncataloguedCount"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="UNCATALOGUED_COUNT"
+    Expression="UNCATALOGUED_COUNT"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.UncataloguedCount_LABEL"/>
+        <DISPLAYWIDTH
+          Value="15"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SignedDate"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="SIGNED_DATE"
+    Expression="SIGNED_DATE"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.SignedDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CurrentPreStatus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CURRENT_PRE_STATUS"
+    Expression="CURRENT_PRE_STATUS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.CurrentPreStatus_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CurrentCatalogingStatus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CURRENT_CATALOGING_STATUS"
+    Expression="CURRENT_CATALOGING_STATUS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.CurrentCatalogingStatus_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CurrentAgreementStatus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="CURRENT_AGREEMENT_STATUS"
+    Expression="CURRENT_AGREEMENT_STATUS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.CurrentAgreementStatus_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AgreementDataFlag"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="AGREEMENT_DATA_FLAG"
+    Expression="AGREEMENT_DATA_FLAG"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.AgreementDataFlag_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="UserId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="38"
+    Scale="0"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="USER_ID"
+    Expression="USER_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Username"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="USERNAME"
+    Expression="USERNAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OpportunityType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="OPPORTUNITY_TYPE"
+    Expression="OPPORTUNITY_TYPE"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.pq.tracs.model.ro.InProcessOpportunitiesCADashboardView.OpportunityType_LABEL"/>
+        <DISPLAYWIDTH
+          Value="10"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="Id"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

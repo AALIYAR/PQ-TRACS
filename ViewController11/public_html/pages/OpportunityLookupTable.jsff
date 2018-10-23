@@ -1,0 +1,655 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplate.jspx">
+    <f:facet name="pageContent">
+      <af:panelStretchLayout topHeight="auto" id="OpportunityLookupTopLc"
+                             partialTriggers="">
+        <f:facet name="top">
+          <!-- Pushed "disabled" on stretchContext, now: enabled (default), disabled (default/pageComponent/groupContent.vm) -->
+          <af:group id="g0">
+            <af:panelHeader id="ph0"
+                            text="#{nls['TABLE_TITLE_OPPORTUNITYLOOKUP']}">
+              <f:facet name="toolbar">
+                <af:toolbox id="tbox0">
+                  <af:toolbar id="tbar0">
+                    <af:group id="gr0"></af:group>
+                    <af:group id="gr1"></af:group>
+                    <af:group id="gr2"></af:group>
+                  </af:toolbar>
+                </af:toolbox>
+              </f:facet>
+              <f:facet name="context"></f:facet>
+              <af:subform id="OpportunityLookupSbf"
+                          rendered="#{!pageFlowScope.createModes.CreateOpportunityLookup and !pageFlowScope.hideSearchArea}"
+                          defaultCommand="OpportunityLookupQuickSearchButton">
+                <af:panelGroupLayout id="searchAreaOpportunityLookup"
+                                     partialTriggers="">
+                  <f:attribute name="JhsIgnoreChanges" value="true"/>
+                  <af:panelGroupLayout id="qsAreaOpportunityLookup"
+                                       rendered="#{pageFlowScope.searchOpportunityLookup.quickSearchMode}"
+                                       layout="horizontal">
+                    <af:selectOneChoice id="qsSelectOpportunityLookup"
+                                        label="#{nls['FILTER_BY']}"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchItem}"
+                                        autoSubmit="true" immediate="true"
+                                        valueChangeListener="#{pageFlowScope.searchOpportunityLookup.searchItemChanged}">
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.Id.label}"
+                                     value="OpportunityLookupId" id="si0"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.ContentOwnerId.label}"
+                                     value="OpportunityLookupContentOwnerId"
+                                     id="si1"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.OpportunityNo.label}"
+                                     value="OpportunityLookupOpportunityNo"
+                                     id="si2"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.Name.label}"
+                                     value="OpportunityLookupName" id="si3"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.AllianceManager.label}"
+                                     value="OpportunityLookupAllianceManager"
+                                     id="si4"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.AccountNumber.label}"
+                                     value="OpportunityLookupAccountNumber"
+                                     id="si5"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.AccountName.label}"
+                                     value="OpportunityLookupAccountName"
+                                     id="si6"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.CurrentStatus.label}"
+                                     value="OpportunityLookupCurrentStatus"
+                                     id="si7"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.OpportunityType.label}"
+                                     value="OpportunityLookupOpportunityType"
+                                     id="si8"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.Description.label}"
+                                     value="OpportunityLookupDescription"
+                                     id="si9"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.Summary.label}"
+                                     value="OpportunityLookupSummary"
+                                     id="si10"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.ProbabilityPct.label}"
+                                     value="OpportunityLookupProbabilityPct"
+                                     id="si11"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.Priority.label}"
+                                     value="OpportunityLookupPriority"
+                                     id="si12"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.ExpectedPipelines.label}"
+                                     value="OpportunityLookupExpectedPipelines"
+                                     id="si13"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.EstimatedCloseQuarter.label}"
+                                     value="OpportunityLookupEstimatedCloseQuarter"
+                                     id="si14"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.AgreementReceivedDate.label}"
+                                     value="OpportunityLookupAgreementReceivedDate"
+                                     id="si15"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.ExclusivitySoughtObtained.label}"
+                                     value="OpportunityLookupExclusivitySoughtObtained"
+                                     id="si16"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.ReasonLost.label}"
+                                     value="OpportunityLookupReasonLost"
+                                     id="si17"/>
+                      <af:selectItem label="#{bindings.OpportunityLookupTable.hints.DocumentSigned.label}"
+                                     value="OpportunityLookupDocumentSigned"
+                                     id="si18"/>
+                    </af:selectOneChoice>
+                    <af:spacer width="4" id="qsAreaOpportunityLookupSpacer1"/>
+                    <af:panelGroupLayout partialTriggers="qsSelectOpportunityLookup"
+                                         id="qsAreaOpportunityLookuppanelGroupLayout">
+                      <af:switcher facetName="#{pageFlowScope.searchOpportunityLookup.searchItem}"
+                                   id="qsAreaOpportunityLookupSwitcher">
+                        <f:facet name="OpportunityLookupId">
+                          <af:inputText id="QuickSearchOpportunityLookupId"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.Id.label}"
+                                        shortDesc="#{bindings.OpportunityLookupId.hints.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupId.hints.displayWidth}"
+                                        maximumLength="4000">
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.OpportunityLookupId.format}"/>
+                          </af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupContentOwnerId">
+                          <af:inputText id="QuickSearchOpportunityLookupContentOwnerId"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.ContentOwnerId.label}"
+                                        shortDesc="#{bindings.OpportunityLookupContentOwnerId.hints.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupContentOwnerId.hints.displayWidth}"
+                                        maximumLength="4000">
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.OpportunityLookupContentOwnerId.format}"/>
+                          </af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupOpportunityNo">
+                          <af:inputText id="QuickSearchOpportunityLookupOpportunityNo"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.OpportunityNo.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.OpportunityNo.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupTable.hints.OpportunityNo.displayWidth}"
+                                        maximumLength="4000">
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.OpportunityLookupTable.hints.OpportunityNo.format}"/>
+                          </af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupName">
+                          <af:inputText id="QuickSearchOpportunityLookupName"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.Name.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.Name.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupTable.hints.Name.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupAllianceManager">
+                          <af:inputText id="QuickSearchOpportunityLookupAllianceManager"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.AllianceManager.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.AllianceManager.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupTable.hints.AllianceManager.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupAccountNumber">
+                          <af:inputText id="QuickSearchOpportunityLookupAccountNumber"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.AccountNumber.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.AccountNumber.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupTable.hints.AccountNumber.displayWidth}"
+                                        maximumLength="4000">
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.OpportunityLookupTable.hints.AccountNumber.format}"/>
+                          </af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupAccountName">
+                          <af:inputText id="QuickSearchOpportunityLookupAccountName"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.AccountName.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.AccountName.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupTable.hints.AccountName.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupCurrentStatus">
+                          <af:inputText id="QuickSearchOpportunityLookupCurrentStatus"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.CurrentStatus.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.CurrentStatus.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupTable.hints.CurrentStatus.displayWidth}"
+                                        maximumLength="4000"/>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupOpportunityType">
+                          <af:inputText id="QuickSearchOpportunityLookupOpportunityType"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.OpportunityType.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.OpportunityType.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupTable.hints.OpportunityType.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupDescription">
+                          <af:inputText id="QuickSearchOpportunityLookupDescription"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.Description.label}"
+                                        shortDesc="#{bindings.OpportunityLookupDescription.hints.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupDescription.hints.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupSummary">
+                          <af:inputText id="QuickSearchOpportunityLookupSummary"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.Summary.label}"
+                                        shortDesc="#{bindings.OpportunityLookupSummary.hints.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupSummary.hints.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupProbabilityPct">
+                          <af:inputText id="QuickSearchOpportunityLookupProbabilityPct"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.ProbabilityPct.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.ProbabilityPct.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupTable.hints.ProbabilityPct.displayWidth}"
+                                        maximumLength="4000">
+                            <af:convertNumber groupingUsed="false"
+                                              pattern="#{bindings.OpportunityLookupTable.hints.ProbabilityPct.format}"/>
+                          </af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupPriority">
+                          <af:inputText id="QuickSearchOpportunityLookupPriority"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.Priority.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.Priority.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupTable.hints.Priority.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupExpectedPipelines">
+                          <af:inputText id="QuickSearchOpportunityLookupExpectedPipelines"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.ExpectedPipelines.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.ExpectedPipelines.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupTable.hints.ExpectedPipelines.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupEstimatedCloseQuarter">
+                          <af:inputText id="QuickSearchOpportunityLookupEstimatedCloseQuarter"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.EstimatedCloseQuarter.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.EstimatedCloseQuarter.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupTable.hints.EstimatedCloseQuarter.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupAgreementReceivedDate">
+                          <af:inputDate id="QuickSearchOpportunityLookupAgreementReceivedDate"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.AgreementReceivedDate.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.AgreementReceivedDate.tooltip}"
+                                        simple="true">
+                            <af:convertDateTime pattern="#{nls.datepattern}"/>
+                          </af:inputDate>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupExclusivitySoughtObtained">
+                          <af:inputText id="QuickSearchOpportunityLookupExclusivitySoughtObtained"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.ExclusivitySoughtObtained.label}"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.ExclusivitySoughtObtained.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupTable.hints.ExclusivitySoughtObtained.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupReasonLost">
+                          <af:inputText id="QuickSearchOpportunityLookupReasonLost"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.ReasonLost.label}"
+                                        shortDesc="#{bindings.OpportunityLookupReasonLost.hints.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupReasonLost.hints.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                        <f:facet name="OpportunityLookupDocumentSigned">
+                          <af:inputText id="QuickSearchOpportunityLookupDocumentSigned"
+                                        value="#{pageFlowScope.searchOpportunityLookup.searchText}"
+                                        label="#{bindings.OpportunityLookupTable.hints.DocumentSigned.label}"
+                                        shortDesc="#{bindings.OpportunityLookupDocumentSigned.hints.tooltip}"
+                                        simple="true"
+                                        columns="#{bindings.OpportunityLookupDocumentSigned.hints.displayWidth}"
+                                        maximumLength="4000"></af:inputText>
+                        </f:facet>
+                      </af:switcher>
+                    </af:panelGroupLayout>
+                    <af:spacer width="4" id="qsAreaOpportunityLookupSpacer2"/>
+                    <af:commandImageLink action="#{pageFlowScope.searchOpportunityLookup.quickSearch}"
+                                         shortDesc="#{nls['FILTER_BY']}"
+                                         icon="/jheadstart/images/go_ena.png"
+                                         id="OpportunityLookupQuickSearchButton"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:subform>
+            </af:panelHeader>
+            <af:spacer width="10" height="10" id="sp0"/>
+          </af:group>
+          <!-- Popped "disabled" from stretchContext, now: enabled (default) -->
+        </f:facet>
+        <f:facet name="center">
+          <af:panelStretchLayout topHeight="0" id="psl0">
+            <f:facet name="top"></f:facet>
+            <f:facet name="center">
+              <af:panelCollection id="OpportunityLookupPC" featuresOff=" "
+                                  styleClass="AFStretchWidth">
+                <f:facet name="menus">
+                  <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                           id="menu0">
+                    <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                             id="menu1">
+                      <af:group id="OpportunityLookuptbb"
+                                rendered="#{ bindings.OpportunityLookupIterator.currentRow!=null }">
+                        <af:commandMenuItem actionListener="#{bindings.FirstOpportunityLookup.execute}"
+                                            id="OpportunityLookupFirst"
+                                            partialSubmit="true"
+                                            icon="/afr/shuttleleftall_ena.png"
+                                            textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.PreviousOpportunityLookup.execute}"
+                                            icon="/afr/shuttleleft_ena.png"
+                                            textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                            id="OpportunityLookupPrevious"
+                                            partialSubmit="true"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.NextOpportunityLookup.execute}"
+                                            icon="/afr/shuttleright_ena.png"
+                                            textAndAccessKey="#{nls['NEXT_ROW']}"
+                                            id="OpportunityLookupNext"
+                                            partialSubmit="true"></af:commandMenuItem>
+                        <af:commandMenuItem actionListener="#{bindings.LastOpportunityLookup.execute}"
+                                            icon="/afr/shuttlerightall_ena.png"
+                                            textAndAccessKey="#{nls['LAST_ROW']}"
+                                            id="OpportunityLookupLast"
+                                            partialSubmit="true"></af:commandMenuItem>
+                      </af:group>
+                    </af:menu>
+                  </af:menu>
+                </f:facet>
+                <f:facet name="toolbar">
+                  <af:toolbar id="tbar1">
+                    <af:commandToolbarButton text="Print"
+                                             id="OpportunityLookupPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="statusbar">
+                  <af:toolbar>
+                    <af:outputText value="#{bindings.OpportunityLookupIterator.estimatedRowCount} rows found"/>
+                  </af:toolbar>
+                </f:facet>
+                <af:table id="OpportunityLookupTab" contentDelivery="immediate"
+                          value="#{bindings.OpportunityLookupTable.collectionModel}"
+                          columnStretching="blank" rowBandingInterval="0"
+                          editingMode="editAll" columnSelection="multiple"
+                          contextMenuSelect="true" rowSelection="multiple"
+                          selectionListener="#{pageFlowScope.OpportunityLookupPage.selectionListener}"
+                          selectedRowKeys="#{pageFlowScope.OpportunityLookupPage.selectedRowKeySet}"
+                          rowDisclosureListener="#{pageFlowScope.OpportunityLookupTable.discloseRow}"
+                          var="row" varStatus="status"
+                          fetchSize="#{bindings.OpportunityLookupTable.rangeSize}"
+                          emptyText="#{nls['NO_ROWS_FOUND']}"
+                          queryListener="#{bindings.OpportunityLookupIteratorQuery.processQuery}"
+                          filterModel="#{bindings.OpportunityLookupIteratorQuery.queryDescriptor}"
+                          filterVisible="true"
+                          binding="#{pageFlowScope.OpportunityLookupPage.lovTable}"
+                          partialTriggers=" :::OpportunityLookupPC ::OpportunityLookupFirst ::OpportunityLookupPrevious ::OpportunityLookupNext ::OpportunityLookupLast"
+                          styleClass="AFStretchWidth"
+                          summary="#{nls['TABLE_TITLE_OPPORTUNITYLOOKUP']}">
+                  <f:facet name="contextMenu">
+                    <af:popup id="OpportunityLookupTablePopup"
+                              childCreation="deferred">
+                      <af:menu id="menu2">
+                        <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3"></af:menu>
+                      </af:menu>
+                    </af:popup>
+                  </f:facet>
+                  <af:column id="OpportunityLookupOpportunityNoCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100" sortProperty="OpportunityNo"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.OpportunityNo.label}"
+                                      id="ol0"/>
+                    </f:facet>
+                    <af:inputText id="OpportunityLookupOpportunityNo"
+                                  value="#{row.bindings.OpportunityNo.inputValue}"
+                                  label="#{bindings.OpportunityLookupTable.hints.OpportunityNo.label}"
+                                  required="#{bindings.OpportunityLookupTable.hints.OpportunityNo.mandatory}"
+                                  rows="#{bindings.OpportunityLookupTable.hints.OpportunityNo.displayHeight}"
+                                  columns="#{bindings.OpportunityLookupTable.hints.OpportunityNo.displayWidth}"
+                                  maximumLength="38" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityLookupTable.hints.OpportunityNo.tooltip}">
+                      <f:validator binding="#{row.bindings.OpportunityNo.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.OpportunityLookupTable.hints.OpportunityNo.format}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="OpportunityLookupNameCol" sortable="true"
+                             filterable="true" noWrap="true" width="240"
+                             sortProperty="Name" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.Name.label}"
+                                      id="ol1"/>
+                    </f:facet>
+                    <af:inputText id="OpportunityLookupName"
+                                  value="#{row.bindings.Name.inputValue}"
+                                  label="#{bindings.OpportunityLookupTable.hints.Name.label}"
+                                  required="#{bindings.OpportunityLookupTable.hints.Name.mandatory}"
+                                  rows="#{bindings.OpportunityLookupTable.hints.Name.displayHeight}"
+                                  columns="#{bindings.OpportunityLookupTable.hints.Name.displayWidth}"
+                                  maximumLength="200" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityLookupTable.hints.Name.tooltip}">
+                      <f:validator binding="#{row.bindings.Name.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="OpportunityLookupAllianceManagerCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="180" sortProperty="AllianceManager"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.AllianceManager.label}"
+                                      id="ol2"/>
+                    </f:facet>
+                    <af:inputText id="OpportunityLookupAllianceManager"
+                                  value="#{row.bindings.AllianceManager.inputValue}"
+                                  label="#{bindings.OpportunityLookupTable.hints.AllianceManager.label}"
+                                  required="#{bindings.OpportunityLookupTable.hints.AllianceManager.mandatory}"
+                                  rows="#{bindings.OpportunityLookupTable.hints.AllianceManager.displayHeight}"
+                                  columns="#{bindings.OpportunityLookupTable.hints.AllianceManager.displayWidth}"
+                                  maximumLength="101" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityLookupTable.hints.AllianceManager.tooltip}">
+                      <f:validator binding="#{row.bindings.AllianceManager.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="OpportunityLookupAccountNumberCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100" sortProperty="AccountNumber"
+                             align="right" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.AccountNumber.label}"
+                                      id="ol3"/>
+                    </f:facet>
+                    <af:inputText id="OpportunityLookupAccountNumber"
+                                  value="#{row.bindings.AccountNumber.inputValue}"
+                                  label="#{bindings.OpportunityLookupTable.hints.AccountNumber.label}"
+                                  required="#{bindings.OpportunityLookupTable.hints.AccountNumber.mandatory}"
+                                  rows="#{bindings.OpportunityLookupTable.hints.AccountNumber.displayHeight}"
+                                  columns="#{bindings.OpportunityLookupTable.hints.AccountNumber.displayWidth}"
+                                  maximumLength="38" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityLookupTable.hints.AccountNumber.tooltip}">
+                      <f:validator binding="#{row.bindings.AccountNumber.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.OpportunityLookupTable.hints.AccountNumber.format}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="OpportunityLookupAccountNameCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="240" sortProperty="AccountName"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.AccountName.label}"
+                                      id="ol4"/>
+                    </f:facet>
+                    <af:inputText id="OpportunityLookupAccountName"
+                                  value="#{row.bindings.AccountName.inputValue}"
+                                  label="#{bindings.OpportunityLookupTable.hints.AccountName.label}"
+                                  required="#{bindings.OpportunityLookupTable.hints.AccountName.mandatory}"
+                                  rows="#{bindings.OpportunityLookupTable.hints.AccountName.displayHeight}"
+                                  columns="#{bindings.OpportunityLookupTable.hints.AccountName.displayWidth}"
+                                  maximumLength="400" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityLookupTable.hints.AccountName.tooltip}">
+                      <f:validator binding="#{row.bindings.AccountName.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="OpportunityLookupCurrentStatusCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="120" sortProperty="CurrentStatus"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.CurrentStatus.label}"
+                                      id="ol5"/>
+                    </f:facet>
+                    <af:selectOneChoice id="OpportunityLookupCurrentStatus"
+                                        value="#{row.bindings.CurrentStatus.inputValue}"
+                                        label="#{bindings.OpportunityLookupTable.hints.CurrentStatus.label}"
+                                        required="#{bindings.OpportunityLookupTable.hints.CurrentStatus.mandatory}"
+                                        readOnly="true"
+                                        shortDesc="#{bindings.OpportunityLookupTable.hints.CurrentStatus.tooltip}">
+                      <f:selectItems value="#{row.bindings.CurrentStatus.items}"/>
+                    </af:selectOneChoice>
+                  </af:column>
+                  <af:column id="OpportunityLookupOpportunityTypeCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="120" sortProperty="OpportunityType"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.OpportunityType.label}"
+                                      id="ol6"/>
+                    </f:facet>
+                    <af:inputText id="OpportunityLookupOpportunityType"
+                                  value="#{row.bindings.OpportunityType.inputValue}"
+                                  label="#{bindings.OpportunityLookupTable.hints.OpportunityType.label}"
+                                  required="#{bindings.OpportunityLookupTable.hints.OpportunityType.mandatory}"
+                                  rows="#{bindings.OpportunityLookupTable.hints.OpportunityType.displayHeight}"
+                                  columns="#{bindings.OpportunityLookupTable.hints.OpportunityType.displayWidth}"
+                                  maximumLength="20" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityLookupTable.hints.OpportunityType.tooltip}">
+                      <f:validator binding="#{row.bindings.OpportunityType.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="OpportunityLookupProbabilityPctCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100" sortProperty="ProbabilityPct"
+                             align="right" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.ProbabilityPct.label}"
+                                      id="ol7"/>
+                    </f:facet>
+                    <af:inputText id="OpportunityLookupProbabilityPct"
+                                  value="#{row.bindings.ProbabilityPct.inputValue}"
+                                  label="#{bindings.OpportunityLookupTable.hints.ProbabilityPct.label}"
+                                  required="#{bindings.OpportunityLookupTable.hints.ProbabilityPct.mandatory}"
+                                  rows="#{bindings.OpportunityLookupTable.hints.ProbabilityPct.displayHeight}"
+                                  columns="#{bindings.OpportunityLookupTable.hints.ProbabilityPct.displayWidth}"
+                                  maximumLength="9" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityLookupTable.hints.ProbabilityPct.tooltip}">
+                      <f:validator binding="#{row.bindings.ProbabilityPct.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.OpportunityLookupTable.hints.ProbabilityPct.format}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="OpportunityLookupPriorityCol" sortable="true"
+                             filterable="true" noWrap="true" width="120"
+                             sortProperty="Priority" rowHeader="false"
+                             filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.Priority.label}"
+                                      id="ol8"/>
+                    </f:facet>
+                    <af:inputText id="OpportunityLookupPriority"
+                                  value="#{row.bindings.Priority.inputValue}"
+                                  label="#{bindings.OpportunityLookupTable.hints.Priority.label}"
+                                  required="#{bindings.OpportunityLookupTable.hints.Priority.mandatory}"
+                                  rows="#{bindings.OpportunityLookupTable.hints.Priority.displayHeight}"
+                                  columns="#{bindings.OpportunityLookupTable.hints.Priority.displayWidth}"
+                                  maximumLength="20" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityLookupTable.hints.Priority.tooltip}">
+                      <f:validator binding="#{row.bindings.Priority.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="OpportunityLookupExpectedPipelinesCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="120" sortProperty="ExpectedPipelines"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.ExpectedPipelines.label}"
+                                      id="ol9"/>
+                    </f:facet>
+                    <af:inputText id="OpportunityLookupExpectedPipelines"
+                                  value="#{row.bindings.ExpectedPipelines.inputValue}"
+                                  label="#{bindings.OpportunityLookupTable.hints.ExpectedPipelines.label}"
+                                  required="#{bindings.OpportunityLookupTable.hints.ExpectedPipelines.mandatory}"
+                                  rows="#{bindings.OpportunityLookupTable.hints.ExpectedPipelines.displayHeight}"
+                                  columns="#{bindings.OpportunityLookupTable.hints.ExpectedPipelines.displayWidth}"
+                                  maximumLength="20" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityLookupTable.hints.ExpectedPipelines.tooltip}">
+                      <f:validator binding="#{row.bindings.ExpectedPipelines.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="OpportunityLookupEstimatedCloseQuarterCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="120" sortProperty="EstimatedCloseQuarter"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.EstimatedCloseQuarter.label}"
+                                      id="ol10"/>
+                    </f:facet>
+                    <af:inputText id="OpportunityLookupEstimatedCloseQuarter"
+                                  value="#{row.bindings.EstimatedCloseQuarter.inputValue}"
+                                  label="#{bindings.OpportunityLookupTable.hints.EstimatedCloseQuarter.label}"
+                                  required="#{bindings.OpportunityLookupTable.hints.EstimatedCloseQuarter.mandatory}"
+                                  rows="#{bindings.OpportunityLookupTable.hints.EstimatedCloseQuarter.displayHeight}"
+                                  columns="#{bindings.OpportunityLookupTable.hints.EstimatedCloseQuarter.displayWidth}"
+                                  maximumLength="20" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityLookupTable.hints.EstimatedCloseQuarter.tooltip}">
+                      <f:validator binding="#{row.bindings.EstimatedCloseQuarter.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                  <af:column id="OpportunityLookupAgreementReceivedDateCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100" sortProperty="AgreementReceivedDate"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.AgreementReceivedDate.label}"
+                                      id="ol11"/>
+                    </f:facet>
+                    <f:facet name="filter">
+                      <af:inputDate value="#{status.filterCriteria.AgreementReceivedDate}"
+                                    id="id0">
+                        <af:convertDateTime pattern="#{nls.datepattern}"/>
+                      </af:inputDate>
+                    </f:facet>
+                    <af:inputDate id="OpportunityLookupAgreementReceivedDate"
+                                  value="#{row.bindings.AgreementReceivedDate.inputValue}"
+                                  label="#{bindings.OpportunityLookupTable.hints.AgreementReceivedDate.label}"
+                                  required="#{bindings.OpportunityLookupTable.hints.AgreementReceivedDate.mandatory}"
+                                  readOnly="true"
+                                  shortDesc="#{bindings.OpportunityLookupTable.hints.AgreementReceivedDate.tooltip}">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </af:column>
+                  <af:column id="OpportunityLookupExclusivitySoughtObtainedCol"
+                             sortable="true" filterable="true" noWrap="true"
+                             width="100"
+                             sortProperty="ExclusivitySoughtObtained"
+                             rowHeader="false" filterFeatures="caseInsensitive">
+                    <f:facet name="header">
+                      <af:outputLabel value="#{bindings.OpportunityLookupTable.hints.ExclusivitySoughtObtained.label}"
+                                      id="ol12"/>
+                    </f:facet>
+                    <af:inputText id="OpportunityLookupExclusivitySoughtObtained"
+                                  value="#{row.bindings.ExclusivitySoughtObtained.inputValue}"
+                                  label="#{bindings.OpportunityLookupTable.hints.ExclusivitySoughtObtained.label}"
+                                  required="#{bindings.OpportunityLookupTable.hints.ExclusivitySoughtObtained.mandatory}"
+                                  rows="#{bindings.OpportunityLookupTable.hints.ExclusivitySoughtObtained.displayHeight}"
+                                  columns="#{bindings.OpportunityLookupTable.hints.ExclusivitySoughtObtained.displayWidth}"
+                                  maximumLength="1" readOnly="true"
+                                  shortDesc="#{bindings.OpportunityLookupTable.hints.ExclusivitySoughtObtained.tooltip}">
+                      <f:validator binding="#{row.bindings.ExclusivitySoughtObtained.validator}"/>
+                    </af:inputText>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

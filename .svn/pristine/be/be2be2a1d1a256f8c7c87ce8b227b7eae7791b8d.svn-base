@@ -1,0 +1,769 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="OVRTopLc"
+                             partialTriggers=" OVRCancelButton0 asAreaOVRSearchOptions qsAreaOVRSearchOptions"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty, BRUSER, BR']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_OVRS']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreateOVRs.execute}"
+                                      action="CreateOVR"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_OVRS']}"
+                                      rendered="#{(true) and (jhsUserRoles['RM, ADMIN, OVR, AllButAdmn'])}"
+                                      id="OVRNewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="OVRCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaOVR"
+                                 rendered="#{!pageFlowScope.createModes.CreateOVRs and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaOVRSearchOptions:qsButtonOVR qsAreaOVRSearchOptions:asButtonOVR ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaOVRSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.OVRsIteratorTitleRecordViewCriteriaAdvQuery.queryDescriptor}"
+                        model="#{bindings.OVRsIteratorTitleRecordViewCriteriaAdvQuery.queryModel}"
+                        queryListener="#{bindings.OVRsIteratorTitleRecordViewCriteriaAdvQuery.processQuery}"
+                        queryOperationListener="#{bindings.OVRsIteratorTitleRecordViewCriteriaAdvQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchOVRs.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonOVR"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchOVRs.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaOVRSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.OVRsIteratorTitleRecordViewCriteriaAdvQuery.queryDescriptor}"
+                             model="#{bindings.OVRsIteratorTitleRecordViewCriteriaAdvQuery.queryModel}"
+                             queryListener="#{bindings.OVRsIteratorTitleRecordViewCriteriaAdvQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchOVRs.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonOVR"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchOVRs.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="OVRPC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="OVRsDetails"></af:commandMenuItem>
+                    <af:group id="OVRtbb"
+                              rendered="#{ (bindings.OVRsIterator.viewObject!=null and bindings.OVRsIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstOVRs.execute}"
+                                          id="OVRFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousOVRs.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="OVRPrevious" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextOVRs.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="OVRNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastOVRs.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="OVRLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="OVRTab"
+                                                       type="excelHTML"
+                                                       filename="OVRs.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="OVRTab"
+                                                       type="excelHTML"
+                                                       filename="OVRs.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="OVRPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.OVRsIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="OVRTab" contentDelivery="immediate"
+                        value="#{bindings.OVRsTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.OVRsTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.OVRsTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.OVRsTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.OVRsTable.rangeSize}"
+                        autoHeightRows="#{bindings.OVRsTable.estimatedRowCount}"
+                        fetchSize="#{bindings.OVRsTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.OVRsIteratorTitleRecordViewCriteriaAdvQuery.processQuery}"
+                        filterModel="#{bindings.OVRsIteratorTitleRecordViewCriteriaAdvQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.OVRsTable.table}"
+                        partialTriggers=":::qsAreaOVRSearchOptions :::asAreaOVRSearchOptions :::OVRPC ::OVRFirst ::OVRPrevious ::OVRNext ::OVRLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_OVRS']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="OVRTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="OVRsDetails"></af:commandMenuItem>
+                      </af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="OVRCatalogNumberLinkCol" sortable="true"
+                           noWrap="true" width="100"
+                           sortProperty="CatalogNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.CatalogNumber.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="cl1"
+                                value="#{row.bindings.CatalogNumber.inputValue}"
+                                label="#{bindings.OVRsTable.hints.CatalogNumber.label}"
+                                required="true" readOnly="true"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.CatalogNumber.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="OVRCatalogNumberLink"
+                                  text="#{row.bindings.CatalogNumber.attributeValue}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="Titles"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="TTL#{bindings.OVRTitleId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="Title #{bindings.OVRCatalogNumberLink.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.OVRTitleId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueTitles}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="OVROvrIDCol" sortable="true" filterable="true"
+                           noWrap="true" width="100" sortProperty="OvrId"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.OvrId.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="OVROvrID"
+                                value="#{row.bindings.OvrId.inputValue}"
+                                label="#{bindings.OVRsTable.hints.OvrId.label}"
+                                required="false" readOnly="true">
+                    <f:validator binding="#{row.bindings.OvrId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.OVRsTable.hints.OvrId.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OVRContentSourceCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="ContentSource" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.ContentSource.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OVRContentSource"
+                                      value="#{row.bindings.ContentSource.inputValue}"
+                                      label="#{bindings.OVRsTable.hints.ContentSource.label}"
+                                      required="#{bindings.OVRsTable.hints.ContentSource.mandatory}"
+                                      readOnly="true" autoSubmit="true"
+                                      valueChangeListener="#{OVRContentSourceDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{row.bindings.ContentSource.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OVRPmidCol" sortable="true" filterable="true"
+                           noWrap="true" width="180" sortProperty="Pmid"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.Pmid.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputText id="OVRPmid"
+                                value="#{row.bindings.Pmid.inputValue}"
+                                label="#{bindings.OVRsTable.hints.Pmid.label}"
+                                required="#{bindings.OVRsTable.hints.Pmid.mandatory}"
+                                rows="#{bindings.OVRsTable.hints.Pmid.displayHeight}"
+                                columns="#{bindings.OVRsTable.hints.Pmid.displayWidth}"
+                                maximumLength="40" readOnly="true">
+                    <f:validator binding="#{row.bindings.Pmid.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OVRCopyOfPmTitleCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="PmTitle" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.PmTitle.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:inputText id="cl2"
+                                value="#{row.bindings.PmTitle.inputValue}"
+                                label="#{bindings.OVRsTable.hints.PmTitle.label}"
+                                required="true" rows="1" columns="30"
+                                maximumLength="1000" readOnly="true"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.PmTitle.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="cl3"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}"
+                                  action="OVRsDetails" text="#{row.PmTitle}"></af:commandLink>
+                </af:column>
+                <af:column id="OVRSubTitleCol" sortable="true" filterable="true"
+                           noWrap="true" width="180" sortProperty="SubTitle"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.SubTitle.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="OVRSubTitle"
+                                value="#{row.bindings.SubTitle.inputValue}"
+                                label="#{bindings.OVRsTable.hints.SubTitle.label}"
+                                required="#{bindings.OVRsTable.hints.SubTitle.mandatory}"
+                                rows="#{bindings.OVRsTable.hints.SubTitle.displayHeight}"
+                                columns="#{bindings.OVRsTable.hints.SubTitle.displayWidth}"
+                                maximumLength="1000" readOnly="true">
+                    <f:validator binding="#{row.bindings.SubTitle.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OVRCopyOfSortTitleCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="SortTitle" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.SortTitle.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:inputText id="OVRCopyOfSortTitle"
+                                value="#{row.bindings.SortTitle.inputValue}"
+                                label="#{bindings.OVRsTable.hints.SortTitle.label}"
+                                required="false" rows="1"
+                                columns="#{bindings.OVRsTable.hints.SortTitle.displayWidth}"
+                                maximumLength="1000" readOnly="true">
+                    <f:validator binding="#{row.bindings.SortTitle.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OVRQualifierCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="Qualifier" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.Qualifier.label}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:inputText id="OVRQualifier"
+                                value="#{row.bindings.Qualifier.inputValue}"
+                                label="#{bindings.OVRsTable.hints.Qualifier.label}"
+                                required="#{bindings.OVRsTable.hints.Qualifier.mandatory}"
+                                rows="#{bindings.OVRsTable.hints.Qualifier.displayHeight}"
+                                columns="#{bindings.OVRsTable.hints.Qualifier.displayWidth}"
+                                maximumLength="400" readOnly="true">
+                    <f:validator binding="#{row.bindings.Qualifier.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OVRPartNumberCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="PartNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.PartNumber.label}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:inputText id="OVRPartNumber"
+                                value="#{row.bindings.PartNumber.inputValue}"
+                                label="#{bindings.OVRsTable.hints.PartNumber.label}"
+                                required="#{bindings.OVRsTable.hints.PartNumber.mandatory}"
+                                rows="#{bindings.OVRsTable.hints.PartNumber.displayHeight}"
+                                columns="#{bindings.OVRsTable.hints.PartNumber.displayWidth}"
+                                maximumLength="80" readOnly="true">
+                    <f:validator binding="#{row.bindings.PartNumber.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OVRPartNameCol" sortable="true" filterable="true"
+                           noWrap="true" width="180" sortProperty="PartName"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.PartName.label}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:inputText id="OVRPartName"
+                                value="#{row.bindings.PartName.inputValue}"
+                                label="#{bindings.OVRsTable.hints.PartName.label}"
+                                required="#{bindings.OVRsTable.hints.PartName.mandatory}"
+                                rows="#{bindings.OVRsTable.hints.PartName.displayHeight}"
+                                columns="#{bindings.OVRsTable.hints.PartName.displayWidth}"
+                                maximumLength="200" readOnly="true">
+                    <f:validator binding="#{row.bindings.PartName.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OVRPublisherNameCol" sortable="true"
+                           noWrap="true" width="180" sortProperty="Name"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.Name.label}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:inputText id="OVRPublisherName"
+                                value="#{row.bindings.Name.inputValue}"
+                                label="#{bindings.OVRsTable.hints.Name.label}"
+                                required="#{bindings.OVRsTable.hints.Name.mandatory}"
+                                rows="#{bindings.OVRsTable.hints.Name.displayHeight}"
+                                columns="#{bindings.OVRsTable.hints.Name.displayWidth}"
+                                maximumLength="4000" readOnly="true">
+                    <f:validator binding="#{row.bindings.Name.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OVRPrimarySourceTypeCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="PrimarySourceType" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.PrimarySourceType.label}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OVRPrimarySourceType"
+                                      value="#{row.bindings.PrimarySourceType.inputValue}"
+                                      label="#{bindings.OVRsTable.hints.PrimarySourceType.label}"
+                                      required="true" readOnly="true">
+                    <f:selectItems value="#{row.bindings.PrimarySourceType.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OVRK12SourceTypeCol" filterable="true"
+                           noWrap="false" width="180" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="" id="ol12"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OVRK12SourceType"
+                                      value="#{row.bindings.K12SourceType.inputValue}"
+                                      label="" required="false" readOnly="true">
+                    <f:selectItems value="#{row.bindings.K12SourceType.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OVRJCodeCountCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="Jcodecount" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.Jcodecount.label}"
+                                    id="ol13"/>
+                  </f:facet>
+                  <af:inputText id="OVRJCodeCount"
+                                value="#{row.bindings.Jcodecount.inputValue}"
+                                label="#{bindings.OVRsTable.hints.Jcodecount.label}"
+                                required="false"
+                                rows="#{bindings.OVRsTable.hints.Jcodecount.displayHeight}"
+                                columns="#{bindings.OVRsTable.hints.Jcodecount.displayWidth}"
+                                maximumLength="5" readOnly="true">
+                    <f:validator binding="#{row.bindings.Jcodecount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.OVRsTable.hints.Jcodecount.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OVRDocUsageRoyaltiesFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="DocUsageRoyaltiesFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.DocUsageRoyaltiesFlag.label}"
+                                    id="ol14"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="OVRDocUsageRoyaltiesFlag"
+                                            label="#{bindings.OVRsTable.hints.DocUsageRoyaltiesFlag.label}"
+                                            value="#{OVRDocUsageRoyaltiesFlagcheckboxInTable.value}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="OVRCblIdCol" sortable="true" filterable="true"
+                           noWrap="true" width="100" sortProperty="CblId"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.CblId.label}"
+                                    id="ol15"/>
+                  </f:facet>
+                  <af:inputText id="OVRCblId"
+                                value="#{row.bindings.CblId.inputValue}"
+                                label="#{bindings.OVRsTable.hints.CblId.label}"
+                                required="#{bindings.OVRsTable.hints.CblId.mandatory}"
+                                rows="#{bindings.OVRsTable.hints.CblId.displayHeight}"
+                                columns="#{bindings.OVRsTable.hints.CblId.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.OVRsTable.hints.CblId.tooltip}">
+                    <f:validator binding="#{row.bindings.CblId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.OVRsTable.hints.CblId.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OVRCountryOfPublicationCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="CountryOfPublication" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.CountryOfPublication.label}"
+                                    id="ol16"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OVRCountryOfPublication"
+                                      value="#{row.bindings.CountryOfPublication.inputValue}"
+                                      label="#{bindings.OVRsTable.hints.CountryOfPublication.label}"
+                                      required="#{bindings.OVRsTable.hints.CountryOfPublication.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OVRsTable.hints.CountryOfPublication.tooltip}">
+                    <f:selectItems value="#{row.bindings.CountryOfPublication.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OVROkForExportFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="OkForExportFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.OkForExportFlag.label}"
+                                    id="ol17"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="OVROkForExportFlag"
+                                            label="#{bindings.OVRsTable.hints.OkForExportFlag.label}"
+                                            value="#{OVROkForExportFlagcheckboxInTable.value}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.OVRsTable.hints.OkForExportFlag.tooltip}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="OVRDoNotUseCol" sortable="true" filterable="true"
+                           noWrap="true" width="100" sortProperty="DoNotUse"
+                           align="center" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.DoNotUse.label}"
+                                    id="ol18"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="OVRDoNotUse"
+                                            label="#{bindings.OVRsTable.hints.DoNotUse.label}"
+                                            value="#{OVRDoNotUsecheckboxInTable.value}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.OVRsTable.hints.DoNotUse.tooltip}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="OVRGenerationMethodCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="GenerationMethod" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.GenerationMethod.label}"
+                                    id="ol19"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OVRGenerationMethod"
+                                      value="#{row.bindings.GenerationMethod.inputValue}"
+                                      label="#{bindings.OVRsTable.hints.GenerationMethod.label}"
+                                      required="#{bindings.OVRsTable.hints.GenerationMethod.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OVRsTable.hints.GenerationMethod.tooltip}">
+                    <f:selectItems value="#{row.bindings.GenerationMethod.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OVRCreatedDateSearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedBySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.CreatedBySearch.label}"
+                                    id="ol20"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedBySearch}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="OVRCreatedDateSearch"
+                                value="#{row.bindings.CreatedBySearch.inputValue}"
+                                label="#{bindings.OVRsTable.hints.CreatedBySearch.label}"
+                                required="#{bindings.OVRsTable.hints.CreatedBySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.OVRsTable.hints.CreatedBySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="OVRLastUpdateDateSearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LastUpdateBySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.LastUpdateBySearch.label}"
+                                    id="ol21"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdateBySearch}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="OVRLastUpdateDateSearch"
+                                value="#{row.bindings.LastUpdateBySearch.inputValue}"
+                                label="#{bindings.OVRsTable.hints.LastUpdateBySearch.label}"
+                                required="#{bindings.OVRsTable.hints.LastUpdateBySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.OVRsTable.hints.LastUpdateBySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="OVRAutogenRuleSetCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="AutogenRuleSet" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.AutogenRuleSet.label}"
+                                    id="ol22"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OVRAutogenRuleSet"
+                                      value="#{row.bindings.AutogenRuleSet.inputValue}"
+                                      label="#{bindings.OVRsTable.hints.AutogenRuleSet.label}"
+                                      required="#{bindings.OVRsTable.hints.AutogenRuleSet.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OVRsTable.hints.AutogenRuleSet.tooltip}"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{OVRAutogenRuleSetDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{row.bindings.AutogenRuleSet.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OVRContentModelCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="ContentModel" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.ContentModel.label}"
+                                    id="ol23"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OVRContentModel"
+                                      value="#{row.bindings.ContentModel.inputValue}"
+                                      label="#{bindings.OVRsTable.hints.ContentModel.label}"
+                                      required="#{bindings.OVRsTable.hints.ContentModel.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OVRsTable.hints.ContentModel.tooltip}">
+                    <f:selectItems value="#{row.bindings.ContentModel.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OVRContentSourceCutoverCol" sortable="true"
+                           filterable="true" noWrap="true" width="500"
+                           sortProperty="ContentSourceCutover" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.ContentSourceCutover.label}"
+                                    id="ol24"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OVRContentSourceCutover"
+                                      value="#{row.bindings.ContentSourceCutover.inputValue}"
+                                      label="#{bindings.OVRsTable.hints.ContentSourceCutover.label}"
+                                      required="false" readOnly="true"
+                                      shortDesc="#{bindings.OVRsTable.hints.ContentSourceCutover.tooltip}">
+                    <f:selectItems value="#{row.bindings.ContentSourceCutover.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OVRCsCutoverCreatedDateCol" sortable="true"
+                           filterable="true" noWrap="true" width="306"
+                           sortProperty="CsCutoverCreatedDate" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.CsCutoverCreatedDate.label}"
+                                    id="ol25"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CsCutoverCreatedDate}"
+                                  id="id2">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="OVRCsCutoverCreatedDate"
+                                value="#{row.bindings.CsCutoverCreatedDate.inputValue}"
+                                label="#{bindings.OVRsTable.hints.CsCutoverCreatedDate.label}"
+                                required="#{bindings.OVRsTable.hints.CsCutoverCreatedDate.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.OVRsTable.hints.CsCutoverCreatedDate.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="OVRPublicAccessContentCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="PublicAccessContent" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.PublicAccessContent.label}"
+                                    id="ol26"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OVRPublicAccessContent"
+                                      value="#{row.bindings.PublicAccessContent.inputValue}"
+                                      label="#{bindings.OVRsTable.hints.PublicAccessContent.label}"
+                                      required="#{bindings.OVRsTable.hints.PublicAccessContent.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.OVRsTable.hints.PublicAccessContent.tooltip}">
+                    <f:selectItems value="#{row.bindings.PublicAccessContent.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OVRUnstructuredFlagCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="UnstructuredFlag" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OVRsTable.hints.UnstructuredFlag.label}"
+                                    id="ol27"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="OVRUnstructuredFlag"
+                                            label="#{bindings.OVRsTable.hints.UnstructuredFlag.label}"
+                                            value="#{OVRUnstructuredFlagcheckboxInTable.value}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.OVRsTable.hints.UnstructuredFlag.tooltip}"></af:selectBooleanCheckbox>
+                </af:column>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <f:facet name="detailStamp">
+                  <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                  <af:panelGroupLayout id="pgl1"
+                                       rendered="#{bindings.OVRsIterator.estimatedRowCount>0}"
+                                       layout="scroll">
+                    <f:facet name="separator">
+                      <af:spacer width="10" height="10" id="sp1"/>
+                    </f:facet>
+                    <af:panelFormLayout rows="1" maxColumns="4"
+                                        labelAlignment="start" id="pfl0">
+                      <af:inputText id="OVREdition"
+                                    value="#{row.bindings.Edition.inputValue}"
+                                    label="#{bindings.OVREdition.hints.label}"
+                                    required="#{bindings.OVREdition.hints.mandatory}"
+                                    rows="#{bindings.OVRsTable.hints.Edition.displayHeight}"
+                                    columns="#{bindings.OVRsTable.hints.Edition.displayWidth}"
+                                    maximumLength="400" readOnly="true">
+                        <f:validator binding="#{row.bindings.Edition.validator}"/>
+                      </af:inputText>
+                      <af:selectBooleanCheckbox id="OVRBlockByPubFlag"
+                                                value="#{OVRBlockByPubFlagcheckboxInTable.value}"
+                                                label="#{bindings.OVRBlockByPubFlag.hints.label}"
+                                                readOnly="true"></af:selectBooleanCheckbox>
+                      <af:selectBooleanCheckbox id="OVRTranslationFlag"
+                                                value="#{OVRTranslationFlagcheckboxInTable.value}"
+                                                label="#{bindings.OVRTranslationFlag.hints.label}"
+                                                readOnly="true"></af:selectBooleanCheckbox>
+                      <af:selectBooleanCheckbox id="OVRPubSearchAlertFlag"
+                                                value="#{OVRPubSearchAlertFlagcheckboxInTable.value}"
+                                                label="#{bindings.OVRPubSearchAlertFlag.hints.label}"
+                                                readOnly="true"></af:selectBooleanCheckbox>
+                      <af:inputText id="OVRJournalCode"
+                                    value="#{row.bindings.JournalCode.inputValue}"
+                                    label="#{bindings.OVRJournalCode.hints.label}"
+                                    required="#{bindings.OVRJournalCode.hints.mandatory}"
+                                    rows="#{bindings.OVRsTable.hints.JournalCode.displayHeight}"
+                                    columns="#{bindings.OVRsTable.hints.JournalCode.displayWidth}"
+                                    maximumLength="5" readOnly="true">
+                        <f:validator binding="#{row.bindings.JournalCode.validator}"/>
+                      </af:inputText>
+                      <af:inputListOfValues id="OVRAltRightsOvrId"
+                                            popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.OVRsTable.hints.Altrightsovrid.label}"
+                                            searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.OVRsTable.hints.Altrightsovrid.label}"
+                                            value="#{row.bindings.Altrightsovrid.inputValue}"
+                                            label="#{bindings.OVRAltRightsOvrId.hints.label}"
+                                            required="false"
+                                            columns="#{bindings.OVRsTable.hints.Altrightsovrid.displayWidth}"
+                                            maximumLength="20" readOnly="true"
+                                            autoSubmit="true"
+                                            model="#{bindings.OVRAltRightsOvrId.listOfValuesModel}">
+                        <f:validator binding="#{row.bindings.Altrightsovrid.validator}"/>
+                        <af:convertNumber groupingUsed="false"
+                                          pattern="#{bindings.OVRsTable.hints.Altrightsovrid.format}"/>
+                      </af:inputListOfValues>
+                      <af:selectBooleanCheckbox id="OVRAltRightsFlag"
+                                                value="#{OVRAltRightsFlagcheckboxInTable.value}"
+                                                label="#{bindings.OVRAltRightsFlag.hints.label}"
+                                                readOnly="true"></af:selectBooleanCheckbox>
+                      <af:inputText id="OVRCreatedBy"
+                                    value="#{row.bindings.CreatedBy.inputValue}"
+                                    label="#{bindings.OVRCreatedBy.hints.label}"
+                                    required="#{bindings.OVRCreatedBy.hints.mandatory}"
+                                    rows="#{bindings.OVRsTable.hints.CreatedBy.displayHeight}"
+                                    columns="#{bindings.OVRsTable.hints.CreatedBy.displayWidth}"
+                                    readOnly="true" disabled="true">
+                        <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                      </af:inputText>
+                      <af:inputText id="OVRLastUpdatedBy"
+                                    value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                    label="#{bindings.OVRLastUpdatedBy.hints.label}"
+                                    required="#{bindings.OVRLastUpdatedBy.hints.mandatory}"
+                                    rows="#{bindings.OVRsTable.hints.LastUpdatedBy.displayHeight}"
+                                    columns="#{bindings.OVRsTable.hints.LastUpdatedBy.displayWidth}"
+                                    maximumLength="40" readOnly="true"
+                                    disabled="true">
+                        <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                      </af:inputText>
+                    </af:panelFormLayout>
+                  </af:panelGroupLayout>
+                  <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                </f:facet>
+                 
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

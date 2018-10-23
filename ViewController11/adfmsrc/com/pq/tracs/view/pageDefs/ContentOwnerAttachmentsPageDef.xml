@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="ContentOwnerAttachmentsPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare"
+               value="#{'ContentOwnerPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="ContentOwnerAttachmentsIterator"
+              Binds="TraxContentOwnerAttachmentView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ContentOwnerAttachmentsIteratorTraxContentOwnerAttachmentViewCriteriaQuery"
+                  Binds="ContentOwnerAttachmentsIterator"
+                  Criteria="TraxContentOwnerAttachmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttachmentType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="s07Name" IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07AttachmentType"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="AttachmentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07Attachment"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07AttachmentDL"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07Description"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07FileSize"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="FileSize"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07CreatedBy"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07CreatedDate"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07LastUpdatedBy"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s07LastUpdatedDate"
+                     IterBinding="ContentOwnerAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContentOwnerAttachmentsTable"
+          IterBinding="ContentOwnerAttachmentsIterator">
+      <nodeDefinition Name="ContentOwnerAttachments"
+                      DefName="com.pq.tracs.model.vo.TraxContentOwnerAttachmentView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="AttachmentType"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Description"/>
+          <Item Value="FileSize"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContentOwnerAttachments}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteContentOwnerAttachments"
+            IterBinding="ContentOwnerAttachmentsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

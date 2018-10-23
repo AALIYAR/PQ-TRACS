@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23"
+                id="ContractGuaranteTitlesMultiLOVPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <invokeAction id="applyBindParamsContractGuaranteTitlesMultiLOVInvoke"
+                  Binds="applyBindParamsContractGuaranteTitlesMultiLOV"
+                  Refresh="always"/>
+    <iterator id="ContractGuaranteTitlesMultiLOVIterator"
+              Binds="ContractGuaranteeMultiSelectLOV1"
+              DataControl="TracsServiceDataControl" RangeSize="100"/>
+    <invokeAction id="ExecuteQueryContractGuaranteTitlesMultiLOVInvoke"
+                  Binds="ExecuteQueryContractGuaranteTitlesMultiLOV"
+                  Refresh="renderModel" RefreshCondition="#{jhsPageChanged}"/>
+  </executables>
+  <bindings>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsContractGuaranteTitlesMultiLOV"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="ContractGuaranteeMultiSelectLOV1"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{ContractGuaranteTitlesMultiLOVQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="ExecuteQueryContractGuaranteTitlesMultiLOV"
+            IterBinding="ContractGuaranteTitlesMultiLOVIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVId"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVContentOwnerId"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVCatalogNumber"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVLongTitle"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVShortTitle"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="ShortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVContentOwner"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="ContentOwner"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVCatalogRoot"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="CatalogRoot"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVPublicationStartYear"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="PublicationStartYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVPublicationEndYear"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="PublicationEndYear"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVFilmAvailability"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="FilmAvailability"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVBibliographicStatus"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="BibliographicStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVContractId"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ContractGuaranteTitlesMultiLOVTitleId"
+                     IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ContractGuaranteTitlesMultiLOVTable"
+          IterBinding="ContractGuaranteTitlesMultiLOVIterator">
+      <nodeDefinition Name="ContractGuaranteTitlesMultiLOV"
+                      DefName="com.pq.tracs.model.lookups.ContractGuaranteeMultiSelectLOV">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="ShortTitle"/>
+          <Item Value="ContentOwner"/>
+          <Item Value="CatalogRoot"/>
+          <Item Value="PublicationStartYear"/>
+          <Item Value="PublicationEndYear"/>
+          <Item Value="FilmAvailability"/>
+          <Item Value="BibliographicStatus"/>
+          <Item Value="ContractId"/>
+          <Item Value="TitleId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstContractGuaranteTitlesMultiLOV"
+            IterBinding="ContractGuaranteTitlesMultiLOVIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousContractGuaranteTitlesMultiLOV"
+            IterBinding="ContractGuaranteTitlesMultiLOVIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextContractGuaranteTitlesMultiLOV"
+            IterBinding="ContractGuaranteTitlesMultiLOVIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastContractGuaranteTitlesMultiLOV"
+            IterBinding="ContractGuaranteTitlesMultiLOVIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchContractGuaranteTitlesMultiLOV"
+                  IterBinding="ContractGuaranteTitlesMultiLOVIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchContractGuaranteTitlesMultiLOV.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchContractGuaranteTitlesMultiLOV.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchContractGuaranteTitlesMultiLOV.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyContractGuaranteTitlesMultiLOV"
+            IterBinding="ContractGuaranteTitlesMultiLOVIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrContractGuaranteTitlesMultiLOV}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

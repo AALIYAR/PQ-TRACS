@@ -1,0 +1,310 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="UsersTopLc"
+                             partialTriggers=" Usersfbb UsersNewButton UsersSaveButton0 UsersCancelButton0"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{pageFlowScope.createModes.CreateUsers ? nls['INSERT_TITLE_USERS'] :  nls['EDIT_TITLE_USER: #{bindings.UsersUsername.inputValue}'] }">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:panelGroupLayout id="Usersfbb" layout="horizontal"
+                                       rendered="#{ bindings.UsersIterator.currentRow!=null  and bindings.UsersIterator.estimatedRowCount>1 and !pageFlowScope.createModes.CreateUsers and !pageFlowScope.hideFormBrowseButtons}"
+                                       partialTriggers="UsersFirst UsersPrevious UsersNext UsersLast">
+                    <af:commandToolbarButton actionListener="#{bindings.FirstUsers.execute}"
+                                             id="UsersFirst"
+                                             partialSubmit="true"
+                                             icon="/afr/shuttleleftall_ena.png"
+                                             shortDesc="#{nls['FIRST_ROW']}"
+                                             rendered="#{bindings.UsersIterator.rangeStart+bindings.UsersIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleftall_dis.png"
+                              rendered="#{!(bindings.UsersIterator.rangeStart+bindings.UsersIterator.currentRowIndexInRange+1>1)}"
+                              id="img0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.PreviousUsers.execute}"
+                                             icon="/afr/shuttleleft_ena.png"
+                                             shortDesc="#{nls['PREVIOUS_ROW']}"
+                                             id="UsersPrevious"
+                                             partialSubmit="true"
+                                             rendered="#{bindings.UsersIterator.rangeStart+bindings.UsersIterator.currentRowIndexInRange+1>1}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleleft_dis.png"
+                              rendered="#{!(bindings.UsersIterator.rangeStart+bindings.UsersIterator.currentRowIndexInRange+1>1)}"
+                              id="img1"/>
+                    <af:spacer width="4" height="1" id="sp1"/>
+                    <af:outputFormatted styleUsage="instruction"
+                                        inlineStyle="white-space:nowrap; vertical-align:bottom;"
+                                        value=" [#{bindings.UsersIterator.rangeStart+bindings.UsersIterator.currentRowIndexInRange+1} / #{bindings.UsersIterator.estimatedRowCount}] "
+                                        id="of0"/>
+                    <af:commandToolbarButton actionListener="#{bindings.NextUsers.execute}"
+                                             icon="/afr/shuttleright_ena.png"
+                                             shortDesc="#{nls['NEXT_ROW']}"
+                                             id="UsersNext" partialSubmit="true"
+                                             rendered="#{bindings.UsersIterator.rangeStart+bindings.UsersIterator.currentRowIndexInRange+1 lt bindings.UsersIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttleright_dis.png"
+                              rendered="#{!(bindings.UsersIterator.rangeStart+bindings.UsersIterator.currentRowIndexInRange+1 lt bindings.UsersIterator.estimatedRowCount)}"
+                              id="img2"/>
+                    <af:commandToolbarButton actionListener="#{bindings.LastUsers.execute}"
+                                             icon="/afr/shuttlerightall_ena.png"
+                                             shortDesc="#{nls['LAST_ROW']}"
+                                             id="UsersLast" partialSubmit="true"
+                                             rendered="#{bindings.UsersIterator.rangeStart+bindings.UsersIterator.currentRowIndexInRange+1 lt bindings.UsersIterator.estimatedRowCount}"></af:commandToolbarButton>
+                    <af:image source="/afr/shuttlerightall_dis.png"
+                              rendered="#{!(bindings.UsersIterator.rangeStart+bindings.UsersIterator.currentRowIndexInRange+1 lt bindings.UsersIterator.estimatedRowCount)}"
+                              id="img3"/>
+                  </af:panelGroupLayout>
+                  <af:group id="gr0">
+                    <af:commandToolbarButton actionListener="#{CreateUsers.execute}"
+                                             action="CreateUsers"
+                                             icon="/jheadstart/images/newRowInForm.png"
+                                             partialSubmit="true"
+                                             shortDesc="#{nls['NEW_BUTTON_LABEL_USERS']}"
+                                             rendered="#{!pageFlowScope.createModes.CreateUsers and (true) }"
+                                             id="UsersNewButton"></af:commandToolbarButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandToolbarButton text="Print" id="UsersPrint"
+                                             shortDesc="Opens a new tab with printer friendly format.">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                    <af:commandButton action="#{SaveUsers.execute}"
+                                      rendered="#{!pageFlowScope.hideSaveButton}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="UsersSaveButton0"
+                                      partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="UsersCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+          </af:panelHeader>
+          <af:switcher rendered="#{bindings.UsersIterator.findMode!='true'}"
+                       id="UsersSw" defaultFacet="hasRows"
+                       facetName="#{( bindings.UsersIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="UsersNoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="UsersFC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="4"
+                                    id="UsersFI">
+                  <af:inputText id="UsersFirstName"
+                                value="#{bindings.UsersFirstName.inputValue}"
+                                label="#{bindings.UsersFirstName.hints.label}"
+                                required="true"
+                                rows="#{bindings.UsersFirstName.hints.displayHeight}"
+                                columns="#{bindings.UsersFirstName.hints.displayWidth}"
+                                maximumLength="50">
+                    <f:validator binding="#{bindings.UsersFirstName.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="UsersLastName"
+                                value="#{bindings.UsersLastName.inputValue}"
+                                label="#{bindings.UsersLastName.hints.label}"
+                                required="true"
+                                rows="#{bindings.UsersLastName.hints.displayHeight}"
+                                columns="#{bindings.UsersLastName.hints.displayWidth}"
+                                maximumLength="50">
+                    <f:validator binding="#{bindings.UsersLastName.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="UsersMiddleName"
+                                value="#{bindings.UsersMiddleName.inputValue}"
+                                label="#{bindings.UsersMiddleName.hints.label}"
+                                required="#{bindings.UsersMiddleName.hints.mandatory}"
+                                rows="#{bindings.UsersMiddleName.hints.displayHeight}"
+                                columns="#{bindings.UsersMiddleName.hints.displayWidth}"
+                                maximumLength="50">
+                    <f:validator binding="#{bindings.UsersMiddleName.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="UsersAlias"
+                                value="#{bindings.UsersAlias.inputValue}"
+                                label="#{bindings.UsersAlias.hints.label}"
+                                required="#{bindings.UsersAlias.hints.mandatory}"
+                                rows="#{bindings.UsersAlias.hints.displayHeight}"
+                                columns="#{bindings.UsersAlias.hints.displayWidth}"
+                                maximumLength="50">
+                    <f:validator binding="#{bindings.UsersAlias.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="UsersUsername"
+                                value="#{bindings.UsersUsername.inputValue}"
+                                label="#{bindings.UsersUsername.hints.label}"
+                                required="true"
+                                rows="#{bindings.UsersUsername.hints.displayHeight}"
+                                columns="#{bindings.UsersUsername.hints.displayWidth}"
+                                maximumLength="240"
+                                readOnly="#{!(pageFlowScope.createModes.CreateUsers)}">
+                    <f:validator binding="#{bindings.UsersUsername.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="UsersPassword"
+                                value="#{bindings.UsersPassword.inputValue}"
+                                secret="true"
+                                label="#{bindings.UsersPassword.hints.label}"
+                                required="true"
+                                columns="#{bindings.UsersPassword.hints.displayWidth}"
+                                maximumLength="240">
+                    <f:validator binding="#{bindings.UsersPassword.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="UsersDisplayName"
+                                value="#{bindings.UsersDisplayName.inputValue}"
+                                label="#{bindings.UsersDisplayName.hints.label}"
+                                required="true"
+                                rows="#{bindings.UsersDisplayName.hints.displayHeight}"
+                                columns="#{bindings.UsersDisplayName.hints.displayWidth}"
+                                maximumLength="240">
+                    <f:validator binding="#{bindings.UsersDisplayName.validator}"/>
+                  </af:inputText>
+                  <af:inputDate id="UsersLastLoginTime"
+                                value="#{bindings.UsersLastLoginTime.inputValue}"
+                                label="#{bindings.UsersLastLoginTime.hints.label}"
+                                required="#{bindings.UsersLastLoginTime.hints.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.UsersLastLoginTime.hints.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="UsersLastLoginApp"
+                                value="#{bindings.UsersLastLoginApp.inputValue}"
+                                label="#{bindings.UsersLastLoginApp.hints.label}"
+                                required="#{bindings.UsersLastLoginApp.hints.mandatory}"
+                                rows="#{bindings.UsersLastLoginApp.hints.displayHeight}"
+                                columns="#{bindings.UsersLastLoginApp.hints.displayWidth}"
+                                maximumLength="10" readOnly="true"
+                                shortDesc="#{bindings.UsersLastLoginApp.hints.tooltip}">
+                    <f:validator binding="#{bindings.UsersLastLoginApp.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="UsersUserType"
+                                value="#{bindings.UsersUserType.inputValue}"
+                                label="#{bindings.UsersUserType.hints.label}"
+                                required="#{bindings.UsersUserType.hints.mandatory}"
+                                rows="#{bindings.UsersUserType.hints.displayHeight}"
+                                columns="#{bindings.UsersUserType.hints.displayWidth}"
+                                maximumLength="50">
+                    <f:validator binding="#{bindings.UsersUserType.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="UsersEmailAddress"
+                                value="#{bindings.UsersEmailAddress.inputValue}"
+                                label="#{bindings.UsersEmailAddress.hints.label}"
+                                required="#{bindings.UsersEmailAddress.hints.mandatory}"
+                                rows="#{bindings.UsersEmailAddress.hints.displayHeight}"
+                                columns="#{bindings.UsersEmailAddress.hints.displayWidth}"
+                                maximumLength="240">
+                    <f:validator binding="#{bindings.UsersEmailAddress.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="UsersWorkPhone"
+                                value="#{bindings.UsersWorkPhone.inputValue}"
+                                label="#{bindings.UsersWorkPhone.hints.label}"
+                                required="#{bindings.UsersWorkPhone.hints.mandatory}"
+                                rows="#{bindings.UsersWorkPhone.hints.displayHeight}"
+                                columns="#{bindings.UsersWorkPhone.hints.displayWidth}"
+                                maximumLength="50">
+                    <f:validator binding="#{bindings.UsersWorkPhone.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="UsersHomePhone"
+                                value="#{bindings.UsersHomePhone.inputValue}"
+                                label="#{bindings.UsersHomePhone.hints.label}"
+                                required="#{bindings.UsersHomePhone.hints.mandatory}"
+                                rows="#{bindings.UsersHomePhone.hints.displayHeight}"
+                                columns="#{bindings.UsersHomePhone.hints.displayWidth}"
+                                maximumLength="50">
+                    <f:validator binding="#{bindings.UsersHomePhone.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="UsersFax"
+                                value="#{bindings.UsersFax.inputValue}"
+                                label="#{bindings.UsersFax.hints.label}"
+                                required="#{bindings.UsersFax.hints.mandatory}"
+                                rows="#{bindings.UsersFax.hints.displayHeight}"
+                                columns="#{bindings.UsersFax.hints.displayWidth}"
+                                maximumLength="50">
+                    <f:validator binding="#{bindings.UsersFax.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="UsersJobTitle"
+                                value="#{bindings.UsersJobTitle.inputValue}"
+                                label="#{bindings.UsersJobTitle.hints.label}"
+                                required="#{bindings.UsersJobTitle.hints.mandatory}"
+                                rows="#{bindings.UsersJobTitle.hints.displayHeight}"
+                                columns="#{bindings.UsersJobTitle.hints.displayWidth}"
+                                maximumLength="50">
+                    <f:validator binding="#{bindings.UsersJobTitle.validator}"/>
+                  </af:inputText>
+                </af:panelFormLayout>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_USERROLEGRANTS']}"
+                               partialTriggers=" UsersTopLc qsAreaUserRoleGrantsSearchOptions"
+                               id="UserRoleGrantsTopLcSdi"
+                               rendered="#{jhsUserRoles['ADMIN']}"
+                               disabled="#{!jhsUserRoles['ADMIN']}">
+              <af:panelGroupLayout layout="vertical" id="UserRoleGrantsTopLc"
+                                   partialTriggers=" UsersTopLc qsAreaUserRoleGrantsSearchOptions"
+                                   rendered="#{jhsUserRoles['ADMIN']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp3"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g0">
+                  <af:panelGroupLayout id="modelSearchAreaUserRoleGrants"
+                                       rendered="#{!pageFlowScope.createModes.CreateUserRoleGrants and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreaUserRoleGrantsSearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.UserRoleGrantsIteratorQuery.queryDescriptor}"
+                                   model="#{bindings.UserRoleGrantsIteratorQuery.queryModel}"
+                                   queryListener="#{bindings.UserRoleGrantsIteratorQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:selectManyShuttle leadingHeader="Available Roles" size="10"
+                                      trailingHeader="Granted Roles"
+                                      value="#{viewScope.UserRoleGrantsShuttle.selectedKeys}"
+                                      id="UserRoleGrantsSms">
+                  <af:forEach var="rowbinding"
+                              items="#{bindings.ExRolesLookup.rangeSet}">
+                    <af:selectItem label="#{rowbinding.Name}"
+                                   value="#{rowbinding.row.key}" id="si0"/>
+                  </af:forEach>
+                </af:selectManyShuttle>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

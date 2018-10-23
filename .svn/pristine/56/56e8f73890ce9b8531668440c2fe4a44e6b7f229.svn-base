@@ -1,0 +1,1885 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="OpportunitiesPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="OpportunitiesIterator" Binds="PrmOpportunityView1"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="OpportunitiesIteratorPrmOpportunityViewCriteriaAdvQuery"
+                  Binds="OpportunitiesIterator"
+                  Criteria="PrmOpportunityViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="OpportunityNo"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OpportunityAgreementDataIterator"
+              Binds="PrmOpportunityAgreementDataView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OpportunityAgreementDataIteratorPrmOpportunityAgreementDataViewCriteriaQuery"
+                  Binds="OpportunityAgreementDataIterator"
+                  Criteria="PrmOpportunityAgreementDataViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="ContractNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="AgreementDataAttachmentsIterator"
+              Binds="PrmAgreementDataAttachmentView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="AgreementDataAttachmentsIteratorPrmAgreementDataAttachmentViewCriteriaQuery"
+                  Binds="AgreementDataAttachmentsIterator"
+                  Criteria="PrmAgreementDataAttachmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttachmentType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OpportunityTargetsIterator" Binds="PrmOpportunityTargetView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OpportunityTargetsIteratorPrmOpportunityTargetViewCriteriaQuery"
+                  Binds="OpportunityTargetsIterator"
+                  Criteria="PrmOpportunityTargetViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="LongTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OpportunityAttachmentsIterator"
+              Binds="PrmOpportunityAttachmentView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OpportunityAttachmentsIteratorPrmOpportunityAttachmentViewCriteriaQuery"
+                  Binds="OpportunityAttachmentsIterator"
+                  Criteria="PrmOpportunityAttachmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttachmentType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OpportunityActivitiesIterator"
+              Binds="PrmOpportunityActivityView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OpportunityActivitiesIteratorPrmOpportunityActivityViewCriteriaQuery"
+                  Binds="OpportunityActivitiesIterator"
+                  Criteria="PrmOpportunityActivityViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Type"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <variableIterator id="variables">
+      <variable Name="sa3EditLinkVar" Type="String"/>
+    </variableIterator>
+    <iterator id="OpportunityProcessStatusIterator"
+              Binds="PrmOpportunityProcessStatusView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OpportunityProcessStatusIteratorPrmOpportunityProcessStatusViewCriteriaQuery"
+                  Binds="OpportunityProcessStatusIterator"
+                  Criteria="PrmOpportunityProcessStatusViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="StatusType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOpportunityProcessStatusInvoke"
+                  Binds="ExecuteQueryOpportunityProcessStatus"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="OpportunityStatusIterator" Binds="PrmOpportunityStatusView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OpportunityStatusIteratorPrmOpportunityStatusViewCriteriaQuery"
+                  Binds="OpportunityStatusIterator"
+                  Criteria="PrmOpportunityStatusViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="StatusCode"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OpportunityPreResultIterator" Binds="TraxPreResultView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OpportunityPreResultIteratorTraxPreResultViewCriteriaQuery"
+                  Binds="OpportunityPreResultIterator"
+                  Criteria="TraxPreResultViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="OutcomeNo"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOpportunityPreResultInvoke"
+                  Binds="ExecuteQueryOpportunityPreResult" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="OpportunityPreResultTargetIterator"
+              Binds="TraxPreResultTargetView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OpportunityPreResultTargetIteratorTraxPreResultTargetViewCriteriaQuery"
+                  Binds="OpportunityPreResultTargetIterator"
+                  Criteria="TraxPreResultTargetViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="TargetTrackingNo"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOpportunityPreResultTargetInvoke"
+                  Binds="ExecuteQueryOpportunityPreResultTarget"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="OpportunityChangeHistoryIterator"
+              Binds="PrmJuOpportunityView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <invokeAction id="ExecuteQueryOpportunityChangeHistoryInvoke"
+                  Binds="ExecuteQueryOpportunityChangeHistory"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+  </executables>
+  <bindings>
+    <attributeValues id="OppContentOwnerId" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppOpportunityNo" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppAccountNumber" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppAccountName" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppAccountNameLink"
+                     IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppAccountSite" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AccountSite"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OpportunitiesIterator" id="OppCountry"
+          Uses="LOV_Country" StaticList="false"/>
+    <attributeValues id="OppKeyAccountLevel"
+                     IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="KeyAccountLevel"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppName" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppAllianceManager"
+                     IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AllianceManager"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppDescription" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OpportunitiesIterator" id="OppOpportunityType"
+          Uses="LOV_OpportunityType" StaticList="false"/>
+    <list IterBinding="OpportunitiesIterator" id="OppCurrentStatus"
+          Uses="LOV_CurrentStatus" StaticList="false"/>
+    <list IterBinding="OpportunitiesIterator" id="OppReasonLost"
+          Uses="LOV_ReasonLost" StaticList="false"/>
+    <attributeValues id="OppCataloguedCount"
+                     IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppUncataloguedCount"
+                     IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="UncataloguedCount"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OpportunitiesIterator" id="OppCurrentPreStatus"
+          Uses="LOV_CurrentPreStatus" StaticList="false"/>
+    <list IterBinding="OpportunitiesIterator" id="OppCurrentCatalogingStatus"
+          Uses="LOV_CurrentCatalogingStatus" StaticList="false"/>
+    <list IterBinding="OpportunitiesIterator" id="OppCurrentAgreementStatus"
+          Uses="LOV_CurrentAgreementStatus" StaticList="false"/>
+    <attributeValues id="OppProbabilityPct" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="ProbabilityPct"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OpportunitiesIterator" id="OppPriority"
+          Uses="LOV_Priority" StaticList="false"/>
+    <list IterBinding="OpportunitiesIterator" id="OppExpectedPipelines"
+          Uses="LOV_ExpectedPipelines" StaticList="false"/>
+    <list IterBinding="OpportunitiesIterator" id="OppEstimatedCloseQuarter"
+          Uses="LOV_EstimatedCloseQuarter" StaticList="false"/>
+    <attributeValues id="OppAgreementReceivedDate"
+                     IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AgreementReceivedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="OppExclusivitySoughtObtained"
+            IterBinding="OpportunitiesIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ExclusivitySoughtObtained"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="OpportunitiesIterator" id="OppDocumentSigned"
+          Uses="LOV_DocumentSigned" StaticList="false"/>
+    <button id="OppSummonDeepIndexingFlag" IterBinding="OpportunitiesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="SummonDeepIndexingFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="OppOpenAccessFlag" IterBinding="OpportunitiesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="OpenAccessFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="OppSummary" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="Summary"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OpportunitiesIterator" id="OppForm" Uses="LOV_Form"
+          StaticList="false"/>
+    <list IterBinding="OpportunitiesIterator" id="OppType" Uses="LOV_Type"
+          StaticList="false"/>
+    <attributeValues id="OppTechnicalContact"
+                     IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="TechnicalContact"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppCreatedBy" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppCreatedDateSearch"
+                     IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedBySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppCreatedDate" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppLastUpdatedBy" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppLastUpdatedDateSearch"
+                     IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppLastUpdatedDate"
+                     IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OppDocType" IterBinding="OpportunitiesIterator">
+      <AttrNames>
+        <Item Value="DocType"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunitiesTable" IterBinding="OpportunitiesIterator">
+      <nodeDefinition Name="Opportunities"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityView">
+        <AttrNames>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="AccountNumber"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountSite"/>
+          <Item Value="Country"/>
+          <Item Value="KeyAccountLevel"/>
+          <Item Value="Name"/>
+          <Item Value="AllianceManager"/>
+          <Item Value="Description"/>
+          <Item Value="OpportunityType"/>
+          <Item Value="CurrentStatus"/>
+          <Item Value="ReasonLost"/>
+          <Item Value="CataloguedCount"/>
+          <Item Value="UncataloguedCount"/>
+          <Item Value="CurrentPreStatus"/>
+          <Item Value="CurrentCatalogingStatus"/>
+          <Item Value="CurrentAgreementStatus"/>
+          <Item Value="ProbabilityPct"/>
+          <Item Value="Priority"/>
+          <Item Value="ExpectedPipelines"/>
+          <Item Value="EstimatedCloseQuarter"/>
+          <Item Value="AgreementReceivedDate"/>
+          <Item Value="ExclusivitySoughtObtained"/>
+          <Item Value="DocumentSigned"/>
+          <Item Value="SummonDeepIndexingFlag"/>
+          <Item Value="OpenAccessFlag"/>
+          <Item Value="Summary"/>
+          <Item Value="Form"/>
+          <Item Value="Type"/>
+          <Item Value="TechnicalContact"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedBySearch"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedBySearch"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="DocType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunities" IterBinding="OpportunitiesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunities" IterBinding="OpportunitiesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOpportunities" IterBinding="OpportunitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunities" IterBinding="OpportunitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunities"
+            IterBinding="OpportunitiesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="sa0Id" IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0ContractId"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0ContractNumber"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0ContractNumberLink"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0TemplateId"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="TemplateId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0Notes"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0Form"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="Form"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0Status"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="Status"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0Type"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="Type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0Division"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="Division"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0EffectiveDate"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="EffectiveDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0TermLength"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="TermLength"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0CancellationNoticeTerm"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="CancellationNoticeTerm"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0ExpirationDate"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="ExpirationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0AutoRenewTermMonths"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="AutoRenewTermMonths"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0Signatory"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="Signatory"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0ContractSignedDate"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="ContractSignedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0RightsToBeRetained"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="RightsToBeRetained"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0Exclusivity"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="Exclusivity"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0ContentMasterOwner"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="ContentMasterOwner"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0TechnicalContactId"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="TechnicalContactId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0AgreementContactId"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="AgreementContactId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0QaContactId"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="QaContactId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0RoyaltyContactId"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="RoyaltyContactId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0Currency"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="Currency"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0PaymentFrequency"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="PaymentFrequency"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0InterimPaymentTermDays"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="InterimPaymentTermDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0AnnualPaymentTermDays"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="AnnualPaymentTermDays"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="sa0CreateContract" DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="createContractFromOpp"
+                  ReturnName="TracsServiceDataControl.methodResults.createContractFromOpp_TracsServiceDataControl_dataProvider_createContractFromOpp_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="pAgreementId" NDValue="#{bindings.sa0Id.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+    </methodAction>
+    <attributeValues id="sa0CreatedBy"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0CreatedDate"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0LastUpdatedBy"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa0LastUpdatedDate"
+                     IterBinding="OpportunityAgreementDataIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityAgreementDataTable"
+          IterBinding="OpportunityAgreementDataIterator">
+      <nodeDefinition Name="OpportunityAgreementData"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityAgreementDataView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContractId"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="TemplateId"/>
+          <Item Value="Notes"/>
+          <Item Value="Form"/>
+          <Item Value="Status"/>
+          <Item Value="Type"/>
+          <Item Value="Division"/>
+          <Item Value="EffectiveDate"/>
+          <Item Value="TermLength"/>
+          <Item Value="CancellationNoticeTerm"/>
+          <Item Value="ExpirationDate"/>
+          <Item Value="AutoRenewTermMonths"/>
+          <Item Value="Signatory"/>
+          <Item Value="ContractSignedDate"/>
+          <Item Value="RightsToBeRetained"/>
+          <Item Value="Exclusivity"/>
+          <Item Value="ContentMasterOwner"/>
+          <Item Value="TechnicalContactId"/>
+          <Item Value="AgreementContactId"/>
+          <Item Value="QaContactId"/>
+          <Item Value="RoyaltyContactId"/>
+          <Item Value="Currency"/>
+          <Item Value="PaymentFrequency"/>
+          <Item Value="InterimPaymentTermDays"/>
+          <Item Value="AnnualPaymentTermDays"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityAgreementData"
+            IterBinding="OpportunityAgreementDataIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunityAgreementData"
+            IterBinding="OpportunityAgreementDataIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOpportunityAgreementData"
+            IterBinding="OpportunityAgreementDataIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityAgreementData"
+            IterBinding="OpportunityAgreementDataIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunityAgreementData"
+            IterBinding="OpportunityAgreementDataIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityAgreementData}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="AgreementDataAttachmentsName"
+                     IterBinding="AgreementDataAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AgreementDataAttachmentsAttachmentType"
+                     IterBinding="AgreementDataAttachmentsIterator">
+      <AttrNames>
+        <Item Value="AttachmentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AgreementDataAttachmentsAttachmentDL"
+                     IterBinding="AgreementDataAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AgreementDataAttachmentsDescription"
+                     IterBinding="AgreementDataAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AgreementDataAttachmentsFileSize"
+                     IterBinding="AgreementDataAttachmentsIterator">
+      <AttrNames>
+        <Item Value="FileSize"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AgreementDataAttachmentsCreatedBy"
+                     IterBinding="AgreementDataAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AgreementDataAttachmentsCreatedDate"
+                     IterBinding="AgreementDataAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AgreementDataAttachmentsLastUpdatedBy"
+                     IterBinding="AgreementDataAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AgreementDataAttachmentsLastUpdatedDate"
+                     IterBinding="AgreementDataAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="AgreementDataAttachmentsTable"
+          IterBinding="AgreementDataAttachmentsIterator">
+      <nodeDefinition Name="AgreementDataAttachments"
+                      DefName="com.pq.tracs.model.vo.PrmAgreementDataAttachmentView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="AttachmentType"/>
+          <Item Value="Attachment"/>
+          <Item Value="Description"/>
+          <Item Value="FileSize"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstAgreementDataAttachments"
+            IterBinding="AgreementDataAttachmentsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousAgreementDataAttachments"
+            IterBinding="AgreementDataAttachmentsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextAgreementDataAttachments"
+            IterBinding="AgreementDataAttachmentsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastAgreementDataAttachments"
+            IterBinding="AgreementDataAttachmentsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyAgreementDataAttachments"
+            IterBinding="AgreementDataAttachmentsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrAgreementDataAttachments}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="sa1TitleId" IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1TargetTrackingNo"
+                     IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1TargetTrackingNoLink"
+                     IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1CatalogNumberLink"
+                     IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1CatalogNumber"
+                     IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1LongTitle" IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OpportunityTargetsIterator"
+          id="sa1PrimaryPmClass" Uses="LOV_PrimaryPmClass" StaticList="false"/>
+    <list IterBinding="OpportunityTargetsIterator"
+          id="sa1TargetStatus" Uses="LOV_TargetStatus" StaticList="false"/>
+    <attributeValues id="sa1PrdId" IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="PrdId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1ProductName"
+                     IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="ProductName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OpportunityTargetsIterator"
+          id="sa1TargetPriority" Uses="LOV_TargetPriority" StaticList="false"/>
+    <list IterBinding="OpportunityTargetsIterator"
+          id="sa1TargetType" Uses="LOV_TargetType" StaticList="false"/>
+    <button id="sa1AiTargetingFlag" IterBinding="OpportunityTargetsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="AiTargetingFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="sa1AddedDate" IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1RemovedDate"
+                     IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1CreatedBy" IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1CreatedDate"
+                     IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1LastUpdatedBy"
+                     IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1LastUpdatedDate"
+                     IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1AddedDate1"
+                     IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="AddedDate1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa1RemovedDate1"
+                     IterBinding="OpportunityTargetsIterator">
+      <AttrNames>
+        <Item Value="RemovedDate1"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityTargetsTable" IterBinding="OpportunityTargetsIterator">
+      <nodeDefinition Name="OpportunityTargets"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityTargetView">
+        <AttrNames>
+          <Item Value="TitleId"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="PrimaryPmClass"/>
+          <Item Value="TargetStatus"/>
+          <Item Value="PrdId"/>
+          <Item Value="ProductName"/>
+          <Item Value="TargetPriority"/>
+          <Item Value="TargetType"/>
+          <Item Value="AiTargetingFlag"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="AddedDate1"/>
+          <Item Value="RemovedDate1"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityTargets"
+            IterBinding="OpportunityTargetsIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousOpportunityTargets"
+            IterBinding="OpportunityTargetsIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextOpportunityTargets" IterBinding="OpportunityTargetsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityTargets" IterBinding="OpportunityTargetsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunityTargets"
+            IterBinding="OpportunityTargetsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityTargets}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="sa2Name" IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2AttachmentType"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="AttachmentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2Attachment"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2AttachmentDL"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2Description"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2FileSize"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="FileSize"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2CreatedBy"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2CreatedDate"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2LastUpdatedBy"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa2LastUpdatedDate"
+                     IterBinding="OpportunityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityAttachmentsTable"
+          IterBinding="OpportunityAttachmentsIterator">
+      <nodeDefinition Name="OpportunityAttachments"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityAttachmentView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="AttachmentType"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Description"/>
+          <Item Value="FileSize"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityAttachments}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOpportunityAttachments"
+            IterBinding="OpportunityAttachmentsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="sa3Id" IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3JhsUsersId"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="JhsUsersId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3ContactId"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="ContactId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3EditLink" IterBinding="variables">
+      <AttrNames>
+        <Item Value="sa3EditLinkVar"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="OpportunityActivitiesIterator"
+                  id="sa3Owner" Uses="LOV_Owner"/>
+    <list IterBinding="OpportunityActivitiesIterator"
+          id="sa3Type" Uses="LOV_Type" StaticList="false"/>
+    <list IterBinding="OpportunityActivitiesIterator"
+          id="sa3SubType" Uses="LOV_SubType" StaticList="false"/>
+    <attributeValues id="sa3Description"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OpportunityActivitiesIterator"
+          id="sa3Status" Uses="LOV_Status" StaticList="false"/>
+    <list IterBinding="OpportunityActivitiesIterator"
+          id="sa3Priority" Uses="LOV_Priority" StaticList="false"/>
+    <attributeValues id="sa3ContactName"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="ContactName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3DueDate"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="DueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3ExpectedStartDate"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="ExpectedStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3ActualStartDate"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="ActualStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3CompletionDate"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="CompletionDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3HoursSpent"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="HoursSpent"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3Notes" IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="sa3PrimaryFlag" IterBinding="OpportunityActivitiesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="sa3CreatedBy"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3CreatedDate"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3LastUpdatedBy"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3LastUpdatedDate"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3AddedDate"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3UserType"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="UserType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa3AddDate"
+                     IterBinding="OpportunityActivitiesIterator">
+      <AttrNames>
+        <Item Value="AddDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityActivitiesTable"
+          IterBinding="OpportunityActivitiesIterator">
+      <nodeDefinition Name="OpportunityActivities"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityActivityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="JhsUsersId"/>
+          <Item Value="ContactId"/>
+          <Item Value="Owner"/>
+          <Item Value="Type"/>
+          <Item Value="SubType"/>
+          <Item Value="Description"/>
+          <Item Value="Status"/>
+          <Item Value="Priority"/>
+          <Item Value="ContactName"/>
+          <Item Value="DueDate"/>
+          <Item Value="ExpectedStartDate"/>
+          <Item Value="ActualStartDate"/>
+          <Item Value="CompletionDate"/>
+          <Item Value="HoursSpent"/>
+          <Item Value="Notes"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="AddedDate"/>
+          <Item Value="UserType"/>
+          <Item Value="AddDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityActivities"
+            IterBinding="OpportunityActivitiesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunityActivities"
+            IterBinding="OpportunityActivitiesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOpportunityActivities"
+            IterBinding="OpportunityActivitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityActivities"
+            IterBinding="OpportunityActivitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunityActivities"
+            IterBinding="OpportunityActivitiesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityActivities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOpportunityActivities"
+            IterBinding="OpportunityActivitiesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="ExecuteQueryOpportunityProcessStatus"
+            IterBinding="OpportunityProcessStatusIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <list IterBinding="OpportunityProcessStatusIterator"
+          id="sa4StatusType" Uses="LOV_StatusType" StaticList="false"/>
+    <list IterBinding="OpportunityProcessStatusIterator"
+          id="sa4StatusCode" Uses="LOV_StatusCode" StaticList="false"/>
+    <attributeValues id="sa4StatusDate"
+                     IterBinding="OpportunityProcessStatusIterator">
+      <AttrNames>
+        <Item Value="StatusDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa4StatusNote"
+                     IterBinding="OpportunityProcessStatusIterator">
+      <AttrNames>
+        <Item Value="StatusNote"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa4CreatedBy"
+                     IterBinding="OpportunityProcessStatusIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa4CreatedDate"
+                     IterBinding="OpportunityProcessStatusIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa4LastUpdatedBy"
+                     IterBinding="OpportunityProcessStatusIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa4LastUpdatedDate"
+                     IterBinding="OpportunityProcessStatusIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityProcessStatusTable"
+          IterBinding="OpportunityProcessStatusIterator">
+      <nodeDefinition Name="OpportunityProcessStatus"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityProcessStatusView">
+        <AttrNames>
+          <Item Value="StatusType"/>
+          <Item Value="StatusCode"/>
+          <Item Value="StatusDate"/>
+          <Item Value="StatusNote"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityProcessStatus"
+            IterBinding="OpportunityProcessStatusIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunityProcessStatus"
+            IterBinding="OpportunityProcessStatusIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOpportunityProcessStatus"
+            IterBinding="OpportunityProcessStatusIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityProcessStatus"
+            IterBinding="OpportunityProcessStatusIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunityProcessStatus"
+            IterBinding="OpportunityProcessStatusIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityProcessStatus}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="DeleteOpportunityProcessStatus"
+            IterBinding="OpportunityProcessStatusIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="OpportunityStatusIterator" id="sa5StatusCode"
+          Uses="LOV_StatusCode" StaticList="false"/>
+    <attributeValues id="sa5StatusDate" IterBinding="OpportunityStatusIterator">
+      <AttrNames>
+        <Item Value="StatusDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa5StatusNote" IterBinding="OpportunityStatusIterator">
+      <AttrNames>
+        <Item Value="StatusNote"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa5CreatedBy" IterBinding="OpportunityStatusIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa5CreatedDate"
+                     IterBinding="OpportunityStatusIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa5LastUpdatedBy"
+                     IterBinding="OpportunityStatusIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa5LastUpdatedDate"
+                     IterBinding="OpportunityStatusIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityStatusTable" IterBinding="OpportunityStatusIterator">
+      <nodeDefinition Name="OpportunityStatus"
+                      DefName="com.pq.tracs.model.ro.PrmOpportunityStatusView">
+        <AttrNames>
+          <Item Value="StatusCode"/>
+          <Item Value="StatusDate"/>
+          <Item Value="StatusNote"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityStatus" IterBinding="OpportunityStatusIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunityStatus"
+            IterBinding="OpportunityStatusIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextOpportunityStatus" IterBinding="OpportunityStatusIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityStatus" IterBinding="OpportunityStatusIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunityStatus"
+            IterBinding="OpportunityStatusIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityStatus}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryOpportunityPreResult"
+            IterBinding="OpportunityPreResultIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="sa7OutcomeNo"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="OutcomeNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PreBatchId"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PreBatchId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7ChildId" IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="ChildId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PqPlatform"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PqPlatform"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PqMfgFlow"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PqMfgFlow"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PqReceipt"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PqReceipt"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7IlluminaPlatform"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="IlluminaPlatform"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7IlluminaMfgFlow"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="IlluminaMfgFlow"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7IlluminaReceipt"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="IlluminaReceipt"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PrefImageStorage"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PrefImageStorage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7MfgProcess"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="MfgProcess"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7RampType"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="RampType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7OutcomeNotes"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="OutcomeNotes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7DatePreCompleted"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="DatePreCompleted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PrePerformedBy"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PrePerformedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PreTiming"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PreTiming"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PqTargeted"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PqTargeted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7IlluminaTargeted"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="IlluminaTargeted"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7Abstract11"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="Abstract11"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7Indexing"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="Indexing"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7UnstructuredText"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="UnstructuredText"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7Fulltext"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="Fulltext"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7TextAndGraphics"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="TextAndGraphics"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7ArticleImage"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="ArticleImage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7FullPageImage"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="FullPageImage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7CitationReference"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="CitationReference"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7MultimediaVideo"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="MultimediaVideo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7MultimediaTextBased"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="MultimediaTextBased"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7IllustrataObjects"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="IllustrataObjects"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PreRequestDate"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PreRequestDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7PreRequestedBy"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="PreRequestedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7CreatedBy"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7CreatedDate"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7LastUpdatedBy"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa7LastUpdatedDate"
+                     IterBinding="OpportunityPreResultIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityPreResultTable"
+          IterBinding="OpportunityPreResultIterator">
+      <nodeDefinition Name="OpportunityPreResult"
+                      DefName="com.pq.tracs.model.vo.TraxPreResultView">
+        <AttrNames>
+          <Item Value="OutcomeNo"/>
+          <Item Value="PreBatchId"/>
+          <Item Value="ChildId"/>
+          <Item Value="PqPlatform"/>
+          <Item Value="PqMfgFlow"/>
+          <Item Value="PqReceipt"/>
+          <Item Value="IlluminaPlatform"/>
+          <Item Value="IlluminaMfgFlow"/>
+          <Item Value="IlluminaReceipt"/>
+          <Item Value="PrefImageStorage"/>
+          <Item Value="MfgProcess"/>
+          <Item Value="RampType"/>
+          <Item Value="OutcomeNotes"/>
+          <Item Value="DatePreCompleted"/>
+          <Item Value="PrePerformedBy"/>
+          <Item Value="PreTiming"/>
+          <Item Value="PqTargeted"/>
+          <Item Value="IlluminaTargeted"/>
+          <Item Value="Abstract11"/>
+          <Item Value="Indexing"/>
+          <Item Value="UnstructuredText"/>
+          <Item Value="Fulltext"/>
+          <Item Value="TextAndGraphics"/>
+          <Item Value="ArticleImage"/>
+          <Item Value="FullPageImage"/>
+          <Item Value="CitationReference"/>
+          <Item Value="MultimediaVideo"/>
+          <Item Value="MultimediaTextBased"/>
+          <Item Value="IllustrataObjects"/>
+          <Item Value="PreRequestDate"/>
+          <Item Value="PreRequestedBy"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityPreResult"
+            IterBinding="OpportunityPreResultIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunityPreResult"
+            IterBinding="OpportunityPreResultIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOpportunityPreResult"
+            IterBinding="OpportunityPreResultIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityPreResult"
+            IterBinding="OpportunityPreResultIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunityPreResult"
+            IterBinding="OpportunityPreResultIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityPreResult}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryOpportunityPreResultTarget"
+            IterBinding="OpportunityPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="oprtTargetTrackingNo"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="oprtCatalogNumber"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="oprtLongTitle"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="oprtCreatedBy"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="oprtCreatedDate"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="oprtLastUpdatedBy"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="oprtLastUpdatedDate"
+                     IterBinding="OpportunityPreResultTargetIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityPreResultTargetTable"
+          IterBinding="OpportunityPreResultTargetIterator">
+      <nodeDefinition Name="OpportunityPreResultTarget"
+                      DefName="com.pq.tracs.model.vo.TraxPreResultTargetView">
+        <AttrNames>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityPreResultTarget"
+            IterBinding="OpportunityPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunityPreResultTarget"
+            IterBinding="OpportunityPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOpportunityPreResultTarget"
+            IterBinding="OpportunityPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityPreResultTarget"
+            IterBinding="OpportunityPreResultTargetIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunityPreResultTarget"
+            IterBinding="OpportunityPreResultTargetIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityPreResultTarget}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryOpportunityChangeHistory"
+            IterBinding="OpportunityChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="sa6Id" IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6ContentOwnerId"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6PrmOpportunityId"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PrmOpportunityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6JournaledUser"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="JournaledUser"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6JournaledDate"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="JournaledDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6OpportunityNo"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6Name"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6Description"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6OpportunityType"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="OpportunityType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6CurrentStatus"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CurrentStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6ReasonLost"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ReasonLost"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6CurrentPreStatus"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CurrentPreStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6CurrentCatalogingStatus"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CurrentCatalogingStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6CurrentAgreementStatus"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CurrentAgreementStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6ProbabilityPct"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ProbabilityPct"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6Priority"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Priority"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6ExpectedPipelines"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ExpectedPipelines"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6EstimatedCloseQuarter"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="EstimatedCloseQuarter"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6AgreementReceivedDate"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="AgreementReceivedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6ExclusivitySoughtObtained"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ExclusivitySoughtObtained"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6DocumentSigned"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="DocumentSigned"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6SummonDeepIndexingFlag"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="SummonDeepIndexingFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6Summary"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Summary"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6CreatedBy"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6CreatedDate"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6LastUpdatedBy"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sa6LastUpdatedDate"
+                     IterBinding="OpportunityChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OpportunityChangeHistoryTable"
+          IterBinding="OpportunityChangeHistoryIterator">
+      <nodeDefinition Name="OpportunityChangeHistory"
+                      DefName="com.pq.tracs.model.vo.PrmJuOpportunityView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="PrmOpportunityId"/>
+          <Item Value="JournaledUser"/>
+          <Item Value="JournaledDate"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="Name"/>
+          <Item Value="Description"/>
+          <Item Value="OpportunityType"/>
+          <Item Value="CurrentStatus"/>
+          <Item Value="ReasonLost"/>
+          <Item Value="CurrentPreStatus"/>
+          <Item Value="CurrentCatalogingStatus"/>
+          <Item Value="CurrentAgreementStatus"/>
+          <Item Value="ProbabilityPct"/>
+          <Item Value="Priority"/>
+          <Item Value="ExpectedPipelines"/>
+          <Item Value="EstimatedCloseQuarter"/>
+          <Item Value="AgreementReceivedDate"/>
+          <Item Value="ExclusivitySoughtObtained"/>
+          <Item Value="DocumentSigned"/>
+          <Item Value="SummonDeepIndexingFlag"/>
+          <Item Value="Summary"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOpportunityChangeHistory"
+            IterBinding="OpportunityChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOpportunityChangeHistory"
+            IterBinding="OpportunityChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOpportunityChangeHistory"
+            IterBinding="OpportunityChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOpportunityChangeHistory"
+            IterBinding="OpportunityChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOpportunityChangeHistory"
+            IterBinding="OpportunityChangeHistoryIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOpportunityChangeHistory}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

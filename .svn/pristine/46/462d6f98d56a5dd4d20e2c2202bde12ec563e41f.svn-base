@@ -1,0 +1,2783 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="OVRsPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty, BRUSER, BR'}"/>
+  </parameters>
+  <executables>
+    <iterator id="OVRsIterator" Binds="TitleRecordView2"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="OVRsIteratorTitleRecordViewCriteriaAdvQuery"
+                  Binds="OVRsIterator" Criteria="TitleRecordViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="PmTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOVRsInvoke" Binds="ExecuteQueryOVRs"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <variableIterator id="variables">
+      <variable Name="OVRSpacer1Var" Type="String"/>
+      <variable Name="OVRSpacer2Var" Type="String"/>
+      <variable Name="s3eNewURLVar" Type="String"/>
+    </variableIterator>
+    <iterator id="OvrDeliveryRightsIterator" Binds="DeliveryRightView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrDeliveryRightsIteratorDeliveryRightViewCriteriaQuery"
+                  Binds="OvrDeliveryRightsIterator"
+                  Criteria="DeliveryRightViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="RuleNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOvrDeliveryRightsInvoke"
+                  Binds="ExecuteQueryOvrDeliveryRights" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="OvrHistoryIterator" Binds="TitleRecordHistoryView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrHistoryIteratorTitleRecordHistoryViewCriteriaQuery"
+                  Binds="OvrHistoryIterator"
+                  Criteria="TitleRecordHistoryViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="PmTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <invokeAction id="applyBindParamsOvrRightsInvoke"
+                  Binds="applyBindParamsOvrRights" Refresh="always"/>
+    <iterator id="OvrRightsIterator" Binds="TraxTitleRecordRightView4"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrRightsIteratorTraxTitleRecordRightViewCriteriaQuery"
+                  Binds="OvrRightsIterator"
+                  Criteria="TraxTitleRecordRightViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="RuleNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="RightsTitleRecordRightCategoryIterator"
+              Binds="TraxTitleRecRightCategoryView4"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="RightsTitleRecordRightCategoryIteratorTraxTitleRecRightCategoryViewCriteriaQuery"
+                  Binds="RightsTitleRecordRightCategoryIterator"
+                  Criteria="TraxTitleRecRightCategoryViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CategoryId"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <invokeAction id="applyBindParamsGenerationMethodLookupInvoke"
+                  Binds="applyBindParamsGenerationMethodLookup"
+                  Refresh="always"/>
+    <iterator id="GenerationMethodLookupIterator" Binds="GenerationMethodLookup"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+    <iterator id="OvrBlockingRuleDetailsIterator" Binds="TraxOvrBrDetailsView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrBlockingRuleDetailsIteratorTraxOvrBrDetailsViewCriteriaQuery"
+                  Binds="OvrBlockingRuleDetailsIterator"
+                  Criteria="TraxOvrBrDetailsViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Market"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOvrBlockingRuleDetailsInvoke"
+                  Binds="ExecuteQueryOvrBlockingRuleDetails"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="applyBindParamsOvrRestrictionsInvoke"
+                  Binds="applyBindParamsOvrRestrictions" Refresh="always"/>
+    <iterator id="OvrRestrictionsIterator"
+              Binds="TraxTitleRecordRestrictionsView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrRestrictionsIteratorTraxTitleRecordRightViewCriteriaQuery"
+                  Binds="OvrRestrictionsIterator"
+                  Criteria="TraxTitleRecordRightViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="RuleNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="RestrictionsTitleRecordRightCategoryIterator"
+              Binds="TraxTitleRecRightCategoryView6"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="RestrictionsTitleRecordRightCategoryIteratorTraxTitleRecRightCategoryViewCriteriaQuery"
+                  Binds="RestrictionsTitleRecordRightCategoryIterator"
+                  Criteria="TraxTitleRecRightCategoryViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CategoryId"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryRestrictionsTitleRecordRightCategoryInvoke"
+                  Binds="ExecuteQueryRestrictionsTitleRecordRightCategory"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="OvrLegacyDataIterator" Binds="TitleRecordLegacyDataView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrLegacyDataIteratorTitleRecordLegacyDataViewCriteriaQuery"
+                  Binds="OvrLegacyDataIterator"
+                  Criteria="TitleRecordLegacyDataViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="LegacyValue"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OvrPMClassesIterator" Binds="TitleRecordPmClassView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrPMClassesIteratorTitleRecordPmClassViewCriteriaQuery"
+                  Binds="OvrPMClassesIterator"
+                  Criteria="TitleRecordPmClassViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="PmClass"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OvrClassificationsIterator" Binds="ClassificationView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrClassificationsIteratorClassificationViewCriteriaQuery"
+                  Binds="OvrClassificationsIterator"
+                  Criteria="ClassificationViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="ClassificationNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OvrSchedulesIterator" Binds="TitleRecordScheduleView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrSchedulesIteratorTitleRecordScheduleViewCriteriaQuery"
+                  Binds="OvrSchedulesIterator"
+                  Criteria="TitleRecordScheduleViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="PublicationFrequency"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OvrVaryingFormsIterator" Binds="VaryingFormView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrVaryingFormsIteratorVaryingFormViewCriteriaQuery"
+                  Binds="OvrVaryingFormsIterator"
+                  Criteria="VaryingFormViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="TypeOfTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OvrSubjectsIterator" Binds="TitleSubjectView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrSubjectsIteratorTitleSubjectViewCriteriaQuery"
+                  Binds="OvrSubjectsIterator"
+                  Criteria="TitleSubjectViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="SubjectType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OvrLanguagesIterator" Binds="TitleLanguageView3"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrLanguagesIteratorTitleLanguageViewCriteriaQuery"
+                  Binds="OvrLanguagesIterator"
+                  Criteria="TitleLanguageViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="LanguageMeaning2"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OvrBrowseTypesIterator" Binds="OvrBrowseTypeView1"
+              DataControl="TracsServiceDataControl" RangeSize="2"/>
+    <searchRegion id="OvrBrowseTypesIteratorOvrBrowseTypeViewCriteriaQuery"
+                  Binds="OvrBrowseTypesIterator"
+                  Criteria="OvrBrowseTypeViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="BrowseType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OvrSubjectVerticalsIterator" Binds="SubjectVerticalView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrSubjectVerticalsIteratorSubjectVerticalViewCriteriaQuery"
+                  Binds="OvrSubjectVerticalsIterator"
+                  Criteria="SubjectVerticalViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="SubjectVertical"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="OvrPublishersIterator" Binds="OvrPublisherView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrPublishersIteratorOvrPublisherViewCriteriaQuery"
+                  Binds="OvrPublishersIterator"
+                  Criteria="OvrPublisherViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="PublisherId"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOvrPublishersInvoke"
+                  Binds="ExecuteQueryOvrPublishers" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="OVRAttributesIterator" Binds="TraxOvrAttributeView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OVRAttributesIteratorQuery" Binds="OVRAttributesIterator"
+                  Criteria="__ImplicitViewCriteria__"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttributeType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOVRAttributesInvoke"
+                  Binds="ExecuteQueryOVRAttributes" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="OvrMStarIntegrationIterator" Binds="IntegrationQueueROView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrMStarIntegrationIteratorIntegrationQueueROViewCriteriaQuery"
+                  Binds="OvrMStarIntegrationIterator"
+                  Criteria="IntegrationQueueROViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="TargetSystem"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="IntegrationMessagesIterator" Binds="IntegrationMessageROView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <iterator id="OvrChangeHistoryIterator" Binds="TraxJuTitleRecordView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <invokeAction id="ExecuteQueryOvrChangeHistoryInvoke"
+                  Binds="ExecuteQueryOvrChangeHistory" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="OvrRightsNoteIterator" Binds="TraxOvrRightsNoteView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrRightsNoteIteratorTraxOvrRightsNoteViewCriteriaQuery"
+                  Binds="OvrRightsNoteIterator"
+                  Criteria="TraxOvrRightsNoteViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="NoteText"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOvrRightsNoteInvoke"
+                  Binds="ExecuteQueryOvrRightsNote" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="OvrLegacyContractNotesIterator"
+              Binds="TraxOvrLegacyContractNotesView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrLegacyContractNotesIteratorTraxOvrLegacyContractNotesViewCriteriaQuery"
+                  Binds="OvrLegacyContractNotesIterator"
+                  Criteria="TraxOvrLegacyContractNotesViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="LegacyContractNotes"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOvrLegacyContractNotesInvoke"
+                  Binds="ExecuteQueryOvrLegacyContractNotes"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="OvrCSCutoverIterator" Binds="TraxOvrCSCutoverView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="OvrCSCutoverIteratorTraxOvrCSCutoverViewCriteriaQuery"
+                  Binds="OvrCSCutoverIterator"
+                  Criteria="TraxOvrCSCutoverViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="ContentSourceCutover"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryOvrCSCutoverInvoke"
+                  Binds="ExecuteQueryOvrCSCutover" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+  </executables>
+  <bindings>
+    <action id="ExecuteQueryOVRs" IterBinding="OVRsIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="OVRId" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRTitleId" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRCatalogNumberLink" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="OVRsIterator"
+                  id="OVRCatalogNumber" Uses="LOV_CatalogNumber"/>
+    <attributeValues id="OVROvrID" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OVRsIterator" id="OVRContentSource"
+          Uses="LOV_ContentSource" StaticList="false"/>
+    <attributeValues id="OVRPmid" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="Pmid"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRPmTitle" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="PmTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRCopyOfPmTitle" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="PmTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRSubTitle" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="SubTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRSortTitle" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="SortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRCopyOfSortTitle" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="SortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVREdition" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="Edition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRQualifier" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="Qualifier"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRPartNumber" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="PartNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRPartName" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="PartName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRPublisherName" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OVRsIterator" id="OVRPrimarySourceType"
+          Uses="LOV_PrimarySourceType" StaticList="false"/>
+    <list IterBinding="OVRsIterator" id="OVRK12SourceType"
+          Uses="LOV_K12SourceType" StaticList="false"/>
+    <list IterBinding="OVRsIterator" id="OVRSecondarySourceType"
+          Uses="LOV_SecondarySourceType" StaticList="false"/>
+    <list IterBinding="OVRsIterator" id="OVRSourceType" Uses="LOV_SourceType"
+          StaticList="false"/>
+    <button id="OVRBlockByPubFlag" IterBinding="OVRsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="BlockByPubFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="OVRTranslationFlag" IterBinding="OVRsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="TranslationFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="OVRPubSearchAlertFlag" IterBinding="OVRsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PubSearchAlertFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="OVRsIterator" id="OVRVaultName" Uses="LOV_VaultName"
+          StaticList="false"/>
+    <attributeValues id="OVRSpacer1" IterBinding="variables">
+      <AttrNames>
+        <Item Value="OVRSpacer1Var"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OVRsIterator" id="OVRPmType" Uses="LOV_PmType"
+          StaticList="false"/>
+    <list IterBinding="OVRsIterator" id="OVRPmGroups" Uses="LOV_PmGroups"
+          StaticList="false"/>
+    <list IterBinding="OVRsIterator" id="OVRPmFamily" Uses="LOV_PmFamily"
+          StaticList="false"/>
+    <list IterBinding="OVRsIterator" id="OVRManufacturingProcess"
+          Uses="LOV_ManufacturingProcess" StaticList="false"/>
+    <attributeValues id="OVRJournalCode" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="JournalCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRJCodeCount" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="Jcodecount"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OVRsIterator" id="OVRImageStorage"
+          Uses="LOV_ImageStorage" StaticList="false"/>
+    <list IterBinding="OVRsIterator" id="OVRAsciiStorage"
+          Uses="LOV_AsciiStorage" StaticList="false"/>
+    <attributeValues id="OVRSpacer2" IterBinding="variables">
+      <AttrNames>
+        <Item Value="OVRSpacer2Var"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="OVRDocUsageRoyaltiesFlag" IterBinding="OVRsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="DocUsageRoyaltiesFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="OVRsIterator" id="OVRCoverImageType"
+          Uses="LOV_CoverImageType" StaticList="false"/>
+    <attributeValues id="OVRCoverImageLocationId" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="CoverImageLocationId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="OVRsIterator"
+                  id="OVRCoverImageLocation" Uses="LOV_CoverImageLocation"/>
+    <attributeValues id="OVRAltRightsTitleRecordId" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="AltRightsTitleRecordId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="OVRsIterator"
+                  id="OVRAltRightsOvrId" Uses="LOV_Altrightsovrid"/>
+    <button id="OVRAltRightsFlag" IterBinding="OVRsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="Altrightsflag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="OVRCblId" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="CblId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OVRsIterator" id="OVRCountryOfPublication"
+          Uses="LOV_CountryOfPublication" StaticList="false"/>
+    <button id="OVROkForExportFlag" IterBinding="OVRsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="OkForExportFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="OVRDoNotUse" IterBinding="OVRsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="DoNotUse"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="OVRsIterator" id="OVRGenerationMethod"
+          Uses="LOV_GenerationMethod" StaticList="false"/>
+    <attributeValues id="OVRCreatedBy" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRCreatedDate" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRCreatedDateSearch" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="CreatedBySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRLastUpdatedBy" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRLastUpdatedDate" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRLastUpdateDateSearch" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="LastUpdateBySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OVRsIterator" id="OVRAutogenRuleSet"
+          Uses="LOV_AutogenRuleSet" StaticList="false"/>
+    <list IterBinding="OVRsIterator" id="OVRContentModel"
+          Uses="LOV_ContentModel" StaticList="false"/>
+    <list IterBinding="OVRsIterator" id="OVRContentSourceCutover"
+          Uses="LOV_ContentSourceCutover" StaticList="false"/>
+    <attributeValues id="OVRCsCutoverCreatedDate" IterBinding="OVRsIterator">
+      <AttrNames>
+        <Item Value="CsCutoverCreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OVRsIterator" id="OVRPublicAccessContent"
+          Uses="LOV_PublicAccessContent" StaticList="false"/>
+    <button id="OVRUnstructuredFlag" IterBinding="OVRsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="UnstructuredFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <tree id="OVRsTable" IterBinding="OVRsIterator">
+      <nodeDefinition Name="OVRs"
+                      DefName="com.pq.tracs.model.dao.TitleRecordView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="TitleId"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="OvrId"/>
+          <Item Value="ContentSource"/>
+          <Item Value="Pmid"/>
+          <Item Value="PmTitle"/>
+          <Item Value="PmTitle"/>
+          <Item Value="PmTitle"/>
+          <Item Value="PmTitle"/>
+          <Item Value="SubTitle"/>
+          <Item Value="SortTitle"/>
+          <Item Value="SortTitle"/>
+          <Item Value="SortTitle"/>
+          <Item Value="SortTitle"/>
+          <Item Value="Edition"/>
+          <Item Value="Qualifier"/>
+          <Item Value="PartNumber"/>
+          <Item Value="PartName"/>
+          <Item Value="Name"/>
+          <Item Value="PrimarySourceType"/>
+          <Item Value="K12SourceType"/>
+          <Item Value="SecondarySourceType"/>
+          <Item Value="SourceType"/>
+          <Item Value="BlockByPubFlag"/>
+          <Item Value="TranslationFlag"/>
+          <Item Value="PubSearchAlertFlag"/>
+          <Item Value="VaultName"/>
+          <Item Value="PmType"/>
+          <Item Value="PmGroups"/>
+          <Item Value="PmFamily"/>
+          <Item Value="ManufacturingProcess"/>
+          <Item Value="JournalCode"/>
+          <Item Value="Jcodecount"/>
+          <Item Value="ImageStorage"/>
+          <Item Value="AsciiStorage"/>
+          <Item Value="DocUsageRoyaltiesFlag"/>
+          <Item Value="CoverImageType"/>
+          <Item Value="CoverImageLocationId"/>
+          <Item Value="CoverImageLocation"/>
+          <Item Value="AltRightsTitleRecordId"/>
+          <Item Value="Altrightsovrid"/>
+          <Item Value="Altrightsflag"/>
+          <Item Value="CblId"/>
+          <Item Value="CountryOfPublication"/>
+          <Item Value="OkForExportFlag"/>
+          <Item Value="DoNotUse"/>
+          <Item Value="GenerationMethod"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="CreatedBySearch"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="LastUpdateBySearch"/>
+          <Item Value="AutogenRuleSet"/>
+          <Item Value="ContentModel"/>
+          <Item Value="ContentSourceCutover"/>
+          <Item Value="CsCutoverCreatedDate"/>
+          <Item Value="PublicAccessContent"/>
+          <Item Value="UnstructuredFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOVRs" IterBinding="OVRsIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousOVRs" IterBinding="OVRsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOVRs" IterBinding="OVRsIterator" RequiresUpdateModel="true"
+            Action="next"/>
+    <action id="LastOVRs" IterBinding="OVRsIterator" RequiresUpdateModel="true"
+            Action="last"/>
+    <action id="SetCurrentRowWithKeyOVRs" IterBinding="OVRsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{pageFlowScope.rowKeyStrOVRs}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOVRs" IterBinding="OVRsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOVRs" IterBinding="OVRsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryOvrDeliveryRights"
+            IterBinding="OvrDeliveryRightsIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues id="s30Id" IterBinding="OvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s30RuleNumber" IterBinding="OvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="RuleNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s30PublicationStartDate"
+                     IterBinding="OvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="PublicationStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s30PublicationEndDate"
+                     IterBinding="OvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="PublicationEndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s30EmbargoDays"
+                     IterBinding="OvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="EmbargoDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s30DeliveryMethod"
+                     IterBinding="OvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="DeliveryMethod"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s30DeliveryFormat"
+                     IterBinding="OvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="DeliveryFormat"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s30Permit" IterBinding="OvrDeliveryRightsIterator">
+      <AttrNames>
+        <Item Value="Permit"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrDeliveryRightsTable" IterBinding="OvrDeliveryRightsIterator">
+      <nodeDefinition Name="OvrDeliveryRights"
+                      DefName="com.pq.tracs.model.ro.DeliveryRightView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="RuleNumber"/>
+          <Item Value="PublicationStartDate"/>
+          <Item Value="PublicationEndDate"/>
+          <Item Value="EmbargoDays"/>
+          <Item Value="DeliveryMethod"/>
+          <Item Value="DeliveryFormat"/>
+          <Item Value="Permit"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrDeliveryRights" IterBinding="OvrDeliveryRightsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrDeliveryRights"
+            IterBinding="OvrDeliveryRightsIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextOvrDeliveryRights" IterBinding="OvrDeliveryRightsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrDeliveryRights" IterBinding="OvrDeliveryRightsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrDeliveryRights"
+            IterBinding="OvrDeliveryRightsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrDeliveryRights}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="s31PmTitle" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="PmTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31SubTitle" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="SubTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31SortTitle" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="SortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31PartNumber" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="PartNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31PartName" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="PartName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31Edition" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="Edition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31Qualifier" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="Qualifier"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31EndDate" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="EndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31TitleId" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="OvrHistoryIterator"
+                  id="s31CatalogNumber" Uses="LOV_CatalogNumber"/>
+    <attributeValues id="s31Issn" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="Issn"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31OnlineIssn" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="OnlineIssn"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31Coden" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="Coden"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31Isbn" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="Isbn"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31Range" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="Range"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OvrHistoryIterator" id="s31GenerationMethod"
+          Uses="LOV_GenerationMethod" StaticList="false"/>
+    <attributeValues id="s31CreatedBy" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31CreatedDate" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31LastUpdatedBy" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s31LastUpdatedDate" IterBinding="OvrHistoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrHistoryTable" IterBinding="OvrHistoryIterator">
+      <nodeDefinition Name="OvrHistory"
+                      DefName="com.pq.tracs.model.dao.TitleRecordHistoryView">
+        <AttrNames>
+          <Item Value="PmTitle"/>
+          <Item Value="SubTitle"/>
+          <Item Value="SortTitle"/>
+          <Item Value="PartNumber"/>
+          <Item Value="PartName"/>
+          <Item Value="Edition"/>
+          <Item Value="Qualifier"/>
+          <Item Value="EndDate"/>
+          <Item Value="TitleId"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="Issn"/>
+          <Item Value="OnlineIssn"/>
+          <Item Value="Coden"/>
+          <Item Value="Isbn"/>
+          <Item Value="Range"/>
+          <Item Value="GenerationMethod"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrHistory" IterBinding="OvrHistoryIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrHistory" IterBinding="OvrHistoryIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrHistory" IterBinding="OvrHistoryIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrHistory" IterBinding="OvrHistoryIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrHistory" IterBinding="OvrHistoryIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrHistory}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrHistory" IterBinding="OvrHistoryIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrHistory" IterBinding="OvrHistoryIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsOvrRights"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="TraxTitleRecordRightView4"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args" NDValue="#{OvrRightsQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <attributeValues id="s32RightTemplateId" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="RightTemplateId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OvrRightsIterator" id="s32TemplateName"
+          Uses="LOV_TemplateName" StaticList="false"/>
+    <attributeValues id="s32RuleNumber" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="RuleNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32RightType" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="RightType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32PublicationStartDate"
+                     IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="PublicationStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32PublicationEndDate" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="PublicationEndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32EmbargoDays" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="EmbargoDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32ReverseEmbargoDays" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="ReverseEmbargoDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32Methods" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="Methods"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s32CompleteFlag" IterBinding="OvrRightsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="CompleteFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="OvrRightsIterator" id="s32GenerationMethod"
+          Uses="LOV_GenerationMethod" StaticList="false"/>
+    <attributeValues id="s32CreatedBy" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32CreatedDate" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32LastUpdatedBy" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s32LastUpdatedDate" IterBinding="OvrRightsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrRightsTable" IterBinding="OvrRightsIterator">
+      <nodeDefinition Name="OvrRights"
+                      DefName="com.pq.tracs.model.dao.TraxTitleRecordRightView">
+        <AttrNames>
+          <Item Value="RightTemplateId"/>
+          <Item Value="TemplateName"/>
+          <Item Value="RuleNumber"/>
+          <Item Value="RightType"/>
+          <Item Value="PublicationStartDate"/>
+          <Item Value="PublicationEndDate"/>
+          <Item Value="EmbargoDays"/>
+          <Item Value="ReverseEmbargoDays"/>
+          <Item Value="Methods"/>
+          <Item Value="CompleteFlag"/>
+          <Item Value="GenerationMethod"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrRights}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrRights" IterBinding="OvrRightsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="RightsTitleRecordRightCategoryIterator"
+          id="s320Category" Uses="LOV_CategoryId" StaticList="false"/>
+    <list IterBinding="RightsTitleRecordRightCategoryIterator"
+          id="s320Value" Uses="LOV_Value" StaticList="false"/>
+    <button id="s320PermitFlag"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PermitFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s320CreatedBy"
+                     IterBinding="RightsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s320CreatedDate"
+                     IterBinding="RightsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s320LastUpdatedBy"
+                     IterBinding="RightsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s320LastUpdatedDate"
+                     IterBinding="RightsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsGenerationMethodLookup"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="GenerationMethodLookup"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{GenerationMethodLookupQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+    </methodAction>
+    <table id="GenerationMethodLookup"
+           IterBinding="GenerationMethodLookupIterator">
+      <AttrNames>
+        <Item Value="DisplayValue"/>
+        <Item Value="InternalValue"/>
+      </AttrNames>
+    </table>
+    <attributeValues id="s320GenerationMethod"
+                     IterBinding="RightsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="GenerationMethod"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="RightsTitleRecordRightCategoryTable"
+          IterBinding="RightsTitleRecordRightCategoryIterator">
+      <nodeDefinition Name="RightsTitleRecordRightCategory"
+                      DefName="com.pq.tracs.model.dao.TraxTitleRecRightCategoryView">
+        <AttrNames>
+          <Item Value="CategoryId"/>
+          <Item Value="Value"/>
+          <Item Value="PermitFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="GenerationMethod"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrRightsTitleRecordRightCategory}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteRightsTitleRecordRightCategory"
+            IterBinding="RightsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryOvrBlockingRuleDetails"
+            IterBinding="OvrBlockingRuleDetailsIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="OvrBlockingRuleDetailsHdrBrId"
+                     IterBinding="OvrBlockingRuleDetailsIterator">
+      <AttrNames>
+        <Item Value="HdrBrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrBlockingRuleDetailsTitleRecordId"
+                     IterBinding="OvrBlockingRuleDetailsIterator">
+      <AttrNames>
+        <Item Value="TitleRecordId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrBlockingRuleDetailsBlockingRuleName"
+                     IterBinding="OvrBlockingRuleDetailsIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrBlockingRuleDetailsBlockingRuleStatus"
+                     IterBinding="OvrBlockingRuleDetailsIterator">
+      <AttrNames>
+        <Item Value="BlockingRuleStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrBlockingRuleDetailsMarket"
+                     IterBinding="OvrBlockingRuleDetailsIterator">
+      <AttrNames>
+        <Item Value="Market"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrBlockingRuleDetailsSubmarket"
+                     IterBinding="OvrBlockingRuleDetailsIterator">
+      <AttrNames>
+        <Item Value="Submarket"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrBlockingRuleDetailsCountry"
+                     IterBinding="OvrBlockingRuleDetailsIterator">
+      <AttrNames>
+        <Item Value="Country"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrBlockingRuleDetailsFormat"
+                     IterBinding="OvrBlockingRuleDetailsIterator">
+      <AttrNames>
+        <Item Value="Format"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrBlockingRuleDetailsTable"
+          IterBinding="OvrBlockingRuleDetailsIterator">
+      <nodeDefinition Name="OvrBlockingRuleDetails"
+                      DefName="com.pq.tracs.model.vo.TraxOvrBrDetailsView">
+        <AttrNames>
+          <Item Value="HdrBrId"/>
+          <Item Value="TitleRecordId"/>
+          <Item Value="BlockingRuleName"/>
+          <Item Value="BlockingRuleStatus"/>
+          <Item Value="Market"/>
+          <Item Value="Submarket"/>
+          <Item Value="Country"/>
+          <Item Value="Format"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrBlockingRuleDetails"
+            IterBinding="OvrBlockingRuleDetailsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrBlockingRuleDetails"
+            IterBinding="OvrBlockingRuleDetailsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrBlockingRuleDetails"
+            IterBinding="OvrBlockingRuleDetailsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrBlockingRuleDetails"
+            IterBinding="OvrBlockingRuleDetailsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrBlockingRuleDetails"
+            IterBinding="OvrBlockingRuleDetailsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrBlockingRuleDetails}"
+                 NDType="java.lang.String"/>
+    </action>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="applyBindParamsOvrRestrictions"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="applyBindParams"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_applyBindParams_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="voUsage" NDValue="TraxTitleRecordRestrictionsView2"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="args"
+                 NDValue="#{OvrRestrictionsQueryBindParams.namedParams}"
+                 NDType="java.util.HashMap"/>
+      <NamedData NDName="doRequeryWhenParamsChanged" NDValue="true"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <list IterBinding="OvrRestrictionsIterator"
+          id="OvrRestrictionsTemplateNameTable" Uses="LOV_TemplateName"
+          StaticList="false"/>
+    <attributeValues id="OvrRestrictionsRuleNumber"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="RuleNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRestrictionsRightType"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="RightType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRestrictionsRightTemplateId"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="RightTemplateId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRestrictionsRestrictions"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="Restrictions"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="OvrRestrictionsCompleteFlag"
+            IterBinding="OvrRestrictionsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="CompleteFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="OvrRestrictionsCreatedBy"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRestrictionsCreatedDate"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRestrictionsLastUpdatedBy"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRestrictionsLastUpdatedDate"
+                     IterBinding="OvrRestrictionsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrRestrictionsTable" IterBinding="OvrRestrictionsIterator">
+      <nodeDefinition Name="OvrRestrictions"
+                      DefName="com.pq.tracs.model.dao.TraxTitleRecordRightView">
+        <AttrNames>
+          <Item Value="TemplateName"/>
+          <Item Value="RuleNumber"/>
+          <Item Value="RightType"/>
+          <Item Value="RightTemplateId"/>
+          <Item Value="Restrictions"/>
+          <Item Value="CompleteFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrRestrictions" IterBinding="OvrRestrictionsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrRestrictions" IterBinding="OvrRestrictionsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrRestrictions" IterBinding="OvrRestrictionsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrRestrictions" IterBinding="OvrRestrictionsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrRestrictions"
+            IterBinding="OvrRestrictionsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrRestrictions}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrRestrictions" IterBinding="OvrRestrictionsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrRestrictions" IterBinding="OvrRestrictionsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <list IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+          id="s340Category" Uses="LOV_CategoryId" StaticList="false"/>
+    <list IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+          id="s340Value" Uses="LOV_Value" StaticList="false"/>
+    <attributeValues id="s340CreatedBy"
+                     IterBinding="RestrictionsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s340CreatedDate"
+                     IterBinding="RestrictionsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s340LastUpdatedBy"
+                     IterBinding="RestrictionsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s340LastUpdatedDate"
+                     IterBinding="RestrictionsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s340PermitFlag"
+                     IterBinding="RestrictionsTitleRecordRightCategoryIterator">
+      <AttrNames>
+        <Item Value="PermitFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="RestrictionsTitleRecordRightCategoryTable"
+          IterBinding="RestrictionsTitleRecordRightCategoryIterator">
+      <nodeDefinition Name="RestrictionsTitleRecordRightCategory"
+                      DefName="com.pq.tracs.model.dao.TraxTitleRecRightCategoryView">
+        <AttrNames>
+          <Item Value="CategoryId"/>
+          <Item Value="Value"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="PermitFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrRestrictionsTitleRecordRightCategory}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteRestrictionsTitleRecordRightCategory"
+            IterBinding="RestrictionsTitleRecordRightCategoryIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="OvrLegacyDataIterator" id="s35LegacyName"
+          Uses="LOV_LegacyName" StaticList="false"/>
+    <attributeValues id="s35LegacyValue" IterBinding="OvrLegacyDataIterator">
+      <AttrNames>
+        <Item Value="LegacyValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s35CreatedBy" IterBinding="OvrLegacyDataIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s35CreatedDate" IterBinding="OvrLegacyDataIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s35LastUpdatedBy" IterBinding="OvrLegacyDataIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s35LastUpdatedDate"
+                     IterBinding="OvrLegacyDataIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrLegacyDataTable" IterBinding="OvrLegacyDataIterator">
+      <nodeDefinition Name="OvrLegacyData"
+                      DefName="com.pq.tracs.model.dao.TitleRecordLegacyDataView">
+        <AttrNames>
+          <Item Value="LegacyName"/>
+          <Item Value="LegacyValue"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrLegacyData" IterBinding="OvrLegacyDataIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrLegacyData" IterBinding="OvrLegacyDataIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrLegacyData" IterBinding="OvrLegacyDataIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrLegacyData" IterBinding="OvrLegacyDataIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrLegacyData"
+            IterBinding="OvrLegacyDataIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrLegacyData}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrLegacyData" IterBinding="OvrLegacyDataIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrLegacyData" IterBinding="OvrLegacyDataIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="OvrPMClassesIterator" id="s36PmClass"
+          Uses="LOV_PmClass" StaticList="false"/>
+    <button id="s36PrimaryFlag" IterBinding="OvrPMClassesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s36CreatedBy" IterBinding="OvrPMClassesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s36CreatedDate" IterBinding="OvrPMClassesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s36LastUpdatedBy" IterBinding="OvrPMClassesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s36LastUpdatedDate" IterBinding="OvrPMClassesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrPMClassesTable" IterBinding="OvrPMClassesIterator">
+      <nodeDefinition Name="OvrPMClasses"
+                      DefName="com.pq.tracs.model.dao.TitleRecordPmClassView">
+        <AttrNames>
+          <Item Value="PmClass"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrPMClasses" IterBinding="OvrPMClassesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrPMClasses" IterBinding="OvrPMClassesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrPMClasses" IterBinding="OvrPMClassesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrPMClasses" IterBinding="OvrPMClassesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrPMClasses"
+            IterBinding="OvrPMClassesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrPMClasses}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrPMClasses" IterBinding="OvrPMClassesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrPMClasses" IterBinding="OvrPMClassesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="OvrClassificationsIterator"
+          id="s37ClassificationType" Uses="LOV_ClassificationType"
+          StaticList="false"/>
+    <attributeValues id="s37ClassificationNumber"
+                     IterBinding="OvrClassificationsIterator">
+      <AttrNames>
+        <Item Value="ClassificationNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s37PrimaryFlag"
+                     IterBinding="OvrClassificationsIterator">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OvrClassificationsIterator"
+          id="s37GenerationMethod" Uses="LOV_GenerationMethod"
+          StaticList="false"/>
+    <attributeValues id="s37CreatedBy" IterBinding="OvrClassificationsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s37CreatedDate"
+                     IterBinding="OvrClassificationsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s37LastUpdatedBy"
+                     IterBinding="OvrClassificationsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s37LastUpdatedDate"
+                     IterBinding="OvrClassificationsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrClassificationsTable" IterBinding="OvrClassificationsIterator">
+      <nodeDefinition Name="OvrClassifications"
+                      DefName="com.pq.tracs.model.dao.ClassificationView">
+        <AttrNames>
+          <Item Value="ClassificationType"/>
+          <Item Value="ClassificationNumber"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="GenerationMethod"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrClassifications"
+            IterBinding="OvrClassificationsIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousOvrClassifications"
+            IterBinding="OvrClassificationsIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextOvrClassifications" IterBinding="OvrClassificationsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrClassifications" IterBinding="OvrClassificationsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrClassifications"
+            IterBinding="OvrClassificationsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrClassifications}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrClassifications"
+            IterBinding="OvrClassificationsIterator" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="DeleteOvrClassifications"
+            IterBinding="OvrClassificationsIterator" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <attributeValues id="s38PublicationFrequency"
+                     IterBinding="OvrSchedulesIterator">
+      <AttrNames>
+        <Item Value="PublicationFrequency"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OvrSchedulesIterator" id="s38Regularity"
+          Uses="LOV_Regularity" StaticList="false"/>
+    <attributeValues id="s38AdditionalIssues"
+                     IterBinding="OvrSchedulesIterator">
+      <AttrNames>
+        <Item Value="AdditionalIssues"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OvrSchedulesIterator" id="s38FrequencyType"
+          Uses="LOV_FrequencyType" StaticList="false"/>
+    <list IterBinding="OvrSchedulesIterator" id="s38FrequencySource"
+          Uses="LOV_FrequencySource" StaticList="false"/>
+    <attributeValues id="s38FrequencyAdded" IterBinding="OvrSchedulesIterator">
+      <AttrNames>
+        <Item Value="FrequencyAdded"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s38FrequencyChanged"
+                     IterBinding="OvrSchedulesIterator">
+      <AttrNames>
+        <Item Value="FrequencyChanged"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s38CreatedBy" IterBinding="OvrSchedulesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s38CreatedDate" IterBinding="OvrSchedulesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s38LastUpdatedBy" IterBinding="OvrSchedulesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s38LastUpdatedDate" IterBinding="OvrSchedulesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrSchedulesTable" IterBinding="OvrSchedulesIterator">
+      <nodeDefinition Name="OvrSchedules"
+                      DefName="com.pq.tracs.model.dao.TitleRecordScheduleView">
+        <AttrNames>
+          <Item Value="PublicationFrequency"/>
+          <Item Value="Regularity"/>
+          <Item Value="AdditionalIssues"/>
+          <Item Value="FrequencyType"/>
+          <Item Value="FrequencySource"/>
+          <Item Value="FrequencyAdded"/>
+          <Item Value="FrequencyChanged"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrSchedules" IterBinding="OvrSchedulesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrSchedules" IterBinding="OvrSchedulesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrSchedules" IterBinding="OvrSchedulesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrSchedules" IterBinding="OvrSchedulesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrSchedules"
+            IterBinding="OvrSchedulesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrSchedules}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrSchedules" IterBinding="OvrSchedulesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrSchedules" IterBinding="OvrSchedulesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="OvrVaryingFormsIterator" id="s39TypeOfTitle"
+          Uses="LOV_TypeOfTitle" StaticList="false"/>
+    <attributeValues id="s39VaryingForm" IterBinding="OvrVaryingFormsIterator">
+      <AttrNames>
+        <Item Value="VaryingForm1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s39PrimaryFlag" IterBinding="OvrVaryingFormsIterator">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OvrVaryingFormsIterator" id="s39GenerationMethod"
+          Uses="LOV_GenerationMethod" StaticList="false"/>
+    <attributeValues id="s39CreatedBy" IterBinding="OvrVaryingFormsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s39CreatedDate" IterBinding="OvrVaryingFormsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s39LastUpdatedBy"
+                     IterBinding="OvrVaryingFormsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s39LastUpdatedDate"
+                     IterBinding="OvrVaryingFormsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrVaryingFormsTable" IterBinding="OvrVaryingFormsIterator">
+      <nodeDefinition Name="OvrVaryingForms"
+                      DefName="com.pq.tracs.model.dao.VaryingFormView">
+        <AttrNames>
+          <Item Value="TypeOfTitle"/>
+          <Item Value="VaryingForm1"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="GenerationMethod"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrVaryingForms" IterBinding="OvrVaryingFormsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrVaryingForms" IterBinding="OvrVaryingFormsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrVaryingForms" IterBinding="OvrVaryingFormsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrVaryingForms" IterBinding="OvrVaryingFormsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrVaryingForms"
+            IterBinding="OvrVaryingFormsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrVaryingForms}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrVaryingForms" IterBinding="OvrVaryingFormsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrVaryingForms" IterBinding="OvrVaryingFormsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="OvrSubjectsIterator" id="s3aSubjectType"
+          Uses="LOV_SubjectType" StaticList="false"/>
+    <attributeValues id="s3aSubjectCode" IterBinding="OvrSubjectsIterator">
+      <AttrNames>
+        <Item Value="SubjectCode"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OvrSubjectsIterator" id="s3aSubject" Uses="LOV_Subject"
+          StaticList="false"/>
+    <attributeValues id="s3aPrimaryFlag" IterBinding="OvrSubjectsIterator">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3aCreatedBy" IterBinding="OvrSubjectsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3aCreatedDate" IterBinding="OvrSubjectsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3aLastUpdatedBy" IterBinding="OvrSubjectsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3aLastUpdatedDate" IterBinding="OvrSubjectsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrSubjectsTable" IterBinding="OvrSubjectsIterator">
+      <nodeDefinition Name="OvrSubjects"
+                      DefName="com.pq.tracs.model.dao.TitleSubjectView">
+        <AttrNames>
+          <Item Value="SubjectType"/>
+          <Item Value="SubjectCode"/>
+          <Item Value="Subject"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrSubjects" IterBinding="OvrSubjectsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrSubjects" IterBinding="OvrSubjectsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrSubjects" IterBinding="OvrSubjectsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrSubjects" IterBinding="OvrSubjectsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrSubjects"
+            IterBinding="OvrSubjectsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrSubjects}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrSubjects" IterBinding="OvrSubjectsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrSubjects" IterBinding="OvrSubjectsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s3bLanguage" IterBinding="OvrLanguagesIterator">
+      <AttrNames>
+        <Item Value="Language"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="OvrLanguagesIterator"
+                  id="s3bLanguageMeaning" Uses="LOV_LanguageMeaning"/>
+    <attributeValues id="s3bPrimaryFlag" IterBinding="OvrLanguagesIterator">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OvrLanguagesIterator" id="s3bGenerationMethod"
+          Uses="LOV_GenerationMethod" StaticList="false"/>
+    <attributeValues id="s3bCreatedBy" IterBinding="OvrLanguagesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3bCreatedDate" IterBinding="OvrLanguagesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3bLastUpdatedBy" IterBinding="OvrLanguagesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3bLastUpdatedDate" IterBinding="OvrLanguagesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3bLanguageMeaning2"
+                     IterBinding="OvrLanguagesIterator">
+      <AttrNames>
+        <Item Value="LanguageMeaning2"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrLanguagesTable" IterBinding="OvrLanguagesIterator">
+      <nodeDefinition Name="OvrLanguages"
+                      DefName="com.pq.tracs.model.dao.TitleLanguageView">
+        <AttrNames>
+          <Item Value="Language"/>
+          <Item Value="LanguageMeaning"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="GenerationMethod"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="LanguageMeaning2"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrLanguages" IterBinding="OvrLanguagesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrLanguages" IterBinding="OvrLanguagesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrLanguages" IterBinding="OvrLanguagesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrLanguages" IterBinding="OvrLanguagesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrLanguages"
+            IterBinding="OvrLanguagesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrLanguages}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrLanguages" IterBinding="OvrLanguagesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrLanguages" IterBinding="OvrLanguagesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="OvrBrowseTypesIterator" id="s3cBrowseType"
+          Uses="LOV_BrowseType" StaticList="false"/>
+    <attributeValues id="s3cCreatedBy" IterBinding="OvrBrowseTypesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3cCreatedDate" IterBinding="OvrBrowseTypesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3cLastUpdatedBy" IterBinding="OvrBrowseTypesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3cLastUpdatedDate"
+                     IterBinding="OvrBrowseTypesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrBrowseTypesTable" IterBinding="OvrBrowseTypesIterator">
+      <nodeDefinition Name="OvrBrowseTypes"
+                      DefName="com.pq.tracs.model.dao.OvrBrowseTypeView">
+        <AttrNames>
+          <Item Value="BrowseType"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrBrowseTypes" IterBinding="OvrBrowseTypesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrBrowseTypes" IterBinding="OvrBrowseTypesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrBrowseTypes" IterBinding="OvrBrowseTypesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrBrowseTypes" IterBinding="OvrBrowseTypesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrBrowseTypes"
+            IterBinding="OvrBrowseTypesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrBrowseTypes}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrBrowseTypes" IterBinding="OvrBrowseTypesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrBrowseTypes" IterBinding="OvrBrowseTypesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s3dSubjectVertical"
+                     IterBinding="OvrSubjectVerticalsIterator">
+      <AttrNames>
+        <Item Value="SubjectVertical"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrSubjectVerticalsTable"
+          IterBinding="OvrSubjectVerticalsIterator">
+      <nodeDefinition Name="OvrSubjectVerticals"
+                      DefName="com.pq.tracs.model.dao.SubjectVerticalView">
+        <AttrNames>
+          <Item Value="SubjectVertical"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrSubjectVerticals"
+            IterBinding="OvrSubjectVerticalsIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousOvrSubjectVerticals"
+            IterBinding="OvrSubjectVerticalsIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextOvrSubjectVerticals"
+            IterBinding="OvrSubjectVerticalsIterator" RequiresUpdateModel="true"
+            Action="next"/>
+    <action id="LastOvrSubjectVerticals"
+            IterBinding="OvrSubjectVerticalsIterator" RequiresUpdateModel="true"
+            Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrSubjectVerticals"
+            IterBinding="OvrSubjectVerticalsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrSubjectVerticals}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryOvrPublishers" IterBinding="OvrPublishersIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="s3ePublisherId" IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="PublisherId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3ePublisherAddressId"
+                     IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="PublisherAddressId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="OvrPublishersIterator"
+                  id="s3eName" Uses="LOV_Name"/>
+    <attributeValues id="s3ePubId" IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="PubId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3eVpId" IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="VpId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="OvrPublishersIterator"
+                  id="s3eAddress" Uses="LOV_Address"/>
+    <attributeValues id="s3eEndDate" IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="EndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="OvrPublishersIterator"
+                  id="s3eUrl" Uses="LOV_Url"/>
+    <attributeValues id="s3eNotes" IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3eOrgId" IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="OrgId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3eMsId" IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="MsId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3eUrl1" IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="Url1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3eNotes1" IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="Notes1"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="OvrPublishersIterator" id="s3eGenerationMethod"
+          Uses="LOV_GenerationMethod" StaticList="false"/>
+    <attributeValues id="s3eCreatedBy" IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3eCreatedDate" IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3eLastUpdatedBy" IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3eLastUpdatedDate"
+                     IterBinding="OvrPublishersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3eNewURL" IterBinding="variables">
+      <AttrNames>
+        <Item Value="s3eNewURLVar"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrPublishersTable" IterBinding="OvrPublishersIterator">
+      <nodeDefinition Name="OvrPublishers"
+                      DefName="com.pq.tracs.model.dao.OvrPublisherView">
+        <AttrNames>
+          <Item Value="PublisherId"/>
+          <Item Value="PublisherAddressId"/>
+          <Item Value="Name"/>
+          <Item Value="PubId"/>
+          <Item Value="VpId"/>
+          <Item Value="Address"/>
+          <Item Value="EndDate"/>
+          <Item Value="Url"/>
+          <Item Value="Notes"/>
+          <Item Value="OrgId"/>
+          <Item Value="MsId"/>
+          <Item Value="Url1"/>
+          <Item Value="Notes1"/>
+          <Item Value="GenerationMethod"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrPublishers" IterBinding="OvrPublishersIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrPublishers" IterBinding="OvrPublishersIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrPublishers" IterBinding="OvrPublishersIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrPublishers" IterBinding="OvrPublishersIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrPublishers"
+            IterBinding="OvrPublishersIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrPublishers}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrPublishers" IterBinding="OvrPublishersIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrPublishers" IterBinding="OvrPublishersIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryOVRAttributes" IterBinding="OVRAttributesIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <list IterBinding="OVRAttributesIterator" id="OVRAttributesAttributeType"
+          Uses="LOV_AttributeType" StaticList="false"/>
+    <list IterBinding="OVRAttributesIterator" id="OVRAttributesListValue"
+          Uses="LOV_ListValue" StaticList="false"/>
+    <attributeValues id="OVRAttributesTextValue"
+                     IterBinding="OVRAttributesIterator">
+      <AttrNames>
+        <Item Value="TextValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRAttributesDateValue"
+                     IterBinding="OVRAttributesIterator">
+      <AttrNames>
+        <Item Value="DateValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRAttributesOrderBy"
+                     IterBinding="OVRAttributesIterator">
+      <AttrNames>
+        <Item Value="OrderBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRAttributesCreatedBy"
+                     IterBinding="OVRAttributesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRAttributesCreatedDate"
+                     IterBinding="OVRAttributesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRAttributesLastUpdatedBy"
+                     IterBinding="OVRAttributesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRAttributesLastUpdatedDate"
+                     IterBinding="OVRAttributesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRAttributesContentSource"
+                     IterBinding="OVRAttributesIterator">
+      <AttrNames>
+        <Item Value="ContentSource"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRAttributesDataType"
+                     IterBinding="OVRAttributesIterator">
+      <AttrNames>
+        <Item Value="DataType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OVRAttributesCodeSet"
+                     IterBinding="OVRAttributesIterator">
+      <AttrNames>
+        <Item Value="CodeSet"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OVRAttributesTable" IterBinding="OVRAttributesIterator">
+      <nodeDefinition Name="OVRAttributes"
+                      DefName="com.pq.tracs.model.vo.TraxOvrAttributeView">
+        <AttrNames>
+          <Item Value="AttributeType"/>
+          <Item Value="ListValue"/>
+          <Item Value="TextValue"/>
+          <Item Value="DateValue"/>
+          <Item Value="OrderBy"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="ContentSource"/>
+          <Item Value="DataType"/>
+          <Item Value="CodeSet"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOVRAttributes" IterBinding="OVRAttributesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOVRAttributes" IterBinding="OVRAttributesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOVRAttributes" IterBinding="OVRAttributesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOVRAttributes" IterBinding="OVRAttributesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOVRAttributes"
+            IterBinding="OVRAttributesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOVRAttributes}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOVRAttributes" IterBinding="OVRAttributesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOVRAttributes" IterBinding="OVRAttributesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s3fTargetSystem"
+                     IterBinding="OvrMStarIntegrationIterator">
+      <AttrNames>
+        <Item Value="TargetSystem"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3fQueuedBy" IterBinding="OvrMStarIntegrationIterator">
+      <AttrNames>
+        <Item Value="QueuedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3fQueuedDate"
+                     IterBinding="OvrMStarIntegrationIterator">
+      <AttrNames>
+        <Item Value="QueuedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3fStagedDate"
+                     IterBinding="OvrMStarIntegrationIterator">
+      <AttrNames>
+        <Item Value="StagedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3fStatus" IterBinding="OvrMStarIntegrationIterator">
+      <AttrNames>
+        <Item Value="Status"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3fStatusDate"
+                     IterBinding="OvrMStarIntegrationIterator">
+      <AttrNames>
+        <Item Value="StatusDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s3fMessage" IterBinding="OvrMStarIntegrationIterator">
+      <AttrNames>
+        <Item Value="Message"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrMStarIntegrationTable"
+          IterBinding="OvrMStarIntegrationIterator">
+      <nodeDefinition Name="OvrMStarIntegration"
+                      DefName="com.pq.tracs.model.ro.IntegrationQueueROView">
+        <AttrNames>
+          <Item Value="TargetSystem"/>
+          <Item Value="QueuedBy"/>
+          <Item Value="QueuedDate"/>
+          <Item Value="StagedDate"/>
+          <Item Value="Status"/>
+          <Item Value="StatusDate"/>
+          <Item Value="Message"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrMStarIntegration"
+            IterBinding="OvrMStarIntegrationIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousOvrMStarIntegration"
+            IterBinding="OvrMStarIntegrationIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextOvrMStarIntegration"
+            IterBinding="OvrMStarIntegrationIterator" RequiresUpdateModel="true"
+            Action="next"/>
+    <action id="LastOvrMStarIntegration"
+            IterBinding="OvrMStarIntegrationIterator" RequiresUpdateModel="true"
+            Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrMStarIntegration"
+            IterBinding="OvrMStarIntegrationIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrMStarIntegration}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="s3f0Message" IterBinding="IntegrationMessagesIterator">
+      <AttrNames>
+        <Item Value="Message"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="IntegrationMessagesTable"
+          IterBinding="IntegrationMessagesIterator">
+      <nodeDefinition Name="IntegrationMessages"
+                      DefName="com.pq.tracs.model.ro.IntegrationMessageROView">
+        <AttrNames>
+          <Item Value="Message"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstIntegrationMessages"
+            IterBinding="IntegrationMessagesIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousIntegrationMessages"
+            IterBinding="IntegrationMessagesIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextIntegrationMessages"
+            IterBinding="IntegrationMessagesIterator" RequiresUpdateModel="true"
+            Action="next"/>
+    <action id="LastIntegrationMessages"
+            IterBinding="IntegrationMessagesIterator" RequiresUpdateModel="true"
+            Action="last"/>
+    <action id="SetCurrentRowWithKeyIntegrationMessages"
+            IterBinding="IntegrationMessagesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrIntegrationMessages}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryOvrChangeHistory"
+            IterBinding="OvrChangeHistoryIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues id="OvrChangeHistoryId"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryTitleId"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryTitleRecordId"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="TitleRecordId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryAltRightsTitleRecordId"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="AltRightsTitleRecordId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryCoverImageLocationId"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CoverImageLocationId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryJournaledUser"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="JournaledUser"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryJournaledDate"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="JournaledDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryOvrId"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryContentSource"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ContentSource"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryPmid"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Pmid"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryPmTitle"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PmTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistorySubTitle"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="SubTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistorySortTitle"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="SortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryEdition"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Edition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryQualifier"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="Qualifier"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryPartNumber"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PartNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryPartName"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PartName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryPrimarySourceType"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PrimarySourceType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistorySourceType"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="SourceType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryBlockByPubFlag"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="BlockByPubFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryTranslationFlag"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="TranslationFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryPubSearchAlertFlag"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PubSearchAlertFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryVaultName"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="VaultName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryPmType"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PmType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryPmGroups"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PmGroups"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryPmFamily"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="PmFamily"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryManufacturingProcess"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ManufacturingProcess"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryJournalCode"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="JournalCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryImageStorage"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="ImageStorage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryAsciiStorage"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="AsciiStorage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryDocUsageRoyaltiesFlag"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="DocUsageRoyaltiesFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryCoverImageType"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CoverImageType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryCblId"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CblId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryCountryOfPublication"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CountryOfPublication"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryOkForExportFlag"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="OkForExportFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryGenerationMethod"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="GenerationMethod"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryCreatedBy"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryCreatedDate"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryLastUpdatedBy"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrChangeHistoryLastUpdatedDate"
+                     IterBinding="OvrChangeHistoryIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrChangeHistoryTable" IterBinding="OvrChangeHistoryIterator">
+      <nodeDefinition Name="OvrChangeHistory"
+                      DefName="com.pq.tracs.model.vo.TraxJuTitleRecordView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="TitleId"/>
+          <Item Value="TitleRecordId"/>
+          <Item Value="AltRightsTitleRecordId"/>
+          <Item Value="CoverImageLocationId"/>
+          <Item Value="JournaledUser"/>
+          <Item Value="JournaledDate"/>
+          <Item Value="OvrId"/>
+          <Item Value="ContentSource"/>
+          <Item Value="Pmid"/>
+          <Item Value="PmTitle"/>
+          <Item Value="SubTitle"/>
+          <Item Value="SortTitle"/>
+          <Item Value="Edition"/>
+          <Item Value="Qualifier"/>
+          <Item Value="PartNumber"/>
+          <Item Value="PartName"/>
+          <Item Value="PrimarySourceType"/>
+          <Item Value="SourceType"/>
+          <Item Value="BlockByPubFlag"/>
+          <Item Value="TranslationFlag"/>
+          <Item Value="PubSearchAlertFlag"/>
+          <Item Value="VaultName"/>
+          <Item Value="PmType"/>
+          <Item Value="PmGroups"/>
+          <Item Value="PmFamily"/>
+          <Item Value="ManufacturingProcess"/>
+          <Item Value="JournalCode"/>
+          <Item Value="ImageStorage"/>
+          <Item Value="AsciiStorage"/>
+          <Item Value="DocUsageRoyaltiesFlag"/>
+          <Item Value="CoverImageType"/>
+          <Item Value="CblId"/>
+          <Item Value="CountryOfPublication"/>
+          <Item Value="OkForExportFlag"/>
+          <Item Value="GenerationMethod"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrChangeHistory" IterBinding="OvrChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrChangeHistory" IterBinding="OvrChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrChangeHistory" IterBinding="OvrChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrChangeHistory" IterBinding="OvrChangeHistoryIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrChangeHistory"
+            IterBinding="OvrChangeHistoryIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrChangeHistory}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="ExecuteQueryOvrRightsNote" IterBinding="OvrRightsNoteIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="OvrRightsNoteNoteText"
+                     IterBinding="OvrRightsNoteIterator">
+      <AttrNames>
+        <Item Value="NoteText"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRightsNoteCreatedBy"
+                     IterBinding="OvrRightsNoteIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRightsNoteCreatedDate"
+                     IterBinding="OvrRightsNoteIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRightsNoteLastUpdatedBy"
+                     IterBinding="OvrRightsNoteIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrRightsNoteLastUpdatedDate"
+                     IterBinding="OvrRightsNoteIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrRightsNoteTable" IterBinding="OvrRightsNoteIterator">
+      <nodeDefinition Name="OvrRightsNote"
+                      DefName="com.pq.tracs.model.dao.TraxOvrRightsNoteView">
+        <AttrNames>
+          <Item Value="NoteText"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrRightsNote" IterBinding="OvrRightsNoteIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrRightsNote" IterBinding="OvrRightsNoteIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrRightsNote" IterBinding="OvrRightsNoteIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrRightsNote" IterBinding="OvrRightsNoteIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrRightsNote"
+            IterBinding="OvrRightsNoteIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrRightsNote}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrRightsNote" IterBinding="OvrRightsNoteIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrRightsNote" IterBinding="OvrRightsNoteIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryOvrLegacyContractNotes"
+            IterBinding="OvrLegacyContractNotesIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="OvrLegacyContractNotesLegacyContractNotes"
+                     IterBinding="OvrLegacyContractNotesIterator">
+      <AttrNames>
+        <Item Value="LegacyContractNotes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrLegacyContractNotesCreatedBy"
+                     IterBinding="OvrLegacyContractNotesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrLegacyContractNotesCreatedDate"
+                     IterBinding="OvrLegacyContractNotesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrLegacyContractNotesLastUpdatedBy"
+                     IterBinding="OvrLegacyContractNotesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrLegacyContractNotesLastUpdatedDate"
+                     IterBinding="OvrLegacyContractNotesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrLegacyContractNotesTable"
+          IterBinding="OvrLegacyContractNotesIterator">
+      <nodeDefinition Name="OvrLegacyContractNotes"
+                      DefName="com.pq.tracs.model.dao.TraxOvrLegacyContractNotesView">
+        <AttrNames>
+          <Item Value="LegacyContractNotes"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrLegacyContractNotes"
+            IterBinding="OvrLegacyContractNotesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrLegacyContractNotes"
+            IterBinding="OvrLegacyContractNotesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrLegacyContractNotes"
+            IterBinding="OvrLegacyContractNotesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrLegacyContractNotes"
+            IterBinding="OvrLegacyContractNotesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrLegacyContractNotes"
+            IterBinding="OvrLegacyContractNotesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrLegacyContractNotes}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrLegacyContractNotes"
+            IterBinding="OvrLegacyContractNotesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrLegacyContractNotes"
+            IterBinding="OvrLegacyContractNotesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryOvrCSCutover" IterBinding="OvrCSCutoverIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <list IterBinding="OvrCSCutoverIterator"
+          id="OvrCSCutoverContentSourceCutover"
+          Uses="LOV_ContentSourceCutover" StaticList="false"/>
+    <attributeValues id="OvrCSCutoverCsCutoverCreatedDate"
+                     IterBinding="OvrCSCutoverIterator">
+      <AttrNames>
+        <Item Value="CsCutoverCreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrCSCutoverCreatedBy"
+                     IterBinding="OvrCSCutoverIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrCSCutoverCreatedDate"
+                     IterBinding="OvrCSCutoverIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrCSCutoverLastUpdatedBy"
+                     IterBinding="OvrCSCutoverIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="OvrCSCutoverLastUpdatedDate"
+                     IterBinding="OvrCSCutoverIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="OvrCSCutoverTable" IterBinding="OvrCSCutoverIterator">
+      <nodeDefinition Name="OvrCSCutover"
+                      DefName="com.pq.tracs.model.vo.TraxOvrCSCutoverView">
+        <AttrNames>
+          <Item Value="ContentSourceCutover"/>
+          <Item Value="CsCutoverCreatedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstOvrCSCutover" IterBinding="OvrCSCutoverIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousOvrCSCutover" IterBinding="OvrCSCutoverIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextOvrCSCutover" IterBinding="OvrCSCutoverIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastOvrCSCutover" IterBinding="OvrCSCutoverIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyOvrCSCutover"
+            IterBinding="OvrCSCutoverIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrOvrCSCutover}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateOvrCSCutover" IterBinding="OvrCSCutoverIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteOvrCSCutover" IterBinding="OvrCSCutoverIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

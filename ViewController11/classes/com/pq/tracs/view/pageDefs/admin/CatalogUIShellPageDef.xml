@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="CatalogUIShellPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'Catalog'}"/>
+  </parameters>
+  <executables>
+    <taskFlow id="CatalogTaskFlow"
+              taskFlowId="/adminservice/beanconfig/adfc-config-Catalog.xml#CatalogTaskFlow"
+              parametersMap="${pageFlowScope.CatalogTaskFlowConfig.params}"
+              RefreshCondition="${pageFlowScope.CatalogTaskFlowConfig.paramsChanged}"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

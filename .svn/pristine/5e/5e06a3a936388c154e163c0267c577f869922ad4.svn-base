@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="RolesTopLc"
+                             partialTriggers=" RolesCancelButton0 asAreaRolesSearchOptions qsAreaRolesSearchOptions"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_ROLES']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreateRoles.execute}"
+                                      action="CreateRoles"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_ROLES']}"
+                                      rendered="#{(true) }" id="RolesNewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="RolesCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaRoles"
+                                 rendered="#{!pageFlowScope.createModes.CreateRoles and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaRolesSearchOptions:qsButtonRoles qsAreaRolesSearchOptions:asButtonRoles ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaRolesSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.RolesIteratorQuery.queryDescriptor}"
+                        model="#{bindings.RolesIteratorQuery.queryModel}"
+                        queryListener="#{bindings.RolesIteratorQuery.processQuery}"
+                        queryOperationListener="#{bindings.RolesIteratorQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchRoles.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonRoles"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchRoles.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaRolesSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.RolesIteratorQuery.queryDescriptor}"
+                             model="#{bindings.RolesIteratorQuery.queryModel}"
+                             queryListener="#{bindings.RolesIteratorQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchRoles.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonRoles"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchRoles.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="RolesPC" featuresOff=" "
+                                inlineStyle=" width:384px; ">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="RolesDetails"></af:commandMenuItem>
+                    <af:group id="Rolestbb"
+                              rendered="#{ bindings.RolesIterator.currentRow!=null }">
+                      <af:commandMenuItem actionListener="#{bindings.FirstRoles.execute}"
+                                          id="RolesFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousRoles.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="RolesPrevious"
+                                          partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextRoles.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="RolesNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastRoles.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="RolesLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandToolbarButton text="Print" id="RolesPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.RolesIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="RolesTab" contentDelivery="immediate"
+                        value="#{bindings.RolesTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.RolesTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.RolesTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.RolesTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.RolesTable.rangeSize}"
+                        autoHeightRows="#{bindings.RolesTable.estimatedRowCount lt 5 ? 5 : bindings.RolesTable.estimatedRowCount lt bindings.RolesTable.rangeSize ? bindings.RolesTable.estimatedRowCount : 0 }"
+                        fetchSize="#{bindings.RolesTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.RolesIteratorQuery.processQuery}"
+                        filterModel="#{bindings.RolesIteratorQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.RolesTable.table}"
+                        partialTriggers=":::qsAreaRolesSearchOptions :::asAreaRolesSearchOptions :::RolesPC ::RolesFirst ::RolesPrevious ::RolesNext ::RolesLast"
+                        width="384px" summary="#{nls['TABLE_TITLE_ROLES']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="RolesTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="RolesDetails"></af:commandMenuItem>
+                      </af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="RolesShortNameCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ShortName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="ShortName" id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="RolesShortName"
+                                value="#{row.bindings.ShortName.inputValue}"
+                                label="ShortName"
+                                required="#{bindings.RolesTable.hints.ShortName.mandatory}"
+                                rows="#{bindings.RolesTable.hints.ShortName.displayHeight}"
+                                columns="#{bindings.RolesTable.hints.ShortName.displayWidth}"
+                                maximumLength="10" readOnly="true">
+                    <f:validator binding="#{row.bindings.ShortName.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="RolesNameCol" sortable="true" filterable="true"
+                           noWrap="true" width="240" sortProperty="Name"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="Name" id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="cl0" value="#{row.bindings.Name.inputValue}"
+                                label="Name"
+                                required="#{bindings.RolesTable.hints.Name.mandatory}"
+                                rows="#{bindings.RolesTable.hints.Name.displayHeight}"
+                                columns="#{bindings.RolesTable.hints.Name.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.Name.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="cl1"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}"
+                                  action="RolesDetails" text="#{row.Name}"></af:commandLink>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

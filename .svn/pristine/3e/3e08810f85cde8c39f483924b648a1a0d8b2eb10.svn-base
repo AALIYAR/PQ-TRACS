@@ -1,0 +1,578 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="s29TopLc"
+                             partialTriggers=" s29SaveButton0 s29CancelButton0"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:group id="g0"></af:group>
+          <af:switcher rendered="#{bindings.ContractRightIterator.findMode!='true'}"
+                       id="s29Sw" defaultFacet="hasRows"
+                       facetName="#{( bindings.ContractRightIterator.currentRow!=null ) ? 'hasRows' : 'noRows'}">
+            <f:facet name="noRows">
+              <af:outputFormatted value="#{nls['NO_ROWS_FOUND']}"
+                                  styleUsage="pageStamp" id="s29NoRowsFound"/>
+            </f:facet>
+            <f:facet name="hasRows">
+              <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+              <af:panelGroupLayout id="s29FC" layout="vertical">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp1"/>
+                </f:facet>
+                <af:panelFormLayout rows="1" labelAlignment="top" maxColumns="4"
+                                    id="s29FI">
+                  <af:inputText id="s29ContractNumberLinkNpr"
+                                value="#{bindings.s29ContractNumberLink.inputValue}"
+                                label="#{bindings.s29ContractNumberLink.hints.label}"
+                                required="#{bindings.s29ContractNumberLink.hints.mandatory}"
+                                rows="#{bindings.s29ContractNumberLink.hints.displayHeight}"
+                                columns="#{bindings.s29ContractNumberLink.hints.displayWidth}"
+                                maximumLength="255" readOnly="true"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{bindings.s29ContractNumberLink.validator}"/>
+                  </af:inputText>
+                  <af:panelLabelAndMessage id="s29ContractNumberLinkPlm"
+                                           label="#{bindings.s29ContractNumberLink.hints.label}"
+                                           rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:commandLink id="s29ContractNumberLink"
+                                    text="#{bindings.s29ContractNumberLink.attributeValue}"
+                                    action="LaunchTab">
+                      <af:setActionListener from="ContractTab"
+                                            to="#{jhsDynTabLauncher.taskFlowName}"/>
+                      <af:setActionListener from="#{bindings.s29ContractId.inputValue}"
+                                            to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                      <af:setActionListener from="Contract #{bindings.s29ContractNumber.inputValue}"
+                                            to="#{jhsDynTabLauncher.label}"/>
+                      <af:setActionListener from="#{bindings.s29ContractId.inputValue}"
+                                            to="#{jhsDynTabLauncher.parameters.rowKeyValueContractTab}"/>
+                      <af:setActionListener from="#{jhsDynTabLauncher}"
+                                            to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                    </af:commandLink>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="pgl0" valign="top"
+                                           layout="horizontal"></af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelLabelAndMessage>
+                  <af:inputText id="s29RightType"
+                                value="#{bindings.s29RightType.inputValue}"
+                                label="#{bindings.s29RightType.hints.label}"
+                                required="#{bindings.s29RightType.hints.mandatory}"
+                                rows="#{bindings.s29RightType.hints.displayHeight}"
+                                columns="#{bindings.s29RightType.hints.displayWidth}"
+                                maximumLength="40" readOnly="true"
+                                shortDesc="#{bindings.s29RightType.hints.tooltip}">
+                    <f:validator binding="#{bindings.s29RightType.validator}"/>
+                  </af:inputText>
+                  <af:inputText id="s29RightTemplateId"
+                                value="#{bindings.s29RightTemplateId.inputValue}"
+                                label="#{bindings.s29RightTemplateId.hints.label}"
+                                required="#{bindings.s29RightTemplateId.hints.mandatory}"
+                                rows="#{bindings.s29RightTemplateId.hints.displayHeight}"
+                                columns="#{bindings.s29RightTemplateId.hints.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.s29RightTemplateId.hints.tooltip}">
+                    <f:validator binding="#{bindings.s29RightTemplateId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s29RightTemplateId.format}"/>
+                  </af:inputText>
+                  <af:inputText id="s29TemplateName"
+                                value="#{bindings.s29TemplateName.inputValue}"
+                                label="#{bindings.s29TemplateName.hints.label}"
+                                required="#{bindings.s29TemplateName.hints.mandatory}"
+                                rows="#{bindings.s29TemplateName.hints.displayHeight}"
+                                columns="#{bindings.s29TemplateName.hints.displayWidth}"
+                                maximumLength="255" readOnly="true"
+                                shortDesc="#{bindings.s29TemplateName.hints.tooltip}">
+                    <f:validator binding="#{bindings.s29TemplateName.validator}"/>
+                  </af:inputText>
+                  <af:selectOneChoice id="s29PermissionType"
+                                      value="#{bindings.s29PermissionType.inputValue}"
+                                      label="#{bindings.s29PermissionType.hints.label}"
+                                      required="#{bindings.s29PermissionType.hints.mandatory}"
+                                      readOnly="true" autoSubmit="true"
+                                      valueChangeListener="#{s29PermissionTypeDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{bindings.s29PermissionType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="s29PermissionSubType"
+                                      value="#{bindings.s29PermissionSubType.inputValue}"
+                                      label="#{bindings.s29PermissionSubType.hints.label}"
+                                      required="false" readOnly="true">
+                    <f:selectItems value="#{bindings.s29PermissionSubType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="s29RightOrRestrictionType"
+                                      value="#{bindings.s29RightOrRestrictionType.inputValue}"
+                                      label="#{bindings.s29RightOrRestrictionType.hints.label}"
+                                      required="#{bindings.s29RightOrRestrictionType.hints.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{bindings.s29RightOrRestrictionType.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="s29IncludesOrExcludes"
+                                      value="#{bindings.s29IncludesOrExcludes.inputValue}"
+                                      label="#{bindings.s29IncludesOrExcludes.hints.label}"
+                                      required="#{bindings.s29IncludesOrExcludes.hints.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{bindings.s29IncludesOrExcludes.items}"/>
+                  </af:selectOneChoice>
+                  <af:selectBooleanCheckbox id="s29SalesRestrictionFlag"
+                                            value="#{bindings.s29SalesRestrictionFlag.inputValue}"
+                                            label="#{bindings.s29SalesRestrictionFlag.hints.label}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="s29ComplexFlag"
+                                            value="#{bindings.s29ComplexFlag.inputValue}"
+                                            label="#{bindings.s29ComplexFlag.hints.label}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="s29TranslationFlag"
+                                            value="#{bindings.s29TranslationFlag.inputValue}"
+                                            label="#{bindings.s29TranslationFlag.hints.label}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="s29ResellerFyiRequiredFlag"
+                                            value="#{bindings.s29ResellerFyiRequiredFlag.inputValue}"
+                                            label="#{bindings.s29ResellerFyiRequiredFlag.hints.label}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                  <af:selectBooleanCheckbox id="s29WrittenApprovalRequiredFlag"
+                                            value="#{bindings.s29WrittenApprovalRequiredFlag.inputValue}"
+                                            label="#{bindings.s29WrittenApprovalRequiredFlag.hints.label}"
+                                            readOnly="true"></af:selectBooleanCheckbox>
+                  <af:selectOneChoice id="s29Status"
+                                      value="#{bindings.s29Status.inputValue}"
+                                      label="#{bindings.s29Status.hints.label}"
+                                      required="#{bindings.s29Status.hints.mandatory}"
+                                      readOnly="true">
+                    <f:selectItems value="#{bindings.s29Status.items}"/>
+                  </af:selectOneChoice>
+                  <af:inputDate id="s29EffectiveStartDate"
+                                value="#{bindings.s29EffectiveStartDate.inputValue}"
+                                label="#{bindings.s29EffectiveStartDate.hints.label}"
+                                required="#{bindings.s29EffectiveStartDate.hints.mandatory}"
+                                readOnly="true">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputDate id="s29EffectiveEndDate"
+                                value="#{bindings.s29EffectiveEndDate.inputValue}"
+                                label="#{bindings.s29EffectiveEndDate.hints.label}"
+                                required="#{bindings.s29EffectiveEndDate.hints.mandatory}"
+                                readOnly="true">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                  <af:inputText id="s29EmbargoDays"
+                                value="#{bindings.s29EmbargoDays.inputValue}"
+                                label="#{bindings.s29EmbargoDays.hints.label}"
+                                required="#{bindings.s29EmbargoDays.hints.mandatory}"
+                                rows="#{bindings.s29EmbargoDays.hints.displayHeight}"
+                                columns="#{bindings.s29EmbargoDays.hints.displayWidth}"
+                                maximumLength="38" readOnly="true">
+                    <f:validator binding="#{bindings.s29EmbargoDays.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s29EmbargoDays.format}"/>
+                  </af:inputText>
+                  <af:inputText id="s29ReverseEmbargoDays"
+                                value="#{bindings.s29ReverseEmbargoDays.inputValue}"
+                                label="#{bindings.s29ReverseEmbargoDays.hints.label}"
+                                required="#{bindings.s29ReverseEmbargoDays.hints.mandatory}"
+                                rows="#{bindings.s29ReverseEmbargoDays.hints.displayHeight}"
+                                columns="#{bindings.s29ReverseEmbargoDays.hints.displayWidth}"
+                                maximumLength="38" readOnly="true">
+                    <f:validator binding="#{bindings.s29ReverseEmbargoDays.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.s29ReverseEmbargoDays.format}"/>
+                  </af:inputText>
+                  <af:inputText id="s29ComplexRuleDescription"
+                                value="#{bindings.s29ComplexRuleDescription.inputValue}"
+                                label="#{bindings.s29ComplexRuleDescription.hints.label}"
+                                required="#{bindings.s29ComplexRuleDescription.hints.mandatory}"
+                                rows="#{bindings.s29ComplexRuleDescription.hints.displayHeight}"
+                                columns="#{bindings.s29ComplexRuleDescription.hints.displayWidth}"
+                                maximumLength="4000" readOnly="true">
+                    <f:validator binding="#{bindings.s29ComplexRuleDescription.validator}"/>
+                  </af:inputText>
+                </af:panelFormLayout>
+                <af:panelHeader id="ph0" text=" ">
+                  <f:facet name="toolbar">
+                    <af:toolbox id="toolbox0">
+                      <af:toolbar id="toolbar0">
+                        <af:group id="gr0">
+                          <af:commandButton action="#{SaveContractRight.execute}"
+                                            rendered="#{(((jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) or (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])) and (!pageFlowScope.hideSaveButton)}"
+                                            textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                            id="s29SaveButton0"
+                                            partialSubmit="true"></af:commandButton>
+                          <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                            immediate="true"
+                                            partialSubmit="true"
+                                            rendered="#{!pageFlowScope.hideCancelButton}"
+                                            actionListener="#{jhsRollback.execute}"
+                                            action="Cancel"
+                                            id="s29CancelButton0"></af:commandButton>
+                        </af:group>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+            </f:facet>
+          </af:switcher>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+          <af:panelTabbed position="above" childCreation="lazy" id="pst0"
+                          dimensionsFrom="auto" styleClass="AFStretchWidth">
+            <af:showDetailItem stretchChildren="first"
+                               text="#{nls['TABLE_TITLE_RIGHTCATEGORIES']}"
+                               partialTriggers=" s29TopLc crcDeleteDialog qsAreacrcSearchOptions crcPC:crcArm crcPC:crcdelrmTM crcPC:crcArl crcPC:crcTab:crcdelrm crcPC:crcTab:crcdelrl"
+                               id="crcTopLcSdi"
+                               rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}"
+                               disabled="#{!jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+              <af:panelGroupLayout layout="vertical" id="crcTopLc"
+                                   partialTriggers=" s29TopLc crcDeleteDialog qsAreacrcSearchOptions crcPC:crcArm crcPC:crcdelrmTM crcPC:crcArl crcPC:crcTab:crcdelrm crcPC:crcTab:crcdelrl"
+                                   rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="sp2"/>
+                </f:facet>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <af:group id="g1">
+                  <af:panelGroupLayout id="modelSearchAreacrc"
+                                       rendered="#{!pageFlowScope.createModes.CreateRightCategories and !pageFlowScope.hideSearchArea}"
+                                       partialTriggers="">
+                    <f:attribute name="JhsIgnoreChanges" value="true"/>
+                    <af:quickQuery id="qsAreacrcSearchOptions"
+                                   label="#{nls['FILTER_BY']}"
+                                   value="#{bindings.RightCategoriesIteratorContractRightCategoryViewCriteriaQuery.queryDescriptor}"
+                                   model="#{bindings.RightCategoriesIteratorContractRightCategoryViewCriteriaQuery.queryModel}"
+                                   queryListener="#{bindings.RightCategoriesIteratorContractRightCategoryViewCriteriaQuery.processQuery}"></af:quickQuery>
+                  </af:panelGroupLayout>
+                </af:group>
+                <af:panelGroupLayout layout="vertical" id="pgl1">
+                  <af:panelCollection id="crcPC" featuresOff=" "
+                                      styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                               id="menu0">
+                        <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                                 id="menu1">
+                          <af:group id="crctbb"
+                                    rendered="#{ bindings.RightCategoriesIterator.currentRow!=null }">
+                            <af:commandMenuItem actionListener="#{bindings.FirstRightCategories.execute}"
+                                                id="crcFirst"
+                                                partialSubmit="true"
+                                                icon="/afr/shuttleleftall_ena.png"
+                                                textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.PreviousRightCategories.execute}"
+                                                icon="/afr/shuttleleft_ena.png"
+                                                textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                                id="crcPrevious"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.NextRightCategories.execute}"
+                                                icon="/afr/shuttleright_ena.png"
+                                                textAndAccessKey="#{nls['NEXT_ROW']}"
+                                                id="crcNext"
+                                                partialSubmit="true"></af:commandMenuItem>
+                            <af:commandMenuItem actionListener="#{bindings.LastRightCategories.execute}"
+                                                icon="/afr/shuttlerightall_ena.png"
+                                                textAndAccessKey="#{nls['LAST_ROW']}"
+                                                id="crcLast"
+                                                partialSubmit="true"></af:commandMenuItem>
+                          </af:group>
+                        </af:menu>
+                        <af:commandMenuItem id="crcArm"
+                                            textAndAccessKey="#{nls['ADD_ROW']}"
+                                            immediate="false"
+                                            icon="/jheadstart/images/addRow.png"
+                                            partialSubmit="true"
+                                            actionListener="#{pageFlowScope.RightCategoriesTable.addRow}"
+                                            rendered="#{ bindings.ContractRightIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"></af:commandMenuItem>
+                        <af:commandMenuItem id="crcdelrmTM"
+                                            textAndAccessKey="#{nls['DELETE_ROW']}"
+                                            icon="/jheadstart/images/deleteRow.png"
+                                            partialSubmit="true"
+                                            immediate="true"
+                                            rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                          <af:showPopupBehavior popupId="::crcDeletePopup"/>
+                        </af:commandMenuItem>
+                        <af:commandMenuItem partialSubmit="true"
+                                            textAndAccessKey="#{nls['EXPORT']}"
+                                            icon="/jheadstart/images/excel.png"
+                                            immediate="true" id="cmi0">
+                          <af:exportCollectionActionListener exportedId="crcTab"
+                                                             type="excelHTML"
+                                                             filename="RightCategories.xls"/>
+                        </af:commandMenuItem>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar0">
+                        <!-- Also create CreateRightCategories bean so we can start table group in create mode as well -->
+                        <af:commandImageLink id="crcArl" immediate="false"
+                                             rendered="#{ bindings.ContractRightIterator.currentRow!=null  and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                             partialSubmit="true"
+                                             actionListener="#{pageFlowScope.RightCategoriesTable.addRow}"
+                                             shortDesc="#{nls['ADD_ROW']}"
+                                             icon="/jheadstart/images/addRow.png"/>
+                        <af:commandImageLink immediate="true"
+                                             partialSubmit="true" id="cl0"
+                                             shortDesc="#{nls['EXPORT']}"
+                                             icon="/jheadstart/images/excel.png">
+                          <af:exportCollectionActionListener exportedId="crcTab"
+                                                             type="excelHTML"
+                                                             filename="RightCategories.xls"/>
+                        </af:commandImageLink>
+                        <af:commandToolbarButton text="Print" id="crcPrint"
+                                                 shortDesc="Opens a new tab with printer friendly format.">
+                          <af:showPrintablePageBehavior/>
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar">
+                      <af:toolbar>
+                        <af:outputText value="#{bindings.RightCategoriesIterator.estimatedRowCount} rows found"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <af:table id="crcTab" contentDelivery="immediate"
+                              value="#{bindings.RightCategoriesTable.collectionModel}"
+                              columnStretching="blank" rowBandingInterval="0"
+                              editingMode="editAll" columnSelection="multiple"
+                              contextMenuSelect="true" rowSelection="single"
+                              selectionListener="#{pageFlowScope.RightCategoriesTable.makeCurrent}"
+                              selectedRowKeys="#{pageFlowScope.RightCategoriesTable.selectedRow}"
+                              rowDisclosureListener="#{pageFlowScope.RightCategoriesTable.discloseRow}"
+                              var="row" varStatus="status"
+                              rows="#{bindings.RightCategoriesTable.rangeSize}"
+                              autoHeightRows="#{bindings.RightCategoriesTable.estimatedRowCount lt 5 ? 5 : bindings.RightCategoriesTable.estimatedRowCount lt bindings.RightCategoriesTable.rangeSize ? bindings.RightCategoriesTable.estimatedRowCount : 0 }"
+                              fetchSize="#{bindings.RightCategoriesTable.rangeSize}"
+                              emptyText="#{nls['NO_ROWS_FOUND']}"
+                              queryListener="#{bindings.RightCategoriesIteratorContractRightCategoryViewCriteriaQuery.processQuery}"
+                              filterModel="#{bindings.RightCategoriesIteratorContractRightCategoryViewCriteriaQuery.queryDescriptor}"
+                              filterVisible="true"
+                              binding="#{pageFlowScope.RightCategoriesTable.table}"
+                              partialTriggers=":::qsAreacrcSearchOptions :::crcPC ::crcFirst ::crcPrevious ::crcNext ::crcLast"
+                              styleClass="AFStretchWidth"
+                              summary="#{nls['TABLE_TITLE_RIGHTCATEGORIES']}">
+                      <f:facet name="contextMenu">
+                        <af:popup id="crcTablePopup" childCreation="deferred">
+                          <af:menu id="menu2">
+                            <af:menu text="#{nls['GO_TO_MENU_LABEL']}"
+                                     id="menu3"></af:menu>
+                            <af:commandMenuItem id="crcdelrm"
+                                                textAndAccessKey="#{nls['DELETE_ROW']}"
+                                                icon="/jheadstart/images/deleteRow.png"
+                                                partialSubmit="true"
+                                                immediate="true"
+                                                rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}">
+                              <af:showPopupBehavior popupId=":::crcDeletePopup"/>
+                            </af:commandMenuItem>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+                      <af:column id="crcActionColumn" width="20" align="center"
+                                 headerText=" ">
+                        <af:panelGroupLayout layout="horizontal" id="pgl2">
+                          <af:commandImageLink id="crcdelrl"
+                                               partialSubmit="true"
+                                               immediate="true"
+                                               rendered="#{jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']}"
+                                               shortDesc="#{nls['DELETE_ROW']}"
+                                               icon="/jheadstart/images/deleteRow.png">
+                            <af:showPopupBehavior popupId=":::crcDeletePopup"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column id="crcCatCol" sortable="true" noWrap="true"
+                                 width="228" sortProperty="CategoryId"
+                                 align="right" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightCategoriesTable.hints.CategoryId.label}"
+                                          showRequired="#{bindings.RightCategoriesTable.hints.CategoryId.mandatory}"
+                                          id="ol0"/>
+                        </f:facet>
+                        <af:selectOneChoice id="crcCat"
+                                            value="#{row.bindings.CategoryId.inputValue}"
+                                            label="#{bindings.RightCategoriesTable.hints.CategoryId.label}"
+                                            required="#{bindings.RightCategoriesTable.hints.CategoryId.mandatory}"
+                                            readOnly="#{((pageFlowScope.RightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.RightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                            autoSubmit="true"
+                                            valueChangeListener="#{crcCategoryDependsOnItem.updateModelValue}">
+                          <f:selectItems value="#{row.bindings.CategoryId.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="crcValCol" sortable="true"
+                                 filterable="true" noWrap="true" width="180"
+                                 sortProperty="Value" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightCategoriesTable.hints.Value.label}"
+                                          showRequired="true" id="ol1"/>
+                        </f:facet>
+                        <af:selectOneChoice id="crcVal"
+                                            value="#{row.bindings.Value.inputValue}"
+                                            label="#{bindings.RightCategoriesTable.hints.Value.label}"
+                                            required="true"
+                                            readOnly="#{((pageFlowScope.RightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.RightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                            autoSubmit="true"
+                                            valueChangeListener="#{crcValueDependsOnItem.updateModelValue}">
+                          <f:selectItems value="#{row.bindings.Value.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="crcFOPCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="FullOrPartial" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightCategoriesTable.hints.FullOrPartial.label}"
+                                          showRequired="#{bindings.RightCategoriesTable.hints.FullOrPartial.mandatory}"
+                                          id="ol2"/>
+                        </f:facet>
+                        <af:selectOneChoice id="crcFOP"
+                                            value="#{row.bindings.FullOrPartial.inputValue}"
+                                            label="#{bindings.RightCategoriesTable.hints.FullOrPartial.label}"
+                                            required="#{bindings.RightCategoriesTable.hints.FullOrPartial.mandatory}"
+                                            readOnly="#{((pageFlowScope.RightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.RightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                            disabled="#{row.FullOrPartialFlag!='Y'}"
+                                            unselectedLabel="">
+                          <af:selectItem id="si0" value="Full" label="Full"/>
+                          <af:selectItem id="si1" value="Partial"
+                                         label="Partial"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="crcPFCol" sortable="true" filterable="true"
+                                 noWrap="true" width="100"
+                                 sortProperty="PermitFlag" align="center"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightCategoriesTable.hints.PermitFlag.label}"
+                                          showRequired="#{bindings.RightCategoriesTable.hints.PermitFlag.mandatory}"
+                                          id="ol3"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="crcPF"
+                                                  label="#{bindings.RightCategoriesTable.hints.PermitFlag.label}"
+                                                  value="#{crcPermitFlagcheckboxInTable.value}"
+                                                  readOnly="#{((pageFlowScope.RightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.RightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))}"
+                                                  autoSubmit="true"
+                                                  valueChangeListener="#{crcPermitFlagDependsOnItem.updateModelValue}"></af:selectBooleanCheckbox>
+                      </af:column>
+                      <af:column id="crcSubValCol" sortable="true"
+                                 filterable="true" noWrap="true" width="180"
+                                 sortProperty="SubcategoryValue"
+                                 rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightCategoriesTable.hints.SubcategoryValue.label}"
+                                          showRequired="false" id="ol4"/>
+                        </f:facet>
+                        <af:selectOneChoice id="crcSubVal"
+                                            value="#{row.bindings.SubcategoryValue.inputValue}"
+                                            label="#{bindings.RightCategoriesTable.hints.SubcategoryValue.label}"
+                                            required="false"
+                                            readOnly="#{(((pageFlowScope.RightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.RightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))) or (!(row.PermitFlag!='Y'))}"
+                                            disabled="#{row.bindings.CategoryId.attributeValue.value== 4 ? false : true}"
+                                            autoSubmit="true">
+                          <f:selectItems value="#{row.bindings.SubcategoryValue.items}"/>
+                        </af:selectOneChoice>
+                      </af:column>
+                      <af:column id="crcSUBPFCol" sortable="true"
+                                 filterable="true" noWrap="true" width="100"
+                                 sortProperty="SubcategoryValuePermitFlag"
+                                 align="center" rowHeader="false"
+                                 filterFeatures="caseInsensitive">
+                        <f:facet name="header">
+                          <af:outputLabel value="#{bindings.RightCategoriesTable.hints.SubcategoryValuePermitFlag.label}"
+                                          showRequired="false" id="ol5"/>
+                        </f:facet>
+                        <af:selectBooleanCheckbox id="crcSUBPF"
+                                                  label="#{bindings.RightCategoriesTable.hints.SubcategoryValuePermitFlag.label}"
+                                                  value="#{crcSubCategoryPermitFlagcheckboxInTable.value}"
+                                                  readOnly="#{(((pageFlowScope.RightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.RightCategoriesTable.newRow) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))) or (!(row.PermitFlag!='Y'))}"
+                                                  disabled="#{row.bindings.CategoryId.attributeValue.value== 4 ? false : true}"></af:selectBooleanCheckbox>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                  <af:spacer width="10" height="10" id="sp3"/>
+                  <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                  <af:panelGroupLayout id="pgl3"
+                                       rendered="#{bindings.RightCategoriesIterator.estimatedRowCount>0}"
+                                       partialTriggers="crcPC:crcTab"
+                                       layout="scroll">
+                    <f:facet name="separator">
+                      <af:spacer width="10" height="10" id="sp4"/>
+                    </f:facet>
+                    <af:panelFormLayout rows="1" maxColumns="2"
+                                        labelAlignment="start" id="pfl0">
+                      <af:inputText id="crcCB"
+                                    value="#{bindings.crcCreatedBy.inputValue}"
+                                    label="#{bindings.crcCreatedBy.hints.label}"
+                                    required="#{bindings.crcCreatedBy.hints.mandatory}"
+                                    rows="#{bindings.crcCreatedBy.hints.displayHeight}"
+                                    columns="#{bindings.crcCreatedBy.hints.displayWidth}"
+                                    maximumLength="40" readOnly="true"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.crcCreatedBy.validator}"/>
+                      </af:inputText>
+                      <af:inputDate id="crcCD"
+                                    value="#{bindings.crcCreatedDate.inputValue}"
+                                    label="#{bindings.crcCreatedDate.hints.label}"
+                                    required="#{bindings.crcCreatedDate.hints.mandatory}"
+                                    readOnly="true" disabled="true">
+                        <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                      </af:inputDate>
+                      <af:inputText id="crcLUB"
+                                    value="#{bindings.crcLastUpdatedBy.inputValue}"
+                                    label="#{bindings.crcLastUpdatedBy.hints.label}"
+                                    required="#{bindings.crcLastUpdatedBy.hints.mandatory}"
+                                    rows="#{bindings.crcLastUpdatedBy.hints.displayHeight}"
+                                    columns="#{bindings.crcLastUpdatedBy.hints.displayWidth}"
+                                    maximumLength="40" readOnly="true"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.crcLastUpdatedBy.validator}"/>
+                      </af:inputText>
+                      <af:inputDate id="crcLUD"
+                                    value="#{bindings.crcLastUpdatedDate.inputValue}"
+                                    label="#{bindings.crcLastUpdatedDate.hints.label}"
+                                    required="#{bindings.crcLastUpdatedDate.hints.mandatory}"
+                                    readOnly="true" disabled="true">
+                        <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                      </af:inputDate>
+                    </af:panelFormLayout>
+                  </af:panelGroupLayout>
+                  <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                </af:panelGroupLayout>
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="crcDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="crcDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_RIGHTCATEGORIE:#{pageFlowScope.RightCategoriesTable.currentRowAttributeValues.CategoryId}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteRightCategories.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

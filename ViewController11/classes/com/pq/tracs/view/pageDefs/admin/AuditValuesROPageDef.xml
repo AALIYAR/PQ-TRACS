@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="AuditValuesROPageDef"
+                Package="com.pq.tracs.view.pageDefs.admin"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'ADMIN'}"/>
+  </parameters>
+  <executables>
+    <iterator id="AuditValuesROIterator" Binds="AuditValuesView1"
+              DataControl="TracsAdminServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="AuditValuesROIteratorAuditValuesViewCriteriaQuery"
+                  Binds="AuditValuesROIterator"
+                  Criteria="AuditValuesViewCriteria"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="AuditTable"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="AuditValuesROId" IterBinding="AuditValuesROIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AuditValuesRORecordId"
+                     IterBinding="AuditValuesROIterator">
+      <AttrNames>
+        <Item Value="RecordId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AuditValuesROAuditTable"
+                     IterBinding="AuditValuesROIterator">
+      <AttrNames>
+        <Item Value="AuditTable"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AuditValuesROAuditAttribute"
+                     IterBinding="AuditValuesROIterator">
+      <AttrNames>
+        <Item Value="AuditAttribute"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AuditValuesROAttrPrevValue"
+                     IterBinding="AuditValuesROIterator">
+      <AttrNames>
+        <Item Value="AttrPrevValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AuditValuesROAttrCurrValue"
+                     IterBinding="AuditValuesROIterator">
+      <AttrNames>
+        <Item Value="AttrCurrValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AuditValuesROAttrUpdatedBy"
+                     IterBinding="AuditValuesROIterator">
+      <AttrNames>
+        <Item Value="AttrUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AuditValuesROAttrUpdatedDate"
+                     IterBinding="AuditValuesROIterator">
+      <AttrNames>
+        <Item Value="AttrUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="AuditValuesROTable" IterBinding="AuditValuesROIterator">
+      <nodeDefinition Name="AuditValuesRO"
+                      DefName="com.pq.tracs.model.ro.AuditValuesView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="RecordId"/>
+          <Item Value="AuditTable"/>
+          <Item Value="AuditAttribute"/>
+          <Item Value="AttrPrevValue"/>
+          <Item Value="AttrCurrValue"/>
+          <Item Value="AttrUpdatedBy"/>
+          <Item Value="AttrUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstAuditValuesRO" IterBinding="AuditValuesROIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousAuditValuesRO" IterBinding="AuditValuesROIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextAuditValuesRO" IterBinding="AuditValuesROIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastAuditValuesRO" IterBinding="AuditValuesROIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyAuditValuesRO"
+            IterBinding="AuditValuesROIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrAuditValuesRO}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction"
+            DataControl="TracsAdminServiceDataControl"/>
+  </bindings>
+</pageDefinition>

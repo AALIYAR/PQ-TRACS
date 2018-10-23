@@ -1,0 +1,555 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="ImportsTopLc"
+                             partialTriggers=" ImportsCancelButton0 asAreaImportsSearchOptions qsAreaImportsSearchOptions"
+                             rendered="#{jhsUserRoles['TI, ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_IMPORTS']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreateImports.execute}"
+                                      action="CreateImports"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_IMPORTS']}"
+                                      rendered="#{(true) and (jhsUserRoles['TI, ADMIN'])}"
+                                      id="ImportsNewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="ImportsCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaImports"
+                                 rendered="#{!pageFlowScope.createModes.CreateImports and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaImportsSearchOptions:qsButtonImports qsAreaImportsSearchOptions:asButtonImports ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaImportsSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.ImportsIteratorTraxImportFileViewCriteriaAdvQuery.queryDescriptor}"
+                        model="#{bindings.ImportsIteratorTraxImportFileViewCriteriaAdvQuery.queryModel}"
+                        queryListener="#{bindings.ImportsIteratorTraxImportFileViewCriteriaAdvQuery.processQuery}"
+                        queryOperationListener="#{bindings.ImportsIteratorTraxImportFileViewCriteriaAdvQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchImports.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonImports"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchImports.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaImportsSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.ImportsIteratorTraxImportFileViewCriteriaAdvQuery.queryDescriptor}"
+                             model="#{bindings.ImportsIteratorTraxImportFileViewCriteriaAdvQuery.queryModel}"
+                             queryListener="#{bindings.ImportsIteratorTraxImportFileViewCriteriaAdvQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchImports.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonImports"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchImports.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="ImportsPC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="ImportsDetails"></af:commandMenuItem>
+                    <af:group id="Importstbb"
+                              rendered="#{ (bindings.ImportsIterator.viewObject!=null and bindings.ImportsIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstImports.execute}"
+                                          id="ImportsFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousImports.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="ImportsPrevious"
+                                          partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextImports.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="ImportsNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastImports.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="ImportsLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandToolbarButton text="Print" id="ImportsPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.ImportsIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="ImportsTab" contentDelivery="immediate"
+                        value="#{bindings.ImportsTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.ImportsTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.ImportsTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.ImportsTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.ImportsTable.rangeSize}"
+                        autoHeightRows="#{bindings.ImportsTable.estimatedRowCount}"
+                        fetchSize="#{bindings.ImportsTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.ImportsIteratorTraxImportFileViewCriteriaAdvQuery.processQuery}"
+                        filterModel="#{bindings.ImportsIteratorTraxImportFileViewCriteriaAdvQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.ImportsTable.table}"
+                        partialTriggers=":::qsAreaImportsSearchOptions :::asAreaImportsSearchOptions :::ImportsPC ::ImportsFirst ::ImportsPrevious ::ImportsNext ::ImportsLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_IMPORTS']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="ImportsTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="ImportsDetails"></af:commandMenuItem>
+                      </af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="ImportsImportNumberCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ImportNumber" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.ImportNumber.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="ImportsImportNumber"
+                                value="#{row.bindings.ImportNumber.inputValue}"
+                                label="#{bindings.ImportsTable.hints.ImportNumber.label}"
+                                required="#{bindings.ImportsTable.hints.ImportNumber.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.ImportNumber.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.ImportNumber.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.ImportNumber.tooltip}">
+                    <f:validator binding="#{row.bindings.ImportNumber.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ImportsTable.hints.ImportNumber.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ImportsFileNameCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="FileName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.FileName.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="cl0"
+                                value="#{row.bindings.FileName.inputValue}"
+                                label="#{bindings.ImportsTable.hints.FileName.label}"
+                                required="#{bindings.ImportsTable.hints.FileName.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.FileName.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.FileName.displayWidth}"
+                                maximumLength="200" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.FileName.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.FileName.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="cl1"
+                                  shortDesc="#{bindings.ImportsTable.hints.FileName.tooltip}"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}"
+                                  action="ImportsDetails"
+                                  text="#{row.FileName}"></af:commandLink>
+                </af:column>
+                <af:column id="ImportsImportTypeCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="ImportType" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.ImportType.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:selectOneChoice id="ImportsImportType"
+                                      value="#{row.bindings.ImportType.inputValue}"
+                                      label="#{bindings.ImportsTable.hints.ImportType.label}"
+                                      required="#{bindings.ImportsTable.hints.ImportType.mandatory}"
+                                      readOnly="true"
+                                      shortDesc="#{bindings.ImportsTable.hints.ImportType.tooltip}"
+                                      autoSubmit="true"
+                                      valueChangeListener="#{ImportsImportTypeDependsOnItem.updateModelValue}">
+                    <f:selectItems value="#{row.bindings.ImportType.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="ImportsImportStatusCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="ImportStatus" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.ImportStatus.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputText id="ImportsImportStatus"
+                                value="#{row.bindings.ImportStatus.inputValue}"
+                                label="#{bindings.ImportsTable.hints.ImportStatus.label}"
+                                required="#{bindings.ImportsTable.hints.ImportStatus.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.ImportStatus.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.ImportStatus.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.ImportStatus.tooltip}">
+                    <f:validator binding="#{row.bindings.ImportStatus.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ImportsImportFileDLCol" noWrap="true" width="100"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="Download File" id="ol4"/>
+                  </f:facet>
+                  <af:commandLink id="ImportsImportFileDL"
+                                  rendered="#{ImportsImportFileDLFileHandlerInTable.fileExist}"
+                                  shortDesc="#{bindings.ImportsTable.hints.ImportFile.tooltip}">
+                    <af:outputText id="ot0"
+                                   value="#{ImportsImportFileDLFileHandlerInTable.fileName}"/>
+                    <af:fileDownloadActionListener contentType="#{ImportsImportFileDLFileHandlerInTable.contentType}"
+                                                   filename="#{ImportsImportFileDLFileHandlerInTable.fileName}"
+                                                   method="#{ImportsImportFileDLFileHandlerInTable.downloadFile}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="ImportsParsedRowCountCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ParsedRowCount" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.ParsedRowCount.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="ImportsParsedRowCount"
+                                value="#{row.bindings.ParsedRowCount.inputValue}"
+                                label="#{bindings.ImportsTable.hints.ParsedRowCount.label}"
+                                required="#{bindings.ImportsTable.hints.ParsedRowCount.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.ParsedRowCount.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.ParsedRowCount.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.ParsedRowCount.tooltip}">
+                    <f:validator binding="#{row.bindings.ParsedRowCount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ImportsTable.hints.ParsedRowCount.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ImportsPotentialMatchCountCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="PotentialMatchCount" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.PotentialMatchCount.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:inputText id="ImportsPotentialMatchCount"
+                                value="#{row.bindings.PotentialMatchCount.inputValue}"
+                                label="#{bindings.ImportsTable.hints.PotentialMatchCount.label}"
+                                required="#{bindings.ImportsTable.hints.PotentialMatchCount.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.PotentialMatchCount.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.PotentialMatchCount.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.PotentialMatchCount.tooltip}">
+                    <f:validator binding="#{row.bindings.PotentialMatchCount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ImportsTable.hints.PotentialMatchCount.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ImportsValidatedRowCountCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ValidatedRowCount" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.ValidatedRowCount.label}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:inputText id="ImportsValidatedRowCount"
+                                value="#{row.bindings.ValidatedRowCount.inputValue}"
+                                label="#{bindings.ImportsTable.hints.ValidatedRowCount.label}"
+                                required="#{bindings.ImportsTable.hints.ValidatedRowCount.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.ValidatedRowCount.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.ValidatedRowCount.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.ValidatedRowCount.tooltip}">
+                    <f:validator binding="#{row.bindings.ValidatedRowCount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ImportsTable.hints.ValidatedRowCount.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ImportsValidationWarningCountCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ValidationWarningCount"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.ValidationWarningCount.label}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:inputText id="ImportsValidationWarningCount"
+                                value="#{row.bindings.ValidationWarningCount.inputValue}"
+                                label="#{bindings.ImportsTable.hints.ValidationWarningCount.label}"
+                                required="#{bindings.ImportsTable.hints.ValidationWarningCount.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.ValidationWarningCount.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.ValidationWarningCount.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.ValidationWarningCount.tooltip}">
+                    <f:validator binding="#{row.bindings.ValidationWarningCount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ImportsTable.hints.ValidationWarningCount.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ImportsValidationErrorCountCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ValidationErrorCount" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.ValidationErrorCount.label}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:inputText id="ImportsValidationErrorCount"
+                                value="#{row.bindings.ValidationErrorCount.inputValue}"
+                                label="#{bindings.ImportsTable.hints.ValidationErrorCount.label}"
+                                required="#{bindings.ImportsTable.hints.ValidationErrorCount.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.ValidationErrorCount.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.ValidationErrorCount.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.ValidationErrorCount.tooltip}">
+                    <f:validator binding="#{row.bindings.ValidationErrorCount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ImportsTable.hints.ValidationErrorCount.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ImportsImportedRowCountCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ImportedRowCount" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.ImportedRowCount.label}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:inputText id="ImportsImportedRowCount"
+                                value="#{row.bindings.ImportedRowCount.inputValue}"
+                                label="#{bindings.ImportsTable.hints.ImportedRowCount.label}"
+                                required="#{bindings.ImportsTable.hints.ImportedRowCount.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.ImportedRowCount.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.ImportedRowCount.displayWidth}"
+                                maximumLength="38" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.ImportedRowCount.tooltip}">
+                    <f:validator binding="#{row.bindings.ImportedRowCount.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ImportsTable.hints.ImportedRowCount.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ImportsGroupNameCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="GroupName" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.GroupName.label}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <af:inputText id="cl2"
+                                value="#{row.bindings.GroupName.inputValue}"
+                                label="#{bindings.ImportsTable.hints.GroupName.label}"
+                                required="#{bindings.ImportsTable.hints.GroupName.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.GroupName.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.GroupName.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.GroupName.tooltip}"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.GroupName.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="ImportsGroupName"
+                                  text="#{row.bindings.GroupName.attributeValue}"
+                                  shortDesc="#{bindings.ImportsTable.hints.GroupName.tooltip}"
+                                  action="LaunchTab"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}">
+                    <af:setActionListener from="TargetingGroups"
+                                          to="#{jhsDynTabLauncher.taskFlowName}"/>
+                    <af:setActionListener from="#{bindings.ImportsTargetGroupId.inputValue}"
+                                          to="#{jhsDynTabLauncher.tabUniqueIdentifier}"/>
+                    <af:setActionListener from="#{bindings.ImportsGroupName.inputValue}"
+                                          to="#{jhsDynTabLauncher.label}"/>
+                    <af:setActionListener from="#{bindings.ImportsTargetGroupId.inputValue}"
+                                          to="#{jhsDynTabLauncher.parameters.rowKeyValueTargetingGroups}"/>
+                    <af:setActionListener from="#{jhsDynTabLauncher}"
+                                          to="#{pageFlowScope.parentContext.jhsDynTabLauncher}"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="ImportsGroupTypeCol" sortable="true"
+                           filterable="true" noWrap="true" width="120"
+                           sortProperty="GroupType" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.GroupType.label}"
+                                    id="ol12"/>
+                  </f:facet>
+                  <af:inputText id="ImportsGroupType"
+                                value="#{row.bindings.GroupType.inputValue}"
+                                label="#{bindings.ImportsTable.hints.GroupType.label}"
+                                required="#{bindings.ImportsTable.hints.GroupType.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.GroupType.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.GroupType.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.GroupType.tooltip}">
+                    <f:validator binding="#{row.bindings.GroupType.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ImportsImportNoteCol" sortable="true"
+                           filterable="true" noWrap="true" width="240"
+                           sortProperty="ImportNote" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.ImportNote.label}"
+                                    id="ol13"/>
+                  </f:facet>
+                  <af:inputText id="ImportsImportNote"
+                                value="#{row.bindings.ImportNote.inputValue}"
+                                label="#{bindings.ImportsTable.hints.ImportNote.label}"
+                                required="#{bindings.ImportsTable.hints.ImportNote.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.ImportNote.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.ImportNote.displayWidth}"
+                                maximumLength="2000" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.ImportNote.tooltip}">
+                    <f:validator binding="#{row.bindings.ImportNote.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ImportsCreatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.CreatedBy.label}"
+                                    id="ol14"/>
+                  </f:facet>
+                  <af:inputText id="ImportsCreatedBy"
+                                value="#{row.bindings.CreatedBy.inputValue}"
+                                label="#{bindings.ImportsTable.hints.CreatedBy.label}"
+                                required="#{bindings.ImportsTable.hints.CreatedBy.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.CreatedBy.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.CreatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.CreatedBy.tooltip}">
+                    <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ImportsCreatedDateCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedDate" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.CreatedDate.label}"
+                                    id="ol15"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedDate}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="ImportsCreatedDate"
+                                value="#{row.bindings.CreatedDate.inputValue}"
+                                label="#{bindings.ImportsTable.hints.CreatedDate.label}"
+                                required="#{bindings.ImportsTable.hints.CreatedDate.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.CreatedDate.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="ImportsLastUpdatedByCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LastUpdatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.LastUpdatedBy.label}"
+                                    id="ol16"/>
+                  </f:facet>
+                  <af:inputText id="ImportsLastUpdatedBy"
+                                value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                label="#{bindings.ImportsTable.hints.LastUpdatedBy.label}"
+                                required="#{bindings.ImportsTable.hints.LastUpdatedBy.mandatory}"
+                                rows="#{bindings.ImportsTable.hints.LastUpdatedBy.displayHeight}"
+                                columns="#{bindings.ImportsTable.hints.LastUpdatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.LastUpdatedBy.tooltip}">
+                    <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="ImportsLastUpdatedDateCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LastUpdatedDate" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ImportsTable.hints.LastUpdatedDate.label}"
+                                    id="ol17"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdatedDate}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="ImportsLastUpdatedDate"
+                                value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                label="#{bindings.ImportsTable.hints.LastUpdatedDate.label}"
+                                required="#{bindings.ImportsTable.hints.LastUpdatedDate.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.ImportsTable.hints.LastUpdatedDate.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl"></af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

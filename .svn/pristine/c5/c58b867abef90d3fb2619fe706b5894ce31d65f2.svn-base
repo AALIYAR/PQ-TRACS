@@ -1,0 +1,565 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="CtOTopLc"
+                             partialTriggers=" CtOCancelButton0 asAreaCtOSearchOptions qsAreaCtOSearchOptions"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0" text="#{nls['TABLE_TITLE_CONTENTOWNER']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0">
+                    <af:commandButton actionListener="#{CreateContentOwner.execute}"
+                                      action="CreateCtO"
+                                      textAndAccessKey="#{nls['NEW_BUTTON_LABEL_CONTENTOWNER']}"
+                                      rendered="#{(true) and (jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])}"
+                                      id="CtONewButton"></af:commandButton>
+                  </af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="CtOCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaCtO"
+                                 rendered="#{!pageFlowScope.createModes.CreateContentOwner and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaCtOSearchOptions:qsButtonCtO qsAreaCtOSearchOptions:asButtonCtO ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaCtOSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.ContentOwnerIteratorContentOwnerViewCriteriaQuery.queryDescriptor}"
+                        model="#{bindings.ContentOwnerIteratorContentOwnerViewCriteriaQuery.queryModel}"
+                        queryListener="#{bindings.ContentOwnerIteratorContentOwnerViewCriteriaQuery.processQuery}"
+                        queryOperationListener="#{bindings.ContentOwnerIteratorContentOwnerViewCriteriaQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchContentOwner.quickSearchMode}"
+                        rows="1" labelAlignment="top" maxColumns="4">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonCtO"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchContentOwner.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaCtOSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.ContentOwnerIteratorContentOwnerViewCriteriaQuery.queryDescriptor}"
+                             model="#{bindings.ContentOwnerIteratorContentOwnerViewCriteriaQuery.queryModel}"
+                             queryListener="#{bindings.ContentOwnerIteratorContentOwnerViewCriteriaQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchContentOwner.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonCtO"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchContentOwner.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="CtOPC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:commandMenuItem id="mi0"
+                                        textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                        action="ContentOwnerDetails"></af:commandMenuItem>
+                    <af:group id="CtOtbb"
+                              rendered="#{ (bindings.ContentOwnerIterator.viewObject!=null and bindings.ContentOwnerIterator.viewObject.currentRow!=null)}">
+                      <af:commandMenuItem actionListener="#{bindings.FirstContentOwner.execute}"
+                                          id="CtOFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousContentOwner.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="CtOPrevious" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextContentOwner.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="CtONext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastContentOwner.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="CtOLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="CtOTab"
+                                                       type="excelHTML"
+                                                       filename="ContentOwner.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="CtOTab"
+                                                       type="excelHTML"
+                                                       filename="ContentOwner.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="CtOPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.ContentOwnerIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="CtOTab" contentDelivery="immediate"
+                        value="#{bindings.ContentOwnerTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.ContentOwnerTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.ContentOwnerTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.ContentOwnerTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.ContentOwnerTable.rangeSize}"
+                        autoHeightRows="#{bindings.ContentOwnerTable.estimatedRowCount}"
+                        fetchSize="#{bindings.ContentOwnerTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.ContentOwnerIteratorContentOwnerViewCriteriaQuery.processQuery}"
+                        filterModel="#{bindings.ContentOwnerIteratorContentOwnerViewCriteriaQuery.queryDescriptor}"
+                        filterVisible="true"
+                        binding="#{pageFlowScope.ContentOwnerTable.table}"
+                        partialTriggers=":::qsAreaCtOSearchOptions :::asAreaCtOSearchOptions :::CtOPC ::CtOFirst ::CtOPrevious ::CtONext ::CtOLast"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_CONTENTOWNER']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="CtOTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3">
+                        <af:commandMenuItem id="mi1"
+                                            textAndAccessKey="#{nls['DETAIL_VIEW_BUTTON_LABEL']}"
+                                            action="ContentOwnerDetails"></af:commandMenuItem>
+                      </af:menu>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="CtOANoCol" sortable="true" filterable="true"
+                           noWrap="true" width="100"
+                           sortProperty="ContentOwnerNo" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.ContentOwnerNo.label}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputText id="CtOANo"
+                                value="#{row.bindings.ContentOwnerNo.inputValue}"
+                                label="#{bindings.ContentOwnerTable.hints.ContentOwnerNo.label}"
+                                required="false"
+                                rows="#{bindings.ContentOwnerTable.hints.ContentOwnerNo.displayHeight}"
+                                columns="#{bindings.ContentOwnerTable.hints.ContentOwnerNo.displayWidth}"
+                                readOnly="true">
+                    <f:validator binding="#{row.bindings.ContentOwnerNo.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ContentOwnerTable.hints.ContentOwnerNo.format}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CtONmCol" sortable="true" filterable="true"
+                           noWrap="true" width="120" sortProperty="Name"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.Name.label}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="cl1" value="#{row.bindings.Name.inputValue}"
+                                label="#{bindings.ContentOwnerTable.hints.Name.label}"
+                                required="true"
+                                rows="#{bindings.ContentOwnerTable.hints.Name.displayHeight}"
+                                columns="#{bindings.ContentOwnerTable.hints.Name.displayWidth}"
+                                maximumLength="400" readOnly="true"
+                                rendered="#{adfFacesContext.outputMode eq 'printable'}">
+                    <f:validator binding="#{row.bindings.Name.validator}"/>
+                  </af:inputText>
+                  <af:commandLink id="cl2"
+                                  rendered="#{adfFacesContext.outputMode != 'printable'}"
+                                  action="ContentOwnerDetails"
+                                  text="#{row.Name}"></af:commandLink>
+                </af:column>
+                <af:column id="CtOStCol" sortable="true" filterable="true"
+                           noWrap="true" width="180" sortProperty="Site"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.Site.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="CtOSt"
+                                value="#{row.bindings.Site.inputValue}"
+                                label="#{bindings.ContentOwnerTable.hints.Site.label}"
+                                required="#{bindings.ContentOwnerTable.hints.Site.mandatory}"
+                                rows="#{bindings.ContentOwnerTable.hints.Site.displayHeight}"
+                                columns="#{bindings.ContentOwnerTable.hints.Site.displayWidth}"
+                                maximumLength="400" readOnly="true">
+                    <f:validator binding="#{row.bindings.Site.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CtOAMgCol" sortable="true" filterable="true"
+                           noWrap="true" width="240"
+                           sortProperty="AllianceManager" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.AllianceManager.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputText id="CtOAMg"
+                                value="#{row.bindings.AllianceManager.inputValue}"
+                                label="#{bindings.ContentOwnerTable.hints.AllianceManager.label}"
+                                required="false"
+                                rows="#{bindings.ContentOwnerTable.hints.AllianceManager.displayHeight}"
+                                columns="#{bindings.ContentOwnerTable.hints.AllianceManager.displayWidth}"
+                                readOnly="true">
+                    <f:validator binding="#{row.bindings.AllianceManager.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CtOVLICol" sortable="true" filterable="true"
+                           noWrap="true" width="180" sortProperty="VanLoozenId"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.VanLoozenId.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:inputText id="CtOVLI"
+                                value="#{row.bindings.VanLoozenId.inputValue}"
+                                label="#{bindings.ContentOwnerTable.hints.VanLoozenId.label}"
+                                required="#{bindings.ContentOwnerTable.hints.VanLoozenId.mandatory}"
+                                rows="#{bindings.ContentOwnerTable.hints.VanLoozenId.displayHeight}"
+                                columns="#{bindings.ContentOwnerTable.hints.VanLoozenId.displayWidth}"
+                                maximumLength="30" readOnly="true">
+                    <f:validator binding="#{row.bindings.VanLoozenId.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CtOParentContentOwnerCol" sortable="true"
+                           filterable="true" noWrap="true" width="180"
+                           sortProperty="ParentContentOwner" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.ParentContentOwner.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputListOfValues id="CtOParentContentOwner"
+                                        value="#{row.bindings.ParentContentOwner.inputValue}"
+                                        label="#{bindings.ContentOwnerTable.hints.ParentContentOwner.label}"
+                                        popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.ContentOwnerTable.hints.ParentContentOwner.label}"
+                                        searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.ContentOwnerTable.hints.ParentContentOwner.label}"
+                                        required="#{bindings.ContentOwnerTable.hints.ParentContentOwner.mandatory}"
+                                        columns="#{bindings.ContentOwnerTable.hints.ParentContentOwner.displayWidth}"
+                                        maximumLength="400" readOnly="true"
+                                        model="#{row.bindings.ParentContentOwner.listOfValuesModel}">
+                    <f:validator binding="#{row.bindings.ParentContentOwner.validator}"/>
+                  </af:inputListOfValues>
+                </af:column>
+                <af:column id="CtOkeyAccountLevelCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="KeyAccountLevel" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.KeyAccountLevel.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:inputText id="CtOkeyAccountLevel"
+                                value="#{row.bindings.KeyAccountLevel.inputValue}"
+                                label="#{bindings.ContentOwnerTable.hints.KeyAccountLevel.label}"
+                                required="#{bindings.ContentOwnerTable.hints.KeyAccountLevel.mandatory}"
+                                rows="#{bindings.ContentOwnerTable.hints.KeyAccountLevel.displayHeight}"
+                                columns="#{bindings.ContentOwnerTable.hints.KeyAccountLevel.displayWidth}"
+                                maximumLength="5" readOnly="true"
+                                shortDesc="#{bindings.ContentOwnerTable.hints.KeyAccountLevel.tooltip}">
+                    <f:validator binding="#{row.bindings.KeyAccountLevel.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="CtOCOTCol" sortable="true" filterable="true"
+                           noWrap="true" width="180"
+                           sortProperty="ContentOwnerType" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.ContentOwnerType.label}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:selectOneChoice id="CtOCOT"
+                                      value="#{row.bindings.ContentOwnerType.inputValue}"
+                                      label="#{bindings.ContentOwnerTable.hints.ContentOwnerType.label}"
+                                      required="false" readOnly="true">
+                    <f:selectItems value="#{row.bindings.ContentOwnerType.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="CtOCOSCol" sortable="true" filterable="true"
+                           noWrap="true" width="180"
+                           sortProperty="ContentOwnerSubType" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.ContentOwnerSubType.label}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:selectOneChoice id="CtOCOS"
+                                      value="#{row.bindings.ContentOwnerSubType.inputValue}"
+                                      label="#{bindings.ContentOwnerTable.hints.ContentOwnerSubType.label}"
+                                      required="false" readOnly="true">
+                    <f:selectItems value="#{row.bindings.ContentOwnerSubType.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="CtOAFCol" sortable="true" noWrap="true"
+                           width="100" sortProperty="ActiveFlag" align="center"
+                           visible="#{jhsUserRoles['ADMIN']}" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.ActiveFlag.label}"
+                                    id="ol9"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="CtOAF"
+                                            label="#{bindings.ContentOwnerTable.hints.ActiveFlag.label}"
+                                            value="#{CtOActiveFlagcheckboxInTable.value}"
+                                            readOnly="true"
+                                            visible="#{jhsUserRoles['ADMIN']}"
+                                            disabled="#{!jhsUserRoles['ADMIN']}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="CtOProblematicPublisherCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="ProblematicPublisher" align="center"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.ProblematicPublisher.label}"
+                                    id="ol10"/>
+                  </f:facet>
+                  <af:selectBooleanCheckbox id="CtOProblematicPublisher"
+                                            label="#{bindings.ContentOwnerTable.hints.ProblematicPublisher.label}"
+                                            value="#{CtOProblematicPublishercheckboxInTable.value}"
+                                            readOnly="true"
+                                            shortDesc="#{bindings.ContentOwnerTable.hints.ProblematicPublisher.tooltip}"></af:selectBooleanCheckbox>
+                </af:column>
+                <af:column id="CtOCreatedDateSearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="CreatedBySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.CreatedBySearch.label}"
+                                    id="ol11"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.CreatedBySearch}"
+                                  id="id0">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="CtOCreatedDateSearch"
+                                value="#{row.bindings.CreatedBySearch.inputValue}"
+                                label="#{bindings.ContentOwnerTable.hints.CreatedBySearch.label}"
+                                required="#{bindings.ContentOwnerTable.hints.CreatedBySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.ContentOwnerTable.hints.CreatedBySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="CtOLastUpdatedbySearchCol" sortable="true"
+                           filterable="true" noWrap="true" width="100"
+                           sortProperty="LastUpdatedbySearch" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ContentOwnerTable.hints.LastUpdatedbySearch.label}"
+                                    id="ol12"/>
+                  </f:facet>
+                  <f:facet name="filter">
+                    <af:inputDate value="#{status.filterCriteria.LastUpdatedbySearch}"
+                                  id="id1">
+                      <af:convertDateTime pattern="#{nls.datepattern}"/>
+                    </af:inputDate>
+                  </f:facet>
+                  <af:inputDate id="CtOLastUpdatedbySearch"
+                                value="#{row.bindings.LastUpdatedbySearch.inputValue}"
+                                label="#{bindings.ContentOwnerTable.hints.LastUpdatedbySearch.label}"
+                                required="#{bindings.ContentOwnerTable.hints.LastUpdatedbySearch.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.ContentOwnerTable.hints.LastUpdatedbySearch.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                <f:facet name="detailStamp">
+                  <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+                  <af:panelGroupLayout id="pgl1"
+                                       rendered="#{bindings.ContentOwnerIterator.estimatedRowCount>0}"
+                                       layout="scroll">
+                    <f:facet name="separator">
+                      <af:spacer width="10" height="10" id="sp1"/>
+                    </f:facet>
+                    <af:panelFormLayout rows="1" maxColumns="4"
+                                        labelAlignment="start" id="pfl0">
+                      <af:inputText id="CtOMPN"
+                                    value="#{row.bindings.MainPhoneNumber.inputValue}"
+                                    label="#{bindings.CtOMainPhoneNumber.hints.label}"
+                                    required="false"
+                                    rows="#{bindings.ContentOwnerTable.hints.MainPhoneNumber.displayHeight}"
+                                    columns="#{bindings.ContentOwnerTable.hints.MainPhoneNumber.displayWidth}"
+                                    maximumLength="40" readOnly="true">
+                        <f:validator binding="#{row.bindings.MainPhoneNumber.validator}"/>
+                      </af:inputText>
+                      <af:inputText id="CtOMFN"
+                                    value="#{row.bindings.MainFaxNumber.inputValue}"
+                                    label="#{bindings.CtOMainFaxNumber.hints.label}"
+                                    required="#{bindings.CtOMainFaxNumber.hints.mandatory}"
+                                    rows="#{bindings.ContentOwnerTable.hints.MainFaxNumber.displayHeight}"
+                                    columns="#{bindings.ContentOwnerTable.hints.MainFaxNumber.displayWidth}"
+                                    maximumLength="40" readOnly="true">
+                        <f:validator binding="#{row.bindings.MainFaxNumber.validator}"/>
+                      </af:inputText>
+                      <af:inputText id="CtOMEA"
+                                    value="#{row.bindings.MainEmailAddress.inputValue}"
+                                    label="#{bindings.CtOMainEmailAddress.hints.label}"
+                                    required="false"
+                                    rows="#{bindings.ContentOwnerTable.hints.MainEmailAddress.displayHeight}"
+                                    columns="#{bindings.ContentOwnerTable.hints.MainEmailAddress.displayWidth}"
+                                    maximumLength="100" readOnly="true">
+                        <f:validator binding="#{row.bindings.MainEmailAddress.validator}"/>
+                      </af:inputText>
+                      <af:panelLabelAndMessage label="#{bindings.CtOMainUrl.hints.label}"
+                                               shortDesc="#{bindings.ContentOwnerTable.hints.MainUrl.tooltip}"
+                                               showRequired="#{bindings.CtOMainUrl.hints.mandatory}"
+                                               id="CtOMainUrlLabel">
+                        <af:inputText id="CtOMainUrl"
+                                      value="#{row.bindings.MainUrl.inputValue}"
+                                      required="#{bindings.CtOMainUrl.hints.mandatory}"
+                                      rows="#{bindings.ContentOwnerTable.hints.MainUrl.displayHeight}"
+                                      columns="#{bindings.ContentOwnerTable.hints.MainUrl.displayWidth}"
+                                      maximumLength="255" readOnly="true"
+                                      autoSubmit="true" simple="true"
+                                      partialTriggers="CtOMainUrlEditorLink CtOMainUrlEditorText">
+                          <f:validator binding="#{row.bindings.MainUrl.validator}"/>
+                        </af:inputText>
+                        <f:facet name="end">
+                          <af:panelGroupLayout id="pgl2" valign="top"
+                                               layout="horizontal">
+                            <af:commandLink id="CtOMainUrlEditorLink"
+                                            rendered="#{!((((pageFlowScope.createModes.CreateContentOwner) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn']))) or ((!pageFlowScope.createModes.CreateContentOwner) and (!(jhsUserRoles['RM, ADMIN, AllButTitl, AllButAdmn'])))) or (!(!pageFlowScope.createModes.CreateContentOwner)))}"
+                                            immediate="true"
+                                            partialSubmit="true">
+                              <af:showPopupBehavior popupId=":::CtOMainUrlPopup"/>
+                              <af:image source="/jheadstart/images/editor.gif"
+                                        id="CtOMainUrlIcon"
+                                        clientComponent="true"/>
+                            </af:commandLink>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </af:panelLabelAndMessage>
+                      <af:selectBooleanCheckbox id="CtOESA"
+                                                value="#{CtOEfeedSampleAvailableFlagcheckboxInTable.value}"
+                                                label="#{bindings.CtOEfeedSampleAvailableFlag.hints.label}"
+                                                readOnly="true"></af:selectBooleanCheckbox>
+                      <af:selectBooleanCheckbox id="CtOEIP"
+                                                value="#{CtOEfeedInProductionFlagcheckboxInTable.value}"
+                                                label="#{bindings.CtOEfeedInProductionFlag.hints.label}"
+                                                readOnly="true"></af:selectBooleanCheckbox>
+                      <af:inputDate id="CtOEIL"
+                                    value="#{row.bindings.EfeedInformationLastUpdated.inputValue}"
+                                    label="#{bindings.CtOEfeedInformationLastUpdated.hints.label}"
+                                    required="false" readOnly="true">
+                        <af:convertDateTime pattern="#{nls.datepattern}"/>
+                      </af:inputDate>
+                      <af:selectOneChoice id="CtOPLn"
+                                          value="#{row.bindings.PrimaryLanguage.inputValue}"
+                                          label="#{bindings.CtOPrimaryLanguage.hints.label}"
+                                          required="false" readOnly="true"
+                                          shortDesc="#{bindings.ContentOwnerTable.hints.PrimaryLanguage.tooltip}">
+                        <f:selectItems value="#{bindings.CtOPrimaryLanguage.items}"/>
+                      </af:selectOneChoice>
+                      <af:selectBooleanCheckbox id="CtOCF"
+                                                value="#{CtOCustomerFlagcheckboxInTable.value}"
+                                                label="#{bindings.CtOCustomerFlag.hints.label}"
+                                                readOnly="true"></af:selectBooleanCheckbox>
+                      <af:inputText id="CtOCB"
+                                    value="#{row.bindings.CreatedBy.inputValue}"
+                                    label="#{bindings.CtOCreatedBy.hints.label}"
+                                    required="#{bindings.CtOCreatedBy.hints.mandatory}"
+                                    rows="#{bindings.ContentOwnerTable.hints.CreatedBy.displayHeight}"
+                                    columns="#{bindings.ContentOwnerTable.hints.CreatedBy.displayWidth}"
+                                    maximumLength="40" readOnly="true"
+                                    disabled="true">
+                        <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                      </af:inputText>
+                      <af:inputDate id="CtOCD"
+                                    value="#{row.bindings.CreatedDate.inputValue}"
+                                    label="#{bindings.CtOCreatedDate.hints.label}"
+                                    required="#{bindings.CtOCreatedDate.hints.mandatory}"
+                                    readOnly="true" disabled="true">
+                        <af:convertDateTime pattern="#{nls.datepattern}"/>
+                      </af:inputDate>
+                      <af:inputText id="CtOLUB"
+                                    value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                    label="#{bindings.CtOLastUpdatedBy.hints.label}"
+                                    required="#{bindings.CtOLastUpdatedBy.hints.mandatory}"
+                                    rows="#{bindings.ContentOwnerTable.hints.LastUpdatedBy.displayHeight}"
+                                    columns="#{bindings.ContentOwnerTable.hints.LastUpdatedBy.displayWidth}"
+                                    maximumLength="40" readOnly="true"
+                                    disabled="true">
+                        <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                      </af:inputText>
+                      <af:inputDate id="CtOLUD"
+                                    value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                    label="#{bindings.CtOLastUpdatedDate.hints.label}"
+                                    required="#{bindings.CtOLastUpdatedDate.hints.mandatory}"
+                                    readOnly="true" disabled="true">
+                        <af:convertDateTime pattern="#{nls.datepattern}"/>
+                      </af:inputDate>
+                    </af:panelFormLayout>
+                  </af:panelGroupLayout>
+                  <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+                </f:facet>
+                 
+                <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="CtOMainUrlPopup" contentDelivery="lazyUncached"
+                  eventContext="launcher" childCreation="deferred">
+          <af:dialog modal="true" resize="on" title="Text Editor" id="dialog0">
+            <af:inputText rows="10" columns="100"
+                          value="#{row.bindings.MainUrl.inputValue}"
+                          simple="true" maximumLength="255"
+                          id="CtOMainUrlEditorText"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

@@ -1,0 +1,898 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="ActivitiesTabPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR'}"/>
+  </parameters>
+  <executables>
+    <iterator id="ActivitiesTabIterator" Binds="ActivityView4"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="ActivitiesTabIteratorActivityViewCriteriaAdvQuery"
+                  Binds="ActivitiesTabIterator"
+                  Criteria="ActivityViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="Type"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <variableIterator id="variables">
+      <variable Name="ActActSpacerVar" Type="Number"/>
+      <variable Name="AP3EditLinkVar" Type="String"/>
+    </variableIterator>
+    <iterator id="ActivityUsersIterator" Binds="TraxActivityUserView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ActivityUsersIteratorTraxActivityUserViewCriteriaQuery"
+                  Binds="ActivityUsersIterator"
+                  Criteria="TraxActivityUserViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="DisplayName"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ActivityTitlesIterator" Binds="TraxActivityTitleView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ActivityTitlesIteratorTraxActivityTitleViewCriteriaQuery"
+                  Binds="ActivityTitlesIterator"
+                  Criteria="TraxActivityTitleViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CatalogNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ActivityContentOwnersIterator"
+              Binds="TraxActivityContentOwnerView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ActivityContentOwnersIteratorTraxActivityContentOwnerViewCriteriaQuery"
+                  Binds="ActivityContentOwnersIterator"
+                  Criteria="TraxActivityContentOwnerViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AccountName"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ActivityContractsIterator" Binds="TraxActivityContractView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ActivityContractsIteratorTraxActivityContractViewCriteriaQuery"
+                  Binds="ActivityContractsIterator"
+                  Criteria="TraxActivityContractViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="ContractNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ActivityOpportunitiesIterator"
+              Binds="TraxActivityOpportunityView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ActivityOpportunitiesIteratorTraxActivityOpportunityViewCriteriaQuery"
+                  Binds="ActivityOpportunitiesIterator"
+                  Criteria="TraxActivityOpportunityViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="OpportunityName"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="ActivityAttachmentsIterator"
+              Binds="TraxActivityAttachmentView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ActivityAttachmentsIteratorTraxActivityAttachmentViewCriteriaQuery"
+                  Binds="ActivityAttachmentsIterator"
+                  Criteria="TraxActivityAttachmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttachmentType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <taskFlow id="LovTaskFlow"
+              taskFlowId="#{pageFlowScope.jhsLovTaskFlowManager.currentTaskFlowId}"
+              activation="deferred"
+              parametersMap="#{pageFlowScope.jhsLovTaskFlowManager.currentParamMap}"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings>
+    <attributeValues id="ActAccountId" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="AccountId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActContractId" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActTitleId" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActUserId" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="UserId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActAccountName" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActAccountNameLink"
+                     IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActAccountSite" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="AccountSite"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActContractNumber" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActContractNumberLink"
+                     IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActCatalogNumber" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActCatalogNumberLink"
+                     IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActShortTitle" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="ShortTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ActivitiesTabIterator" id="ActType" Uses="LOV_Type"
+          StaticList="false"/>
+    <list IterBinding="ActivitiesTabIterator" id="ActSubType"
+          Uses="LOV_SubType" StaticList="false"/>
+    <list IterBinding="ActivitiesTabIterator" id="ActSubTypeTable"
+          Uses="LOV_SubType" StaticList="false"/>
+    <attributeValues id="ActOwner" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="Owner"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActDisplayName" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="DisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ActivitiesTabIterator" id="ActStatus" Uses="LOV_Status"
+          StaticList="false"/>
+    <list IterBinding="ActivitiesTabIterator" id="ActPriority"
+          Uses="LOV_Priority" StaticList="false"/>
+    <attributeValues id="ActExpectedStartDate"
+                     IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="ExpectedStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActActualStartDate"
+                     IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="ActualStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActDueDate" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="DueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActCompletionDate" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="CompletionDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActHoursSpent" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="HoursSpent"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActDescription" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActNotes" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActActSpacer" IterBinding="variables">
+      <AttrNames>
+        <Item Value="ActActSpacerVar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActCreatedBy" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActCreatedDate" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActLastUpdatedBy" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActLastUpdatedDate"
+                     IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="ActEmailText" IterBinding="ActivitiesTabIterator">
+      <AttrNames>
+        <Item Value="EmailText"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ActivitiesTabTable" IterBinding="ActivitiesTabIterator">
+      <nodeDefinition Name="ActivitiesTab"
+                      DefName="com.pq.tracs.model.dao.ActivityView">
+        <AttrNames>
+          <Item Value="AccountId"/>
+          <Item Value="ContractId"/>
+          <Item Value="TitleId"/>
+          <Item Value="UserId"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountSite"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="ShortTitle"/>
+          <Item Value="Type"/>
+          <Item Value="SubType"/>
+          <Item Value="SubType"/>
+          <Item Value="SubType"/>
+          <Item Value="SubType"/>
+          <Item Value="Owner"/>
+          <Item Value="DisplayName"/>
+          <Item Value="Status"/>
+          <Item Value="Priority"/>
+          <Item Value="ExpectedStartDate"/>
+          <Item Value="ActualStartDate"/>
+          <Item Value="DueDate"/>
+          <Item Value="CompletionDate"/>
+          <Item Value="HoursSpent"/>
+          <Item Value="Description"/>
+          <Item Value="Notes"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="EmailText"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstActivitiesTab" IterBinding="ActivitiesTabIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousActivitiesTab" IterBinding="ActivitiesTabIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextActivitiesTab" IterBinding="ActivitiesTabIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastActivitiesTab" IterBinding="ActivitiesTabIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyActivitiesTab"
+            IterBinding="ActivitiesTabIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrActivitiesTab}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateActivitiesTab" IterBinding="ActivitiesTabIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteActivitiesTab" IterBinding="ActivitiesTabIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s50JhsUsersId" IterBinding="ActivityUsersIterator">
+      <AttrNames>
+        <Item Value="JhsUsersId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="ActivityUsersIterator"
+                  id="s50Username" Uses="LOV_Username"/>
+    <attributeValues id="s50DisplayName" IterBinding="ActivityUsersIterator">
+      <AttrNames>
+        <Item Value="DisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ActivityUsersIterator" id="s50UserType"
+          Uses="LOV_UserType" StaticList="false"/>
+    <attributeValues id="s50AddDate" IterBinding="ActivityUsersIterator">
+      <AttrNames>
+        <Item Value="AddDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s50RemovedDate" IterBinding="ActivityUsersIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s50CreatedBy" IterBinding="ActivityUsersIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s50CreatedDate" IterBinding="ActivityUsersIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s50LastUpdatedBy" IterBinding="ActivityUsersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s50LastUpdatedDate"
+                     IterBinding="ActivityUsersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ActivityUsersTable" IterBinding="ActivityUsersIterator">
+      <nodeDefinition Name="ActivityUsers"
+                      DefName="com.pq.tracs.model.vo.TraxActivityUserView">
+        <AttrNames>
+          <Item Value="JhsUsersId"/>
+          <Item Value="Username"/>
+          <Item Value="DisplayName"/>
+          <Item Value="UserType"/>
+          <Item Value="AddDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstActivityUsers" IterBinding="ActivityUsersIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousActivityUsers" IterBinding="ActivityUsersIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextActivityUsers" IterBinding="ActivityUsersIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastActivityUsers" IterBinding="ActivityUsersIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyActivityUsers"
+            IterBinding="ActivityUsersIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrActivityUsers}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateActivityUsers" IterBinding="ActivityUsersIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteActivityUsers" IterBinding="ActivityUsersIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s51TitleId" IterBinding="ActivityTitlesIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="ActivityTitlesIterator"
+                  id="s51TargetTrackingNo" Uses="LOV_TargetTrackingNo"/>
+    <attributeValues id="s51CatalogNumber" IterBinding="ActivityTitlesIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s51LongTitle" IterBinding="ActivityTitlesIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s51PrimaryFlag" IterBinding="ActivityTitlesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s51AddedDate" IterBinding="ActivityTitlesIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s51RemovedDate" IterBinding="ActivityTitlesIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s51CreatedBy" IterBinding="ActivityTitlesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s51CreatedDate" IterBinding="ActivityTitlesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s51LastUpdatedBy" IterBinding="ActivityTitlesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s51LastUpdatedDate"
+                     IterBinding="ActivityTitlesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ActivityTitlesTable" IterBinding="ActivityTitlesIterator">
+      <nodeDefinition Name="ActivityTitles"
+                      DefName="com.pq.tracs.model.vo.TraxActivityTitleView">
+        <AttrNames>
+          <Item Value="TitleId"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstActivityTitles" IterBinding="ActivityTitlesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousActivityTitles" IterBinding="ActivityTitlesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextActivityTitles" IterBinding="ActivityTitlesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastActivityTitles" IterBinding="ActivityTitlesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyActivityTitles"
+            IterBinding="ActivityTitlesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrActivityTitles}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateActivityTitles" IterBinding="ActivityTitlesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteActivityTitles" IterBinding="ActivityTitlesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s52ContentOwnerId"
+                     IterBinding="ActivityContentOwnersIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="ActivityContentOwnersIterator"
+                  id="s52AccountNo" Uses="LOV_AccountNo"/>
+    <attributeValues id="s52AccountName"
+                     IterBinding="ActivityContentOwnersIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s52AccountSite"
+                     IterBinding="ActivityContentOwnersIterator">
+      <AttrNames>
+        <Item Value="AccountSite"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s52PrimaryFlag" IterBinding="ActivityContentOwnersIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s52AddedDate"
+                     IterBinding="ActivityContentOwnersIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s52RemovedDate"
+                     IterBinding="ActivityContentOwnersIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s52CreatedBy"
+                     IterBinding="ActivityContentOwnersIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s52CreatedDate"
+                     IterBinding="ActivityContentOwnersIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s52LastUpdatedBy"
+                     IterBinding="ActivityContentOwnersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s52LastUpdatedDate"
+                     IterBinding="ActivityContentOwnersIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ActivityContentOwnersTable"
+          IterBinding="ActivityContentOwnersIterator">
+      <nodeDefinition Name="ActivityContentOwners"
+                      DefName="com.pq.tracs.model.vo.TraxActivityContentOwnerView">
+        <AttrNames>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="AccountNo"/>
+          <Item Value="AccountName"/>
+          <Item Value="AccountSite"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstActivityContentOwners"
+            IterBinding="ActivityContentOwnersIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousActivityContentOwners"
+            IterBinding="ActivityContentOwnersIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextActivityContentOwners"
+            IterBinding="ActivityContentOwnersIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastActivityContentOwners"
+            IterBinding="ActivityContentOwnersIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyActivityContentOwners"
+            IterBinding="ActivityContentOwnersIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrActivityContentOwners}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateActivityContentOwners"
+            IterBinding="ActivityContentOwnersIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteActivityContentOwners"
+            IterBinding="ActivityContentOwnersIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s53ContractId" IterBinding="ActivityContractsIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="ActivityContractsIterator"
+                  id="s53ContractNumber" Uses="LOV_ContractNumber"/>
+    <button id="s53PrimaryFlag" IterBinding="ActivityContractsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s53AddedDate" IterBinding="ActivityContractsIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s53RemovedDate"
+                     IterBinding="ActivityContractsIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s53CreatedBy" IterBinding="ActivityContractsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s53CreatedDate"
+                     IterBinding="ActivityContractsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s53LastUpdatedBy"
+                     IterBinding="ActivityContractsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s53LastUpdatedDate"
+                     IterBinding="ActivityContractsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ActivityContractsTable" IterBinding="ActivityContractsIterator">
+      <nodeDefinition Name="ActivityContracts"
+                      DefName="com.pq.tracs.model.vo.TraxActivityContractView">
+        <AttrNames>
+          <Item Value="ContractId"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstActivityContracts" IterBinding="ActivityContractsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousActivityContracts"
+            IterBinding="ActivityContractsIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextActivityContracts" IterBinding="ActivityContractsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastActivityContracts" IterBinding="ActivityContractsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyActivityContracts"
+            IterBinding="ActivityContractsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrActivityContracts}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateActivityContracts" IterBinding="ActivityContractsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteActivityContracts" IterBinding="ActivityContractsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="AP3PrmOpportunityId"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="PrmOpportunityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AP3OpportunityNo"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AP3OpportunityName"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="OpportunityName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AP3EditLink" IterBinding="variables">
+      <AttrNames>
+        <Item Value="AP3EditLinkVar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AP3AllianceManager"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AllianceManager"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="AP3PrimaryFlag" IterBinding="ActivityOpportunitiesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="AP3AddedDate"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AP3RemovedDate"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AP3CreatedBy"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AP3CreatedDate"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AP3LastUpdatedBy"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="AP3LastUpdatedDate"
+                     IterBinding="ActivityOpportunitiesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ActivityOpportunitiesTable"
+          IterBinding="ActivityOpportunitiesIterator">
+      <nodeDefinition Name="ActivityOpportunities"
+                      DefName="com.pq.tracs.model.vo.TraxActivityOpportunityView">
+        <AttrNames>
+          <Item Value="PrmOpportunityId"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="AllianceManager"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrActivityOpportunities}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteActivityOpportunities"
+            IterBinding="ActivityOpportunitiesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues id="s54Name" IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54AttachmentType"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="AttachmentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54Attachment"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54AttachmentDL"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54Description"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54FileSize" IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="FileSize"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54CreatedBy"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54CreatedDate"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54LastUpdatedBy"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s54LastUpdatedDate"
+                     IterBinding="ActivityAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ActivityAttachmentsTable"
+          IterBinding="ActivityAttachmentsIterator">
+      <nodeDefinition Name="ActivityAttachments"
+                      DefName="com.pq.tracs.model.vo.TraxActivityAttachmentView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="AttachmentType"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Description"/>
+          <Item Value="FileSize"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator" RequiresUpdateModel="true"
+            Action="first"/>
+    <action id="PreviousActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator" RequiresUpdateModel="true"
+            Action="next"/>
+    <action id="LastActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator" RequiresUpdateModel="true"
+            Action="last"/>
+    <action id="SetCurrentRowWithKeyActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrActivityAttachments}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="DeleteActivityAttachments"
+            IterBinding="ActivityAttachmentsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

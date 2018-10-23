@@ -1,0 +1,371 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="OATTopLc"
+                             partialTriggers=" OATDeleteDialog OATSaveButton0 OATCancelButton0 asAreaOATSearchOptions qsAreaOATSearchOptions OATPC:OATArm OATPC:OATdelrmTM OATPC:OATArl OATPC:OATTab:OATdelrm OATPC:OATTab:OATdelrl"
+                             rendered="#{jhsUserRoles['ADMIN']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{nls['TABLE_TITLE_OVRATTRIBUTETYPES']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0"></af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton action="#{SaveOvrAttributeTypes.execute}"
+                                      rendered="#{!pageFlowScope.hideSaveButton}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="OATSaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="OATCancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreaOAT"
+                                 rendered="#{!pageFlowScope.createModes.CreateOvrAttributeTypes and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers=" asAreaOATSearchOptions:qsButtonOAT qsAreaOATSearchOptions:asButtonOAT ">
+              <f:attribute name="JhsIgnoreChanges" value="true"/>
+              <af:query id="asAreaOATSearchOptions"
+                        headerText="#{nls['ADVANCED_SEARCH']}" disclosed="true"
+                        value="#{bindings.OvrAttributeTypesIteratorTraxOvrAttributeTypeSearchQuery.queryDescriptor}"
+                        model="#{bindings.OvrAttributeTypesIteratorTraxOvrAttributeTypeSearchQuery.queryModel}"
+                        queryListener="#{bindings.OvrAttributeTypesIteratorTraxOvrAttributeTypeSearchQuery.processQuery}"
+                        queryOperationListener="#{bindings.OvrAttributeTypesIteratorTraxOvrAttributeTypeSearchQuery.processQueryOperation}"
+                        rendered="#{!pageFlowScope.searchOvrAttributeTypes.quickSearchMode}"
+                        rows="1" labelAlignment="start" maxColumns="1">
+                <f:facet name="toolbar">
+                  <af:commandButton partialSubmit="true" id="qsButtonOAT"
+                                    immediate="true"
+                                    textAndAccessKey="#{nls['QUICK_SEARCH']}"
+                                    action="#{pageFlowScope.searchOvrAttributeTypes.switchToQuickSearchMode}"/>
+                </f:facet>
+              </af:query>
+              <af:quickQuery id="qsAreaOATSearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.OvrAttributeTypesIteratorTraxOvrAttributeTypeSearchQuery.queryDescriptor}"
+                             model="#{bindings.OvrAttributeTypesIteratorTraxOvrAttributeTypeSearchQuery.queryModel}"
+                             queryListener="#{bindings.OvrAttributeTypesIteratorTraxOvrAttributeTypeSearchQuery.processQuery}"
+                             rendered="#{pageFlowScope.searchOvrAttributeTypes.quickSearchMode}">
+                <f:facet name="end">
+                  <af:commandLink id="asButtonOAT"
+                                  textAndAccessKey="#{nls['ADVANCED_SEARCH']}"
+                                  partialSubmit="true" immediate="true"
+                                  action="#{pageFlowScope.searchOvrAttributeTypes.switchToAdvancedSearchMode}"/>
+                </f:facet>
+              </af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="OATPC" featuresOff=" "
+                                inlineStyle=" width:1200px; ">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:group id="OATtbb"
+                              rendered="#{ bindings.OvrAttributeTypesIterator.currentRow!=null }">
+                      <af:commandMenuItem actionListener="#{bindings.FirstOvrAttributeTypes.execute}"
+                                          id="OATFirst" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousOvrAttributeTypes.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="OATPrevious" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextOvrAttributeTypes.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="OATNext" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastOvrAttributeTypes.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="OATLast" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem id="OATArm"
+                                      textAndAccessKey="#{nls['ADD_ROW']}"
+                                      immediate="false"
+                                      icon="/jheadstart/images/addRow.png"
+                                      partialSubmit="true"
+                                      actionListener="#{pageFlowScope.OvrAttributeTypesTable.addRow}"
+                                      rendered="#{(true) }"></af:commandMenuItem>
+                  <af:commandMenuItem id="OATdelrmTM"
+                                      textAndAccessKey="#{nls['DELETE_ROW']}"
+                                      icon="/jheadstart/images/deleteRow.png"
+                                      partialSubmit="true" immediate="true">
+                    <af:showPopupBehavior popupId="::OATDeletePopup"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <!-- Also create CreateOvrAttributeTypes bean so we can start table group in create mode as well -->
+                  <af:commandImageLink id="OATArl" immediate="false"
+                                       rendered="#{(true) }"
+                                       partialSubmit="true"
+                                       actionListener="#{pageFlowScope.OvrAttributeTypesTable.addRow}"
+                                       shortDesc="#{nls['ADD_ROW']}"
+                                       icon="/jheadstart/images/addRow.png"/>
+                  <af:commandToolbarButton text="Print" id="OATPrint"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.OvrAttributeTypesIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="OATTab" contentDelivery="immediate"
+                        value="#{bindings.OvrAttributeTypesTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.OvrAttributeTypesTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.OvrAttributeTypesTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.OvrAttributeTypesTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.OvrAttributeTypesTable.rangeSize}"
+                        autoHeightRows="#{bindings.OvrAttributeTypesTable.estimatedRowCount lt 5 ? 5 : bindings.OvrAttributeTypesTable.estimatedRowCount lt bindings.OvrAttributeTypesTable.rangeSize ? bindings.OvrAttributeTypesTable.estimatedRowCount : 0 }"
+                        fetchSize="#{bindings.OvrAttributeTypesTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.OvrAttributeTypesIteratorTraxOvrAttributeTypeSearchQuery.processQuery}"
+                        binding="#{pageFlowScope.OvrAttributeTypesTable.table}"
+                        partialTriggers=":::qsAreaOATSearchOptions :::asAreaOATSearchOptions :::OATPC ::OATFirst ::OATPrevious ::OATNext ::OATLast"
+                        width="1200px"
+                        summary="#{nls['TABLE_TITLE_OVRATTRIBUTETYPES']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="OATTablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3"></af:menu>
+                      <af:commandMenuItem id="OATdelrm"
+                                          textAndAccessKey="#{nls['DELETE_ROW']}"
+                                          icon="/jheadstart/images/deleteRow.png"
+                                          partialSubmit="true" immediate="true">
+                        <af:showPopupBehavior popupId=":::OATDeletePopup"/>
+                      </af:commandMenuItem>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="OATActionColumn" frozen="true" width="20"
+                           align="center" headerText=" ">
+                  <af:panelGroupLayout layout="horizontal" id="pgl1">
+                    <af:commandImageLink id="OATdelrl" partialSubmit="true"
+                                         immediate="true"
+                                         shortDesc="#{nls['DELETE_ROW']}"
+                                         icon="/jheadstart/images/deleteRow.png">
+                      <af:showPopupBehavior popupId=":::OATDeletePopup"/>
+                    </af:commandImageLink>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column id="OATContentSourceCol" sortable="true"
+                           noWrap="true" width="180"
+                           sortProperty="ContentSource" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OvrAttributeTypesTable.hints.ContentSource.label}"
+                                    showRequired="#{bindings.OvrAttributeTypesTable.hints.ContentSource.mandatory}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OATContentSource"
+                                      value="#{row.bindings.ContentSource.inputValue}"
+                                      label="#{bindings.OvrAttributeTypesTable.hints.ContentSource.label}"
+                                      required="#{bindings.OvrAttributeTypesTable.hints.ContentSource.mandatory}"
+                                      shortDesc="#{bindings.OvrAttributeTypesTable.hints.ContentSource.tooltip}">
+                    <f:selectItems value="#{row.bindings.ContentSource.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OATAttributeTypeCol" sortable="true"
+                           noWrap="true" width="180"
+                           sortProperty="AttributeType" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OvrAttributeTypesTable.hints.AttributeType.label}"
+                                    showRequired="#{bindings.OvrAttributeTypesTable.hints.AttributeType.mandatory}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="OATAttributeType"
+                                value="#{row.bindings.AttributeType.inputValue}"
+                                label="#{bindings.OvrAttributeTypesTable.hints.AttributeType.label}"
+                                required="#{bindings.OvrAttributeTypesTable.hints.AttributeType.mandatory}"
+                                rows="#{bindings.OvrAttributeTypesTable.hints.AttributeType.displayHeight}"
+                                columns="#{bindings.OvrAttributeTypesTable.hints.AttributeType.displayWidth}"
+                                maximumLength="40"
+                                shortDesc="#{bindings.OvrAttributeTypesTable.hints.AttributeType.tooltip}">
+                    <f:validator binding="#{row.bindings.AttributeType.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OATDataTypeCol" sortable="true" noWrap="true"
+                           width="100" sortProperty="DataType" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OvrAttributeTypesTable.hints.DataType.label}"
+                                    showRequired="#{bindings.OvrAttributeTypesTable.hints.DataType.mandatory}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OATDataType"
+                                      value="#{row.bindings.DataType.inputValue}"
+                                      label="#{bindings.OvrAttributeTypesTable.hints.DataType.label}"
+                                      required="#{bindings.OvrAttributeTypesTable.hints.DataType.mandatory}"
+                                      shortDesc="#{bindings.OvrAttributeTypesTable.hints.DataType.tooltip}"
+                                      unselectedLabel="">
+                    <af:selectItem id="si0" value="List" label="List"/>
+                    <af:selectItem id="si1" value="Text" label="Text"/>
+                    <af:selectItem id="si2" value="Date" label="Date"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OATCodeSetCol" sortable="true" noWrap="true"
+                           width="180" sortProperty="CodeSet" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OvrAttributeTypesTable.hints.CodeSet.label}"
+                                    showRequired="#{bindings.OvrAttributeTypesTable.hints.CodeSet.mandatory}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:selectOneChoice id="OATCodeSet"
+                                      value="#{row.bindings.CodeSet.inputValue}"
+                                      label="#{bindings.OvrAttributeTypesTable.hints.CodeSet.label}"
+                                      required="#{bindings.OvrAttributeTypesTable.hints.CodeSet.mandatory}"
+                                      shortDesc="#{bindings.OvrAttributeTypesTable.hints.CodeSet.tooltip}">
+                    <f:selectItems value="#{row.bindings.CodeSet.items}"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column id="OATTrmsValueCol" sortable="true" noWrap="true"
+                           width="180" sortProperty="TrmsValue"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OvrAttributeTypesTable.hints.TrmsValue.label}"
+                                    showRequired="#{bindings.OvrAttributeTypesTable.hints.TrmsValue.mandatory}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:inputText id="OATTrmsValue"
+                                value="#{row.bindings.TrmsValue.inputValue}"
+                                label="#{bindings.OvrAttributeTypesTable.hints.TrmsValue.label}"
+                                required="#{bindings.OvrAttributeTypesTable.hints.TrmsValue.mandatory}"
+                                rows="#{bindings.OvrAttributeTypesTable.hints.TrmsValue.displayHeight}"
+                                columns="#{bindings.OvrAttributeTypesTable.hints.TrmsValue.displayWidth}"
+                                maximumLength="200"
+                                shortDesc="#{bindings.OvrAttributeTypesTable.hints.TrmsValue.tooltip}">
+                    <f:validator binding="#{row.bindings.TrmsValue.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OATCreatedByCol" sortable="true" noWrap="true"
+                           width="120" sortProperty="CreatedBy"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OvrAttributeTypesTable.hints.CreatedBy.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputText id="OATCreatedBy"
+                                value="#{row.bindings.CreatedBy.inputValue}"
+                                label="#{bindings.OvrAttributeTypesTable.hints.CreatedBy.label}"
+                                required="#{bindings.OvrAttributeTypesTable.hints.CreatedBy.mandatory}"
+                                rows="#{bindings.OvrAttributeTypesTable.hints.CreatedBy.displayHeight}"
+                                columns="#{bindings.OvrAttributeTypesTable.hints.CreatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.OvrAttributeTypesTable.hints.CreatedBy.tooltip}">
+                    <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OATCreatedDateCol" sortable="true" noWrap="true"
+                           width="100" sortProperty="CreatedDate"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OvrAttributeTypesTable.hints.CreatedDate.label}"
+                                    id="ol6"/>
+                  </f:facet>
+                  <af:inputDate id="OATCreatedDate"
+                                value="#{row.bindings.CreatedDate.inputValue}"
+                                label="#{bindings.OvrAttributeTypesTable.hints.CreatedDate.label}"
+                                required="#{bindings.OvrAttributeTypesTable.hints.CreatedDate.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.OvrAttributeTypesTable.hints.CreatedDate.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="OATLastUpdatedByCol" sortable="true"
+                           noWrap="true" width="120"
+                           sortProperty="LastUpdatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OvrAttributeTypesTable.hints.LastUpdatedBy.label}"
+                                    id="ol7"/>
+                  </f:facet>
+                  <af:inputText id="OATLastUpdatedBy"
+                                value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                label="#{bindings.OvrAttributeTypesTable.hints.LastUpdatedBy.label}"
+                                required="#{bindings.OvrAttributeTypesTable.hints.LastUpdatedBy.mandatory}"
+                                rows="#{bindings.OvrAttributeTypesTable.hints.LastUpdatedBy.displayHeight}"
+                                columns="#{bindings.OvrAttributeTypesTable.hints.LastUpdatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.OvrAttributeTypesTable.hints.LastUpdatedBy.tooltip}">
+                    <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="OATLastUpdatedDateCol" sortable="true"
+                           noWrap="true" width="100"
+                           sortProperty="LastUpdatedDate" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.OvrAttributeTypesTable.hints.LastUpdatedDate.label}"
+                                    id="ol8"/>
+                  </f:facet>
+                  <af:inputDate id="OATLastUpdatedDate"
+                                value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                label="#{bindings.OvrAttributeTypesTable.hints.LastUpdatedDate.label}"
+                                required="#{bindings.OvrAttributeTypesTable.hints.LastUpdatedDate.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.OvrAttributeTypesTable.hints.LastUpdatedDate.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datetimepattern}"/>
+                  </af:inputDate>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="OATDeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="OATDeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_OVRATTRIBUTETYPE:#{pageFlowScope.OvrAttributeTypesTable.currentRowAttributeValues.AttributeType}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteOvrAttributeTypes.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="SearchTabPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="SearchTabIterator" Binds="SearchView1"
+              DataControl="TracsServiceDataControl" RangeSize="20"/>
+    <variableIterator id="variables">
+      <variable Name="SearchTabRowKeyVar" Type="java.lang.String"
+                DefaultValue="#{bindings.SearchTabIterator.currentRowKeyString}"/>
+    </variableIterator>
+    <iterator id="SearchAddressesIterator" Binds="SearchAddressesView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="SearchAddressesIteratorSearchAddressesViewCriteriaAdvQuery"
+                  Binds="SearchAddressesIterator"
+                  Criteria="SearchAddressesViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="AddressLine1"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="SearchContractRightsIterator"
+              Binds="SearchContractRightsView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="SearchContractRightsIteratorSearchContractRightsViewCriteriaAdvQuery"
+                  Binds="SearchContractRightsIterator"
+                  Criteria="SearchContractRightsViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="RightOrRestrictionType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="SearchRoyaltyInformationIterator"
+              Binds="SearchRoyaltyInfoView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="SearchRoyaltyInformationIteratorSearchRoyaltyInfoViewCriteriaAdvQuery"
+                  Binds="SearchRoyaltyInformationIterator"
+                  Criteria="SearchRoyaltyInfoViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="PaymentTerm"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="SearchClassificationsIterator"
+              Binds="SearchClassificationsView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="SearchClassificationsIteratorSearchClassificationsViewCriteriaAdvQuery"
+                  Binds="SearchClassificationsIterator"
+                  Criteria="SearchClassificationsViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="ClassificationNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="SearchSubjectsIterator" Binds="SearchSubjectsView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="SearchSubjectsIteratorSearchSubjectsViewCriteriaAdvQuery"
+                  Binds="SearchSubjectsIterator"
+                  Criteria="SearchSubjectsViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="LongTitle"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="SearchPublisherIterator" Binds="SearchPublisherVpIdView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="SearchPublisherIteratorSearchPublisherVpIdViewCriteriaQuery"
+                  Binds="SearchPublisherIterator"
+                  Criteria="SearchPublisherVpIdViewCriteria"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="PubId"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="SrTLinkValue" IterBinding="SearchTabIterator">
+      <AttrNames>
+        <Item Value="LinkValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="SrTLabel" IterBinding="SearchTabIterator">
+      <AttrNames>
+        <Item Value="Label"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="FirstSearchTab" IterBinding="SearchTabIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousSearchTab" IterBinding="SearchTabIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextSearchTab" IterBinding="SearchTabIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastSearchTab" IterBinding="SearchTabIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <attributeValues id="SearchTabRowKey" IterBinding="variables">
+      <AttrNames>
+        <Item Value="SearchTabRowKeyVar"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="SetCurrentRowWithKeySearchTab" IterBinding="SearchTabIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{bindings.SearchTabRowKey}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="s90ContentOwnerName"
+                     IterBinding="SearchAddressesIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s90ContentOwnerId"
+                     IterBinding="SearchAddressesIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s90AddressLine1" IterBinding="SearchAddressesIterator">
+      <AttrNames>
+        <Item Value="AddressLine1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s90AddressLine2" IterBinding="SearchAddressesIterator">
+      <AttrNames>
+        <Item Value="AddressLine2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s90City" IterBinding="SearchAddressesIterator">
+      <AttrNames>
+        <Item Value="City"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s90ZipOrPostalCode"
+                     IterBinding="SearchAddressesIterator">
+      <AttrNames>
+        <Item Value="ZipOrPostalCode"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="SearchAddressesIterator" id="s90Country"
+          Uses="LOV_Country" StaticList="false"/>
+    <list IterBinding="SearchAddressesIterator" id="s90StateOrProvince"
+          Uses="LOV_StateOrProvince" StaticList="false"/>
+    <attributeValues id="s90County" IterBinding="SearchAddressesIterator">
+      <AttrNames>
+        <Item Value="County"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s90SitePhoneNumber"
+                     IterBinding="SearchAddressesIterator">
+      <AttrNames>
+        <Item Value="SitePhoneNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s90EffectiveStartDate"
+                     IterBinding="SearchAddressesIterator">
+      <AttrNames>
+        <Item Value="EffectiveStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s90SiteOrDepartment"
+                     IterBinding="SearchAddressesIterator">
+      <AttrNames>
+        <Item Value="SiteOrDepartment"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s90PrimaryFlag" IterBinding="SearchAddressesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="s90BillToFlag" IterBinding="SearchAddressesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="BillToFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="s90ShipToFlag" IterBinding="SearchAddressesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ShipToFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="s90OverrideAddressValidFlag"
+            IterBinding="SearchAddressesIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="OverrideAddressValidFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s90AddressComments"
+                     IterBinding="SearchAddressesIterator">
+      <AttrNames>
+        <Item Value="AddressComments"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s90ActiveFlag" IterBinding="SearchAddressesIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ActiveFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <tree id="SearchAddressesTable" IterBinding="SearchAddressesIterator">
+      <nodeDefinition Name="SearchAddresses"
+                      DefName="com.pq.tracs.model.ro.SearchAddressesView">
+        <AttrNames>
+          <Item Value="ContentOwnerName"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="AddressLine1"/>
+          <Item Value="AddressLine2"/>
+          <Item Value="City"/>
+          <Item Value="ZipOrPostalCode"/>
+          <Item Value="Country"/>
+          <Item Value="StateOrProvince"/>
+          <Item Value="County"/>
+          <Item Value="SitePhoneNumber"/>
+          <Item Value="EffectiveStartDate"/>
+          <Item Value="SiteOrDepartment"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="BillToFlag"/>
+          <Item Value="ShipToFlag"/>
+          <Item Value="OverrideAddressValidFlag"/>
+          <Item Value="AddressComments"/>
+          <Item Value="ActiveFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstSearchAddresses" IterBinding="SearchAddressesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousSearchAddresses" IterBinding="SearchAddressesIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextSearchAddresses" IterBinding="SearchAddressesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastSearchAddresses" IterBinding="SearchAddressesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeySearchAddresses"
+            IterBinding="SearchAddressesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrSearchAddresses}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="s91ContractId"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s91ContractNumber"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s91RuleNumber"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="RuleNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="SearchContractRightsIterator"
+          id="s91RightType" Uses="LOV_RightType" StaticList="false"/>
+    <list IterBinding="SearchContractRightsIterator"
+          id="s91PermissionType" Uses="LOV_PermissionType" StaticList="false"/>
+    <list IterBinding="SearchContractRightsIterator"
+          id="s91RightOrRestrictionType" Uses="LOV_RightOrRestrictionType"
+          StaticList="false"/>
+    <list IterBinding="SearchContractRightsIterator"
+          id="s91IncludesOrExcludes" Uses="LOV_IncludesOrExcludes"
+          StaticList="false"/>
+    <button id="s91SalesRestrictionFlag"
+            IterBinding="SearchContractRightsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="SalesRestrictionFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="s91ComplexFlag" IterBinding="SearchContractRightsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ComplexFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="s91TranslationFlag" IterBinding="SearchContractRightsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="TranslationFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="s91ResellerFyiRequiredFlag"
+            IterBinding="SearchContractRightsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ResellerFyiRequiredFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button id="s91WrittenApprovalRequiredFlag"
+            IterBinding="SearchContractRightsIterator" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="WrittenApprovalRequiredFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="SearchContractRightsIterator"
+          id="s91Status" Uses="LOV_Status" StaticList="false"/>
+    <attributeValues id="s91EffectiveStartDate"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="EffectiveStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s91EffectiveEndDate"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="EffectiveEndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s91PublicationStartDate"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="PublicationStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s91PublicationEndDate"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="PublicationEndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s91EmbargoDays"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="EmbargoDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s91ReverseEmbargoDays"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="ReverseEmbargoDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s91ComplexRuleDescription"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="ComplexRuleDescription"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s91CreatedBy"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s91CreatedDate"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s91LastUpdatedBy"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s91LastUpdatedDate"
+                     IterBinding="SearchContractRightsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="SearchContractRightsTable"
+          IterBinding="SearchContractRightsIterator">
+      <nodeDefinition Name="SearchContractRights"
+                      DefName="com.pq.tracs.model.ro.SearchContractRightsView">
+        <AttrNames>
+          <Item Value="ContractId"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="RuleNumber"/>
+          <Item Value="RightType"/>
+          <Item Value="PermissionType"/>
+          <Item Value="RightOrRestrictionType"/>
+          <Item Value="IncludesOrExcludes"/>
+          <Item Value="SalesRestrictionFlag"/>
+          <Item Value="ComplexFlag"/>
+          <Item Value="TranslationFlag"/>
+          <Item Value="ResellerFyiRequiredFlag"/>
+          <Item Value="WrittenApprovalRequiredFlag"/>
+          <Item Value="Status"/>
+          <Item Value="EffectiveStartDate"/>
+          <Item Value="EffectiveEndDate"/>
+          <Item Value="PublicationStartDate"/>
+          <Item Value="PublicationEndDate"/>
+          <Item Value="EmbargoDays"/>
+          <Item Value="ReverseEmbargoDays"/>
+          <Item Value="ComplexRuleDescription"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstSearchContractRights"
+            IterBinding="SearchContractRightsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousSearchContractRights"
+            IterBinding="SearchContractRightsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextSearchContractRights"
+            IterBinding="SearchContractRightsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastSearchContractRights"
+            IterBinding="SearchContractRightsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeySearchContractRights"
+            IterBinding="SearchContractRightsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrSearchContractRights}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="s92ContractId"
+                     IterBinding="SearchRoyaltyInformationIterator">
+      <AttrNames>
+        <Item Value="ContractId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s92ContractNumber"
+                     IterBinding="SearchRoyaltyInformationIterator">
+      <AttrNames>
+        <Item Value="ContractNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="SearchRoyaltyInformationIterator"
+          id="s92PaymentTerm" Uses="LOV_PaymentTerm" StaticList="false"/>
+    <attributeValues id="s92RoyaltyContact"
+                     IterBinding="SearchRoyaltyInformationIterator">
+      <AttrNames>
+        <Item Value="RoyaltyContact"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s92RoyaltyContactId"
+                     IterBinding="SearchRoyaltyInformationIterator">
+      <AttrNames>
+        <Item Value="RoyaltyContactId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="SearchRoyaltyInformationIterator"
+          id="s92Currency" Uses="LOV_Currency" StaticList="false"/>
+    <list IterBinding="SearchRoyaltyInformationIterator"
+          id="s92PaymentFrequency" Uses="LOV_PaymentFrequency"
+          StaticList="false"/>
+    <list IterBinding="SearchRoyaltyInformationIterator"
+          id="s92GuaranteeFrequency" Uses="LOV_GuaranteeFrequency"
+          StaticList="false"/>
+    <list IterBinding="SearchRoyaltyInformationIterator"
+          id="s92InterimPaymentTermDays" Uses="LOV_InterimPaymentTermDays"
+          StaticList="false"/>
+    <list IterBinding="SearchRoyaltyInformationIterator"
+          id="s92AnnualPaymentTermDays" Uses="LOV_AnnualPaymentTermDays"
+          StaticList="false"/>
+    <attributeValues id="s92AdvanceRoyaltyAmount"
+                     IterBinding="SearchRoyaltyInformationIterator">
+      <AttrNames>
+        <Item Value="AdvanceRoyaltyAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s92LicenseDataDeliveryFee"
+                     IterBinding="SearchRoyaltyInformationIterator">
+      <AttrNames>
+        <Item Value="LicenseDataDeliveryFee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s92OneTimeSigningBonus"
+                     IterBinding="SearchRoyaltyInformationIterator">
+      <AttrNames>
+        <Item Value="OneTimeSigningBonus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s92LicenseFeeDueDate"
+                     IterBinding="SearchRoyaltyInformationIterator">
+      <AttrNames>
+        <Item Value="LicenseFeeDueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s92SigningBonusDueDate"
+                     IterBinding="SearchRoyaltyInformationIterator">
+      <AttrNames>
+        <Item Value="SigningBonusDueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s92AdvanceFrequencyComments"
+                     IterBinding="SearchRoyaltyInformationIterator">
+      <AttrNames>
+        <Item Value="AdvanceFrequencyComments"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="s92PaidOnBillingFlag"
+            IterBinding="SearchRoyaltyInformationIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="PaidOnBillingFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="s92LinkValue"
+                     IterBinding="SearchRoyaltyInformationIterator">
+      <AttrNames>
+        <Item Value="LinkValue"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="SearchRoyaltyInformationTable"
+          IterBinding="SearchRoyaltyInformationIterator">
+      <nodeDefinition Name="SearchRoyaltyInformation"
+                      DefName="com.pq.tracs.model.ro.SearchRoyaltyInfoView">
+        <AttrNames>
+          <Item Value="ContractId"/>
+          <Item Value="ContractNumber"/>
+          <Item Value="PaymentTerm"/>
+          <Item Value="RoyaltyContact"/>
+          <Item Value="RoyaltyContactId"/>
+          <Item Value="Currency"/>
+          <Item Value="PaymentFrequency"/>
+          <Item Value="GuaranteeFrequency"/>
+          <Item Value="InterimPaymentTermDays"/>
+          <Item Value="AnnualPaymentTermDays"/>
+          <Item Value="AdvanceRoyaltyAmount"/>
+          <Item Value="LicenseDataDeliveryFee"/>
+          <Item Value="OneTimeSigningBonus"/>
+          <Item Value="LicenseFeeDueDate"/>
+          <Item Value="SigningBonusDueDate"/>
+          <Item Value="AdvanceFrequencyComments"/>
+          <Item Value="PaidOnBillingFlag"/>
+          <Item Value="LinkValue"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstSearchRoyaltyInformation"
+            IterBinding="SearchRoyaltyInformationIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousSearchRoyaltyInformation"
+            IterBinding="SearchRoyaltyInformationIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextSearchRoyaltyInformation"
+            IterBinding="SearchRoyaltyInformationIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastSearchRoyaltyInformation"
+            IterBinding="SearchRoyaltyInformationIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeySearchRoyaltyInformation"
+            IterBinding="SearchRoyaltyInformationIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrSearchRoyaltyInformation}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="s93TitleId"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s93TitleId2"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="TitleId2"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="SearchClassificationsIterator"
+          id="s93ClassificationType" Uses="LOV_ClassificationType"
+          StaticList="false"/>
+    <attributeValues id="s93ClassificationNumber"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="ClassificationNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s93PrimaryFlag"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s93CatalogNumber"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s93LongTitle"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s93TitleRecordId"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="TitleRecordId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s93OvrId" IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="SearchClassificationsIterator"
+          id="s93ContentSource" Uses="LOV_ContentSource" StaticList="false"/>
+    <attributeValues id="s93PmId" IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="PmId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s93PmTitle"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="PmTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s93CreatedBy"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s93CreatedDate"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s93LastUpdatedBy"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s93LastUpdatedDate"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s93LinkValue"
+                     IterBinding="SearchClassificationsIterator">
+      <AttrNames>
+        <Item Value="LinkValue"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="SearchClassificationsTable"
+          IterBinding="SearchClassificationsIterator">
+      <nodeDefinition Name="SearchClassifications"
+                      DefName="com.pq.tracs.model.ro.SearchClassificationsView">
+        <AttrNames>
+          <Item Value="TitleId"/>
+          <Item Value="TitleId2"/>
+          <Item Value="ClassificationType"/>
+          <Item Value="ClassificationNumber"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="TitleRecordId"/>
+          <Item Value="OvrId"/>
+          <Item Value="ContentSource"/>
+          <Item Value="PmId"/>
+          <Item Value="PmTitle"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="LinkValue"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstSearchClassifications"
+            IterBinding="SearchClassificationsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousSearchClassifications"
+            IterBinding="SearchClassificationsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextSearchClassifications"
+            IterBinding="SearchClassificationsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastSearchClassifications"
+            IterBinding="SearchClassificationsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeySearchClassifications"
+            IterBinding="SearchClassificationsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrSearchClassifications}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="s94TitleId" IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="SearchSubjectsIterator" id="s94SubjectType"
+          Uses="LOV_SubjectType" StaticList="false"/>
+    <list IterBinding="SearchSubjectsIterator" id="s94SubjectCode"
+          Uses="LOV_Subject" StaticList="false"/>
+    <list IterBinding="SearchSubjectsIterator" id="s94Subject"
+          Uses="LOV_Subject" StaticList="false"/>
+    <list IterBinding="SearchSubjectsIterator" id="s94SubjectForSearch"
+          Uses="LOV_Subject" StaticList="false"/>
+    <attributeValues id="s94PrimaryFlag" IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="PrimaryFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s94CatalogNumber" IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s94LongTitle" IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s94TitleRecordId" IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="TitleRecordId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s94OvrId" IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="OvrId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="SearchSubjectsIterator" id="s94ContentSource"
+          Uses="LOV_ContentSource" StaticList="false"/>
+    <attributeValues id="s94PmId" IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="Pmid"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s94PmTitle" IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="PmTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s94CreatedBy" IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s94CreatedDate" IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s94LastUpdatedBy" IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s94LastUpdatedDate"
+                     IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="s94LinkValue" IterBinding="SearchSubjectsIterator">
+      <AttrNames>
+        <Item Value="LinkValue"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="SearchSubjectsTable" IterBinding="SearchSubjectsIterator">
+      <nodeDefinition Name="SearchSubjects"
+                      DefName="com.pq.tracs.model.ro.SearchSubjectsView">
+        <AttrNames>
+          <Item Value="TitleId"/>
+          <Item Value="SubjectType"/>
+          <Item Value="Subject"/>
+          <Item Value="Subject"/>
+          <Item Value="Subject"/>
+          <Item Value="Subject"/>
+          <Item Value="Subject"/>
+          <Item Value="Subject"/>
+          <Item Value="Subject"/>
+          <Item Value="Subject"/>
+          <Item Value="Subject"/>
+          <Item Value="PrimaryFlag"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="TitleRecordId"/>
+          <Item Value="OvrId"/>
+          <Item Value="ContentSource"/>
+          <Item Value="Pmid"/>
+          <Item Value="PmTitle"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="LinkValue"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstSearchSubjects" IterBinding="SearchSubjectsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousSearchSubjects" IterBinding="SearchSubjectsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextSearchSubjects" IterBinding="SearchSubjectsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastSearchSubjects" IterBinding="SearchSubjectsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeySearchSubjects"
+            IterBinding="SearchSubjectsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrSearchSubjects}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues id="spPubId" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="PubId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spPublisherName" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="PublisherName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spSortName" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="SortName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spUrl" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="Url"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spNotes" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spEmail" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="Email"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spVpId" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="VpId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spStreetAddress" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="StreetAddress"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spStreetAddress2"
+                     IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="StreetAddress2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spCity" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="City"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spState" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="State"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spZipcode" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="Zipcode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spCountry" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="Country"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spDefaultFlag" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="DefaultFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spZipPlusFour" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="ZipPlusFour"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spLinkValue" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="LinkValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spTraxPublisherId"
+                     IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="TraxPublisherId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spPublisherAddressId"
+                     IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="PublisherAddressId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="spPublisherId" IterBinding="SearchPublisherIterator">
+      <AttrNames>
+        <Item Value="PublisherId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="SearchPublisherTable" IterBinding="SearchPublisherIterator">
+      <nodeDefinition Name="SearchPublisher"
+                      DefName="com.pq.tracs.model.ro.SearchPublisherVpIdView">
+        <AttrNames>
+          <Item Value="PubId"/>
+          <Item Value="PublisherName"/>
+          <Item Value="SortName"/>
+          <Item Value="Url"/>
+          <Item Value="Notes"/>
+          <Item Value="Email"/>
+          <Item Value="VpId"/>
+          <Item Value="StreetAddress"/>
+          <Item Value="StreetAddress2"/>
+          <Item Value="City"/>
+          <Item Value="State"/>
+          <Item Value="Zipcode"/>
+          <Item Value="Country"/>
+          <Item Value="DefaultFlag"/>
+          <Item Value="ZipPlusFour"/>
+          <Item Value="LinkValue"/>
+          <Item Value="TraxPublisherId"/>
+          <Item Value="PublisherAddressId"/>
+          <Item Value="PublisherId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstSearchPublisher" IterBinding="SearchPublisherIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousSearchPublisher" IterBinding="SearchPublisherIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextSearchPublisher" IterBinding="SearchPublisherIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastSearchPublisher" IterBinding="SearchPublisherIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeySearchPublisher"
+            IterBinding="SearchPublisherIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrSearchPublisher}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

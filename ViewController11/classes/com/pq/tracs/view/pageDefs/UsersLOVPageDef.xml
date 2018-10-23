@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.59.23" id="UsersLOVPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters/>
+  <executables>
+    <iterator id="UsersLOVIterator" Binds="UsersLOV1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="UsersLOVIteratorQuery" Binds="UsersLOVIterator"
+                  Criteria="__ImplicitViewCriteria__"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="Username"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="UsersLOVId" IterBinding="UsersLOVIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersLOVUsername" IterBinding="UsersLOVIterator">
+      <AttrNames>
+        <Item Value="Username"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersLOVFirstName" IterBinding="UsersLOVIterator">
+      <AttrNames>
+        <Item Value="FirstName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersLOVLastName" IterBinding="UsersLOVIterator">
+      <AttrNames>
+        <Item Value="LastName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersLOVDisplayName" IterBinding="UsersLOVIterator">
+      <AttrNames>
+        <Item Value="DisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="UsersLOVEmailAddress" IterBinding="UsersLOVIterator">
+      <AttrNames>
+        <Item Value="EmailAddress"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="UsersLOVTable" IterBinding="UsersLOVIterator">
+      <nodeDefinition Name="UsersLOV"
+                      DefName="com.pq.tracs.model.lookups.UsersLOV">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="Username"/>
+          <Item Value="FirstName"/>
+          <Item Value="LastName"/>
+          <Item Value="DisplayName"/>
+          <Item Value="EmailAddress"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstUsersLOV" IterBinding="UsersLOVIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousUsersLOV" IterBinding="UsersLOVIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextUsersLOV" IterBinding="UsersLOVIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastUsersLOV" IterBinding="UsersLOVIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <methodAction RequiresUpdateModel="true" Action="invokeMethod"
+                  id="advancedSearchUsersLOV" IterBinding="UsersLOVIterator"
+                  DataControl="TracsServiceDataControl"
+                  InstanceName="TracsServiceDataControl.dataProvider"
+                  MethodName="advancedSearch"
+                  ReturnName="TracsServiceDataControl.methodResults.TracsServiceDataControl_dataProvider_advancedSearch_result"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="viewObjectUsage"
+                 NDValue="#{pageFlowScope.searchUsersLOV.dataCollection}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="arguments"
+                 NDValue="#{pageFlowScope.searchUsersLOV.arguments}"
+                 NDType="java.util.ArrayList"/>
+      <NamedData NDName="allConditionsMet"
+                 NDValue="#{pageFlowScope.searchUsersLOV.allConditionsMet}"
+                 NDType="java.lang.Boolean"/>
+    </methodAction>
+    <action id="SetCurrentRowWithKeyUsersLOV" IterBinding="UsersLOVIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr" NDValue="#{pageFlowScope.rowKeyStrUsersLOV}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

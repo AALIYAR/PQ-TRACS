@@ -1,0 +1,316 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<ViewObject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="RoyaltyRateView"
+   Version="11.1.1.62.29"
+   OrderBy="EFFECTIVE_START_DATE, EFFECTIVE_END_DATE"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="com.pq.tracs.model.dao.RoyaltyRateViewRowImpl"
+   ComponentClass="com.pq.tracs.model.dao.RoyaltyRateViewImpl"
+   PageIterMode="Partial"
+   UseGlueCode="false"
+   FetchMode="FETCH_AS_NEEDED"
+   FetchSize="15"
+   RangeSize="10">
+   <DesignTime>
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+      <Attr Name="_isExpertMode" Value="true"/>
+      <Attr Name="_objectSuperClassName"
+         Value="com.pq.tracs.model.dao.TracsView"/>
+      <Attr Name="_isCodegen" Value="true"/>
+   </DesignTime>
+   <ViewAccessor
+      Name="ContractMediaCodeLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Contract Media Code']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ViewAccessor
+      Name="ContractRoyaltyTypeLookup"
+      ViewObjectName="com.pq.tracs.model.lookups.LookupCodeLookup">
+      <ParameterMap>
+         <PIMap Variable="code_set">
+            <TransientExpression><![CDATA['Contract Royalty Type']]></TransientExpression>
+         </PIMap>
+      </ParameterMap>
+   </ViewAccessor>
+   <ListBinding
+      Name="LOV_Media"
+      ListVOName="ContractMediaCodeLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="Media"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <ListBinding
+      Name="LOV_RateType"
+      ListVOName="ContractRoyaltyTypeLookup"
+      ListRangeSize="-1"
+      NullValueFlag="start"
+      NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+      MRUCount="0">
+      <AttrArray Name="AttrNames">
+         <Item Value="RateType"/>
+      </AttrArray>
+      <AttrArray Name="ListAttrNames">
+         <Item Value="InternalValue"/>
+      </AttrArray>
+      <AttrArray Name="ListDisplayAttrNames">
+         <Item Value="DisplayValue"/>
+      </AttrArray>
+      <DisplayCriteria/>
+   </ListBinding>
+   <SQLQuery><![CDATA[
+SELECT RoyaltyRate.ID, 
+       RoyaltyRate.CONTRACT_ID, 
+       RoyaltyRate.MEDIA, 
+       RoyaltyRate.RATE_TYPE, 
+       RoyaltyRate.ROYALTY_RATE, 
+       RoyaltyRate.EFFECTIVE_START_DATE, 
+       RoyaltyRate.EFFECTIVE_END_DATE, 
+       RoyaltyRate.EXCEPTION_FLAG, 
+       RoyaltyRate.CREATED_BY, 
+       RoyaltyRate.CREATED_DATE, 
+       RoyaltyRate.LAST_UPDATED_BY, 
+       RoyaltyRate.LAST_UPDATED_DATE, 
+decode(RATE_TYPE,'Percentage','%','') DISPLAY_RATE_TYPE
+FROM TRAX_ROYALTY_RATE RoyaltyRate
+   ]]></SQLQuery>
+   <EntityUsage
+      Name="RoyaltyRate"
+      Entity="com.pq.tracs.model.bo.RoyaltyRate" >
+   </EntityUsage>
+   <ViewAttribute
+      Name="Id"
+      EntityAttrName="Id"
+      EntityUsage="RoyaltyRate"
+      AliasName="ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="ContractId"
+      EntityAttrName="ContractId"
+      EntityUsage="RoyaltyRate"
+      AliasName="CONTRACT_ID" >
+   </ViewAttribute>
+   <ViewAttribute
+      Name="Media"
+      EntityAttrName="Media"
+      EntityUsage="RoyaltyRate"
+      AliasName="MEDIA"
+      LOVName="LOV_Media">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RateType"
+      EntityAttrName="RateType"
+      EntityUsage="RoyaltyRate"
+      AliasName="RATE_TYPE"
+      LOVName="LOV_RateType">
+      <Properties>
+         <SchemaBasedProperties>
+            <CONTROLTYPE
+               Value="choice"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="RoyaltyRate1"
+      EntityAttrName="RoyaltyRate"
+      EntityUsage="RoyaltyRate"
+      AliasName="ROYALTY_RATE" />
+   <ViewAttribute
+      Name="EffectiveStartDate"
+      EntityAttrName="EffectiveStartDate"
+      EntityUsage="RoyaltyRate"
+      AliasName="EFFECTIVE_START_DATE" />
+   <ViewAttribute
+      Name="EffectiveEndDate"
+      EntityAttrName="EffectiveEndDate"
+      EntityUsage="RoyaltyRate"
+      AliasName="EFFECTIVE_END_DATE" />
+   <ViewAttribute
+      Name="ExceptionFlag"
+      EntityAttrName="ExceptionFlag"
+      EntityUsage="RoyaltyRate"
+      AliasName="EXCEPTION_FLAG" />
+   <ViewAttribute
+      Name="CreatedBy"
+      IsUpdateable="false"
+      EntityAttrName="CreatedBy"
+      EntityUsage="RoyaltyRate"
+      AliasName="CREATED_BY" />
+   <ViewAttribute
+      Name="CreatedDate"
+      IsUpdateable="false"
+      EntityAttrName="CreatedDate"
+      EntityUsage="RoyaltyRate"
+      AliasName="CREATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.RoyaltyRateView.CreatedDate_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LastUpdatedBy"
+      EntityAttrName="LastUpdatedBy"
+      EntityUsage="RoyaltyRate"
+      AliasName="LAST_UPDATED_BY" />
+   <ViewAttribute
+      Name="LastUpdatedDate"
+      IsUpdateable="false"
+      EntityAttrName="LastUpdatedDate"
+      EntityUsage="RoyaltyRate"
+      AliasName="LAST_UPDATED_DATE" >
+      <Properties>
+         <SchemaBasedProperties>
+            <FMT_FORMATTER
+               ResId="com.pq.tracs.model.dao.RoyaltyRateView.LastUpdatedDate_FMT_FORMATTER"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="DisplayRateType"
+      IsPersistent="false"
+      Precision="1"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="DISPLAY_RATE_TYPE"
+      Expression="DISPLAY_RATE_TYPE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="1" />
+      </DesignTime>
+      <Properties>
+         <SchemaBasedProperties>
+            <LABEL
+               ResId="com.pq.tracs.model.dao.RoyaltyRateView.DisplayRateType_LABEL"/>
+         </SchemaBasedProperties>
+      </Properties>
+   </ViewAttribute>
+   <ViewCriteria
+      Name="RoyaltyRateViewCriteria"
+      ViewObjectName="com.pq.tracs.model.dao.RoyaltyRateView"
+      Conjunction="AND">
+      <Properties>
+         <CustomProperties>
+            <Property
+               Name="displayOperators"
+               Value="InAdvancedMode"/>
+            <Property
+               Name="autoExecute"
+               Value="false"/>
+            <Property
+               Name="allowConjunctionOverride"
+               Value="true"/>
+            <Property
+               Name="showInList"
+               Value="true"/>
+            <Property
+               Name="mode"
+               Value="Basic"/>
+         </CustomProperties>
+      </Properties>
+      <ViewCriteriaRow
+         Name="vcrow67"
+         UpperColumns="1">
+         <ViewCriteriaItem
+            Name="RoyaltyRateViewCriteria_vcrow67_Media"
+            ViewAttribute="Media"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="RoyaltyRateViewCriteria_vcrow67_RateType"
+            ViewAttribute="RateType"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="RoyaltyRateViewCriteria_vcrow67_RoyaltyRate1"
+            ViewAttribute="RoyaltyRate1"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="RoyaltyRateViewCriteria_vcrow67_EffectiveStartDate"
+            ViewAttribute="EffectiveStartDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="RoyaltyRateViewCriteria_vcrow67_EffectiveEndDate"
+            ViewAttribute="EffectiveEndDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="RoyaltyRateViewCriteria_vcrow67_ExceptionFlag"
+            ViewAttribute="ExceptionFlag"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="RoyaltyRateViewCriteria_vcrow67_CreatedBy"
+            ViewAttribute="CreatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="RoyaltyRateViewCriteria_vcrow67_CreatedDate"
+            ViewAttribute="CreatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="RoyaltyRateViewCriteria_vcrow67_LastUpdatedBy"
+            ViewAttribute="LastUpdatedBy"
+            Conjunction="AND"
+            Required="Optional"/>
+         <ViewCriteriaItem
+            Name="RoyaltyRateViewCriteria_vcrow67_LastUpdatedDate"
+            ViewAttribute="LastUpdatedDate"
+            Operator="="
+            Conjunction="AND"
+            Required="Optional"/>
+      </ViewCriteriaRow>
+   </ViewCriteria>
+   <ViewLinkAccessor
+      Name="ContractRoyaltyRateTitleView"
+      ViewLink="com.pq.tracs.model.dao.ContractRoyaltyRateTitleViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ViewLinkAccessor
+      Name="RoyaltyRateExceptionView"
+      ViewLink="com.pq.tracs.model.dao.RoyaltyRateRoyaltyRateExceptionViewLink"
+      Type="oracle.jbo.RowIterator"
+      IsUpdateable="false" >
+   </ViewLinkAccessor>
+   <ResourceBundle>
+      <PropertiesBundle
+         PropertiesFile="com.pq.tracs.model.ModelBundle"/>
+   </ResourceBundle>
+</ViewObject>

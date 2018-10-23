@@ -1,0 +1,328 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:tr="http://myfaces.apache.org/trinidad"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplate id="pt"
+                   viewId="/common/pageTemplates/JhsRegionTemplateNoStretch.jspx">
+    <f:facet name="pageContent">
+      <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+      <af:panelGroupLayout id="pcpg" layout="scroll">
+        <af:panelGroupLayout layout="vertical" id="sd4TopLc"
+                             partialTriggers=" sd4DeleteDialog sd4SaveButton0 sd4CancelButton0 qsAreasd4SearchOptions sd4PC:sd4Arm sd4PC:sd4duprmTM sd4PC:sd4delrmTM sd4PC:sd4Arl sd4PC:sd4Tab:sd4duprm sd4PC:sd4Tab:sd4delrm sd4PC:sd4Tab:sd4delrl sd4PC:sd4Tab:sd4duprl"
+                             rendered="#{jhsUserRoles['AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty']}">
+          <f:facet name="separator">
+            <af:spacer width="10" height="10" id="sp0"/>
+          </f:facet>
+          <!-- Pushed "disabled" on stretchContext, now: Stretching disabled on group level. -->
+          <af:panelHeader id="ph0"
+                          text="#{nls['TABLE_TITLE_PROCESSINGGROUPCONTRACT']}">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox0">
+                <af:toolbar id="tbar0">
+                  <af:group id="gr0"></af:group>
+                  <af:group id="gr1"></af:group>
+                  <af:group id="gr2">
+                    <af:commandButton action="#{SaveProcessingGroupContract.execute}"
+                                      textAndAccessKey="#{nls['SAVE_BUTTON_LABEL']}"
+                                      id="sd4SaveButton0" partialSubmit="true"></af:commandButton>
+                    <af:commandButton textAndAccessKey="#{nls['CANCEL']}"
+                                      immediate="true" partialSubmit="true"
+                                      rendered="#{!pageFlowScope.hideCancelButton}"
+                                      actionListener="#{jhsRollback.execute}"
+                                      action="Cancel" id="sd4CancelButton0"></af:commandButton>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <f:facet name="context"></f:facet>
+            <af:panelGroupLayout id="modelSearchAreasd4"
+                                 rendered="#{!pageFlowScope.createModes.CreateProcessingGroupContract and !pageFlowScope.hideSearchArea}"
+                                 partialTriggers="">
+              <af:quickQuery id="qsAreasd4SearchOptions"
+                             label="#{nls['FILTER_BY']}"
+                             value="#{bindings.ProcessingGroupContractIteratorPrmOpportunityContractViewCriteriaQuery.queryDescriptor}"
+                             model="#{bindings.ProcessingGroupContractIteratorPrmOpportunityContractViewCriteriaQuery.queryModel}"
+                             queryListener="#{bindings.ProcessingGroupContractIteratorPrmOpportunityContractViewCriteriaQuery.processQuery}"></af:quickQuery>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="vertical" id="pgl0">
+            <af:panelCollection id="sd4PC" featuresOff=" "
+                                styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu textAndAccessKey="#{nls['ACTION_MENU_LABEL']}"
+                         id="menu0">
+                  <af:menu textAndAccessKey="#{nls['GO_TO_MENU_LABEL']}"
+                           id="menu1">
+                    <af:group id="sd4tbb"
+                              rendered="#{ bindings.ProcessingGroupContractIterator.currentRow!=null }">
+                      <af:commandMenuItem actionListener="#{bindings.FirstProcessingGroupContract.execute}"
+                                          id="sd4First" partialSubmit="true"
+                                          icon="/afr/shuttleleftall_ena.png"
+                                          textAndAccessKey="#{nls['FIRST_ROW']}"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.PreviousProcessingGroupContract.execute}"
+                                          icon="/afr/shuttleleft_ena.png"
+                                          textAndAccessKey="#{nls['PREVIOUS_ROW']}"
+                                          id="sd4Previous" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.NextProcessingGroupContract.execute}"
+                                          icon="/afr/shuttleright_ena.png"
+                                          textAndAccessKey="#{nls['NEXT_ROW']}"
+                                          id="sd4Next" partialSubmit="true"></af:commandMenuItem>
+                      <af:commandMenuItem actionListener="#{bindings.LastProcessingGroupContract.execute}"
+                                          icon="/afr/shuttlerightall_ena.png"
+                                          textAndAccessKey="#{nls['LAST_ROW']}"
+                                          id="sd4Last" partialSubmit="true"></af:commandMenuItem>
+                    </af:group>
+                  </af:menu>
+                  <af:commandMenuItem id="sd4Arm"
+                                      textAndAccessKey="#{nls['ADD_ROW']}"
+                                      immediate="false"
+                                      icon="/jheadstart/images/addRow.png"
+                                      partialSubmit="true"
+                                      actionListener="#{pageFlowScope.ProcessingGroupContractTable.addRow}"
+                                      rendered="#{(true) }"></af:commandMenuItem>
+                  <af:commandMenuItem id="sd4duprmTM"
+                                      textAndAccessKey="#{nls['DUPLICATE_ROW']}"
+                                      immediate="true"
+                                      icon="/jheadstart/images/duplicateRow.png"
+                                      partialSubmit="true"
+                                      actionListener="#{pageFlowScope.ProcessingGroupContractTable.duplicateRow}"></af:commandMenuItem>
+                  <af:commandMenuItem id="sd4delrmTM"
+                                      textAndAccessKey="#{nls['DELETE_ROW']}"
+                                      icon="/jheadstart/images/deleteRow.png"
+                                      partialSubmit="true" immediate="true">
+                    <af:showPopupBehavior popupId="::sd4DeletePopup"/>
+                  </af:commandMenuItem>
+                  <af:commandMenuItem partialSubmit="true"
+                                      textAndAccessKey="#{nls['EXPORT']}"
+                                      icon="/jheadstart/images/excel.png"
+                                      immediate="true" id="cmi0">
+                    <af:exportCollectionActionListener exportedId="sd4Tab"
+                                                       type="excelHTML"
+                                                       filename="ProcessingGroupContract.xls"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="tbar1">
+                  <!-- Also create CreateProcessingGroupContract bean so we can start table group in create mode as well -->
+                  <af:commandImageLink id="sd4Arl" immediate="false"
+                                       rendered="#{(true) }"
+                                       partialSubmit="true"
+                                       actionListener="#{pageFlowScope.ProcessingGroupContractTable.addRow}"
+                                       shortDesc="#{nls['ADD_ROW']}"
+                                       icon="/jheadstart/images/addRow.png"/>
+                  <af:commandImageLink immediate="true" partialSubmit="true"
+                                       id="cl0" shortDesc="#{nls['EXPORT']}"
+                                       icon="/jheadstart/images/excel.png">
+                    <af:exportCollectionActionListener exportedId="sd4Tab"
+                                                       type="excelHTML"
+                                                       filename="ProcessingGroupContract.xls"/>
+                  </af:commandImageLink>
+                  <af:commandToolbarButton text="Print" id="sd4Print"
+                                           shortDesc="Opens a new tab with printer friendly format.">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar>
+                  <af:outputText value="#{bindings.ProcessingGroupContractIterator.estimatedRowCount} rows found"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table id="sd4Tab" contentDelivery="immediate"
+                        value="#{bindings.ProcessingGroupContractTable.collectionModel}"
+                        columnStretching="blank" rowBandingInterval="0"
+                        editingMode="editAll" columnSelection="multiple"
+                        contextMenuSelect="true" rowSelection="single"
+                        selectionListener="#{pageFlowScope.ProcessingGroupContractTable.makeCurrent}"
+                        selectedRowKeys="#{pageFlowScope.ProcessingGroupContractTable.selectedRow}"
+                        rowDisclosureListener="#{pageFlowScope.ProcessingGroupContractTable.discloseRow}"
+                        var="row" varStatus="status"
+                        rows="#{bindings.ProcessingGroupContractTable.rangeSize}"
+                        autoHeightRows="#{bindings.ProcessingGroupContractTable.estimatedRowCount lt 5 ? 5 : bindings.ProcessingGroupContractTable.estimatedRowCount lt bindings.ProcessingGroupContractTable.rangeSize ? bindings.ProcessingGroupContractTable.estimatedRowCount : 0 }"
+                        fetchSize="#{bindings.ProcessingGroupContractTable.rangeSize}"
+                        emptyText="#{nls['NO_ROWS_FOUND']}"
+                        queryListener="#{bindings.ProcessingGroupContractIteratorPrmOpportunityContractViewCriteriaQuery.processQuery}"
+                        binding="#{pageFlowScope.ProcessingGroupContractTable.table}"
+                        partialTriggers=":::qsAreasd4SearchOptions :::sd4PC ::sd4First ::sd4Previous ::sd4Next ::sd4Last"
+                        styleClass="AFStretchWidth"
+                        summary="#{nls['TABLE_TITLE_PROCESSINGGROUPCONTRACT']}">
+                <f:facet name="contextMenu">
+                  <af:popup id="sd4TablePopup" childCreation="deferred">
+                    <af:menu id="menu2">
+                      <af:menu text="#{nls['GO_TO_MENU_LABEL']}" id="menu3"></af:menu>
+                      <af:commandMenuItem id="sd4duprm"
+                                          textAndAccessKey="#{nls['DUPLICATE_ROW']}"
+                                          immediate="true"
+                                          icon="/jheadstart/images/duplicateRow.png"
+                                          partialSubmit="true"
+                                          actionListener="#{pageFlowScope.ProcessingGroupContractTable.duplicateRow}"></af:commandMenuItem>
+                      <af:commandMenuItem id="sd4delrm"
+                                          textAndAccessKey="#{nls['DELETE_ROW']}"
+                                          icon="/jheadstart/images/deleteRow.png"
+                                          partialSubmit="true" immediate="true">
+                        <af:showPopupBehavior popupId=":::sd4DeletePopup"/>
+                      </af:commandMenuItem>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column id="sd4ActionColumn" frozen="true" width="40"
+                           align="center" headerText=" ">
+                  <af:panelGroupLayout layout="horizontal" id="pgl1">
+                    <af:commandImageLink id="sd4delrl" partialSubmit="true"
+                                         immediate="true"
+                                         shortDesc="#{nls['DELETE_ROW']}"
+                                         icon="/jheadstart/images/deleteRow.png">
+                      <af:showPopupBehavior popupId=":::sd4DeletePopup"/>
+                    </af:commandImageLink>
+                    <af:commandImageLink id="sd4duprl" immediate="true"
+                                         partialSubmit="true"
+                                         actionListener="#{pageFlowScope.ProcessingGroupContractTable.duplicateRow}"
+                                         shortDesc="#{nls['DUPLICATE_ROW']}"
+                                         icon="/jheadstart/images/duplicateRow.png"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column id="sd4ContractNumber2Col" sortable="true"
+                           noWrap="true" width="100"
+                           sortProperty="ContractNumber2" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupContractTable.hints.ContractNumber2.label}"
+                                    showRequired="#{bindings.ProcessingGroupContractTable.hints.ContractNumber2.mandatory}"
+                                    id="ol0"/>
+                  </f:facet>
+                  <af:inputListOfValues id="sd4ContractNumber2"
+                                        value="#{row.bindings.ContractNumber2.inputValue}"
+                                        label="#{bindings.ProcessingGroupContractTable.hints.ContractNumber2.label}"
+                                        popupTitle="#{nls['SEARCH_AND_SELECT']} #{bindings.ProcessingGroupContractTable.hints.ContractNumber2.label}"
+                                        searchDesc="#{nls['SEARCH_AND_SELECT']} #{bindings.ProcessingGroupContractTable.hints.ContractNumber2.label}"
+                                        required="#{bindings.ProcessingGroupContractTable.hints.ContractNumber2.mandatory}"
+                                        columns="#{bindings.ProcessingGroupContractTable.hints.ContractNumber2.displayWidth}"
+                                        maximumLength="20"
+                                        shortDesc="#{bindings.ProcessingGroupContractTable.hints.ContractNumber2.tooltip}"
+                                        model="#{row.bindings.ContractNumber2.listOfValuesModel}">
+                    <f:validator binding="#{row.bindings.ContractNumber2.validator}"/>
+                  </af:inputListOfValues>
+                </af:column>
+                <af:column id="sd4NoteCol" sortable="true" noWrap="true"
+                           width="500" sortProperty="Note" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupContractTable.hints.Note.label}"
+                                    showRequired="#{bindings.ProcessingGroupContractTable.hints.Note.mandatory}"
+                                    id="ol1"/>
+                  </f:facet>
+                  <af:inputText id="sd4Note"
+                                value="#{row.bindings.Note.inputValue}"
+                                label="#{bindings.ProcessingGroupContractTable.hints.Note.label}"
+                                required="#{bindings.ProcessingGroupContractTable.hints.Note.mandatory}"
+                                rows="#{bindings.ProcessingGroupContractTable.hints.Note.displayHeight}"
+                                columns="#{bindings.ProcessingGroupContractTable.hints.Note.displayWidth}"
+                                maximumLength="4000"
+                                shortDesc="#{bindings.ProcessingGroupContractTable.hints.Note.tooltip}">
+                    <f:validator binding="#{row.bindings.Note.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="sd4CreatedByCol" sortable="true" noWrap="true"
+                           width="180" sortProperty="CreatedBy"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupContractTable.hints.CreatedBy.label}"
+                                    id="ol2"/>
+                  </f:facet>
+                  <af:inputText id="sd4CreatedBy"
+                                value="#{row.bindings.CreatedBy.inputValue}"
+                                label="#{bindings.ProcessingGroupContractTable.hints.CreatedBy.label}"
+                                required="#{bindings.ProcessingGroupContractTable.hints.CreatedBy.mandatory}"
+                                rows="#{bindings.ProcessingGroupContractTable.hints.CreatedBy.displayHeight}"
+                                columns="#{bindings.ProcessingGroupContractTable.hints.CreatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupContractTable.hints.CreatedBy.tooltip}">
+                    <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="sd4CreatedDateCol" sortable="true" noWrap="true"
+                           width="100" sortProperty="CreatedDate"
+                           rowHeader="false" filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupContractTable.hints.CreatedDate.label}"
+                                    id="ol3"/>
+                  </f:facet>
+                  <af:inputDate id="sd4CreatedDate"
+                                value="#{row.bindings.CreatedDate.inputValue}"
+                                label="#{bindings.ProcessingGroupContractTable.hints.CreatedDate.label}"
+                                required="#{bindings.ProcessingGroupContractTable.hints.CreatedDate.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupContractTable.hints.CreatedDate.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+                <af:column id="sd4LastUpdatedByCol" sortable="true"
+                           noWrap="true" width="180"
+                           sortProperty="LastUpdatedBy" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupContractTable.hints.LastUpdatedBy.label}"
+                                    id="ol4"/>
+                  </f:facet>
+                  <af:inputText id="sd4LastUpdatedBy"
+                                value="#{row.bindings.LastUpdatedBy.inputValue}"
+                                label="#{bindings.ProcessingGroupContractTable.hints.LastUpdatedBy.label}"
+                                required="#{bindings.ProcessingGroupContractTable.hints.LastUpdatedBy.mandatory}"
+                                rows="#{bindings.ProcessingGroupContractTable.hints.LastUpdatedBy.displayHeight}"
+                                columns="#{bindings.ProcessingGroupContractTable.hints.LastUpdatedBy.displayWidth}"
+                                maximumLength="20" readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupContractTable.hints.LastUpdatedBy.tooltip}">
+                    <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+                  </af:inputText>
+                </af:column>
+                <af:column id="sd4LastUpdatedDateCol" sortable="true"
+                           noWrap="true" width="100"
+                           sortProperty="LastUpdatedDate" rowHeader="false"
+                           filterFeatures="caseInsensitive">
+                  <f:facet name="header">
+                    <af:outputLabel value="#{bindings.ProcessingGroupContractTable.hints.LastUpdatedDate.label}"
+                                    id="ol5"/>
+                  </f:facet>
+                  <af:inputDate id="sd4LastUpdatedDate"
+                                value="#{row.bindings.LastUpdatedDate.inputValue}"
+                                label="#{bindings.ProcessingGroupContractTable.hints.LastUpdatedDate.label}"
+                                required="#{bindings.ProcessingGroupContractTable.hints.LastUpdatedDate.mandatory}"
+                                readOnly="true"
+                                shortDesc="#{bindings.ProcessingGroupContractTable.hints.LastUpdatedDate.tooltip}">
+                    <af:convertDateTime pattern="#{nls.datepattern}"/>
+                  </af:inputDate>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+          <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <!-- Popped "disabled" from stretchContext, now: Stretching disabled on group level. -->
+    </f:facet>
+    <f:facet name="popups">
+      <af:panelGroupLayout id="popupsPgl">
+        <af:popup id="sd4DeletePopup" contentDelivery="lazyUncached"
+                  childCreation="deferred">
+          <af:dialog type="yesNo" title="#{nls['WARNING']}"
+                     dialogListener="#{ExecuteActionAfterConfirmation.processDialogEvent}"
+                     modal="true" id="sd4DeleteDialog">
+            <af:outputText value="#{nls['DELETE_WARNING_PROCESSINGGROUPCONTRAC:#{pageFlowScope.ProcessingGroupContractTable.currentRowAttributeValues.ContractNumber2}']} "
+                           id="ot0"/>
+            <f:attribute name="methodExpression"
+                         value="#{'#{DeleteProcessingGroupContract.execute}'}"/>
+          </af:dialog>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>
+
+
+

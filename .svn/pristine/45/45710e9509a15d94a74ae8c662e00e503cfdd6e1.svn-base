@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.62.29" id="ProcessingGroupAttachmentsPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="bindingContainersToPrepare"
+               value="#{'ProcessingGroupsPageDef'}"/>
+    <parameter id="roles"
+               value="#{'AM, PM, AST, GCA, RO, RM, CO, ADMIN, USER, ReadOnly, ActOnly, AllButTitl, AllButAdmn, OVR, RORoyalty'}"/>
+  </parameters>
+  <executables>
+    <iterator id="ProcessingGroupAttachmentsIterator"
+              Binds="PrmOpportunityAttachmentView2"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="ProcessingGroupAttachmentsIteratorPrmOpportunityAttachmentViewCriteriaQuery"
+                  Binds="ProcessingGroupAttachmentsIterator"
+                  Criteria="PrmOpportunityAttachmentViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="AttachmentType"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+  </executables>
+  <bindings>
+    <attributeValues id="sd1Name"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1AttachmentType"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="AttachmentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1Attachment"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1AttachmentDL"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Attachment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1Description"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1FileSize"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="FileSize"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1CreatedBy"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1CreatedDate"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1LastUpdatedBy"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="sd1LastUpdatedDate"
+                     IterBinding="ProcessingGroupAttachmentsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="ProcessingGroupAttachmentsTable"
+          IterBinding="ProcessingGroupAttachmentsIterator">
+      <nodeDefinition Name="ProcessingGroupAttachments"
+                      DefName="com.pq.tracs.model.vo.PrmOpportunityAttachmentView">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="AttachmentType"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Attachment"/>
+          <Item Value="Description"/>
+          <Item Value="FileSize"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrProcessingGroupAttachments}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteProcessingGroupAttachments"
+            IterBinding="ProcessingGroupAttachmentsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>

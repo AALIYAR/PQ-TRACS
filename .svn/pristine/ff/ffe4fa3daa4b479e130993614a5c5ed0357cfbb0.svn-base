@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.62.29" id="TargetingGroupsPageDef"
+                Package="com.pq.tracs.view.pageDefs"
+                ControllerClass="oracle.jheadstart.controller.jsf.lifecycle.JhsPageLifecycle"
+                SkipValidation="skipDataControls">
+  <parameters>
+    <parameter id="roles" value="#{'AutoAdd'}"/>
+  </parameters>
+  <executables>
+    <iterator id="TargetingGroupsIterator" Binds="PrmTargetGroupView1"
+              DataControl="TracsServiceDataControl" RangeSize="-1"/>
+    <searchRegion id="TargetingGroupsIteratorPrmTargetGroupViewCriteriaAdvQuery"
+                  Binds="TargetingGroupsIterator"
+                  Criteria="PrmTargetGroupViewCriteriaAdv"
+                  InitialQueryOverridden="#{pageFlowScope.isDeepLink!=null and pageFlowScope.isDeepLink}"
+                  DefaultQuickSearchAttrName="GroupName"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"/>
+    <iterator id="TargetGroupTitlesIterator" Binds="PrmTargetGroupTitleView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="TargetGroupTitlesIteratorPrmTargetGroupTitleViewCriteriaQuery"
+                  Binds="TargetGroupTitlesIterator"
+                  Criteria="PrmTargetGroupTitleViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CatalogNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryTargetGroupTitlesInvoke"
+                  Binds="ExecuteQueryTargetGroupTitles" Refresh="renderModel"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <iterator id="TargetGroupTargetedProductsIterator"
+              Binds="PrmTargetedProductTitleView1"
+              DataControl="TracsServiceDataControl" RangeSize="10"/>
+    <searchRegion id="TargetGroupTargetedProductsIteratorPrmTargetedProductTitleViewCriteriaQuery"
+                  Binds="TargetGroupTargetedProductsIterator"
+                  Criteria="PrmTargetedProductTitleViewCriteria"
+                  InitialQueryOverridden="true"
+                  DefaultQuickSearchAttrName="CatalogNumber"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  RefreshCondition="#{jhsAfterCommit}"/>
+    <invokeAction id="ExecuteQueryTargetGroupTargetedProductsInvoke"
+                  Binds="ExecuteQueryTargetGroupTargetedProducts"
+                  Refresh="renderModel" RefreshCondition="#{jhsAfterCommit}"/>
+    <taskFlow id="LovTaskFlow"
+              taskFlowId="#{pageFlowScope.jhsLovTaskFlowManager.currentTaskFlowId}"
+              activation="deferred"
+              parametersMap="#{pageFlowScope.jhsLovTaskFlowManager.currentParamMap}"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings>
+    <attributeValues id="TGId" IterBinding="TargetingGroupsIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TGImportFileId" IterBinding="TargetingGroupsIterator">
+      <AttrNames>
+        <Item Value="ImportFileId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TGGroupNo" IterBinding="TargetingGroupsIterator">
+      <AttrNames>
+        <Item Value="GroupNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TGGroupName" IterBinding="TargetingGroupsIterator">
+      <AttrNames>
+        <Item Value="GroupName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="TargetingGroupsIterator" id="TGGroupType"
+          Uses="LOV_GroupType" StaticList="false"/>
+    <attributeValues id="TGTitlecount" IterBinding="TargetingGroupsIterator">
+      <AttrNames>
+        <Item Value="Titlecount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TGFileName" IterBinding="TargetingGroupsIterator">
+      <AttrNames>
+        <Item Value="FileName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TGCreatedBy" IterBinding="TargetingGroupsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TGCreatedDate" IterBinding="TargetingGroupsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TGCreatedbySearch"
+                     IterBinding="TargetingGroupsIterator">
+      <AttrNames>
+        <Item Value="CreatedbySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TGLastUpdatedBy" IterBinding="TargetingGroupsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TGLastUpdatedDate"
+                     IterBinding="TargetingGroupsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="TGLastUpdatedbySearch"
+                     IterBinding="TargetingGroupsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedbySearch"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="TargetingGroupsTable" IterBinding="TargetingGroupsIterator">
+      <nodeDefinition Name="TargetingGroups"
+                      DefName="com.pq.tracs.model.vo.PrmTargetGroupView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ImportFileId"/>
+          <Item Value="GroupNo"/>
+          <Item Value="GroupName"/>
+          <Item Value="GroupType"/>
+          <Item Value="Titlecount"/>
+          <Item Value="FileName"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="CreatedbySearch"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+          <Item Value="LastUpdatedbySearch"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstTargetingGroups" IterBinding="TargetingGroupsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousTargetingGroups" IterBinding="TargetingGroupsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextTargetingGroups" IterBinding="TargetingGroupsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastTargetingGroups" IterBinding="TargetingGroupsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyTargetingGroups"
+            IterBinding="TargetingGroupsIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrTargetingGroups}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateTargetingGroups" IterBinding="TargetingGroupsIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteTargetingGroups" IterBinding="TargetingGroupsIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryTargetGroupTitles"
+            IterBinding="TargetGroupTitlesIterator" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues id="se0Id" IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0PrmTargetGroupId"
+                     IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="PrmTargetGroupId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0TitleId" IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0Id1" IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="Id1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0AccountId" IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="AccountId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0TargetTrackingNo"
+                     IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0CatalogNumber"
+                     IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0LongTitle" IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0OpenAccess" IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="OpenAccess"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0SubjectCode"
+                     IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="SubjectCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0Subject" IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="Subject"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0SubjectType"
+                     IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="SubjectType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0AccountNo" IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="AccountNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0AccountName"
+                     IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="AccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0ExternalIndexes"
+                     IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="ExternalIndexes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0AddedDate" IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0RemovedDate"
+                     IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0CreatedBy" IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0CreatedDate"
+                     IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0LastUpdatedBy"
+                     IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se0LastUpdatedDate"
+                     IterBinding="TargetGroupTitlesIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="TargetGroupTitlesTable" IterBinding="TargetGroupTitlesIterator">
+      <nodeDefinition Name="TargetGroupTitles"
+                      DefName="com.pq.tracs.model.vo.PrmTargetGroupTitleView">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="PrmTargetGroupId"/>
+          <Item Value="TitleId"/>
+          <Item Value="Id1"/>
+          <Item Value="AccountId"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="OpenAccess"/>
+          <Item Value="SubjectCode"/>
+          <Item Value="Subject"/>
+          <Item Value="SubjectType"/>
+          <Item Value="AccountNo"/>
+          <Item Value="AccountName"/>
+          <Item Value="ExternalIndexes"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstTargetGroupTitles" IterBinding="TargetGroupTitlesIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousTargetGroupTitles"
+            IterBinding="TargetGroupTitlesIterator" RequiresUpdateModel="true"
+            Action="previous"/>
+    <action id="NextTargetGroupTitles" IterBinding="TargetGroupTitlesIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastTargetGroupTitles" IterBinding="TargetGroupTitlesIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyTargetGroupTitles"
+            IterBinding="TargetGroupTitlesIterator" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrTargetGroupTitles}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="CreateTargetGroupTitles" IterBinding="TargetGroupTitlesIterator"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="DeleteTargetGroupTitles" IterBinding="TargetGroupTitlesIterator"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="ExecuteQueryTargetGroupTargetedProducts"
+            IterBinding="TargetGroupTargetedProductsIterator"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+    <attributeValues id="se1PrmTargetedProductId"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="PrmTargetedProductId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1TitleId"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="TitleId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1ContentOwnerId"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="ContentOwnerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1OpportunityId"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="OpportunityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1OpportunityAccountId"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="OpportunityAccountId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="TargetGroupTargetedProductsIterator"
+          id="se1PrmTargetGroupId" Uses="LOV_PrmTargetGroupId"
+          StaticList="false"/>
+    <attributeValues id="se1TargetTrackingNo"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="TargetTrackingNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1CatalogNumber"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="CatalogNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1LongTitle"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="LongTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1Author"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="Author"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1PrdId"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="PrdId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1ProductName"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="ProductName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="TargetGroupTargetedProductsIterator"
+          id="se1TargetPriority" Uses="LOV_TargetPriority" StaticList="false"/>
+    <attributeValues id="se1TargetType"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="TargetType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1AddedDate"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="AddedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1RemovedDate"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="RemovedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1OpportunityNo"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="OpportunityNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1OpportunityName"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="OpportunityName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1OpportunityAccountName"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="OpportunityAccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="TargetGroupTargetedProductsIterator"
+          id="se1NegotiationStage" Uses="LOV_NegotiationStage"
+          StaticList="false"/>
+    <attributeValues id="se1OpenAccess"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="OpenAccess"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1ExternalIndexes"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="ExternalIndexes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1RightsGrantedDate"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="RightsGrantedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1Name"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1ProductFamily"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="ProductFamily"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1AllianceManager"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="AllianceManager"/>
+      </AttrNames>
+    </attributeValues>
+    <button id="se1AiTargetingFlag"
+            IterBinding="TargetGroupTargetedProductsIterator"
+            DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="AiTargetingFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <attributeValues id="se1CreatedBy"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1CreatedDate"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="CreatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1LastUpdatedBy"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues id="se1LastUpdatedDate"
+                     IterBinding="TargetGroupTargetedProductsIterator">
+      <AttrNames>
+        <Item Value="LastUpdatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree id="TargetGroupTargetedProductsTable"
+          IterBinding="TargetGroupTargetedProductsIterator">
+      <nodeDefinition Name="TargetGroupTargetedProducts"
+                      DefName="com.pq.tracs.model.vo.PrmTargetedProductTitleView">
+        <AttrNames>
+          <Item Value="PrmTargetedProductId"/>
+          <Item Value="TitleId"/>
+          <Item Value="ContentOwnerId"/>
+          <Item Value="OpportunityId"/>
+          <Item Value="OpportunityAccountId"/>
+          <Item Value="PrmTargetGroupId"/>
+          <Item Value="TargetTrackingNo"/>
+          <Item Value="CatalogNumber"/>
+          <Item Value="LongTitle"/>
+          <Item Value="Author"/>
+          <Item Value="PrdId"/>
+          <Item Value="ProductName"/>
+          <Item Value="TargetPriority"/>
+          <Item Value="TargetType"/>
+          <Item Value="AddedDate"/>
+          <Item Value="RemovedDate"/>
+          <Item Value="OpportunityNo"/>
+          <Item Value="OpportunityName"/>
+          <Item Value="OpportunityAccountName"/>
+          <Item Value="NegotiationStage"/>
+          <Item Value="OpenAccess"/>
+          <Item Value="ExternalIndexes"/>
+          <Item Value="RightsGrantedDate"/>
+          <Item Value="Name"/>
+          <Item Value="ProductFamily"/>
+          <Item Value="AllianceManager"/>
+          <Item Value="AiTargetingFlag"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="FirstTargetGroupTargetedProducts"
+            IterBinding="TargetGroupTargetedProductsIterator"
+            RequiresUpdateModel="true" Action="first"/>
+    <action id="PreviousTargetGroupTargetedProducts"
+            IterBinding="TargetGroupTargetedProductsIterator"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action id="NextTargetGroupTargetedProducts"
+            IterBinding="TargetGroupTargetedProductsIterator"
+            RequiresUpdateModel="true" Action="next"/>
+    <action id="LastTargetGroupTargetedProducts"
+            IterBinding="TargetGroupTargetedProductsIterator"
+            RequiresUpdateModel="true" Action="last"/>
+    <action id="SetCurrentRowWithKeyTargetGroupTargetedProducts"
+            IterBinding="TargetGroupTargetedProductsIterator"
+            RequiresUpdateModel="false" Action="setCurrentRowWithKey">
+      <NamedData NDName="rowKeyStr"
+                 NDValue="#{pageFlowScope.rowKeyStrTargetGroupTargetedProducts}"
+                 NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="TracsServiceDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="TracsServiceDataControl"/>
+  </bindings>
+</pageDefinition>
